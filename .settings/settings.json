@@ -1,0 +1,12 @@
+{
+	"search.excludeFolders": [
+		".git",
+		"node_modules",
+		"bower_components",
+		"platforms",
+		"plugins",
+		"www/js/bundle.js",
+		"www/js/bundle.js.map",
+		"www/js/src"
+	]
+}

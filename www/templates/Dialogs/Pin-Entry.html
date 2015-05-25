@@ -1,0 +1,177 @@
+﻿<div class="modal" ng-controller="PinEntryController">
+
+    <header class="bar bar-header bar-positive">
+        <h1 class="title">{{viewModel.promptText}}</h1>
+    </header>
+
+    <ion-content has-header="true" padding="false" scroll="false" class="pin-entry content-vertical-center">
+
+        <div class="pin-entry-portrait phone-portrait-tablet-both">
+
+            <div class="row pin-entry-input">
+                <div class="col col-25">
+                    <button class="button button-large button-light">
+                        <span ng-show="viewModel.pin.length > 0">•</span>
+                    </button>
+                </div>
+                <div class="col col-25">
+                    <button class="button button-large button-light">
+                        <span ng-show="viewModel.pin.length > 1">•</span>
+                    </button>
+                </div>
+                <div class="col col-25">
+                    <button class="button button-large button-light">
+                        <span ng-show="viewModel.pin.length > 2">•</span>
+                    </button>
+                </div>
+                <div class="col col-25">
+                    <button class="button button-large button-light">
+                        <span ng-show="viewModel.pin.length > 3">•</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pin-entry-numpad">
+                <div class="row">
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(1)">1</button>
+                    </div>
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(2)">2</button>
+                    </div>
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(3)">3</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(4)">4</button>
+                    </div>
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(5)">5</button>
+                    </div>
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(6)">6</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(7)">7</button>
+                    </div>
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(8)">8</button>
+                    </div>
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(9)">9</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.back_click()" ng-show="viewModel.showBackButton">
+                            <i class="icon ion-android-arrow-back"></i>
+                        </button>
+                    </div>
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.number_click(0)">0</button>
+                    </div>
+                    <div class="col col-33">
+                        <button class="button button-block button-positive" ng-click="controller.clear_click()">
+                            <i class="icon ion-close-circled"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="pin-entry-landscape phone-landscape">
+
+            <div class="row">
+                <div class="col col-50 content-vertical-center">
+                    <div class="row pin-entry-input" style="float:left;">
+                        <div class="col col-25">
+                            <button class="button button-large button-light">
+                                <span ng-show="viewModel.pin.length > 0">•</span>
+                            </button>
+                        </div>
+                        <div class="col col-25">
+                            <button class="button button-large button-light">
+                                <span ng-show="viewModel.pin.length > 1">•</span>
+                            </button>
+                        </div>
+                        <div class="col col-25">
+                            <button class="button button-large button-light">
+                                <span ng-show="viewModel.pin.length > 2">•</span>
+                            </button>
+                        </div>
+                        <div class="col col-25">
+                            <button class="button button-large button-light">
+                                <span ng-show="viewModel.pin.length > 3">•</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-50">
+                    <div class="pin-entry-numpad" style="float:right;">
+                        <div class="row">
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(1)">1</button>
+                            </div>
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(2)">2</button>
+                            </div>
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(3)">3</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(4)">4</button>
+                            </div>
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(5)">5</button>
+                            </div>
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(6)">6</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(7)">7</button>
+                            </div>
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(8)">8</button>
+                            </div>
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(9)">9</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.back_click()" ng-show="viewModel.showBackButton">
+                                    <i class="icon ion-android-arrow-back"></i>
+                                </button>
+                            </div>
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.number_click(0)">0</button>
+                            </div>
+                            <div class="col col-33">
+                                <button class="button button-block button-positive" ng-click="controller.clear_click()">
+                                    <i class="icon ion-close-circled"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</div>

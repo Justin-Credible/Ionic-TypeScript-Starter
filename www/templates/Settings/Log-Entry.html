@@ -1,0 +1,62 @@
+﻿<ion-view view-title="Log Entry">
+
+    <ion-nav-buttons side="right">
+    </ion-nav-buttons>
+
+    <ion-content class="has-header">
+        <div class="list card">
+
+            <div class="item item-avatar item-icon-left">
+                <i class="icon ion-{{viewModel.iconType}}"></i>
+                <h2 ng-show="viewModel.iconType === 'alert'">Unhandled JS Exception</h2>
+                <h2 ng-show="viewModel.iconType === 'alert-circled'">Angular JS Exception</h2>
+                <h2 ng-show="viewModel.iconType === 'android-wifi'">{{viewModel.message}}</h2>
+                <p>{{viewModel.date}}&nbsp;&nbsp;&nbsp;{{viewModel.time}}</p>
+            </div>
+
+            <div class="item item-body" ng-hide="viewModel.iconType === 'android-wifi'">
+                <p>{{viewModel.message}}</p>
+            </div>
+
+            <div class="item item-body" ng-show="viewModel.error != null && viewModel.error.message">
+                <p>{{viewModel.error.message}}</p>
+            </div>
+
+            <div class="item item-body" ng-show="viewModel.error != null && viewModel.error.stack">
+                <p>{{viewModel.error.stack}}</p>
+            </div>
+
+            <div class="item item-body" ng-show="viewModel.iconType === 'alert'">
+                <p>URI: {{viewModel.uri}}</p>
+                <p>Line: {{viewModel.lineNumber}}</p>
+                <p>Column: {{viewModel.colNumber}}</p>
+            </div>
+
+            <div class="item item-body" ng-show="viewModel.iconType === 'alert-circled'">
+                <p>URI: {{viewModel.uri}}</p>
+            </div>
+
+            <div class="item item-body" ng-show="viewModel.iconType === 'android-wifi'">
+                <p>HTTP Information</p>
+                <p>URL: {{viewModel.httpUrl}}</p>
+                <p>Status: {{viewModel.httpStatus}}</p>
+                <p>Status Text: {{viewModel.httpStatusText}}</p>
+                <p>Headers: {{viewModel.httpHeaders}}</p>
+                <p>Response: {{viewModel.httpBody}}</p>
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" ng-click="controller.copy()">
+                    <i class="icon ion-ios-copy-outline"></i>
+                    Copy
+                </a>
+                <a class="tab-item" ng-click="controller.email()">
+                    <i class="icon ion-ios-email-outline"></i>
+                    E-mail
+                </a>
+            </div>
+
+        </div>
+    </ion-content>
+
+</ion-view>

@@ -1,0 +1,161 @@
+﻿<ion-view view-title="Development Tools">
+
+    <ion-nav-buttons side="left">
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scrolling="true">
+
+        <div class="list card">
+            <div class="item item-divider">HTTP API</div>
+
+            <label class="item item-toggle">
+                Mock API Requests
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox" ng-model="viewModel.mockApiRequests" ng-change="controller.mockApiRequests_change()">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </label>
+
+            <button class="button button-block button-positive" ng-click="controller.apiGetToken_click()">GET /tokens/{currentToken}</button>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">Platform Tools</div>
+
+            <label class="item item-readonly-label">
+                <span>Device.Platform</span>
+                <span>{{viewModel.devicePlatform}}</span>
+            </label>
+
+            <label class="item item-readonly-label">
+                <span>Logging to Local Storage?</span>
+                <span>{{viewModel.loggingToLocalStorage}}</span>
+            </label>
+
+            <label class="item">
+                <span>Default Storage Path ID</span>
+                <br />
+                <span>{{viewModel.defaultStoragePathId}}</span>
+            </label>
+
+            <label class="item">
+                <span>Default Storage Path</span>
+                <br />
+                <span>{{viewModel.defaultStoragePath}}</span>
+            </label>
+
+            <button class="button button-block button-positive" ng-click="controller.setLoggingMode_click()">Set Logging Mode</button>
+            <button class="button button-block button-positive" ng-click="controller.setHttpLoggingMode_click()">Set HTTP Logging Mode</button>
+            <button class="button button-block button-positive" ng-click="controller.addModulesToGlobalScope_click()">Add Modules to Global Scope</button>
+            <button class="button button-block button-positive" ng-click="controller.setRequirePinThreshold_click()">Set Require PIN Threshold</button>
+            <button class="button button-block button-positive" ng-click="controller.resetPinTimeout_click()">Reset PIN Entry Timeout</button>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">Modal Dialogs</div>
+            <button class="button button-block button-energized" ng-click="controller.showPinEntry_click()">Show New PIN Entry</button>
+            <button class="button button-block button-energized" ng-click="controller.showPinEntry1234_click()">Show Confirm PIN Entry (1234)</button>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">Test Exception Handling</div>
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-assertive" ng-click="controller.testJsException_click()">JS Exception</button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-assertive" ng-click="controller.testAngularException_click()">Angular Exception</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">HTTP Progress Bar</div>
+
+            <div class="row">
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.startProgress_click()">Start</button>
+                </div>
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.incrementProgress_click()">Increment</button>
+                </div>
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.doneProgress_click()">Done</button>
+                </div>
+            </div>
+
+            <button class="button button-block button-calm" ng-click="controller.showFullScreenBlock_click()">Show Full Screen Block</button>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">Toast Notifications</div>
+
+            <div class="row">
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.showToast_top()">Top</button>
+                </div>
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.showToast_center()">Center</button>
+                </div>
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.showToast_bottom()">Bottom</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">Clipboard</div>
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-calm" ng-click="controller.clipboard_copy()">Copy</button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-calm" ng-click="controller.clipboard_paste()">Paste</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">File System I/O</div>
+
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-royal" ng-click="controller.listFiles_click()">List Files</button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-royal" ng-click="controller.listDirs_click()">List Dirs</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-calm" ng-click="controller.readFile_click()">Read File</button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-calm" ng-click="controller.writeFile_click()">Write File</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-calm" ng-click="controller.appendFile_click()">Append File</button>
+                </div>
+                <div class="col col-50"><button class="button button-block button-calm" ng-click="controller.createDir_click()">Create Dir</button></div>
+            </div>
+
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-assertive" ng-click="controller.deleteFile_click()">Delete File</button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-assertive" ng-click="controller.deleteDir_click()">Delete Dir</button>
+                </div>
+            </div>
+
+        </div>
+
+</ion-content>
+
+</ion-view>

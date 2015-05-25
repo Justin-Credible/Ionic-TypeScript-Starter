@@ -1,0 +1,17 @@
+﻿<ion-view view-title="Cloud Sync">
+
+    <ion-content padding="true">
+
+        <icon-panel name="cloud-icon-panel"
+                    icon="{{viewModel.icon}}"
+                    text="Here you can setup cloud sync for your data."></icon-panel>
+
+        <p style="text-align: center;" ng-show="viewModel.showUserCount">More than {{viewModel.userCount|Thousands}} users are using cloud sync today!</p>
+
+        <button class="button button-positive button-block"
+                ng-show="viewModel.showButton"
+                ng-click="controller.setup_click()">Setup Cloud Sync</button>
+
+    </ion-content>
+
+</ion-view>

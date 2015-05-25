@@ -1,0 +1,45 @@
+<ion-side-menus>
+
+    <ion-pane ion-side-menu-content drag-content="true">
+
+        <ion-nav-bar class="bar-positive nav-title-slide-ios">
+            <ion-nav-back-button class="button-clear nav-back-button">
+                <i class="ion-ios-arrow-back"></i> Back
+            </ion-nav-back-button>
+        </ion-nav-bar>
+
+        <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+
+    </ion-pane>
+
+    <ion-side-menu side="left" expose-aside-when="(min-width: 768px) and (orientation: landscape)">
+        <ion-content scroll="true">
+
+            <ion-list>
+
+                <ion-item class="item-divider">Categories</ion-item>
+
+                <ion-item ng-repeat="category in viewModel.categories"
+                          class="item menu-close item-icon-left" href="{{category.href}}">
+                    <i class="icon ion-{{category.icon}}"></i>
+                    {{category.name}}
+                </ion-item>
+
+                <ion-item class="item-divider">Preferences</ion-item>
+
+                <ion-item class="item-icon-left menu-close" ng-click="controller.reorder_click()">
+                    <i class="icon ion-shuffle"></i>
+                    Reorder Categories
+                </ion-item>
+
+                <ion-item class="item-icon-left menu-close" href="#/app/settings/list">
+                    <i class="icon ion-android-settings"></i>
+                    Settings
+                </ion-item>
+
+            </ion-list>
+
+        </ion-content>
+    </ion-side-menu>
+
+</ion-side-menus>

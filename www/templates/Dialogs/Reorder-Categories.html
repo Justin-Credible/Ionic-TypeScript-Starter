@@ -1,0 +1,20 @@
+﻿<div class="modal" ng-controller="ReorderCategoriesController">
+
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Reorder Categories</h1>
+        <button class="button" ng-click="controller.done_click()">Done</button>
+    </ion-header-bar>
+
+    <ion-content class="has-header">
+
+        <ion-list show-reorder="true">
+            <ion-item class="item-icon-left" ng-repeat="categoryItem in viewModel.categories">
+                <i class="icon ion-{{categoryItem.icon}}"></i>
+                <span>{{categoryItem.name}}</span>
+                <ion-reorder-button class="ion-navicon" on-reorder="controller.item_reorder(categoryItem, $fromIndex, $toIndex)"></ion-reorder-button>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+
+</div>

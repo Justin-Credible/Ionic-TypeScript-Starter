@@ -1,0 +1,34 @@
+{
+    "version": "0.1.0",
+    "command": "gulp",
+    "isShellCommand": true,
+    "args": [
+        "--no-color"
+    ],
+    "tasks": [
+        {
+            "taskName": "ts",
+            "isBuildCommand": true,
+            "showOutput": "silent",
+            "problemMatcher": "$tsc"
+        },
+        {
+            "taskName": "lint",
+            "showOutput": "silent",
+            "problemMatcher": [
+                {
+                    "owner": "gulp",
+                    "fileLocation": ["absolute"],
+                    "pattern": {
+                        "regexp": "^\\[\\d\\d:\\d\\d:\\d\\d\\] \\[gulp-tslint\\] (.*) \\(.*\\) (.*)\\[(\\d*), (\\d*)\\]: (.*)$",
+                        "file": 2,
+                        "line": 3,
+                        "column": 4,
+                        "message": 5,
+                        "severity": 1
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+﻿<ion-view view-title="Configure PIN">
+
+    <ion-nav-buttons side="left">
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scrolling="true" padding="true">
+
+        <p class="configure-pin-lock-icon">
+            <i class="icon ion-locked"></i>
+        </p>
+
+        <p>A four digit PIN number can be used to secure access to the application after it has been in the background for ten minutes.</p>
+
+        <p>The PIN will remain in effect until it is removed or the application is re-installed.</p>
+
+        <p>
+            <button class="button button-block button-positive" ng-hide="viewModel.isPinSet" ng-click="controller.setPin_click()">Set PIN</button>
+            <button class="button button-block button-positive" ng-show="viewModel.isPinSet" ng-click="controller.changePin_click()">Change PIN</button>
+            <button class="button button-block button-assertive" ng-show="viewModel.isPinSet" ng-click="controller.removePin_click()">Remove PIN</button>
+        </p>
+
+    </ion-content>
+
+</ion-view>

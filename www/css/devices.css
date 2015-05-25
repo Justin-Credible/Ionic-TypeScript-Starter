@@ -1,0 +1,207 @@
+﻿
+@media only screen and (orientation: portrait) {
+	.portrait {
+		display: auto;
+	}
+
+	.landscape {
+		display: none !important;
+	}
+}
+
+@media only screen and (orientation: landscape) {
+	.portrait {
+		display: none !important;
+	}
+
+	.landscape {
+		display: auto;
+	}
+}
+
+/* Phone - Portrait */
+@media only screen and (max-width: 755px) and (orientation: portrait) {
+	/* Uncomment to show a yellow bar at the top of the screen to show when this media query is in effect. */
+	/*body::before{ content: "CSS Media Query: Phone (Portrait)"; font-weight: bold; display: block; text-align: center; background: rgba(255,255,0, 0.9); position: absolute; top: 0; left: 0; right: 0; z-index: 99; }*/
+
+	.phone-portrait {
+		display: auto;
+	}
+
+	.phone-landscape {
+		display: none !important;
+	}
+
+	.phone-both {
+		display: auto;
+	}
+
+	.tablet-portrait {
+		display: none !important;
+	}
+
+	.tablet-landscape {
+		display: none !important;
+	}
+
+	.tablet-both {
+		display: none !important;
+	}
+
+	.phone-portrait-tablet-both {
+		display: auto;
+	}
+
+	.phone-landscape-tablet-both {
+		display: none !important;
+	}
+
+	.phone-both-tablet-portrait {
+		display: auto;
+	}
+
+	.phone-both-tablet-landscape {
+		display: auto;
+	}
+}
+
+/* Phone - Landscape */
+@media only screen and (max-width: 1023px) and (orientation: landscape) {
+
+	/* Uncomment to show a yellow bar at the top of the screen to show when this media query is in effect. */
+	/*body::before{ content: "CSS Media Query: Phone (Landscape)"; font-weight: bold; display: block; text-align: center; background: rgba(255,255,0, 0.9); position: absolute; top: 0; left: 0; right: 0; z-index: 99; }*/
+
+	.phone-portrait {
+		display: none !important;
+	}
+
+	.phone-landscape {
+		display: auto;
+	}
+
+	.phone-both {
+		display: auto;
+	}
+
+	.tablet-portrait {
+		display: none !important;
+	}
+
+	.tablet-landscape {
+		display: none !important;
+	}
+
+	.tablet-both {
+		display: none !important;
+	}
+
+	.phone-portrait-tablet-both {
+		display: none !important;
+	}
+
+	.phone-landscape-tablet-both {
+		display: auto;
+	}
+
+	.phone-both-tablet-portrait {
+		display: auto;
+	}
+
+	.phone-both-tablet-landscape {
+		display: auto;
+	}
+}
+
+/* Tablet - Portrait */
+@media only screen and (min-width: 768px) and (orientation : portrait) {
+
+	/* Uncomment to show a yellow bar at the top of the screen to show when this media query is in effect. */
+	/*body::before{ content: "CSS Media Query: Tablet (Portrait)"; font-weight: bold; display: block; text-align: center; background: rgba(255,255,0, 0.9); position: absolute; top: 0; left: 0; right: 0; z-index: 99; }*/
+
+	.phone-portrait {
+		display: none !important;
+	}
+
+	.phone-landscape {
+		display: none !important;
+	}
+
+	.phone-both {
+		display: none !important;
+	}
+
+	.tablet-portrait {
+		display: auto;
+	}
+
+	.tablet-landscape {
+		display: none !important;
+	}
+
+	.tablet-both {
+		display: auto;
+	}
+
+	.phone-portrait-tablet-both {
+		display: auto;
+	}
+
+	.phone-landscape-tablet-both {
+		display: auto;
+	}
+
+	.phone-both-tablet-portrait {
+		display: auto;
+	}
+
+	.phone-both-tablet-landscape {
+		display: none !important;
+	}
+}
+
+/* Tablet - Landscape */
+@media only screen and (min-width : 1024px) and (orientation : landscape) {
+
+	/* Uncomment to show a yellow bar at the top of the screen to show when this media query is in effect. */
+	/*body::before{ content: "CSS Media Query: Phone (Landscape)"; font-weight: bold; display: block; text-align: center; background: rgba(255,255,0, 0.9); position: absolute; top: 0; left: 0; right: 0; z-index: 99; }*/
+
+	.phone-portrait {
+		display: none !important;
+	}
+
+	.phone-landscape {
+		display: none !important;
+	}
+
+	.phone-both {
+		display: none !important;
+	}
+
+	.tablet-portrait {
+		display: none !important;
+	}
+
+	.tablet-landscape {
+		display: auto;
+	}
+
+	.tablet-both {
+		display: auto;
+	}
+
+	.phone-portrait-tablet-both {
+		display: auto;
+	}
+
+	.phone-landscape-tablet-both {
+		display: auto;
+	}
+
+	.phone-both-tablet-portrait {
+		display: none !important
+	}
+
+	.phone-both-tablet-landscape {
+		display: auto;
+	}
+}

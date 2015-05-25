@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"out": "www/js/bundle.js",
+		"sourceMap": true,
+		"removeComments": true,
+		"sourceRoot": ""
+	}
+}

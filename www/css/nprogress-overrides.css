@@ -1,0 +1,16 @@
+﻿
+/* This file contains overrides for the NProgress library's default stylings. */
+
+#nprogress .bar {
+	background: #fff;
+	height: 1px;
+}
+
+#nprogress .peg {
+	display: none;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #fff;
+  border-left-color: #fff;
+}

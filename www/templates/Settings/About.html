@@ -1,0 +1,41 @@
+﻿<ion-view view-title="About">
+
+    <ion-nav-buttons side="left">
+    </ion-nav-buttons>
+
+    <ion-content class="has-header about-view" scrolling="true" padding="true">
+
+        <div class="list card">
+
+            <div class="item item-avatar">
+                <img src="images/about-icon.png" ng-click="controller.logo_click()">
+                <h2>{{viewModel.applicationName}}</h2>
+                <p>Version: {{viewModel.versionString}}</p>
+                <p>Built: {{viewModel.timestamp}}</p>
+            </div>
+
+            <div class="item item-body">
+                <p>Created by Justin Unterreiner.</p>
+                <p>Copyright 2015. All rights reserved.</p>
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" href="#/app/copyright-info">
+                    <i class="icon ion-information-circled"></i>
+                    Copyright Info
+                </a>
+                <a class="tab-item" href="{{viewModel.websiteUrl}}" target="_system">
+                    <i class="icon ion-home"></i>
+                    Website
+                </a>
+                <a class="tab-item" href="{{viewModel.githubUrl}}" target="_system">
+                    <i class="icon ion-social-github"></i>
+                    Github Repo
+                </a>
+            </div>
+
+        </div>
+
+    </ion-content>
+
+</ion-view>
