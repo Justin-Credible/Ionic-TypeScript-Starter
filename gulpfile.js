@@ -15,7 +15,10 @@ var xpath = require("xpath");
 var XmlDom = require("xmldom").DOMParser;
 
 var paths = {
-  ts: ['./src/**/*.ts']
+  ts: ['./src/**/*.ts'],
+  www: ['./www/**/*.*'],
+  chromeIcon: ['./resources/icon.png'],
+  chromeManifest: ['./chrome-manifest.json']
 };
 
 /**
@@ -219,6 +222,31 @@ gulp.task('ts:src-read-me', function (cb) {
 });
 
 /**
+ * Used to compile TypeScript and create a Chrome extension located in the
+ * chrome directory.
+ */
+gulp.task('chrome', ['ts'], function (cb) {
+  
+  // Copy the www payload.
+  gulp.src(paths.www)
+    .pipe(gulp.dest('chrome'))
+    .on('end', function() {
+      
+      // Copy in the icon to use for the toolbar.
+      gulp.src(paths.chromeIcon)
+        .pipe(gulp.dest('chrome'))
+        .on('end', function() {
+          
+          // Copy in the manifest file for the extension.
+          gulp.src(paths.chromeManifest)
+            .pipe(rename('manifest.json'))
+            .pipe(gulp.dest("./chrome"))
+            .on('end', cb);
+        });
+    });
+});
+
+/**
  * Used to perform compliation of the TypeScript source in the src directory and
  * output the JavaScript to www/js/bundle.js. Compilation parameters is located
  * in src/tsconfig.json.
@@ -285,7 +313,7 @@ gulp.task('plugins', ['git-check'], function(cb) {
  * that don't need to be committed to source control by delegating to several of the clean
  * sub-tasks.
  */
-gulp.task('clean', ['clean:node', 'clean:bower', 'clean:platforms', 'clean:plugins', 'clean:libs', 'clean:ts']);
+gulp.task('clean', ['clean:node', 'clean:bower', 'clean:platforms', 'clean:plugins', 'clean:chrome', 'clean:libs', 'clean:ts']);
 
 /**
  * Removes the node_modules directory.
@@ -341,6 +369,15 @@ gulp.task('clean:ts', function (cb) {
     'www/js/bundle.js.map',
     'www/js/BuildVars.js',
     'www/js/src'
+  ], cb);
+});
+
+/**
+ * Removes the chrome directory.
+ */
+gulp.task('clean:chrome', function (cb) {
+  del([
+    'chrome'
   ], cb);
 });
 
