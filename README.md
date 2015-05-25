@@ -257,4 +257,4 @@ There are two sample dialogs provided; one for PIN entry and one for re-ordering
 
 Copyright © 2015 Justin Unterreiner.
 
-Released under an MIT license; see [LICENSE](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter/blob/master/LICENSE) for more information.
+Released under an MIT license; see [LICENSE](https://github.com/Justin-Credible/Ionic-TypeScript-Starter/blob/master/LICENSE) for more information.
