@@ -404,7 +404,7 @@ module JustinCredible.SampleApp.Application {
     function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number): void {
         var Logger: Services.Logger;
 
-        console.log("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
+        console.error("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
 
         if (window.plugins && window.plugins.toast) {
             window.plugins.toast.showLongBottom("An error has occurred; please try again.");
@@ -437,7 +437,7 @@ module JustinCredible.SampleApp.Application {
             cause = "[Unknown]";
         }
 
-        console.log("AngularJS Exception", exception, cause);
+        console.error("AngularJS Exception", exception, cause);
 
         if (window.plugins && window.plugins.toast) {
             window.plugins.toast.showLongBottom("An error has occurred; please try again.");
