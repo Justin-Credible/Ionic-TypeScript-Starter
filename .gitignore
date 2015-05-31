@@ -2,16 +2,16 @@
 # http://git-scm.com/docs/gitignore
 
 # Toolchain
-node_modules/
-bower_components/
-platforms/
-plugins/
-typings/
+/node_modules
+/bower_components
+/platforms
+/plugins
+/typings
 
 # Development Artifacts
-www/lib
-www/js/bundle.*
-www/js/BuildVars.js
-www/js/src/
-src/tsd.d.ts
-chrome/
+/www/lib
+/www/js/bundle.*
+/www/js/BuildVars.js
+/www/js/src/
+/src/tsd.d.ts
+/chrome
