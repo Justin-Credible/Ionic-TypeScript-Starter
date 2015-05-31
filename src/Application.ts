@@ -421,7 +421,7 @@ module JustinCredible.SampleApp.Application {
         }
         catch (ex) {
         }
-        /* tslint:disable:no-empty */
+        /* tslint:enable:no-empty */
     }
 
     /**

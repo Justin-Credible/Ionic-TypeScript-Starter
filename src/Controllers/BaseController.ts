@@ -20,7 +20,7 @@
             // Create the view model.
             this.viewModel = new ModelType();
 
-            /*tslint:disable no-string-literal*/
+            /* tslint:disable:no-string-literal */
 
             // Push the view model onto the scope so it can be
             // referenced from the template/views.
@@ -30,7 +30,7 @@
             // used to reference events for controls etc.
             this.scope["controller"] = this;
 
-            /*tslint:enable no-string-literal*/
+            /* tslint:enable:no-string-literal */
 
             // Subscribe to various events.
             this.scope.$on("$ionicView.loaded", _.bind(this.view_loaded, this));
