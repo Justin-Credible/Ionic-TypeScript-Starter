@@ -83,7 +83,7 @@
         }
 
         /**
-         * Exposes an API for working with the operating system's clipboard.
+         * Exposes an API for working with progress indicators.
          */
         get progressIndicator(): ICordovaProgressIndicator {
             if (window.ProgressIndicator && !this.Utilities.isAndroid) {
@@ -102,7 +102,7 @@
                 return cordova.plugins.clipboard;
             }
             else {
-                this.MockPlatformApis.getClipboardPlugin();
+                return this.MockPlatformApis.getClipboardPlugin();
             }
         }
 
