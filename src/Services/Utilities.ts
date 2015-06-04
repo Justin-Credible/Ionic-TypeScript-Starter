@@ -104,17 +104,6 @@
 
         //#endregion
 
-        //#region Plug-ins
-
-        /**
-         * Exposes an API for working with the operating system's clipboard.
-         */
-        get clipboard(): ICordovaClipboardPlugin {
-            return cordova.plugins.clipboard;
-        }
-
-        //#endregion
-
         //#region String Manipulation
 
         /**

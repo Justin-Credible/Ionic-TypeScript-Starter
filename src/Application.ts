@@ -58,7 +58,8 @@ module JustinCredible.SampleApp.Application {
         ngModule.service("FileUtilities", Services.FileUtilities);
         ngModule.service("Logger", Services.Logger);
         ngModule.service("Preferences", Services.Preferences);
-        ngModule.service("MockApis", Services.MockApis);
+        ngModule.service("MockPlatformApis", Services.MockPlatformApis);
+        ngModule.service("MockHttpApis", Services.MockHttpApis);
         ngModule.factory("HttpInterceptor", Services.HttpInterceptor.getFactory());
         ngModule.service("UiHelper", Services.UiHelper);
 
@@ -140,16 +141,16 @@ module JustinCredible.SampleApp.Application {
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
      */
-    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
+    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockHttpApis: Services.MockHttpApis): void {
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
+            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences);
         });
 
         // Mock up or allow HTTP responses.
-        MockApis.mockHttpCalls(Preferences.enableMockHttpCalls);
+        MockHttpApis.mockHttpCalls(Preferences.enableMockHttpCalls);
     };
 
     /**
@@ -158,18 +159,7 @@ module JustinCredible.SampleApp.Application {
      * Note that this will not fire in the Ripple emulator because it relies
      * on the Codrova device ready event.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
-
-        // Mock up APIs for the various platforms. This allows us to "polyfill" functionality
-        // that isn't available on all platforms.
-
-        if (!Utilities.isCordova) {
-            setTimeout(function () { MockApis.mockCordovaPlugins(); }, 1000);
-        }
-
-        if (Utilities.isAndroid) {
-            setTimeout(function () { MockApis.mockForAndroid(); }, 1000);
-        }
+    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences): void {
 
         // Subscribe to device events.
         document.addEventListener("pause", _.bind(device_pause, null, Preferences));
@@ -182,7 +172,7 @@ module JustinCredible.SampleApp.Application {
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume($location, $ionicViewService, Utilities, UiHelper, Preferences);
+        device_resume($location, $ionicViewService, Utilities, UiHelper);
     }
 
     /**
@@ -215,7 +205,7 @@ module JustinCredible.SampleApp.Application {
         // If mock API calls are enabled, then we'll add a random delay for all HTTP requests to simulate
         // network latency so we can see the spinners and loading bars. Useful for demo purposes.
         if (localStorage.getItem("ENABLE_MOCK_HTTP_CALLS") === "true") {
-            JustinCredible.SampleApp.Services.MockApis.setupMockHttpDelay($provide);
+            Services.MockHttpApis.setupMockHttpDelay($provide);
         }
     };
 
@@ -355,7 +345,7 @@ module JustinCredible.SampleApp.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
+    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper): void {
 
         isShowingPinPrompt = true;
 
@@ -402,26 +392,28 @@ module JustinCredible.SampleApp.Application {
      * Fired when an unhandled JavaScript exception occurs outside of Angular.
      */
     function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number): void {
-        var Logger: Services.Logger;
+        var Logger: Services.Logger,
+            UiHelper: Services.UiHelper;
 
         console.error("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
 
-        if (window.plugins && window.plugins.toast) {
-            window.plugins.toast.showLongBottom("An error has occurred; please try again.");
+        try {
+            UiHelper = angular.element(document.body).injector().get("UiHelper");
+            UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+            UiHelper.progressIndicator.hide();
+        }
+        catch (ex) {
+            console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
+            alert("An error has occurred; please try again.");
         }
 
-        if (window.ProgressIndicator) {
-            window.ProgressIndicator.hide();
-        }
-
-        /* tslint:disable:no-empty */
         try {
             Logger = angular.element(document.body).injector().get("Logger");
             Logger.logWindowError(message, uri, lineNumber, columnNumber);
         }
         catch (ex) {
+            console.error("An error occurred while attempting to log an exception.", ex);
         }
-        /* tslint:enable:no-empty */
     }
 
     /**
@@ -431,7 +423,8 @@ module JustinCredible.SampleApp.Application {
      */
     function angular_exceptionHandler(exception: Error, cause: string): void {
         var message = exception.message,
-            Logger: Services.Logger;
+            Logger: Services.Logger,
+            UiHelper: Services.UiHelper;
 
         if (!cause) {
             cause = "[Unknown]";
@@ -439,22 +432,23 @@ module JustinCredible.SampleApp.Application {
 
         console.error("AngularJS Exception", exception, cause);
 
-        if (window.plugins && window.plugins.toast) {
-            window.plugins.toast.showLongBottom("An error has occurred; please try again.");
+        try {
+            UiHelper = angular.element(document.body).injector().get("UiHelper");
+            UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+            UiHelper.progressIndicator.hide();
+        }
+        catch (ex) {
+            console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
+            alert("An error has occurred; please try again.");
         }
 
-        if (window.ProgressIndicator) {
-            window.ProgressIndicator.hide();
-        }
-
-        /* tslint:disable:no-empty */
         try {
             Logger = angular.element(document.body).injector().get("Logger");
             Logger.logError("Angular exception caused by " + cause, exception);
         }
         catch (ex) {
+            console.error("An error occurred while attempting to log an Angular exception.", ex);
         }
-        /* tslint:enable:no-empty */
     }
 
     //#endregion

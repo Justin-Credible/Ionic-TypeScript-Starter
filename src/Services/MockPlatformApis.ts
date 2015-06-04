@@ -1,25 +1,21 @@
 ﻿module JustinCredible.SampleApp.Services {
 
     /**
-     * Provides a set of mocked up APIs for functions that aren't available in the Apache
-     * Ripple Emulator. Also allows us to mock up responses to API requests when the application
-     * is in "Mock API" mode (via the development tools).
+     * Provides mock implementation APIs that may not be available on all platforms.
      */
-    export class MockApis {
+    export class MockPlatformApis {
 
-        public static $inject = ["$q", "$httpBackend", "$ionicPopup", "$ionicLoading", "Utilities"];
+        public static $inject = ["$q", "$ionicPopup", "$ionicLoading", "Utilities"];
 
         private $q: ng.IQService;
-        private $httpBackend: ng.IHttpBackendService;
         private Utilities: Utilities;
         private $ionicPopup: any;
         private $ionicLoading: any;
 
         private isProgressIndicatorShown: boolean;
 
-        constructor($q: ng.IQService, $httpBackend: ng.IHttpBackendService, $ionicPopup: any, $ionicLoading: any, Utilities: Utilities) {
+        constructor($q: ng.IQService, $ionicPopup: any, $ionicLoading: any, Utilities: Utilities) {
             this.$q = $q;
-            this.$httpBackend = $httpBackend;
             this.Utilities = Utilities;
             this.$ionicPopup = $ionicPopup;
             this.$ionicLoading = $ionicLoading;
@@ -29,90 +25,8 @@
 
         //#region Public API
 
-        /**
-         * Used to setup a random delay time for mock HTTP requests.
-         * 
-         * @param $provide The provider service which will be used to obtain and decorate the httpBackend service.
-         */
-        public static setupMockHttpDelay($provide: ng.auto.IProvideService) {
-            var maxDelay = 3000,
-                minDelay = 1000;
-
-            // Example taken from the following blog post:
-            // http://endlessindirection.wordpress.com/2013/05/18/angularjs-delay-response-from-httpbackend/
-            $provide.decorator("$httpBackend", function ($delegate) {
-                var proxy = function (method, url, data, callback, headers) {
-                    var interceptor = function () {
-                        var _this = this,
-                            _arguments = arguments,
-                            delay: number;
-
-                        if (url.indexOf(".html") > -1) {
-                            // Don't apply a delay for templates.
-                            callback.apply(_this, _arguments);
-                        }
-                        else {
-                            // http://jsfiddle.net/alanwsmith/GfAhy/
-                            delay = Math.floor(Math.random() * (maxDelay - minDelay + 1) + minDelay);
-
-                            setTimeout(function () {
-                                callback.apply(_this, _arguments);
-                            }, delay);
-                        }
-                    };
-                    return $delegate.call(this, method, url, data, interceptor, headers);
-                };
-
-                /* tslint:disable:forin */
-                for (var key in $delegate) {
-                    proxy[key] = $delegate[key];
-                }
-                /* tslint:enable:forin */
-
-                return proxy;
-            });
-        }
-
-        /**
-         * Used to mock the responses for the $http service. Useful when debugging
-         * or demo scenarios when a backend is not available.
-         * 
-         * This can only be called once per page (ie on page load). Subsequent calls
-         * will not remove existing mock rules.
-         * 
-         * @param mock True to mock API calls, false to let them pass through normally.
-         */
-        public mockHttpCalls(mock: boolean) {
-
-            // Always allow all requests for templates to go through.
-            this.$httpBackend.whenGET(/.*\.html/).passThrough();
-
-            if (mock) {
-                // Mock up all the API requests.
-                //this.$httpBackend.whenGET(/someUrl/).respond(200, this.getMockTokenGetResponse());
-            }
-            else {
-                // Allow ALL HTTP requests to go through.
-                this.$httpBackend.whenDELETE(/.*/).passThrough();
-                this.$httpBackend.whenGET(/.*/).passThrough();
-                //this.$httpBackend.whenHEAD(/.*/).passThrough(); //TODO The ts.d includes whenHEAD but this version of Angular doesn't?
-                this.$httpBackend.whenJSONP(/.*/).passThrough();
-                this.$httpBackend.whenPATCH(/.*/).passThrough();
-                this.$httpBackend.whenPOST(/.*/).passThrough();
-                this.$httpBackend.whenPUT(/.*/).passThrough();
-            }
-        }
-
-        /**
-         * Used to mock up the plugin APIs that are not present when running in the Apache
-         * Cordova runtime so that we can polyfill functionality for testing etc.
-         */
-        public mockCordovaPlugins() {
-            var mockToastPlugin: ICordovaToastPlugin,
-                mockPushNotificationPlugin: PushNotification,
-                mockClipboardPlugin: ICordovaClipboardPlugin;
-
-            mockToastPlugin = {
+        public getToastPlugin(): ICordovaToastPlugin {
+            return {
                 show: _.bind(this.toast, this),
                 showLongBottom: _.bind(this.toast, this),
                 showLongCenter: _.bind(this.toast, this),
@@ -121,19 +35,25 @@
                 showShortCenter: _.bind(this.toast, this),
                 showShortTop: _.bind(this.toast, this)
             };
-
-            mockPushNotificationPlugin = {
+        }
+        
+        public getPushNotificationPlugin(): PushNotification {
+            return {
                 register: _.bind(this.pushNotification_register, this),
                 unregister: _.bind(this.pushNotification_unregister, this),
                 setApplicationIconBadgeNumber: _.bind(this.pushNotification_setApplicationIconBadgeNumber, this)
             };
-
-            mockClipboardPlugin = {
+        }
+        
+        public getClipboardPlugin(): ICordovaClipboardPlugin {
+            return {
                 copy: _.bind(this.clipboard_copy, this),
                 paste: _.bind(this.clipboard_paste, this)
             };
+        }
 
-            navigator.notification = {
+        public getNotificationPlugin(): Notification {
+            return {
                 alert: _.bind(this.notification_alert, this),
                 confirm: _.bind(this.notification_confirm, this),
                 prompt: _.bind(this.notification_prompt, this),
@@ -142,53 +62,10 @@
                 vibrateWithPattern: _.bind(this.notification_vibrateWithPattern, this),
                 cancelVibration: _.bind(this.notification_cancelVibration, this)
             };
-
-            window.ProgressIndicator = {
-                hide: _.bind(this.progressIndicator_hide, this),
-                showSimple: _.bind(this.progressIndicator_show, this),
-                showSimpleWithLabel: _.bind(this.progressIndicator_show, this),
-                showSimpleWithLabelDetail: _.bind(this.progressIndicator_show, this),
-                showDeterminate: _.bind(this.progressIndicator_show, this),
-                showDeterminateWithLabel: _.bind(this.progressIndicator_show, this),
-                showAnnular: _.bind(this.progressIndicator_show, this),
-                showAnnularWithLabel: _.bind(this.progressIndicator_show, this),
-                showBar: _.bind(this.progressIndicator_show, this),
-                showBarWithLabel: _.bind(this.progressIndicator_show, this),
-                showSuccess: _.bind(this.progressIndicator_show, this),
-                showText: _.bind(this.progressIndicator_show, this)
-            };
-
-            // Cast to any so we can avoid TypeScript's interface enforcement.
-            var windowObj = <any>window;
-
-            if (typeof(windowObj.cordova) === "undefined") {
-                try {
-                    windowObj.cordova = {};
-                }
-                catch (ex) {
-                    console.log("An error occurred when mocking up the global Cordova object instance; this usually is caused by Ripple and can be ignored.", ex);
-                }
-            }
-
-            if (typeof(windowObj.cordova.plugins) === "undefined") {
-                windowObj.cordova.plugins = {};
-            }
-
-            if (typeof(windowObj.plugins) === "undefined") {
-                windowObj.plugins = {};
-            }
-
-            windowObj.cordova.plugins.clipboard = mockClipboardPlugin;
-            windowObj.plugins.toast = mockToastPlugin;
-            windowObj.plugins.pushNotification = mockPushNotificationPlugin;
         }
 
-        /**
-         * Used to mock up the APIs that are not present when running in Android.
-         */
-        public mockForAndroid() {
-
-            window.ProgressIndicator = {
+        public getProgressIndicatorPlugin(): ICordovaProgressIndicator {
+            return {
                 hide: _.bind(this.progressIndicator_hide, this),
                 showSimple: _.bind(this.progressIndicator_show, this),
                 showSimpleWithLabel: _.bind(this.progressIndicator_show, this),
@@ -205,8 +82,6 @@
         }
 
         //#endregion
-
-        //#region Mock functions for JS APIs
 
         //#region Toast
 
@@ -241,26 +116,26 @@
         //#region Push Notifications
 
         private pushNotification_register(successCallback: (registrationId: string) => void, errorCallback: (error: any) => void, registrationOptions: RegistrationOptions): void {
-            console.log("window.pushNotification.register()", registrationOptions);
+            console.warn("window.pushNotification.register()", registrationOptions);
 
             setTimeout(() => {
-                errorCallback(new Error("Not implemented in MockApis.ts"));
+                errorCallback(new Error("Not implemented in MockPlatformApis.ts"));
             }, 0);
         }
 
         private pushNotification_unregister(successCallback: (result: any) => void, errorCallback: (error: any) => void): void {
-            console.log("window.pushNotification.unregister()");
+            console.warn("window.pushNotification.unregister()");
 
             setTimeout(() => {
-                errorCallback(new Error("Not implemented in MockApis.ts"));
+                errorCallback(new Error("Not implemented in MockPlatformApis.ts"));
             }, 0);
         }
 
         private pushNotification_setApplicationIconBadgeNumber(successCallback: (result: any) => void, errorCallback: (error: any) => void, badgeCount: number): void {
-            console.log("window.pushNotification.setApplicationIconBadgeNumber()", badgeCount);
+            console.warn("window.pushNotification.setApplicationIconBadgeNumber()", badgeCount);
 
             setTimeout(() => {
-                errorCallback(new Error("Not implemented in MockApis.ts"));
+                errorCallback(new Error("Not implemented in MockPlatformApis.ts"));
             }, 0);
         }
 
@@ -489,8 +364,6 @@
                 }, timeout);
             }
         }
-
-        //#endregion
 
         //#endregion
     }

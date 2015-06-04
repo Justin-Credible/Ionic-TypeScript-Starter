@@ -46,22 +46,24 @@
 
         //#endregion
 
-        public static $inject = ["$rootScope", "$q", "$http", "$ionicModal", "Utilities", "Preferences"];
+        public static $inject = ["$rootScope", "$q", "$http", "$ionicModal", "MockPlatformApis", "Utilities", "Preferences"];
 
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
         private $http: ng.IHttpService;
         private $ionicModal: any;
+        private MockPlatformApis: Services.MockPlatformApis;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
 
         private isPinEntryOpen = false;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: Services.MockPlatformApis, Utilities: Services.Utilities, Preferences: Services.Preferences) {
             this.$rootScope = $rootScope;
             this.$q = $q;
             this.$http = $http;
             this.$ionicModal = $ionicModal;
+            this.MockPlatformApis = MockPlatformApis;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
         }
@@ -72,14 +74,36 @@
          * Exposes an API for showing toast messages.
          */
         get toast(): ICordovaToastPlugin {
-            return window.plugins.toast;
+            if (window.plugins && window.plugins.toast) {
+                return window.plugins.toast;
+            }
+            else {
+                return this.MockPlatformApis.getToastPlugin();
+            }
         }
 
         /**
          * Exposes an API for working with the operating system's clipboard.
          */
         get progressIndicator(): ICordovaProgressIndicator {
-            return window.ProgressIndicator;
+            if (window.ProgressIndicator && !this.Utilities.isAndroid) {
+                return window.ProgressIndicator;
+            }
+            else {
+                return this.MockPlatformApis.getProgressIndicatorPlugin();
+            }
+        }
+
+        /**
+         * Exposes an API for working with the operating system's clipboard.
+         */
+        get clipboard(): ICordovaClipboardPlugin {
+            if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
+                return cordova.plugins.clipboard;
+            }
+            else {
+                this.MockPlatformApis.getClipboardPlugin();
+            }
         }
 
         //#endregion
@@ -127,7 +151,8 @@
          */
         public alert(message: string, title?: string, buttonName?: string): ng.IPromise<void> {
             var q = this.$q.defer<void>(),
-                callback: () => void;
+                callback: () => void,
+                notificationPlugin: Notification;
 
             // Default the title.
             title = title || "Alert";
@@ -140,7 +165,16 @@
                 q.resolve();
             };
 
-            navigator.notification.alert(message, callback, title, buttonName);
+            // Obtain the notification plugin implementation.
+            if (navigator.notification) {
+                notificationPlugin = navigator.notification;
+            }
+            else {
+                notificationPlugin = this.MockPlatformApis.getNotificationPlugin();
+            }
+
+            // Show the alert dialog.
+            notificationPlugin.alert(message, callback, title, buttonName);
 
             return q.promise;
         }
@@ -186,7 +220,8 @@
          */
         public confirm(message: string, title?: string, buttonLabels?: string[]): ng.IPromise<string> {
             var q = this.$q.defer<string>(),
-                callback: (choice: number) => void;
+                callback: (choice: number) => void,
+                notificationPlugin: Notification;
 
             // Default the title.
             title = title || "Confirm";
@@ -205,8 +240,16 @@
                 q.resolve(buttonText);
             };
 
-            // Show the prompt.
-            navigator.notification.confirm(message, callback, title, buttonLabels);
+            // Obtain the notification plugin implementation.
+            if (navigator.notification) {
+                notificationPlugin = navigator.notification;
+            }
+            else {
+                notificationPlugin = this.MockPlatformApis.getNotificationPlugin();
+            }
+
+            // Show the confirm dialog.
+            notificationPlugin.confirm(message, callback, title, buttonLabels);
 
             return q.promise;
         }
@@ -265,7 +308,8 @@
          */
         public prompt(message: string, title?: string, buttonLabels?: string[], defaultText?: string): ng.IPromise<Models.KeyValuePair<string, string>> {
             var q = this.$q.defer<Models.KeyValuePair<string, string>>(),
-                callback: (result: NotificationPromptResult) => void;
+                callback: (result: NotificationPromptResult) => void,
+                notificationPlugin: Notification;
 
             // Default the title
             title = title || "Prompt";
@@ -290,8 +334,16 @@
                 q.resolve(promiseResult);
             };
 
-            // Show the prompt.
-            navigator.notification.prompt(message, callback, title, buttonLabels, defaultText);
+            // Obtain the notification plugin implementation.
+            if (navigator.notification) {
+                notificationPlugin = navigator.notification;
+            }
+            else {
+                notificationPlugin = this.MockPlatformApis.getNotificationPlugin();
+            }
+
+            // Show the prompt dialog.
+            notificationPlugin.prompt(message, callback, title, buttonLabels, defaultText);
 
             return q.promise;
         }

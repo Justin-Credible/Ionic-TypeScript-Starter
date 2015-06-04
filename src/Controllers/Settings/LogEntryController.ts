@@ -86,7 +86,7 @@
         //#region Controller Methods
 
         public copy(): void {
-            this.Utilities.clipboard.copy(JSON.stringify(this._fullLogEntry), () => {
+            this.UiHelper.clipboard.copy(JSON.stringify(this._fullLogEntry), () => {
                 this.UiHelper.toast.showShortBottom("Log copied to clipboard!");
             }, null);
         }
