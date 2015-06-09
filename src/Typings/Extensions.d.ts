@@ -5,9 +5,6 @@
  * 
  */
 
-/** Google Chrome instance */
-declare var chrome: any;
-
 interface Window {
 
     /**

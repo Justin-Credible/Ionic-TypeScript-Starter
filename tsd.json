@@ -94,6 +94,12 @@
     },
     "urijs/URIjs.d.ts": {
       "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+    },
+    "chrome/chrome.d.ts": {
+      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+    },
+    "webrtc/MediaStream.d.ts": {
+      "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
     }
   }
 }
