@@ -61,6 +61,7 @@
             this.viewModel.httpStatus = logEntry.httpStatus;
             this.viewModel.httpStatusText = logEntry.httpStatusText;
             this.viewModel.httpUrl = logEntry.httpUrl;
+            this.viewModel.httpMethod = logEntry.httpMethod;
 
             // Format the date and time for display.
             this.viewModel.time = moment(logEntry.timestamp).format("h:mm:ss a");

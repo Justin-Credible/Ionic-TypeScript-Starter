@@ -13,6 +13,7 @@
 
         public error: Error;
 
+        public httpMethod: string;
         public httpUrl: string;
         public httpStatus: number;
         public httpStatusText: string;

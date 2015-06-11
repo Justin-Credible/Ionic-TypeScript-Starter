@@ -274,6 +274,7 @@
             logEntry.uri = window.location.href;
             logEntry.message = "HTTP Request";
 
+            logEntry.httpMethod = config.method;
             logEntry.httpUrl = config.url;
             logEntry.httpBody = typeof (config.data) === "string" ? config.data : JSON.stringify(config.data);
             logEntry.httpHeaders = JSON.stringify(config.headers);

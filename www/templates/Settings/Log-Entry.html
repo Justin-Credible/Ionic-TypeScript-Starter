@@ -38,6 +38,7 @@
 
             <div class="item item-body" ng-show="viewModel.iconType === 'android-wifi'">
                 <p>HTTP Information</p>
+                <p ng-show="viewModel.httpMethod != null">Method: {{viewModel.httpMethod}}</p>
                 <p>URL: {{viewModel.httpUrl}}</p>
                 <p>Status: {{viewModel.httpStatus}}</p>
                 <p>Status Text: {{viewModel.httpStatusText}}</p>
