@@ -59,7 +59,7 @@
 
         //#region Controller Methods
 
-        public reorder_click() {
+        protected reorder_click() {
             this.UiHelper.showDialog(this.UiHelper.DialogIds.ReorderCategories).then(() => {
                 // After the re-order dialog is closed, re-populate the category
                 // items since they may have been re-ordered.

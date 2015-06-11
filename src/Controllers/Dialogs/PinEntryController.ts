@@ -67,7 +67,7 @@
 
         //#region Controller Methods
 
-        public number_click(value: number) {
+        protected number_click(value: number) {
 
             if (this.viewModel.pin.length < 4) {
                 this.viewModel.pin += value;
@@ -81,11 +81,11 @@
             }
         }
 
-        public clear_click() {
+        protected clear_click() {
             this.viewModel.pin = "";
         }
 
-        public back_click() {
+        protected back_click() {
             this.close(new Models.PinEntryDialogResultModel(null, true, null));
         }
 

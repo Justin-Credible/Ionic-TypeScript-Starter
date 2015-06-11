@@ -87,13 +87,13 @@
 
         //#region Controller Methods
 
-        public copy(): void {
+        protected copy(): void {
             this.UiHelper.clipboard.copy(JSON.stringify(this._fullLogEntry), () => {
                 this.UiHelper.toast.showShortBottom("Log copied to clipboard!");
             }, null);
         }
 
-        public email(): void {
+        protected email(): void {
             this.Logger.getLog(this.$stateParams.id).then((logEntry: Models.LogEntry) => {
                 var uri = this.Utilities.format("mailto:{0}?subject={0}&body={1}", this.versionInfo.email, "SampleApp Error Log", JSON.stringify(logEntry));
                 uri = encodeURI(uri);

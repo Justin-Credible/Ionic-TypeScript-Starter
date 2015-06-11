@@ -31,12 +31,12 @@
 
         //#region Controller Methods
 
-        public item_reorder(item: ViewModels.CategoryItemViewModel, fromIndex: number, toIndex: number) {
+        protected item_reorder(item: ViewModels.CategoryItemViewModel, fromIndex: number, toIndex: number) {
             this.viewModel.categories.splice(fromIndex, 1);
             this.viewModel.categories.splice(toIndex, 0, item);
         }
 
-        public done_click() {
+        protected done_click() {
             var categoryOrder: string[] = [];
 
             this.viewModel.categories.forEach((categoryItem: ViewModels.CategoryItemViewModel) => {

@@ -31,7 +31,7 @@
 
         //#region Controller Methods
 
-        public setPin_click() {
+        protected setPin_click() {
             var options: Models.DialogOptions,
                 model: Models.PinEntryDialogModel;
 
@@ -65,7 +65,7 @@
             });
         }
 
-        public changePin_click() {
+        protected changePin_click() {
             var options: Models.DialogOptions,
                 model: Models.PinEntryDialogModel;
 
@@ -108,7 +108,7 @@
             });
         }
 
-        public removePin_click() {
+        protected removePin_click() {
             var options: Models.DialogOptions,
                 model: Models.PinEntryDialogModel;
 

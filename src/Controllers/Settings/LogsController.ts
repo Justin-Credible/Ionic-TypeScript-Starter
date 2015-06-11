@@ -98,7 +98,7 @@
 
         //#region Controller Methods
 
-        public clearLogs() {
+        protected clearLogs() {
             this.UiHelper.confirm("Are you sure you want to delete the logs?", "Delete Logs").then((result: string) => {
                 if (result === "Yes") {
                     this.Logger.clearLogs();

@@ -42,7 +42,7 @@
 
         //#region Controller Methods
 
-        public logo_click() {
+        protected logo_click() {
 
             if (this.Preferences.enableDeveloperTools) {
                 return;

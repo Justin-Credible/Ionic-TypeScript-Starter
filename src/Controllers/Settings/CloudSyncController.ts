@@ -73,7 +73,7 @@
 
         //#region Controller Methods
 
-        public setup_click() {
+        protected setup_click() {
             // Stop the auto icon swapping.
             clearInterval(this.updateInterval);
 
