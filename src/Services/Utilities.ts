@@ -52,7 +52,7 @@
         public get isDebugMode(): boolean {
             return this._isDebug;
         }
-        
+
         /**
          * Can be used to determine if the application is running as a Chrome browser Extension.
          * 

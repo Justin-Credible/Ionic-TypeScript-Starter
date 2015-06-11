@@ -36,7 +36,7 @@
                 showShortTop: _.bind(this.toast, this)
             };
         }
-        
+
         public getPushNotificationPlugin(): PushNotification {
             return {
                 register: _.bind(this.pushNotification_register, this),
@@ -44,7 +44,7 @@
                 setApplicationIconBadgeNumber: _.bind(this.pushNotification_setApplicationIconBadgeNumber, this)
             };
         }
-        
+
         public getClipboardPlugin(): ICordovaClipboardPlugin {
             return {
                 copy: _.bind(this.clipboard_copy, this),
