@@ -20,9 +20,11 @@
             this.UiHelper = UiHelper;
         }
 
-        //#region BaseController Overrides
+        //#region BaseDialogController Overrides
 
-        public dialog_shown() {
+        protected dialog_shown() {
+            super.dialog_shown();
+
             this.viewModel.pin = "";
             this.viewModel.showBackButton = !!this.getData().showBackButton;
             this.viewModel.promptText = this.getData().promptText;

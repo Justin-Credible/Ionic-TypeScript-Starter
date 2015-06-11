@@ -99,9 +99,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public dialog_shown(): void {
-            // No logic should be placed here, since TypeScript doesn't currently support
-            // protected members, so descendants may not be delegating to super.dialog_shown().
+        protected dialog_shown(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -109,9 +109,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public dialog_hidden(): void {
-            // No logic should be placed here, since TypeScript doesn't currently support
-            // protected members, so descendants may not be delegating to super.dialog_hidden().
+        protected dialog_hidden(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         //#endregion

@@ -20,9 +20,11 @@
             this.$stateParams = $stateParams;
         }
 
-        //#region Controller Events
+        //#region BaseController Events
 
-        public view_beforeEnter(): void {
+        protected view_beforeEnter(): void {
+            super.view_beforeEnter();
+
             // Set the category number into the view model using the value as provided
             // in the view route (via the $stateParameters).
             this.viewModel.categoryNumber = this.$stateParams.categoryNumber;

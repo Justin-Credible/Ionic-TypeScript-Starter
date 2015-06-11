@@ -57,9 +57,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public initialize(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected initialize(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -67,9 +67,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public view_loaded(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected view_loaded(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -77,9 +77,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public view_enter(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected view_enter(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -87,9 +87,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public view_leave(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected view_leave(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -97,9 +97,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public view_beforeEnter(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected view_beforeEnter(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -107,9 +107,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public view_beforeLeave(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected view_beforeLeave(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -117,9 +117,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public view_afterEnter(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected view_afterEnter(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -127,9 +127,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public view_afterLeave(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected view_afterLeave(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -137,9 +137,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public view_unloaded(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected view_unloaded(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -147,9 +147,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public destroy(): void {
-            // No logic should be placed here, since TypeScript 1.0 does not currently support
-            // protected members, so descendants may not be delegating to this method.
+        protected destroy(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
     }
 }

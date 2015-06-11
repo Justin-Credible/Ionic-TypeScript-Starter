@@ -20,7 +20,9 @@
 
         //#region BaseDialogController Overrides
 
-        public dialog_shown(): void {
+        protected dialog_shown(): void {
+            super.dialog_shown();
+
             // Grab the available categories.
             this.viewModel.categories = this.Utilities.categories;
         }

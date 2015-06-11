@@ -22,9 +22,11 @@
             this.scope.$on("icon-panel.cloud-icon-panel.created", _.bind(this.iconPanel_created, this));
         }
 
-        //#region Events
+        //#region BaseController Overrides
 
-        public view_beforeEnter(): void {
+        protected view_beforeEnter(): void {
+            super.view_beforeEnter();
+
             // Setup the view model.
             this.viewModel.showButton = true;
             this.viewModel.showUserCount = true;
@@ -32,7 +34,9 @@
             this.viewModel.userCount = 2344;
         }
 
-        public view_leave(): void {
+        protected view_leave(): void {
+            super.view_leave();
+
             // Stop the toggleIcon function from firing.
             clearInterval(this.updateInterval);
         }

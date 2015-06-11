@@ -22,7 +22,9 @@
 
         //#region BaseController Overrides
 
-        public view_beforeEnter(): void {
+        protected view_beforeEnter(): void {
+            super.view_beforeEnter();
+
             this.Logger.getLogs().then(_.bind(this.getLogs_success, this), _.bind(this.getLogs_failure, this));
         }
 
