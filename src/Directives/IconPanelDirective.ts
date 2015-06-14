@@ -14,7 +14,7 @@
     }
 
     /**
-     * Describes the scope object for the Chart directive.
+     * Describes the scope object for the IconPanel directive.
      */
     export interface IIconPanelDirectiveScope extends ng.IScope {
         name: string;
@@ -25,9 +25,9 @@
     //#endregion
 
     /**
-     * A chart directive for creating charts which utilize the Chart.js library.
+     * An element that shows an icon with optional text.
      */
-    export class IconPanelDirective extends BaseDirective<IIconPanelDirectiveScope> implements IIconPanelDirectiveInstance {
+    export class IconPanelDirective extends BaseElementDirective<IIconPanelDirectiveScope> implements IIconPanelDirectiveInstance {
 
         //#region Angular Directive Options
 
@@ -62,7 +62,7 @@
 
             // Fire a created event sending along this directive instance.
             // Parent scopes can listen for this so they can obtain a reference
-            // to the chart instance so they can call getters/setters etc.
+            // to the instance so they can call getters/setters etc.
             if (this.scope.name) {
                 this.scope.$emit("icon-panel." + this.scope.name + ".created", <IIconPanelDirectiveInstance>this);
             }
@@ -72,7 +72,7 @@
         }
 
         /**
-         * Used to render the chart. This will cause any animations to re-animate as well.
+         * Used to render the element.
          */
         public render(): void {
 
