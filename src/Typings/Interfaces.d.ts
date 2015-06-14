@@ -36,6 +36,7 @@ declare module JustinCredible.SampleApp.Interfaces {
         versionString: string;
         buildTimestamp: string;
         applicationName: string;
+        copyrightInfoUrl: string;
         websiteUrl: string;
         githubUrl: string;
         email: string;

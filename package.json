@@ -27,6 +27,7 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-file",
     "cordova-plugin-dialogs",
+    "cordova-plugin-inappbrowser",
     "com.ionic.keyboard",
     "nl.x-services.plugins.toast",
     "com.verso.cordova.clipboard",

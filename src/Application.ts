@@ -32,6 +32,7 @@ module JustinCredible.SampleApp.Application {
 
         versionInfo = {
             applicationName: "Sample App",
+            copyrightInfoUrl: "https://github.com/Justin-Credible/Ionic-TypeScript-Starter/blob/master/LICENSE",
             websiteUrl: "http://www.justin-credible.net",
             githubUrl: "https://github.com/Justin-Credible",
             email: "justin.unterreiner@gmail.com",

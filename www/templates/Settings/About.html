@@ -20,15 +20,15 @@
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" href="#/app/copyright-info">
+                <a class="tab-item" ng-click="controller.copyrightInfo_click()">
                     <i class="icon ion-information-circled"></i>
                     Copyright Info
                 </a>
-                <a class="tab-item" href="{{viewModel.websiteUrl}}" target="_system">
+                <a class="tab-item" ng-click="controller.website_click()">
                     <i class="icon ion-home"></i>
                     Website
                 </a>
-                <a class="tab-item" href="{{viewModel.githubUrl}}" target="_system">
+                <a class="tab-item" ng-click="controller.gitHubRepo_click()">
                     <i class="icon ion-social-github"></i>
                     Github Repo
                 </a>

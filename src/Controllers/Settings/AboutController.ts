@@ -32,8 +32,6 @@
             this.viewModel.logoClickCount = 0;
 
             this.viewModel.applicationName = this.versionInfo.applicationName;
-            this.viewModel.websiteUrl = this.versionInfo.websiteUrl;
-            this.viewModel.githubUrl = this.versionInfo.githubUrl;
             this.viewModel.versionString = this.Utilities.format("{0}.{1}.{2}", this.versionInfo.majorVersion, this.versionInfo.minorVersion, this.versionInfo.buildVersion);
             this.viewModel.timestamp = this.versionInfo.buildTimestamp;
         }
@@ -57,6 +55,18 @@
                 this.UiHelper.toast.showShortBottom("Development Tools Enabled!");
                 this.$location.path("/app/settings");
             }
+        }
+
+        protected copyrightInfo_click(): void {
+            window.open(this.versionInfo.copyrightInfoUrl, "_system");
+        }
+
+        protected website_click(): void {
+            window.open(this.versionInfo.websiteUrl, "_system");
+        }
+
+        protected gitHubRepo_click(): void {
+            window.open(this.versionInfo.githubUrl, "_system");
         }
 
         //#endregion
