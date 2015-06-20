@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "description": "SampleApp: A starter application using Ionic and TypeScript.",
   "author": "Justin Unterreiner",
-  "homepage": "https://github.com/Justin-Credible/Ionic-TypeScript-Starter",
+  "license": "MIT",
+  "homepage": "http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git"
+  },
   "dependencies": {
     "async": "^1.0.0",
-    "bower": "^1.3.3",
+    "bower": "^1.4.1",
+    "bower-installer": "^1.2.0",
+    "cordova": "^5.0.0",
     "del": "^1.2.0",
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
@@ -15,8 +22,11 @@
     "gulp-tslint": "^3.0.1-beta",
     "gulp-typescript": "2.7.5",
     "gulp-util": "^2.2.14",
+    "ionic": "^1.5.5",
     "shelljs": "^0.3.0",
+    "tsd": "^0.6.1",
     "tslint": "^2.2.0-beta",
+    "typescript": "^1.5.0-beta",
     "xmldom": "^0.1.19",
     "xpath": "0.0.9"
   },

@@ -19,7 +19,7 @@ Screenshots can be found on the project page [here](http://www.justin-credible.n
 
 ## Libraries Used ##
 
-The following is a list of JavaScript libraries that are included.
+The following is a list of JavaScript libraries that are used:
 
 * [Ionic](http://ionicframework.com/)
 * [AngularJS](https://angularjs.org/)
@@ -50,25 +50,18 @@ The following prerequisites are required (I've listed the versions of the packag
 * Ionic (1.4.5)
 * TypeScript (1.5.0-beta)
 * Bower (1.4.1)
-* bower-installer 1.2.0
+* bower-installer (1.2.0)
 * tsd (0.6.0-beta.5)
 
-These prerequisites can be installed using the following npm commands once Node.js is installed:
-
-	$ npm install -g cordova
-	$ npm install -g ionic
-	$ npm install -g typescript
-	$ npm install -g bower
-	$ npm install -g bower-installer
-	$ npm install -g tsd
+Each of these prerequisites can be installed using `npm install -g` or, if you do not wish to install them globally, they can be use directly from the project directory by adding `./node_modules/.bin` to your path.
 
 If you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.
 
 After the dependencies are installed, clone the respository and initialize the node packages:
 
-	git clone https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git
-	cd Ionic-TypeScript-Starter
-	npm install
+	$ git clone https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git
+	$ cd Ionic-TypeScript-Starter
+	$ npm install
 
 Now you can use the various gulp tasks to obtain Cordova plugins, install third party libraries via Bower, download TypeScript definition files and compile the TypeScript code.
 
