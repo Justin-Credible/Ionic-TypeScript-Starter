@@ -6,48 +6,45 @@
   "license": "MIT",
   "homepage": "http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git"
+    "type": "git",
+    "url": "https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git"
   },
   "dependencies": {
-    "async": "^1.0.0",
-    "bower": "^1.4.1",
-    "bower-installer": "^1.2.0",
-    "cordova": "^5.0.0",
-    "del": "^1.2.0",
-    "gulp": "^3.5.6",
-    "gulp-concat": "^2.2.0",
-    "gulp-rename": "^1.2.0",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-tslint": "^3.0.1-beta",
+    "async": "1.0.0",
+    "bower": "1.4.1",
+    "bower-installer": "1.2.0",
+    "cordova": "5.1.1",
+    "del": "1.2.0",
+    "gulp": "3.5.6",
+    "gulp-concat": "2.2.0",
+    "gulp-rename": "1.2.0",
+    "gulp-sourcemaps": "1.5.2",
+    "gulp-tslint": "3.0.1-beta",
     "gulp-typescript": "2.7.5",
-    "gulp-util": "^2.2.14",
-    "ionic": "^1.5.5",
-    "shelljs": "^0.3.0",
-    "tsd": "^0.6.1",
-    "tslint": "^2.2.0-beta",
-    "typescript": "^1.5.0-beta",
-    "xmldom": "^0.1.19",
+    "gulp-util": "2.2.14",
+    "ionic": "1.5.5",
+    "shelljs": "0.3.0",
+    "tsd": "0.6.1",
+    "tslint": "2.2.0-beta",
+    "typescript": "1.5.0-beta",
+    "xmldom": "0.1.19",
     "xpath": "0.0.9"
   },
   "cordovaPlugins": [
-    "cordova-plugin-device",
-    "cordova-plugin-console",
-    "cordova-plugin-whitelist",
-    "cordova-plugin-splashscreen",
-    "cordova-plugin-file",
-    "cordova-plugin-dialogs",
-    "cordova-plugin-inappbrowser",
-    "com.ionic.keyboard",
-    "nl.x-services.plugins.toast",
-    "com.verso.cordova.clipboard",
-    {
-      "locator": "https://github.com/pbernasconi/cordova-progressIndicator.git",
-      "id": "org.pbernasconi.progressindicator"
-    }
+    "cordova-plugin-device@1.0.1",
+    "cordova-plugin-console@1.0.1",
+    "cordova-plugin-whitelist@1.0.0",
+    "cordova-plugin-splashscreen@2.1.0",
+    "cordova-plugin-file@2.1.0",
+    "cordova-plugin-dialogs@1.1.1",
+    "cordova-plugin-inappbrowser@1.0.1",
+    "com.ionic.keyboard@1.0.4",
+    "nl.x-services.plugins.toast@2.0.4",
+    "com.verso.cordova.clipboard@0.1.0",
+    "org.pbernasconi.progressindicator@1.1.0"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }
