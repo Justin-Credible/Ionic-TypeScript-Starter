@@ -101,6 +101,9 @@
             if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
                 return cordova.plugins.clipboard;
             }
+            else if (this.Utilities.isChromeExtension) {
+                return this.MockPlatformApis.getClipboardPluginForChromeExtension();
+            }
             else {
                 return this.MockPlatformApis.getClipboardPlugin();
             }

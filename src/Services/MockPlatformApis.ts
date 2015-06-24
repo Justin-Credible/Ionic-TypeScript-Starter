@@ -52,6 +52,13 @@
             };
         }
 
+        public getClipboardPluginForChromeExtension(): ICordovaClipboardPlugin {
+            return {
+                copy: _.bind(this.clipboard_chromeExtension_copy, this),
+                paste: _.bind(this.clipboard_chromeExtension_paste, this)
+            };
+        }
+
         public getNotificationPlugin(): Notification {
             return {
                 alert: _.bind(this.notification_alert, this),
@@ -163,6 +170,41 @@
             }
         }
 
+        private clipboard_chromeExtension_copy(text: string, onSuccess: () => void, onFail: (err: Error) => void): void {
+            // The following is based on http://stackoverflow.com/a/12693636
+
+            try {
+
+                /* tslint:disable:no-string-literal */
+
+                // First, subscribe to the oncopy event. Normally executing the copy command for
+                // the current document will copy the currently selected text block. In this case
+                // we use our handler to override this and use the text that was passed into this
+                // method instead.
+                document["oncopy"] = function(event) {
+                    event.clipboardData.setData("Text", text);
+                    event.preventDefault();
+                };
+
+                // Execute the copy command for the document, which will fire our oncopy handler.
+                document.execCommand("Copy");
+
+                // Finally, remove our copy handler.
+                document["oncopy"] = undefined;
+
+                /* tslint:enable:no-string-literal */
+
+                _.defer(() => {
+                    onSuccess();
+                });
+            }
+            catch (error) {
+                _.defer(() => {
+                    onFail(error);
+                });
+            }
+        }
+
         private clipboard_paste(onSuccess: (result: string) => void, onFail: (err: Error) => void): void {
             var result = prompt("A paste from clipboard was requested; enter text for the paste operation:");
 
@@ -181,6 +223,12 @@
                     }
                 });
             }
+        }
+
+        private clipboard_chromeExtension_paste(onSuccess: (result: string) => void, onFail: (err: Error) => void): void {
+            _.defer(() => {
+                onFail(new Error("The paste operation is not currently implemented for Chrome extensions."));
+            });
         }
 
         //#endregion
