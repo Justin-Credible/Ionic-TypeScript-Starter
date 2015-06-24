@@ -30,6 +30,9 @@
     "xmldom": "0.1.19",
     "xpath": "0.0.9"
   },
+  "scripts": {
+      "test": "gulp lint"
+  },
   "cordovaPlugins": [
     "cordova-plugin-device@1.0.1",
     "cordova-plugin-console@1.0.1",

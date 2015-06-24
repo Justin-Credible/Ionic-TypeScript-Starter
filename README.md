@@ -70,6 +70,10 @@ Now you can use the various gulp tasks to obtain Cordova plugins, install third 
 	$ gulp tsd
 	$ gulp ts
 
+*You can also just run `gulp` without any arguments which will run the above targets.*
+
+While there are no unit tests the TypeScript code can be linted by using `gulp lint`.
+
 If you want to create a build to run on an emulator, you'll need to add a platform before you start the emulator:
 
 	$ ionic platform add ios

@@ -83,7 +83,7 @@ function string_src(filename, str) {
  * The default task downloads Cordova plugins, Bower libraries, TypeScript definitions,
  * and then lints and builds the TypeScript source code.
  */
-gulp.task('default', ['plugins', 'libs', 'tsd', 'lint', 'ts']);
+gulp.task('default', ['plugins', 'libs', 'tsd', 'ts']);
 
 /**
  * The watch task will watch for any changes in the TypeScript files and re-execute the
