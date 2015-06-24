@@ -98,7 +98,7 @@
             this.Logger.getLog(this.$stateParams.id).then((logEntry: Models.LogEntry) => {
                 var uri = this.Utilities.format("mailto:{0}?subject={1} Error Log&body={2}", this.versionInfo.email, this.versionInfo.applicationName, JSON.stringify(logEntry));
                 uri = encodeURI(uri);
-                window.location.href = uri;
+                window.open(uri, "_system");
             });
         }
 
