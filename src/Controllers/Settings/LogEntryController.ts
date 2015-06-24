@@ -88,15 +88,15 @@
 
         //#region Controller Methods
 
-        protected copy(): void {
+        protected copy_click(): void {
             this.UiHelper.clipboard.copy(JSON.stringify(this._fullLogEntry), () => {
                 this.UiHelper.toast.showShortBottom("Log copied to clipboard!");
             }, null);
         }
 
-        protected email(): void {
+        protected email_click(): void {
             this.Logger.getLog(this.$stateParams.id).then((logEntry: Models.LogEntry) => {
-                var uri = this.Utilities.format("mailto:{0}?subject={0}&body={1}", this.versionInfo.email, "SampleApp Error Log", JSON.stringify(logEntry));
+                var uri = this.Utilities.format("mailto:{0}?subject={1} Error Log&body={2}", this.versionInfo.email, this.versionInfo.applicationName, JSON.stringify(logEntry));
                 uri = encodeURI(uri);
                 window.location.href = uri;
             });
