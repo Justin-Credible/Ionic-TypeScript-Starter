@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var runSequence = require('run-sequence');
 var bower = require('bower');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
@@ -83,7 +84,9 @@ function string_src(filename, str) {
  * The default task downloads Cordova plugins, Bower libraries, TypeScript definitions,
  * and then lints and builds the TypeScript source code.
  */
-gulp.task('default', ['plugins', 'libs', 'tsd', 'ts']);
+gulp.task('default', function (cb) {
+    runSequence('plugins', 'libs', 'tsd', 'ts', cb);
+});
 
 /**
  * The watch task will watch for any changes in the TypeScript files and re-execute the
