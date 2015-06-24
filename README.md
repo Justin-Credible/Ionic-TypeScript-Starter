@@ -17,6 +17,8 @@ Screenshots can be found on the project page [here](http://www.justin-credible.n
 
 *If you are looking for a version of this project that uses the full Visual Studio IDE and the Apache Cordova project template, you can check out it's sister project: [Ionic-TypeScript-MDHA-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter).*
 
+[![Build Status](https://travis-ci.org/Justin-Credible/Ionic-TypeScript-Starter.svg?branch=master)](https://travis-ci.org/Justin-Credible/Ionic-TypeScript-Starter)
+
 ## Libraries Used ##
 
 The following is a list of JavaScript libraries that are used:
