@@ -1,0 +1,88 @@
+<ion-view view-title="Share" hide-nav-bar="true">
+
+    <ion-content scroll="false" padding="true">
+
+        <div style="text-align: center;">
+            <h4>Let your friends know you are using SampleApp!</h4>
+        </div>
+
+        <div class="row">
+            <div class="col col-50">
+                <icon-panel
+                    ng-click="controller.share_click('facebook');"
+                    text="Facebook"
+                    icon="ion-social-facebook"
+                    icon-size="60">
+                </icon-panel>
+            </div>
+            <div class="col col-50">
+                <icon-panel
+                    ng-click="controller.share_click('twitter');"
+                    text="Twitter"
+                    icon="ion-social-twitter"
+                    icon-size="60">
+                </icon-panel>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-50">
+                <icon-panel
+                    ng-click="controller.share_click('google+');"
+                    text="Google+"
+                    icon="ion-social-googleplus"
+                    icon-size="60">
+                </icon-panel>
+            </div>
+            <div class="col col-50">
+                <icon-panel
+                    ng-click="controller.share_click('instagram');"
+                    text="Instagram"
+                    icon="ion-social-instagram-outline"
+                    icon-size="60">
+                </icon-panel>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-50">
+                <icon-panel
+                    ng-click="controller.share_click('pinterest');"
+                    text="Pinterest"
+                    icon="ion-social-pinterest"
+                    icon-size="60">
+                </icon-panel>
+            </div>
+            <div class="col col-50">
+                <icon-panel
+                    ng-click="controller.share_click('email');"
+                    text="E-Mail"
+                    icon="ion-ios-email"
+                    icon-size="60">
+                </icon-panel>
+            </div>
+        </div>
+
+        <div style="padding-top: 20px;">
+
+            <button class="button button-block button-positive" ng-click="controller.done_click()">
+                All done! Lets go!
+            </button>
+
+        </div>
+
+    </ion-content>
+
+    <div class="slider-pager">
+        <span class="slider-pager-page">
+            <i class="icon ion-record"></i>
+        </span>
+        <span class="slider-pager-page">
+            <i class="icon ion-record"></i>
+        </span>
+        <span class="slider-pager-page active">
+            <i class="icon ion-record"></i>
+        </span>
+    </div>
+
+</ion-view>

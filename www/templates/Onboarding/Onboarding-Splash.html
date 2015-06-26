@@ -1,0 +1,38 @@
+<ion-view view-title="Splash" hide-nav-bar="true">
+
+    <ion-content scroll="false" padding="true">
+
+        <icon-panel
+            style="padding-top: 50px;"
+            text="Welcome to SampleApp!"
+            icon="ion-ios-world-outline"
+        icon-size="140">
+        </icon-panel>
+
+        <div style="padding-top: 40px;">
+
+            <button class="button button-block button-positive" ui-sref="app.onboarding-register">
+              Get Started!
+            </button>
+
+            <button class="button button-block button-stable" ng-click="controller.skip_click()">
+              Skip this step
+            </button>
+
+        </div>
+
+    </ion-content>
+
+    <div class="slider-pager">
+        <span class="slider-pager-page active">
+            <i class="icon ion-record"></i>
+        </span>
+        <span class="slider-pager-page">
+            <i class="icon ion-record"></i>
+        </span>
+        <span class="slider-pager-page">
+            <i class="icon ion-record"></i>
+        </span>
+    </div>
+
+</ion-view>

@@ -19,6 +19,7 @@
         private static LAST_PAUSED_AT = "LAST_PAUSED_AT";
         private static PIN = "PIN";
         private static CATEGORY_ORDER = "CATEGORY_ORDER";
+        private static HAS_COMPLETED_ONBOARDING = "HAS_COMPLETED_ONBOARDING";
 
         // Default setting is 10 minutes.
         private static REQUIRE_PIN_THRESHOLD_DEFAULT = 10;
@@ -154,6 +155,19 @@
             }
             else {
                 localStorage.setItem(Preferences.CATEGORY_ORDER, JSON.stringify(value));
+            }
+        }
+
+        get hasCompletedOnboarding(): boolean {
+            return localStorage.getItem(Preferences.HAS_COMPLETED_ONBOARDING) === "true";
+        }
+
+        set hasCompletedOnboarding(value: boolean) {
+            if (value == null) {
+                localStorage.removeItem(Preferences.HAS_COMPLETED_ONBOARDING);
+            }
+            else {
+                localStorage.setItem(Preferences.HAS_COMPLETED_ONBOARDING, value.toString());
             }
         }
     }

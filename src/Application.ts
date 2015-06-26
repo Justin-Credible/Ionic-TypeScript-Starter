@@ -71,17 +71,30 @@ module JustinCredible.SampleApp.Application {
         ngModule.filter("Thousands", getFilterFactoryFunction(Filters.ThousandsFilter.filter));
 
         // Define each of the controllers.
+
+        // Root View
         ngModule.controller("MenuController", Controllers.MenuController);
+
+        // Main Views
         ngModule.controller("CategoryController", Controllers.CategoryController);
-        ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
-        ngModule.controller("PinEntryController", Controllers.PinEntryController);
+
+        // Onboarding
+        ngModule.controller("OnboardingSplashController", Controllers.OnboardingSplashController);
+        ngModule.controller("OnboardingRegisterController", Controllers.OnboardingRegisterController);
+        ngModule.controller("OnboardingShareController", Controllers.OnboardingShareController);
+
+        // Settings
         ngModule.controller("SettingsListController", Controllers.SettingsListController);
+        ngModule.controller("CloudSyncController", Controllers.CloudSyncController);
+        ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
         ngModule.controller("LogsController", Controllers.LogsController);
         ngModule.controller("LogEntryController", Controllers.LogEntryController);
         ngModule.controller("DeveloperController", Controllers.DeveloperController);
         ngModule.controller("AboutController", Controllers.AboutController);
-        ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
-        ngModule.controller("CloudSyncController", Controllers.CloudSyncController);
+
+        // Dialogs
+        ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
+        ngModule.controller("PinEntryController", Controllers.PinEntryController);
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
@@ -178,7 +191,7 @@ module JustinCredible.SampleApp.Application {
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume($location, $ionicViewService, Utilities, UiHelper);
+        device_resume($location, $ionicViewService, Utilities, UiHelper, Preferences);
     }
 
     /**
@@ -249,6 +262,40 @@ module JustinCredible.SampleApp.Application {
                 }
             }
         });
+
+        //#region Onboarding
+
+        $stateProvider.state("app.onboarding-splash", {
+            url: "/onboarding/splash",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Onboarding/Onboarding-Splash.html",
+                    controller: "OnboardingSplashController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.onboarding-register", {
+            url: "/onboarding/register",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Onboarding/Onboarding-Register.html",
+                    controller: "OnboardingRegisterController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.onboarding-share", {
+            url: "/onboarding/share",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Onboarding/Onboarding-Share.html",
+                    controller: "OnboardingShareController"
+                }
+            }
+        });
+
+        //#endregion
 
         //#region Settings
 
@@ -351,13 +398,34 @@ module JustinCredible.SampleApp.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper): void {
+    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
 
         isShowingPinPrompt = true;
 
         // Potentially display the PIN screen.
         UiHelper.showPinEntryAfterResume().then(() => {
             isShowingPinPrompt = false;
+
+            // If the user hasn't completed onboarding (eg new, first-time use of the app)
+            // then we'll push them straight into the onboarding flow. Note that we do this
+            // purposefully after the PIN screen for the case where the user may be upgrading
+            // from a version of the application that doesn't have onboarding (we wouldn't
+            // want them to be able to bypass the PIN entry in that case).
+            if (!Preferences.hasCompletedOnboarding) {
+
+                // Tell Ionic to not animate and clear the history (hide the back button)
+                // for the next view that we'll be navigating to below.
+                $ionicViewService.nextViewOptions({
+                    disableAnimate: true,
+                    disableBack: true
+                });
+
+                // Navigate the user to the onboarding splash view.
+                $location.path("/app/onboarding/splash");
+                $location.replace();
+
+                return;
+            }
 
             // If the user is still at the blank sreen, then push them to their default view.
             if ($location.url() === "/app/blank") {

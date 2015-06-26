@@ -133,7 +133,7 @@
 
             this.UiHelper.prompt(message, "Require PIN Threshold", null, this.Preferences.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+            if (result.key !== "OK") {
                     return;
                 }
 
@@ -156,6 +156,11 @@
             message = "The PIN timeout has been set to more than 10 minutes ago. To see the PIN screen, terminate the application via the OS task manager (don't just background it), and then re-launch.";
 
             this.UiHelper.alert(message, "Reset PIN Timeout");
+        }
+
+        protected reEnableOnboarding_click(): void {
+            this.Preferences.hasCompletedOnboarding = false;
+            this.UiHelper.alert("Onboarding has been enabled and will occur upon next app boot.");
         }
 
         protected testJsException_click() {

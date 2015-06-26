@@ -1,0 +1,85 @@
+<ion-view view-title="Register" hide-nav-bar="true">
+
+    <ion-content scroll="false" padding="true">
+
+        <icon-panel
+            ng-hide="viewModel.showSignIn"
+            text="Create an Account"
+            icon="ion-person-add"
+            icon-size="90">
+        </icon-panel>
+
+        <icon-panel
+            ng-show="viewModel.showSignIn"
+            text="Sign In"
+            icon="ion-person-stalker"
+            icon-size="90">
+        </icon-panel>
+
+        <div style="padding-top: 20px;">
+
+            <div class="list list-inset">
+              <label class="item item-input">
+                <input type="text"
+                    placeholder="E-Mail Address"
+                    ng-model="viewModel.email">
+              </label>
+              <label class="item item-input">
+                <input type="password"
+                    placeholder="Password"
+                    ng-model="viewModel.password">
+              </label>
+              <label class="item item-input">
+                <input type="password"
+                    placeholder="Confirm Password"
+                    ng-hide="viewModel.showSignIn"
+                    ng-model="viewModel.confirmPassword">
+              </label>
+            </div>
+
+            <button class="button button-block button-positive"
+                ng-hide="viewModel.showSignIn"
+                ng-click="controller.createAccount_click()">
+              Create Account
+            </button>
+
+            <button class="button button-block button-positive"
+                ng-show="viewModel.showSignIn"
+                ng-click="controller.signIn_click()">
+              Sign In
+            </button>
+
+            <button class="button button-block button-stable"
+                ng-show="viewModel.showSignIn"
+                ng-click="controller.needToCreateAccount_click()">
+              I need to create an account
+            </button>
+
+            <button class="button button-block button-stable"
+                ng-hide="viewModel.showSignIn"
+                ng-click="controller.alreadyHaveAccount_click()">
+              I already have an account
+            </button>
+
+            <button class="button button-block button-stable"
+                ng-click="controller.skip_click()">
+              Skip this step
+            </button>
+
+        </div>
+
+    </ion-content>
+
+    <div class="slider-pager">
+        <span class="slider-pager-page">
+            <i class="icon ion-record"></i>
+        </span>
+        <span class="slider-pager-page active">
+            <i class="icon ion-record"></i>
+        </span>
+        <span class="slider-pager-page">
+            <i class="icon ion-record"></i>
+        </span>
+    </div>
+
+</ion-view>
