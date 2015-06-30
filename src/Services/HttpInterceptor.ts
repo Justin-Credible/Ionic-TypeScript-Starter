@@ -12,6 +12,8 @@
      */
     export class HttpInterceptor {
 
+        public static ID = "HttpInterceptor";
+
         private $rootScope: ng.IRootScopeService;
         private $injector: ng.auto.IInjectorService;
         private $q: ng.IQService;

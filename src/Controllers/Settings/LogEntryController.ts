@@ -6,6 +6,8 @@
 
     export class LogEntryController extends BaseController<ViewModels.LogEntryViewModel> {
 
+        public static ID = "LogEntryController";
+
         public static $inject = ["$scope", "$stateParams", "Logger", "UiHelper", "Utilities", "versionInfo"];
 
         private $stateParams: ILogEntryStateParams;

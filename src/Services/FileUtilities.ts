@@ -7,6 +7,8 @@
      */
     export class FileUtilities {
 
+        public static ID = "FileUtilities";
+
         public static $inject = ["$q", "Utilities"];
 
         private $q: ng.IQService;

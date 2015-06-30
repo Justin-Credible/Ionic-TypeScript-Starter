@@ -2,6 +2,8 @@
 
     export class PinEntryController extends BaseDialogController<ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel> {
 
+        public static ID = "PinEntryController";
+
         public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 
         private Utilities: Services.Utilities;

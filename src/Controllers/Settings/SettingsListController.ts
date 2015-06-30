@@ -2,6 +2,8 @@
 
     export class SettingsListController extends BaseController<ViewModels.SettingsListViewModel> {
 
+        public static ID = "SettingsListController";
+
         public static $inject = ["$scope", "Utilities", "Preferences"];
 
         private Utilities: Services.Utilities;

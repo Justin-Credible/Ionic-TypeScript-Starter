@@ -2,6 +2,8 @@
 
     export class MenuController extends BaseController<ViewModels.MenuViewModel> {
 
+        public static ID = "MenuController";
+
         public static $inject = ["$scope", "$location", "$http", "Utilities", "UiHelper", "Preferences"];
 
         private $location: ng.ILocationService;

@@ -5,6 +5,8 @@
      */
     export class UiHelper {
 
+        public static ID = "UiHelper";
+
         //#region Dialog Stuff
 
         /**

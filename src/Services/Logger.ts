@@ -5,6 +5,8 @@
      */
     export class Logger {
 
+        public static ID = "Logger";
+
         public static $inject = ["$q", "Utilities", "FileUtilities"];
 
         private $q: ng.IQService;

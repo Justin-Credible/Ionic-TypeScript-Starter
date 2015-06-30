@@ -8,6 +8,8 @@ module JustinCredible.SampleApp.Services {
      */
     export class MockHttpApis {
 
+        public static ID = "MockHttpApis";
+
         public static $inject = ["$httpBackend"];
 
         private $httpBackend: ng.IHttpBackendService;

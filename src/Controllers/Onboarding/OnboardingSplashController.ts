@@ -2,6 +2,8 @@ module JustinCredible.SampleApp.Controllers {
 
     export class OnboardingSplashController extends BaseController<ViewModels.EmptyViewModel> {
 
+        public static ID = "OnboardingSplashController";
+
         public static $inject = ["$scope", "$location", "$ionicViewService", "Utilities", "Preferences"];
 
         private $location: ng.ILocationService;

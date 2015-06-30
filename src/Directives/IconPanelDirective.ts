@@ -32,6 +32,8 @@
      */
     export class IconPanelDirective extends BaseElementDirective<IIconPanelDirectiveScope> implements IIconPanelDirectiveInstance {
 
+        public static ID = "iconPanel";
+
         //#region Angular Directive Options
 
         public static restrict = "E";
@@ -57,7 +59,7 @@
 
         public initialize(): void {
 
-            // Grab a reference to the canvas element.
+            // Grab a reference to the root div element.
             this._rootElement = <HTMLDivElement>this.element[0];
 
             // Watch for the changing of the value attributes.

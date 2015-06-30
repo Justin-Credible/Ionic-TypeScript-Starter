@@ -6,6 +6,8 @@
 
     export class CategoryController extends BaseController<ViewModels.CategoryViewModel> {
 
+        public static ID = "CategoryController";
+
         public static $inject = ["$scope", "$stateParams"];
 
         private $stateParams: ICategoryStateParams;

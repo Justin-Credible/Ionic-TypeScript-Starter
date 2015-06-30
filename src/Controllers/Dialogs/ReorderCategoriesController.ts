@@ -2,6 +2,8 @@
 
     export class ReorderCategoriesController extends BaseDialogController<ViewModels.ReorderCategoriesViewModel, void, void> {
 
+        public static ID = "ReorderCategoriesController";
+
         public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 
         private Utilities: Services.Utilities;

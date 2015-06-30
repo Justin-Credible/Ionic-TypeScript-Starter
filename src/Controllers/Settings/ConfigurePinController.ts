@@ -2,6 +2,8 @@
 
     export class ConfigurePinController extends BaseController<ViewModels.ConfigurePinViewModel> {
 
+        public static ID = "ConfigurePinController";
+
         public static $inject = ["$scope", "UiHelper", "Preferences"];
 
         private UiHelper: Services.UiHelper;

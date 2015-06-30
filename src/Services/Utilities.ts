@@ -5,6 +5,8 @@
      */
     export class Utilities {
 
+        public static ID = "Utilities";
+
         public static $inject = ["isRipple", "isCordova", "isDebug", "isChromeExtension", "Preferences"];
 
         private Preferences: Services.Preferences;

@@ -44,6 +44,7 @@ module JustinCredible.SampleApp.Application {
         };
 
         // Define the top level Angular module for the application.
+        // Here we also specify the Angular modules this module depends upon.
         ngModule = angular.module("JustinCredible.SampleApp.Application", ["ui.router", "ionic", "ngMockE2E"]);
 
         // Define our constants.
@@ -54,47 +55,46 @@ module JustinCredible.SampleApp.Application {
         ngModule.constant("versionInfo", versionInfo);
         ngModule.constant("apiVersion", "1.0");
 
-        // Define each of the services.
-        ngModule.service("Utilities", Services.Utilities);
-        ngModule.service("FileUtilities", Services.FileUtilities);
-        ngModule.service("Logger", Services.Logger);
-        ngModule.service("Preferences", Services.Preferences);
-        ngModule.service("MockPlatformApis", Services.MockPlatformApis);
-        ngModule.service("MockHttpApis", Services.MockHttpApis);
-        ngModule.factory("HttpInterceptor", Services.HttpInterceptor.getFactory());
-        ngModule.service("UiHelper", Services.UiHelper);
+        // Register each of the services that exist in the Service namespace.
+        _.each(Services, (Service: any) => {
+            // A static ID property is required to register a service.
+            if (Service.ID) {
+                if (typeof(Service.getFactory) === "function") {
+                    // If a static method named getFactory() is available we'll invoke it
+                    // to get a factory function to register as a factory.
+                    console.log("Registering factory " + Service.ID + "...");
+                    ngModule.factory(Service.ID, Service.getFactory());
+                }
+                else {
+                    console.log("Registering service " + Service.ID + "...");
+                    ngModule.service(Service.ID, Service);
+                }
+            }
+        });
 
-        // Define each of the directives.
-        ngModule.directive("iconPanel", getElementDirectiveFactoryFunction(Directives.IconPanelDirective));
+        // Register each of the directives that exist in the directives namespace.
+        _.each(Directives, (Directive: any) => {
+            if (Directive.ID) {
+                console.log("Registering directive " + Directive.ID + "...");
+                ngModule.directive(Directive.ID, getElementDirectiveFactoryFunction(Directive));
+            }
+        });
 
-        // Define each of the filters.
-        ngModule.filter("Thousands", getFilterFactoryFunction(Filters.ThousandsFilter.filter));
+        // Register each of the filters that exist in the directives namespace.
+        _.each(Filters, (Filter: any) => {
+            if (Filter.ID && typeof(Filter.filter) === "function") {
+                console.log("Registering filter " + Filter.ID + "...");
+                ngModule.filter(Filter.ID, getFilterFactoryFunction(Filter.filter));
+            }
+        });
 
-        // Define each of the controllers.
-
-        // Root View
-        ngModule.controller("MenuController", Controllers.MenuController);
-
-        // Main Views
-        ngModule.controller("CategoryController", Controllers.CategoryController);
-
-        // Onboarding
-        ngModule.controller("OnboardingSplashController", Controllers.OnboardingSplashController);
-        ngModule.controller("OnboardingRegisterController", Controllers.OnboardingRegisterController);
-        ngModule.controller("OnboardingShareController", Controllers.OnboardingShareController);
-
-        // Settings
-        ngModule.controller("SettingsListController", Controllers.SettingsListController);
-        ngModule.controller("CloudSyncController", Controllers.CloudSyncController);
-        ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
-        ngModule.controller("LogsController", Controllers.LogsController);
-        ngModule.controller("LogEntryController", Controllers.LogEntryController);
-        ngModule.controller("DeveloperController", Controllers.DeveloperController);
-        ngModule.controller("AboutController", Controllers.AboutController);
-
-        // Dialogs
-        ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
-        ngModule.controller("PinEntryController", Controllers.PinEntryController);
+        // Register each of the controllers that exist in the Controllers namespace.
+        _.each(Controllers, (Controller: any) => {
+            if (Controller.ID) {
+                console.log("Registering controller " + Controller.ID + "...");
+                ngModule.controller(Controller.ID, Controller);
+            }
+        });
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
@@ -102,6 +102,23 @@ module JustinCredible.SampleApp.Application {
     }
 
     //#region Helpers
+
+    /**
+     * Used construct an instance of an object using the new operator with the given constructor
+     * function and arguments.
+     * 
+     * http://stackoverflow.com/a/1608546/4005811
+     * 
+     * @param constructor The constructor function to invoke with the new keyword.
+     * @param args The arguments to be passed into the constructor function.
+     */
+    function construct(constructor, args) {
+        function F(): void {
+            return constructor.apply(this, args);
+        };
+        F.prototype = constructor.prototype;
+        return new F();
+    }
 
     /**
      * Used to create a function that returns a data structure describing an Angular directive
@@ -123,11 +140,11 @@ module JustinCredible.SampleApp.Application {
         descriptor.transclude = Directive["transclude"];
         descriptor.scope = Directive["scope"];
 
-        if (descriptor.restrict !== "E") {
-            console.warn("BaseElementDirectives were meant to restrict only to element types.");
-        }
-
         /* tslint:enable:no-string-literal */
+
+        if (descriptor.restrict !== "E") {
+            console.warn("BaseElementDirectives are meant to restrict only to element types.");
+        }
 
         // Here we define the link function that Angular invokes when it is linking the
         // directive to the element.
@@ -216,7 +233,7 @@ module JustinCredible.SampleApp.Application {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
 
         // Register our custom interceptor with the HTTP provider so we can hook into AJAX request events.
-        $httpProvider.interceptors.push("HttpInterceptor");
+        $httpProvider.interceptors.push(Services.HttpInterceptor.ID);
 
         // Setup all of the client side routes and their controllers and views.
         RouteConfig.setupRoutes($stateProvider, $urlRouterProvider);

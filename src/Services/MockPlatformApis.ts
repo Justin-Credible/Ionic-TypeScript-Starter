@@ -5,6 +5,8 @@
      */
     export class MockPlatformApis {
 
+        public static ID = "MockPlatformApis";
+
         public static $inject = ["$q", "$ionicPopup", "$ionicLoading", "Utilities"];
 
         private $q: ng.IQService;

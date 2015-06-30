@@ -2,6 +2,8 @@
 
     export class CloudSyncController extends BaseController<ViewModels.CloudSyncViewModel> {
 
+        public static ID = "CloudSyncController";
+
         public static $inject = ["$scope", "$ionicViewService"];
 
         private $ionicViewService: any;

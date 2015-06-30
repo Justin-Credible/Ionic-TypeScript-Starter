@@ -15,6 +15,8 @@
      */
     export class ThousandsFilter {
 
+        public static ID = "Thousands";
+
         public static filter(input: number): string {
 
             if (input == null) {

@@ -2,6 +2,8 @@
 
     export class LogsController extends BaseController<ViewModels.LogsViewModel> {
 
+        public static ID = "LogsController";
+
         public static $inject = ["$scope", "Logger", "Utilities", "UiHelper"];
 
         private Logger: Services.Logger;

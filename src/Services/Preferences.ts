@@ -8,6 +8,8 @@
      */
     export class Preferences {
 
+        public static ID = "Preferences";
+
         public static $inject = [];
 
         private static USER_ID = "USER_ID";

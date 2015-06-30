@@ -2,6 +2,8 @@
 
     export class DeveloperController extends BaseController<ViewModels.DeveloperViewModel> {
 
+        public static ID = "DeveloperController";
+
         public static $inject = ["$scope", "$http", "Utilities", "UiHelper", "FileUtilities", "Logger", "Preferences"];
 
         private $http: ng.IHttpService;
