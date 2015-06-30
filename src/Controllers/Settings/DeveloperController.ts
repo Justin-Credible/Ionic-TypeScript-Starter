@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface IDeveloperController {
-        viewModel: ViewModels.DeveloperViewModel;
-    }
-
-    export class DeveloperController extends BaseController<ViewModels.DeveloperViewModel> implements IDeveloperController {
+    export class DeveloperController extends BaseController<ViewModels.DeveloperViewModel> {
 
         public static $inject = ["$scope", "$http", "Utilities", "UiHelper", "FileUtilities", "Logger", "Preferences"];
 

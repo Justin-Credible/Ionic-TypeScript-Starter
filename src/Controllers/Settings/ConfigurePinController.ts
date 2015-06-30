@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface IConfigurePinController {
-        viewModel: ViewModels.ConfigurePinViewModel;
-    }
-
-    export class ConfigurePinController extends BaseController<ViewModels.ConfigurePinViewModel> implements IConfigurePinController {
+    export class ConfigurePinController extends BaseController<ViewModels.ConfigurePinViewModel> {
 
         public static $inject = ["$scope", "UiHelper", "Preferences"];
 

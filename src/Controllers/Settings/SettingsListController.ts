@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface ISettingsController {
-        viewModel: ViewModels.SettingsListViewModel;
-    }
-
-    export class SettingsListController extends BaseController<ViewModels.SettingsListViewModel> implements ISettingsController {
+    export class SettingsListController extends BaseController<ViewModels.SettingsListViewModel> {
 
         public static $inject = ["$scope", "Utilities", "Preferences"];
 

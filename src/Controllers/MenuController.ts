@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface IMenuController {
-        viewModel: ViewModels.MenuViewModel;
-    }
-
-    export class MenuController extends BaseController<ViewModels.MenuViewModel> implements IMenuController {
+    export class MenuController extends BaseController<ViewModels.MenuViewModel> {
 
         public static $inject = ["$scope", "$location", "$http", "Utilities", "UiHelper", "Preferences"];
 

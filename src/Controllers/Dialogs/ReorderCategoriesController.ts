@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface IReorderCategoriesController {
-        viewModel: ViewModels.ReorderCategoriesViewModel;
-    }
-
-    export class ReorderCategoriesController extends BaseDialogController<ViewModels.ReorderCategoriesViewModel, void, void> implements IReorderCategoriesController {
+    export class ReorderCategoriesController extends BaseDialogController<ViewModels.ReorderCategoriesViewModel, void, void> {
 
         public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 

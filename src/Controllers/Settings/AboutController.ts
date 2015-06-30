@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface IAboutController {
-        viewModel: ViewModels.AboutViewModel;
-    }
-
-    export class AboutController extends BaseController<ViewModels.AboutViewModel> implements IAboutController {
+    export class AboutController extends BaseController<ViewModels.AboutViewModel> {
 
         public static $inject = ["$scope", "$location", "Utilities", "Preferences", "UiHelper", "versionInfo"];
 

@@ -1,14 +1,10 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface ICategoryController {
-        viewModel: ViewModels.CategoryViewModel;
-    }
-
     export interface ICategoryStateParams {
         categoryNumber: number;
     }
 
-    export class CategoryController extends BaseController<ViewModels.CategoryViewModel> implements ICategoryController {
+    export class CategoryController extends BaseController<ViewModels.CategoryViewModel> {
 
         public static $inject = ["$scope", "$stateParams"];
 

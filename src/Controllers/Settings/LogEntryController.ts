@@ -1,14 +1,10 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface ILogEntryController {
-        viewModel: ViewModels.LogEntryViewModel;
-    }
-
     export interface ILogEntryStateParams {
         id: string;
     }
 
-    export class LogEntryController extends BaseController<ViewModels.LogEntryViewModel> implements ILogEntryController {
+    export class LogEntryController extends BaseController<ViewModels.LogEntryViewModel> {
 
         public static $inject = ["$scope", "$stateParams", "Logger", "UiHelper", "Utilities", "versionInfo"];
 

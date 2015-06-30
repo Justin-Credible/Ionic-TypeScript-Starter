@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface IPinEntryController {
-        viewModel: ViewModels.PinEntryViewModel;
-    }
-
-    export class PinEntryController extends BaseDialogController<ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel> implements IPinEntryController {
+    export class PinEntryController extends BaseDialogController<ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel> {
 
         public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 

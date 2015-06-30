@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface ICloudSyncController {
-        viewModel: ViewModels.CloudSyncViewModel;
-    }
-
-    export class CloudSyncController extends BaseController<ViewModels.CloudSyncViewModel> implements ICloudSyncController {
+    export class CloudSyncController extends BaseController<ViewModels.CloudSyncViewModel> {
 
         public static $inject = ["$scope", "$ionicViewService"];
 

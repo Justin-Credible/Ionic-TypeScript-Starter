@@ -1,10 +1,6 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export interface ILogsController {
-        viewModel: ViewModels.LogsViewModel;
-    }
-
-    export class LogsController extends BaseController<ViewModels.LogsViewModel> implements ILogsController {
+    export class LogsController extends BaseController<ViewModels.LogsViewModel> {
 
         public static $inject = ["$scope", "Logger", "Utilities", "UiHelper"];
 
