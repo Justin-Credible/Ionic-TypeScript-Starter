@@ -4,7 +4,9 @@
 
         public static ID = "MenuController";
 
-        public static $inject = ["$scope", "$location", "$http", "Utilities", "UiHelper", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$scope", "$location", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
+        }
 
         private $location: ng.ILocationService;
         private $http: ng.IHttpService;

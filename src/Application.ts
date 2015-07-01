@@ -419,7 +419,7 @@ module JustinCredible.SampleApp.Application {
         console.error("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
 
         try {
-            UiHelper = angular.element(document.body).injector().get("UiHelper");
+            UiHelper = angular.element(document.body).injector().get(Services.UiHelper.ID);
             UiHelper.toast.showLongBottom("An error has occurred; please try again.");
             UiHelper.progressIndicator.hide();
         }
@@ -429,7 +429,7 @@ module JustinCredible.SampleApp.Application {
         }
 
         try {
-            Logger = angular.element(document.body).injector().get("Logger");
+            Logger = angular.element(document.body).injector().get(Services.Logger.ID);
             Logger.logWindowError(message, uri, lineNumber, columnNumber);
         }
         catch (ex) {
@@ -454,7 +454,7 @@ module JustinCredible.SampleApp.Application {
         console.error("AngularJS Exception", exception, cause);
 
         try {
-            UiHelper = angular.element(document.body).injector().get("UiHelper");
+            UiHelper = angular.element(document.body).injector().get(Services.UiHelper.ID);
             UiHelper.toast.showLongBottom("An error has occurred; please try again.");
             UiHelper.progressIndicator.hide();
         }
@@ -464,7 +464,7 @@ module JustinCredible.SampleApp.Application {
         }
 
         try {
-            Logger = angular.element(document.body).injector().get("Logger");
+            Logger = angular.element(document.body).injector().get(Services.Logger.ID);
             Logger.logError("Angular exception caused by " + cause, exception);
         }
         catch (ex) {

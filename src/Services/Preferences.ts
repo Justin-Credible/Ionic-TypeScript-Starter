@@ -10,7 +10,9 @@
 
         public static ID = "Preferences";
 
-        public static $inject = [];
+        public static get $inject(): string[] {
+            return [];
+        }
 
         private static USER_ID = "USER_ID";
         private static TOKEN = "TOKEN";

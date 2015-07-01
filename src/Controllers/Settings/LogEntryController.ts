@@ -8,7 +8,9 @@
 
         public static ID = "LogEntryController";
 
-        public static $inject = ["$scope", "$stateParams", "Logger", "UiHelper", "Utilities", "versionInfo"];
+        public static get $inject(): string[] {
+            return ["$scope", "$stateParams", Services.Logger.ID, Services.UiHelper.ID, Services.Utilities.ID, "versionInfo"];
+        }
 
         private $stateParams: ILogEntryStateParams;
         private Logger: Services.Logger;

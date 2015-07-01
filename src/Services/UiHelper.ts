@@ -48,19 +48,21 @@
 
         //#endregion
 
-        public static $inject = ["$rootScope", "$q", "$http", "$ionicModal", "MockPlatformApis", "Utilities", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$rootScope", "$q", "$http", "$ionicModal", MockPlatformApis.ID, Utilities.ID, Preferences.ID];
+        }
 
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
         private $http: ng.IHttpService;
         private $ionicModal: any;
-        private MockPlatformApis: Services.MockPlatformApis;
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
+        private MockPlatformApis: MockPlatformApis;
+        private Utilities: Utilities;
+        private Preferences: Preferences;
 
         private isPinEntryOpen = false;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: Services.MockPlatformApis, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: MockPlatformApis, Utilities: Utilities, Preferences: Preferences) {
             this.$rootScope = $rootScope;
             this.$q = $q;
             this.$http = $http;

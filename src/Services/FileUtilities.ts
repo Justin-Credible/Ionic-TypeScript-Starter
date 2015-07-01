@@ -9,7 +9,9 @@
 
         public static ID = "FileUtilities";
 
-        public static $inject = ["$q", "Utilities"];
+        public static get $inject(): string[] {
+            return ["$q", Utilities.ID];
+        }
 
         private $q: ng.IQService;
         private Utilities: Utilities;

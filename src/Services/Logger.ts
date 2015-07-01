@@ -7,7 +7,9 @@
 
         public static ID = "Logger";
 
-        public static $inject = ["$q", "Utilities", "FileUtilities"];
+        public static get $inject(): string[] {
+            return ["$q", Utilities.ID, FileUtilities.ID];
+        }
 
         private $q: ng.IQService;
         private Utilities: Utilities;

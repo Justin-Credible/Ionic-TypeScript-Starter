@@ -7,7 +7,9 @@
 
         public static ID = "MockPlatformApis";
 
-        public static $inject = ["$q", "$ionicPopup", "$ionicLoading", "Utilities"];
+        public static get $inject(): string[] {
+            return ["$q", "$ionicPopup", "$ionicLoading", Utilities.ID];
+        }
 
         private $q: ng.IQService;
         private Utilities: Utilities;

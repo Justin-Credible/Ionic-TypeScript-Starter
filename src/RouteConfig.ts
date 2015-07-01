@@ -14,7 +14,7 @@ module JustinCredible.SampleApp {
                 url: "/app",
                 abstract: true,
                 templateUrl: "templates/Menu.html",
-                controller: "MenuController"
+                controller: Controllers.MenuController.ID
             });
 
             // An blank view useful as a place holder etc.
@@ -33,7 +33,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Category.html",
-                        controller: "CategoryController"
+                        controller: Controllers.CategoryController.ID
                     }
                 }
             });
@@ -45,7 +45,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Onboarding/Onboarding-Splash.html",
-                        controller: "OnboardingSplashController"
+                        controller: Controllers.OnboardingSplashController.ID
                     }
                 }
             });
@@ -55,7 +55,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Onboarding/Onboarding-Register.html",
-                        controller: "OnboardingRegisterController"
+                        controller: Controllers.OnboardingRegisterController.ID
                     }
                 }
             });
@@ -65,7 +65,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Onboarding/Onboarding-Share.html",
-                        controller: "OnboardingShareController"
+                        controller: Controllers.OnboardingShareController.ID
                     }
                 }
             });
@@ -79,7 +79,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Settings-List.html",
-                        controller: "SettingsListController"
+                        controller: Controllers.SettingsListController.ID
                     }
                 }
             });
@@ -89,7 +89,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Cloud-Sync.html",
-                        controller: "CloudSyncController"
+                        controller: Controllers.CloudSyncController.ID
                     }
                 }
             });
@@ -99,7 +99,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Configure-Pin.html",
-                        controller: "ConfigurePinController"
+                        controller: Controllers.ConfigurePinController.ID
                     }
                 }
             });
@@ -109,7 +109,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Developer.html",
-                        controller: "DeveloperController"
+                        controller: Controllers.DeveloperController.ID
                     }
                 }
             });
@@ -119,7 +119,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Logs.html",
-                        controller: "LogsController"
+                        controller: Controllers.LogsController.ID
                     }
                 }
             });
@@ -129,7 +129,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/Log-Entry.html",
-                        controller: "LogEntryController"
+                        controller: Controllers.LogEntryController.ID
                     }
                 }
             });
@@ -139,7 +139,7 @@ module JustinCredible.SampleApp {
                 views: {
                     "menuContent": {
                         templateUrl: "templates/Settings/About.html",
-                        controller: "AboutController"
+                        controller: Controllers.AboutController.ID
                     }
                 }
             });

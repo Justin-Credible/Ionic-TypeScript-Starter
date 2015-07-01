@@ -4,7 +4,9 @@
 
         public static ID = "CloudSyncController";
 
-        public static $inject = ["$scope", "$ionicViewService"];
+        public static get $inject(): string[] {
+            return ["$scope", "$ionicViewService"];
+        }
 
         private $ionicViewService: any;
 

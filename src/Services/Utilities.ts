@@ -7,16 +7,18 @@
 
         public static ID = "Utilities";
 
-        public static $inject = ["isRipple", "isCordova", "isDebug", "isChromeExtension", "Preferences"];
+        public static get $inject(): string[] {
+            return ["isRipple", "isCordova", "isDebug", "isChromeExtension", Preferences.ID];
+        }
 
-        private Preferences: Services.Preferences;
+        private Preferences: Preferences;
 
         private _isRipple: boolean;
         private _isCordova: boolean;
         private _isDebug: boolean;
         private _isChromeExtension: boolean;
 
-        constructor(isRipple: boolean, isCordova: boolean, isDebug: boolean, isChromeExtension: boolean, Preferences: Services.Preferences) {
+        constructor(isRipple: boolean, isCordova: boolean, isDebug: boolean, isChromeExtension: boolean, Preferences: Preferences) {
             this._isRipple = isRipple;
             this._isCordova = isCordova;
             this._isDebug = isDebug;

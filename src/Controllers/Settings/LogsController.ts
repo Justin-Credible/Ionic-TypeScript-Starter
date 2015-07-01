@@ -4,7 +4,9 @@
 
         public static ID = "LogsController";
 
-        public static $inject = ["$scope", "Logger", "Utilities", "UiHelper"];
+        public static get $inject(): string[] {
+            return ["$scope", Services.Logger.ID, Services.Utilities.ID, Services.UiHelper.ID];
+        }
 
         private Logger: Services.Logger;
         private Utilities: Services.Utilities;

@@ -4,7 +4,9 @@ module JustinCredible.SampleApp.Controllers {
 
         public static ID = "OnboardingRegisterController";
 
-        public static $inject = ["$scope", "$location", "$ionicViewService", "Utilities", "UiHelper", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$scope", "$location", "$ionicViewService", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
+        }
 
         private $location: ng.ILocationService;
         private $ionicViewService: any;

@@ -4,7 +4,9 @@
 
         public static ID = "DeveloperController";
 
-        public static $inject = ["$scope", "$http", "Utilities", "UiHelper", "FileUtilities", "Logger", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$scope", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.FileUtilities.ID, Services.Logger.ID, Services.Preferences.ID];
+        }
 
         private $http: ng.IHttpService;
         private Utilities: Services.Utilities;

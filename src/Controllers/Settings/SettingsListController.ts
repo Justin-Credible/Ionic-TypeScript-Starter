@@ -4,7 +4,9 @@
 
         public static ID = "SettingsListController";
 
-        public static $inject = ["$scope", "Utilities", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$scope", Services.Utilities.ID, Services.Preferences.ID];
+        }
 
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;

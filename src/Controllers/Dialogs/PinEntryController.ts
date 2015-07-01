@@ -4,7 +4,9 @@
 
         public static ID = "PinEntryController";
 
-        public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
+        public static get $inject(): string[] {
+            return ["$scope", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
+        }
 
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;

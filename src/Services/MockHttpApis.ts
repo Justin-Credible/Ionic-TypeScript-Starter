@@ -10,7 +10,9 @@ module JustinCredible.SampleApp.Services {
 
         public static ID = "MockHttpApis";
 
-        public static $inject = ["$httpBackend"];
+        public static get $inject(): string[] {
+            return ["$httpBackend"];
+        }
 
         private $httpBackend: ng.IHttpBackendService;
 

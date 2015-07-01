@@ -8,7 +8,9 @@
 
         public static ID = "CategoryController";
 
-        public static $inject = ["$scope", "$stateParams"];
+        public static get $inject(): string[] {
+            return ["$scope", "$stateParams"];
+        }
 
         private $stateParams: ICategoryStateParams;
 
