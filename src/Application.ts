@@ -55,46 +55,11 @@ module JustinCredible.SampleApp.Application {
         ngModule.constant("versionInfo", versionInfo);
         ngModule.constant("apiVersion", "1.0");
 
-        // Register each of the services that exist in the Service namespace.
-        _.each(Services, (Service: any) => {
-            // A static ID property is required to register a service.
-            if (Service.ID) {
-                if (typeof(Service.getFactory) === "function") {
-                    // If a static method named getFactory() is available we'll invoke it
-                    // to get a factory function to register as a factory.
-                    console.log("Registering factory " + Service.ID + "...");
-                    ngModule.factory(Service.ID, Service.getFactory());
-                }
-                else {
-                    console.log("Registering service " + Service.ID + "...");
-                    ngModule.service(Service.ID, Service);
-                }
-            }
-        });
-
-        // Register each of the directives that exist in the directives namespace.
-        _.each(Directives, (Directive: any) => {
-            if (Directive.ID) {
-                console.log("Registering directive " + Directive.ID + "...");
-                ngModule.directive(Directive.ID, getElementDirectiveFactoryFunction(Directive));
-            }
-        });
-
-        // Register each of the filters that exist in the directives namespace.
-        _.each(Filters, (Filter: any) => {
-            if (Filter.ID && typeof(Filter.filter) === "function") {
-                console.log("Registering filter " + Filter.ID + "...");
-                ngModule.filter(Filter.ID, getFilterFactoryFunction(Filter.filter));
-            }
-        });
-
-        // Register each of the controllers that exist in the Controllers namespace.
-        _.each(Controllers, (Controller: any) => {
-            if (Controller.ID) {
-                console.log("Registering controller " + Controller.ID + "...");
-                ngModule.controller(Controller.ID, Controller);
-            }
-        });
+        // Register the services, directives, filters, and controllers with Angular.
+        registerServices(ngModule);
+        registerDirectives(ngModule);
+        registerFilters(ngModule);
+        registerControllers(ngModule);
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
@@ -121,11 +86,91 @@ module JustinCredible.SampleApp.Application {
     }
 
     /**
+     * Used to register each of the services that exist in the Service namespace
+     * with the given Angular module.
+     * 
+     * @param ngModule The Angular module with which to register.
+     */
+    function registerServices(ngModule: ng.IModule): void {
+        // Register each of the services that exist in the Service namespace.
+        _.each(Services, (Service: any) => {
+            // A static ID property is required to register a service.
+            if (Service.ID) {
+                if (typeof(Service.getFactory) === "function") {
+                    // If a static method named getFactory() is available we'll invoke it
+                    // to get a factory function to register as a factory.
+                    console.log("Registering factory " + Service.ID + "...");
+                    ngModule.factory(Service.ID, Service.getFactory());
+                }
+                else {
+                    console.log("Registering service " + Service.ID + "...");
+                    ngModule.service(Service.ID, Service);
+                }
+            }
+        });
+    }
+
+    /**
+     * Used to register each of the directives that exist in the Directives namespace
+     * with the given Angular module.
+     * 
+     * @param ngModule The Angular module with which to register.
+     */
+    function registerDirectives(ngModule: ng.IModule): void {
+
+        _.each(Directives, (Directive: any) => {
+            if (Directive.ID) {
+                if (Directive.__BaseElementDirective) {
+                    console.log("Registering element directive " + Directive.ID + "...");
+                    ngModule.directive(Directive.ID, getElementDirectiveFactoryFunction(Directive));
+                }
+                else {
+                    ngModule.directive(Directive.ID, getDirectiveFactoryParameters(Directive));
+                }
+            }
+        });
+    }
+
+    /**
+     * Used to register each of the filters that exist in the Filters namespace
+     * with the given Angular module.
+     * 
+     * @param ngModule The Angular module with which to register.
+     */
+    function registerFilters(ngModule: ng.IModule): void {
+
+        _.each(Filters, (Filter: any) => {
+            if (Filter.ID && typeof(Filter.filter) === "function") {
+                console.log("Registering filter " + Filter.ID + "...");
+                ngModule.filter(Filter.ID, getFilterFactoryFunction(Filter.filter));
+            }
+        });
+    }
+
+    /**
+     * Used to register each of the controllers that exist in the Controller namespace
+     * with the given Angular module.
+     * 
+     * @param ngModule The Angular module with which to register.
+     */
+    function registerControllers(ngModule: ng.IModule): void {
+
+        // Register each of the controllers that exist in the Controllers namespace.
+        _.each(Controllers, (Controller: any) => {
+            if (Controller.ID) {
+                console.log("Registering controller " + Controller.ID + "...");
+                ngModule.controller(Controller.ID, Controller);
+            }
+        });
+    }
+
+    /**
      * Used to create a function that returns a data structure describing an Angular directive
      * for an element from one of our own classes implementing IElementDirective. It handles
      * creating an instance and invoked the render method when linking is invoked.
      * 
      * @param Directive A class reference (not instance) to a element directive class that implements Directives.IElementDirective.
+     * @returns A factory function that can be used by Angular to create an instance of the element directive.
      */
     function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): () => ng.IDirective {
         var descriptor: ng.IDirective = {};
@@ -160,6 +205,39 @@ module JustinCredible.SampleApp.Application {
         // Finally, return a function that returns this Angular directive descriptor object.
         return function () { return descriptor; };
     }
+
+    /**
+     * Used to create an array of injection property names followed by a function that will be
+     * used by Angular to create an instance of the given directive.
+     * 
+     * @param Directive A class reference (not instance) to a directive class.
+     * @returns An array of injection property names followed by a factory function for use by Angular.
+     */
+    function getDirectiveFactoryParameters(Directive: ng.IDirective): any[] {
+
+        var params = [];
+
+        /* tslint:disable:no-string-literal */
+
+        // If the directive is annotated with an injection array, we'll add the injection
+        // array's values to the list first.
+        if (Directive["$inject"]) {
+            params = params.concat(Directive["$inject"]);
+        }
+
+        /* tslint:enable:no-string-literal */
+
+        // The last parameter in the array is the function that will be executed by Angular
+        // when the directive is being used.
+        params.push(function () {
+            // Create a new instance of the directive, passing along the arguments (which
+            // will be the values injected via the $inject annotation).
+            return construct(Directive, arguments);
+        });
+
+        return params;
+    }
+
 
     /**
      * Used to create a function that returns a function for use by a filter.

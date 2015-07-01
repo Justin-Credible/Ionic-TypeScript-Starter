@@ -24,6 +24,12 @@
      */
     export class BaseElementDirective<T extends ng.IScope> implements IElementDirective {
 
+        /**
+         * A flag that can be used to identify element directives that use this
+         * class as their base class.
+         */
+        public static __BaseElementDirective = true;
+
         public scope: T;
         public element: ng.IAugmentedJQuery;
         public attributes: ng.IAttributes;
