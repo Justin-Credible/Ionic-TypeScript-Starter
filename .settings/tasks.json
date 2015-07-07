@@ -29,6 +29,14 @@
                     }
                 }
             ]
+        },
+        {
+            "taskName": "emulate-ios",
+            "showOutput": "silent"
+        },
+        {
+            "taskName": "emulate-android",
+            "showOutput": "silent"
         }
     ]
 }

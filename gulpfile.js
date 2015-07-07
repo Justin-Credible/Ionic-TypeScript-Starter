@@ -98,17 +98,25 @@ gulp.task('watch', function() {
 });
 
 /**
- * Simply delegates to the "ionic emulate" command.
+ * Simply delegates to the "ionic emulate ios" command.
  * 
  * Useful to quickly execute from Visual Studio Code's task launcher:
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
-gulp.task('emulate', function(cb) {
-  exec("ionic emulate", function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+gulp.task('emulate-ios', function(cb) {
+  exec("ionic emulate ios");
+  cb();
+});
+
+/**
+ * Simply delegates to the "ionic emulate android" command.
+ * 
+ * Useful to quickly execute from Visual Studio Code's task launcher:
+ * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
+ */
+gulp.task('emulate-android', function(cb) {
+  exec("ionic emulate android");
+  cb();
 });
 
 /**
