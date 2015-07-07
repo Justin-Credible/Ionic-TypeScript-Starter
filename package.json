@@ -15,7 +15,7 @@
     "bower-installer": "1.2.0",
     "cordova": "5.1.1",
     "del": "1.2.0",
-    "gulp": "3.5.6",
+    "gulp": "3.9.0",
     "gulp-concat": "2.2.0",
     "gulp-rename": "1.2.0",
     "gulp-sourcemaps": "1.5.2",
