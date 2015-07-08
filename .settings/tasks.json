@@ -32,11 +32,11 @@
         },
         {
             "taskName": "emulate-ios",
-            "showOutput": "silent"
+            "showOutput": "never"
         },
         {
             "taskName": "emulate-android",
-            "showOutput": "silent"
+            "showOutput": "never"
         }
     ]
 }

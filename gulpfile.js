@@ -98,23 +98,23 @@ gulp.task('watch', function() {
 });
 
 /**
- * Simply delegates to the "ionic emulate ios" command.
+ * Simply delegates to the "ionic emulate ios" command after compiling the TypeScript.
  * 
  * Useful to quickly execute from Visual Studio Code's task launcher:
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
-gulp.task('emulate-ios', function(cb) {
+gulp.task('emulate-ios', ['ts'], function(cb) {
   exec("ionic emulate ios");
   cb();
 });
 
 /**
- * Simply delegates to the "ionic emulate android" command.
+ * Simply delegates to the "ionic emulate android" command after compiling the TypeScript.
  * 
  * Useful to quickly execute from Visual Studio Code's task launcher:
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
-gulp.task('emulate-android', function(cb) {
+gulp.task('emulate-android', ['ts'], function(cb) {
   exec("ionic emulate android");
   cb();
 });
