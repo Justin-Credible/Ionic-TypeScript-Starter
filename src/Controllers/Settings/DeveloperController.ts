@@ -264,7 +264,7 @@
             model = new Models.PinEntryDialogModel("Testing new PIN entry", null, true);
             options = new Models.DialogOptions(model);
 
-            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
+            this.UiHelper.showDialog(PinEntryController.ID, options).then((result: Models.PinEntryDialogResultModel) => {
                 this.UiHelper.alert("Cancelled: " + result.cancelled + " PIN matches: " + result.matches + " PIN entered: " + result.pin);
             });
         }
@@ -276,7 +276,7 @@
             model = new Models.PinEntryDialogModel("Testing PIN matching (1234)", "1234", true);
             options = new Models.DialogOptions(model);
 
-            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
+            this.UiHelper.showDialog(PinEntryController.ID, options).then((result: Models.PinEntryDialogResultModel) => {
                 this.UiHelper.alert("Cancelled: " + result.cancelled + " PIN matches: " + result.matches + " PIN entered: " + result.pin);
             });
         }

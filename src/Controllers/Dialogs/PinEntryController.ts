@@ -3,6 +3,7 @@
     export class PinEntryController extends BaseDialogController<ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel> {
 
         public static ID = "PinEntryController";
+        public static TemplatePath = "templates/Dialogs/Pin-Entry.html";
 
         public static get $inject(): string[] {
             return ["$scope", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
@@ -13,7 +14,7 @@
         private UiHelper: Services.UiHelper;
 
         constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
-            super($scope, ViewModels.PinEntryViewModel, UiHelper.DialogIds.PinEntry);
+            super($scope, ViewModels.PinEntryViewModel, PinEntryController.ID);
 
             this.Utilities = Utilities;
             this.Preferences = Preferences;

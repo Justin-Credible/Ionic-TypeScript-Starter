@@ -39,7 +39,7 @@
             options = new Models.DialogOptions(model);
 
             // Show the PIN entry dialog.
-            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result1: Models.PinEntryDialogResultModel) => {
+            this.UiHelper.showDialog(PinEntryController.ID, options).then((result1: Models.PinEntryDialogResultModel) => {
 
                 // If there was a PIN returned, they didn't cancel.
                 if (result1.pin) {
@@ -51,7 +51,7 @@
                     model.pinToMatch = result1.pin;
                     options.dialogData = model;
 
-                    this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result2: Models.PinEntryDialogResultModel) => {
+                    this.UiHelper.showDialog(PinEntryController.ID, options).then((result2: Models.PinEntryDialogResultModel) => {
 
                         // If the second PIN entered matched the first one, then use it.
                         if (result2.matches) {
@@ -73,7 +73,7 @@
             options = new Models.DialogOptions(model);
 
             // Show the PIN entry dialog; pass the existing PIN which they need to match.
-            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result1: Models.PinEntryDialogResultModel) => {
+            this.UiHelper.showDialog(PinEntryController.ID, options).then((result1: Models.PinEntryDialogResultModel) => {
 
                 // If the PIN matched, then we can continue.
                 if (result1.matches) {
@@ -84,7 +84,7 @@
                     model.pinToMatch = null;
                     options.dialogData = model;
 
-                    this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result2: Models.PinEntryDialogResultModel) => {
+                    this.UiHelper.showDialog(PinEntryController.ID, options).then((result2: Models.PinEntryDialogResultModel) => {
 
                         // Show a second prompt to make sure they enter the same PIN twice.
                         // We pass in the first PIN value because we want them to be able to match it.
@@ -93,7 +93,7 @@
                         model.pinToMatch = result2.pin;
                         options.dialogData = model;
 
-                        this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result3: Models.PinEntryDialogResultModel) => {
+                        this.UiHelper.showDialog(PinEntryController.ID, options).then((result3: Models.PinEntryDialogResultModel) => {
 
                             // If the second new PIN entered matched the new first one, then use it.
                             if (result3.matches) {
@@ -116,7 +116,7 @@
             options = new Models.DialogOptions(model);
 
             // Show the PIN entry dialog; pass the existing PIN which they need to match.
-            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
+            this.UiHelper.showDialog(PinEntryController.ID, options).then((result: Models.PinEntryDialogResultModel) => {
 
                 // If the PIN entered matched, then we can remove it.
                 if (result.matches) {
