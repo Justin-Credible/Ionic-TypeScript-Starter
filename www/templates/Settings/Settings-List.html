@@ -7,31 +7,31 @@
     <ion-content class="has-header">
         <ion-list>
 
-            <ion-item href="#/app/settings/cloud-sync" class="item-icon-left item-icon-right">
+            <ion-item ui-sref="app.cloud-sync" class="item-icon-left item-icon-right">
                 <i class="icon ion-ios-cloud-upload-outline"></i>
                 <i class="icon ion-ios-arrow-forward"></i>
                 Cloud Sync
             </ion-item>
 
-            <ion-item href="#/app/settings/configure-pin" class="item-icon-left item-icon-right">
+            <ion-item ui-sref="app.configure-pin" class="item-icon-left item-icon-right">
                 <i class="icon ion-ios-locked-outline"></i>
                 <i class="icon ion-ios-arrow-forward"></i>
                 Configure PIN
             </ion-item>
 
-            <ion-item href="#/app/settings/logs" class="item-icon-left item-icon-right">
+            <ion-item ui-sref="app.logs" class="item-icon-left item-icon-right">
                 <i class="icon ion-ios-copy-outline"></i>
                 <i class="icon ion-ios-arrow-forward"></i>
                 Logs
             </ion-item>
 
-            <ion-item href="#/app/settings/developer" class="item-icon-left item-icon-right" ng-show="viewModel.isDebugMode || viewModel.isDeveloperMode">
+            <ion-item ui-sref="app.developer" class="item-icon-left item-icon-right" ng-show="viewModel.isDebugMode || viewModel.isDeveloperMode">
                 <i class="icon ion-code-working"></i>
                 <i class="icon ion-ios-arrow-forward"></i>
                 Development Tools
             </ion-item>
 
-            <ion-item href="#/app/settings/about" class="item-icon-left item-icon-right">
+            <ion-item ui-sref="app.about" class="item-icon-left item-icon-right">
                 <i class="icon ion-ios-information-outline"></i>
                 <i class="icon ion-ios-arrow-forward"></i>
                 About
