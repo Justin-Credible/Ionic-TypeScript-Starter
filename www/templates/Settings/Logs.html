@@ -13,7 +13,7 @@
                     {{logGroup}} - {{logEntries.length}} Errors
                 </div>
 
-                <ion-item ng-repeat="logEntry in logEntries" href="#/app/settings/log-entry/{{logEntry.id}}" class="item-icon-left item-icon-right">
+                <ion-item ng-repeat="logEntry in logEntries" ui-sref="app.log-entry({ id: logEntry.id })" class="item-icon-left item-icon-right">
                     <i class="icon ion-{{logEntry.iconType}}"></i>
                     <i class="icon ion-ios-arrow-forward"></i>
                     {{logEntry.time}} - {{logEntry.message}}
