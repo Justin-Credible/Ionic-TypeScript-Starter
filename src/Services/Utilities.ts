@@ -370,19 +370,15 @@
             // Now that we've finished walking up the class hierarchy, we need to see if
             // any of the prototypes match the prototype of the Base class in question.
 
-            for (var key in prototypes) {
-                if (!prototypes.hasOwnProperty(key)) {
+            var foundMatch = false;
 
-                    var prototype = prototypes[key];
-
-                    if (prototype === BaseClass.prototype) {
-                        return true;
-                    }
+            prototypes.forEach((prototype: any) => {
+                if (prototype === BaseClass.prototype) {
+                    foundMatch = true;
                 }
-            }
+            });
 
-            // None of the prototypes matched.
-            return false;
+            return foundMatch;
         }
 
         /**
