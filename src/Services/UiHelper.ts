@@ -374,7 +374,6 @@
 
         /**
          * Used to open the modal dialog with the given dialog ID.
-         * Dialog IDs and templates can be set via UiHelper.DialogIds.
          * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
@@ -386,7 +385,6 @@
 
         /**
          * Used to open the modal dialog with the given dialog ID.
-         * Dialog IDs and templates can be set via UiHelper.DialogIds.
          * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
@@ -399,7 +397,6 @@
 
         /**
          * Used to open the modal dialog with the given dialog ID.
-         * Dialog IDs and templates can be set via UiHelper.DialogIds.
          * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.

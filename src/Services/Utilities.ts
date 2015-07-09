@@ -192,7 +192,7 @@
 
         //#endregion
 
-        //#region Object Getter/Setter (reflection)
+        //#region Reflection-like Helpers
 
         /**
          * Used to get a value from an object with the given property name.
@@ -321,13 +321,8 @@
             }
         }
 
-        //#endregion
-
-        //#region "Reflection"-like Helpers
-
         /**
          * Used to check if the given class reference dervies from the given base class reference.
-         * 
          * 
          * @param TargetClass A reference to a class to check.
          * @param BaseClass A reference to the base class to check.
