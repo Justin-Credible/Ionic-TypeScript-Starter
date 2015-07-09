@@ -5,20 +5,20 @@ module JustinCredible.SampleApp.Controllers {
         public static ID = "OnboardingRegisterController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", "$ionicViewService", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
+            return ["$scope", "$location", "$ionicHistory", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
         }
 
         private $location: ng.ILocationService;
-        private $ionicViewService: any;
+        private $ionicHistory: any;
         private Utilities: Services.Utilities;
         private UiHelper: Services.UiHelper;
         private Preferences: Services.Preferences;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
             super($scope, ViewModels.OnboardingRegisterViewModel);
 
             this.$location = $location;
-            this.$ionicViewService = $ionicViewService;
+            this.$ionicHistory = $ionicHistory;
             this.Utilities = Utilities;
             this.UiHelper = UiHelper;
             this.Preferences = Preferences;
@@ -64,7 +64,7 @@ module JustinCredible.SampleApp.Controllers {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
-                this.$ionicViewService.nextViewOptions({
+                this.$ionicHistory.nextViewOptions({
                     disableAnimate: true,
                     disableBack: true
                 });
@@ -96,7 +96,7 @@ module JustinCredible.SampleApp.Controllers {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
-                this.$ionicViewService.nextViewOptions({
+                this.$ionicHistory.nextViewOptions({
                     disableAnimate: true,
                     disableBack: true
                 });
@@ -125,7 +125,7 @@ module JustinCredible.SampleApp.Controllers {
 
             // Tell Ionic to not animate and clear the history (hide the back button)
             // for the next view that we'll be navigating to below.
-            this.$ionicViewService.nextViewOptions({
+            this.$ionicHistory.nextViewOptions({
                 disableAnimate: true,
                 disableBack: true
             });

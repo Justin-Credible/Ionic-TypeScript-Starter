@@ -5,18 +5,18 @@
         public static ID = "CloudSyncController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$ionicViewService"];
+            return ["$scope", "$ionicHistory"];
         }
 
-        private $ionicViewService: any;
+        private $ionicHistory: any;
 
         private cloudIconPanel: Directives.IIconPanelDirectiveInstance;
         private updateInterval: number;
 
-        constructor($scope: ng.IScope, $ionicViewService: any) {
+        constructor($scope: ng.IScope, $ionicHistory: any) {
             super($scope, ViewModels.CloudSyncViewModel);
 
-            this.$ionicViewService = $ionicViewService;
+            this.$ionicHistory = $ionicHistory;
 
             // Subscribe to the icon-panel's created event by name ("cloud-icon-panel").
             this.scope.$on("icon-panel.cloud-icon-panel.created", _.bind(this.iconPanel_created, this));

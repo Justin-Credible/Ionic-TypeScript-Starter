@@ -279,12 +279,12 @@ module JustinCredible.SampleApp.Application {
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
      */
-    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockHttpApis: Services.MockHttpApis): void {
+    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockHttpApis: Services.MockHttpApis): void {
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences);
+            ionicPlatform_ready($rootScope, $location, $ionicHistory, $ionicPlatform, UiHelper, Utilities, Preferences);
         });
 
         // Mock up or allow HTTP responses.
@@ -294,11 +294,11 @@ module JustinCredible.SampleApp.Application {
     /**
      * Fired once the Ionic framework determines that the device is ready.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences): void {
+    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences): void {
 
         // Subscribe to device events.
         document.addEventListener("pause", _.bind(device_pause, null, Preferences));
-        document.addEventListener("resume", _.bind(device_resume, null, $location, $ionicViewService, Utilities, UiHelper, Preferences));
+        document.addEventListener("resume", _.bind(device_resume, null, $location, $ionicHistory, Utilities, UiHelper, Preferences));
         document.addEventListener("menubutton", _.bind(device_menuButton, null, $rootScope));
 
         // Subscribe to Angular events.
@@ -310,7 +310,7 @@ module JustinCredible.SampleApp.Application {
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume($location, $ionicViewService, Utilities, UiHelper, Preferences);
+        device_resume($location, $ionicHistory, Utilities, UiHelper, Preferences);
     }
 
     /**
@@ -369,7 +369,7 @@ module JustinCredible.SampleApp.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
+    function device_resume($location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
 
         isShowingPinPrompt = true;
 
@@ -386,7 +386,7 @@ module JustinCredible.SampleApp.Application {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
-                $ionicViewService.nextViewOptions({
+                $ionicHistory.nextViewOptions({
                     disableAnimate: true,
                     disableBack: true
                 });
@@ -403,7 +403,7 @@ module JustinCredible.SampleApp.Application {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
-                $ionicViewService.nextViewOptions({
+                $ionicHistory.nextViewOptions({
                     disableAnimate: true,
                     disableBack: true
                 });
