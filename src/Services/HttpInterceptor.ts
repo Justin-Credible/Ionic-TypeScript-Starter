@@ -270,6 +270,9 @@
                 else if (httpResponse.status === 404) {
                     this.$rootScope.$broadcast("http.notFound");
                 }
+                else if (httpResponse.status === 0) {
+                    this.$rootScope.$broadcast("http.unknownError");
+                }
             }
 
             return this.$q.reject(responseOrError);

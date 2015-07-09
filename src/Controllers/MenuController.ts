@@ -28,6 +28,7 @@
             $scope.$on("http.unauthorized", _.bind(this.http_unauthorized, this));
             $scope.$on("http.forbidden", _.bind(this.http_forbidden, this));
             $scope.$on("http.notFound", _.bind(this.http_notFound, this));
+            $scope.$on("http.unknownError", _.bind(this.http_unknownError, this));
         }
 
         //#region Event Handlers
@@ -53,6 +54,11 @@
         private http_notFound() {
             // The restful API services are down maybe?
             this.UiHelper.toast.showLongBottom("Server not available (404); please contact your administrator.");
+        }
+
+        private http_unknownError() {
+            // No network connection, invalid certificate, or other system level error.
+            this.UiHelper.toast.showLongBottom("Network error; please try again later.");
         }
 
         //#endregion
