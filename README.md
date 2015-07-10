@@ -1,8 +1,8 @@
 Ionic-TypeScript-Starter
 =============================
 [![Build Status](https://travis-ci.org/Justin-Credible/Ionic-TypeScript-Starter.svg?branch=master)](https://travis-ci.org/Justin-Credible/Ionic-TypeScript-Starter)
-![Dependencies](https://david-dm.org/Justin-Credible/Ionic-TypeScript-Starter
-.svg)
+[![Dependencies](https://david-dm.org/Justin-Credible/Ionic-TypeScript-Starter
+.svg)](https://david-dm.org/Justin-Credible/Ionic-TypeScript-Starter)
 
 This is a sample application that I use as a skeleton when bootstrapping new mobile applications.
 
