@@ -15,7 +15,28 @@ describe("Utilities.format()", function() {
         Utilities = _Utilities_;
     }));
 
-    it("formats a string with a single parameter.", function() {
-        expect(Utilities.format("Hello World, {0}!", "Bob")).toEqual("Hello World, Bob!");
+    it("handles null format strings without an exception.", () => {
+        var result = Utilities.format(null);
+        expect(result).toEqual(null);
+    });
+
+    it("handles omitted format parameters without an exception.", () => {
+        var result = Utilities.format("Hello World, {0}!");
+        expect(result).toEqual("Hello World, {0}!");
+    });
+
+    it("handles null format arguments without an exception.", () => {
+        var result = Utilities.format("Hello World, {0}!", null);
+        expect(result).toEqual("Hello World, null!");
+    });
+
+    it("formats a string with a single parameter.", () => {
+        var result = Utilities.format("Hello World, {0}!", "Bob");
+        expect(result).toEqual("Hello World, Bob!");
+    });
+
+    it("handles extra parameters without an exception.", () => {
+        var result = Utilities.format("Hello World, {0}!", "Bob", "Terra");
+        expect(result).toEqual("Hello World, Bob!");
     });
 });
