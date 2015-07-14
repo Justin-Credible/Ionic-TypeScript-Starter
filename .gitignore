@@ -8,8 +8,8 @@
 /plugins
 /typings/*
 !/typings/custom/
-/tests/typings/*
-!/tests/typings/custom/
+/typings-tests/*
+!/typings-tests/custom/
 
 # Development Artifacts
 /www/lib
@@ -17,6 +17,7 @@
 /www/js/BuildVars.js
 /www/js/src/
 /src/tsd.d.ts
+/tests/tsd.d.ts
 /chrome
 /tests/**/*.js
 /tests/**/*.map

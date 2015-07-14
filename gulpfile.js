@@ -159,10 +159,18 @@ gulp.task("test", ["ts:tests"], function (done) {
 
 /**
  * Uses the tsd command to restore TypeScript definitions to the typings
- * directory and rebuild the tsd.d.ts typings bundle.
+ * directories and rebuild the tsd.d.ts typings bundle for both the app
+ * as well as the unit tests.
  */
-gulp.task("tsd", function (cb) {
+gulp.task("tsd", ["tsd:app", "tsd:tests"], function (cb) {
+    cb();
+});
 
+/**
+ * Uses the tsd command to restore TypeScript definitions to the typings
+ * directory and rebuild the tsd.d.ts typings bundle (for the app).
+ */
+gulp.task("tsd:app", function (cb) {
     // First reinstall any missing definitions to the typings directory.
     exec("tsd reinstall", function (err, stdout, stderr) {
         console.log(stdout);
@@ -175,6 +183,30 @@ gulp.task("tsd", function (cb) {
 
         // Rebuild the src/tsd.d.ts bundle reference file.
         exec("tsd rebundle", function (err, stdout, stderr) {
+            console.log(stdout);
+            console.log(stderr);
+            cb(err);
+        });
+    });
+});
+
+/**
+ * Uses the tsd command to restore TypeScript definitions to the typings
+ * directory and rebuild the tsd.d.ts typings bundle (for the unit tests).
+ */
+gulp.task("tsd:tests", function (cb) {
+    // First reinstall any missing definitions to the typings-tests directory.
+    exec("tsd reinstall --config tsd.tests.json", function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+
+        if (err) {
+            cb(err);
+            return;
+        }
+
+        // Rebuild the tests/tsd.d.ts bundle reference file.
+        exec("tsd rebundle --config tsd.tests.json", function (err, stdout, stderr) {
             console.log(stdout);
             console.log(stderr);
             cb(err);
@@ -431,18 +463,29 @@ gulp.task("clean:ts", function (cb) {
 /**
  * Removes files related to TypeScript definitions.
  */
-gulp.task("clean:ts", function (cb) {
+gulp.task("clean:tsd", function (cb) {
+
+    // TODO: These patterns don't actually remove the sub-directories
+    // located in the typings directories, they leave the directories
+    // but remove the *.d.ts files. The following glob should work for
+    // remove directories and preserving the custom directory, but they
+    // don't for some reason and the custom directory is always removed:
+    // "typings/**"
+    // "!typings/custom/**"
+
     del([
-        "typings",
-        "typings-tests",
         "src/tsd.d.ts",
-        "tests/tsd.d.ts"
-    ], {
-        ignore: [
-            "typings/custom",
-            "typings-tests/custom"
-        ]
-    }, cb);
+        "typings/**/*.d.ts",
+        "!typings/custom/*.d.ts",
+        // "typings/**",
+        // "!typings/custom/**",
+
+        "tests/tsd.d.ts",
+        "typings-tests/**/*.d.ts",
+        "!typings-tests/custom/*.d.ts",
+        // "typings-tests/**",
+        // "!typings/custom/**"
+    ], cb);
 });
 
 /**
