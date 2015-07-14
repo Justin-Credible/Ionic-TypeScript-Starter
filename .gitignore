@@ -6,7 +6,10 @@
 /bower_components
 /platforms
 /plugins
-/typings
+/typings/*
+!/typings/custom/
+/tests/typings/*
+!/tests/typings/custom/
 
 # Development Artifacts
 /www/lib
@@ -15,3 +18,5 @@
 /www/js/src/
 /src/tsd.d.ts
 /chrome
+/tests/**/*.js
+/tests/**/*.map
