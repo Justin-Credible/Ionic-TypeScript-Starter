@@ -22,8 +22,6 @@ var async = require("async");
 var xpath = require("xpath");
 var XmlDom = require("xmldom").DOMParser;
 var karma = require("karma").server;
-var SourceMapConsumer = require("source-map").SourceMapConsumer;
-
 
 
 var paths = {

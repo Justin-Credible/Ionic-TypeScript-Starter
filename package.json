@@ -35,7 +35,8 @@
     "xpath": "0.0.9"
   },
   "scripts": {
-    "test": "gulp lint"
+    "pretest": "gulp lint",
+    "test": "gulp test"
   },
   "cordovaPlugins": [
     "cordova-plugin-device@1.0.1",
