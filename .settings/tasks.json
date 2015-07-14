@@ -37,6 +37,31 @@
         {
             "taskName": "emulate-android",
             "showOutput": "never"
+        },
+        {
+            "taskName": "test",
+            "isTestCommand": true,
+            "showOutput": "silent",
+            "problemMatcher": [
+                {
+                    "owner": "gulp",
+                    "fileLocation": ["absolute"],
+                    "pattern": [
+                        {
+                            "regexp": ".*? (FAILED)$"
+                        },
+                        {
+                            "regexp": "\t(.*)$",
+                            "message": 1
+                        },
+                        {
+                            "regexp": "at (.*):(\\d*)$",
+                            "file": 1,
+                            "line": 2
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
