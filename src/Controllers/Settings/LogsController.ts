@@ -100,7 +100,7 @@
 
         protected clearLogs() {
             this.UiHelper.confirm("Are you sure you want to delete the logs?", "Delete Logs").then((result: string) => {
-                if (result === "Yes") {
+                if (result === Constants.Buttons.Yes) {
                     this.Logger.clearLogs();
                     this.viewModel.logs = {};
                 }

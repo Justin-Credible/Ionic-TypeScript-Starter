@@ -10,20 +10,6 @@
         //#region Dialog Stuff
 
         /**
-         * Value for rejection of a promise when opening a dialog using the showDialog
-         * helper method. This value will be used when showDialog was called with a dialog
-         * ID of a dialog that is already open.
-         */
-        public static DIALOG_ALREADY_OPEN = "DIALOG_ALREADY_OPEN";
-
-        /**
-         * Value for rejection of a promise when opening a dialog using the showDialog
-         * helper method. This value will be used when showDialog was called with a dialog
-         * ID who is not registered in the dialogTemplateMap map.
-         */
-        public static DIALOG_ID_NOT_REGISTERED = "DIALOG_ID_NOT_REGISTERED";
-
-        /**
          * Keeps track of the currently open dialogs. Used by the showDialog helper method.
          */
         private static openDialogIds: string[];
@@ -34,7 +20,7 @@
          * 
          * The template's root element should have a controller that extends BaseDialogController.
          */
-         private dialogTemplateMap: { [dialogId: string]: string } = {};
+         private static dialogTemplateMap: { [dialogId: string]: string } = {};
 
         //#endregion
 
@@ -131,7 +117,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Alert".
-         * @param buttonName The label for the button, defaults to "OK".
+         * @param buttonName The label for the button, defaults to Buttons.OK.
          * 
          * @returns A promise of void which will be resolved when the alert is closed.
          */
@@ -142,7 +128,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Alert".
-         * @param buttonName The label for the button, defaults to "OK".
+         * @param buttonName The label for the button, defaults to Buttons.OK.
          * 
          * @returns A promise of void which will be resolved when the alert is closed.
          */
@@ -155,7 +141,7 @@
             title = title || "Alert";
 
             // Default the button name.
-            buttonName = buttonName || "OK";
+            buttonName = buttonName || Constants.Buttons.OK;
 
             // Define the callback that is executed when the dialog is closed.
             callback = (): void => {
@@ -177,7 +163,7 @@
         }
 
         /**
-         * Displays a native confirm dialog with "Yes" and "No" buttons and "Confirm" as the title.
+         * Displays a native confirm dialog with Buttons.Yes and Buttons.No buttons and "Confirm" as the title.
          * 
          * @param message The message text to display.
          * 
@@ -186,7 +172,7 @@
         public confirm(message: string): ng.IPromise<string>;
 
         /**
-         * Displays a native confirm dialog with "Yes" and "No" buttons.
+         * Displays a native confirm dialog with Buttons.Yes and Buttons.No buttons.
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Confirm".
@@ -200,7 +186,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Confirm".
-         * @param buttonLabels An array of strings for specifying button labels, defaults to "Yes" and "No".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to Buttons.Yes and Buttons.No.
          * 
          * @returns A promise of type string which will be resolved when the confirm is closed with the button that was clicked.
          */
@@ -211,7 +197,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Confirm".
-         * @param buttonLabels An array of strings for specifying button labels, defaults to "Yes" and "No".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to Buttons.Yes and Buttons.No.
          * 
          * @returns A promise of type string which will be resolved when the confirm is closed with the button that was clicked.
          */
@@ -224,7 +210,7 @@
             title = title || "Confirm";
 
             // Default the buttons array.
-            buttonLabels = buttonLabels || ["Yes", "No"];
+            buttonLabels = buttonLabels || [Constants.Buttons.Yes, Constants.Buttons.No];
 
             // Define the callback that is executed when the dialog is closed.
             callback = (choice: number): void => {
@@ -252,7 +238,7 @@
         }
 
         /**
-         * Shows a native prompt dialog with "OK" and "Cancel" buttons with "Prompt" as the title.
+         * Shows a native prompt dialog with Buttons.OK and Buttons.Cancel buttons with "Prompt" as the title.
          * 
          * @param message The message text to display.
          * 
@@ -261,7 +247,7 @@
         public prompt(message: string): ng.IPromise<Models.KeyValuePair<string, string>>;
 
         /**
-         * Shows a native prompt dialog with "OK" and "Cancel" buttons.
+         * Shows a native prompt dialog with Buttons.OK and Buttons.Cancel buttons.
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Prompt".
@@ -275,7 +261,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Prompt".
-         * @param buttonLabels An array of strings for specifying button labels, defaults to "OK" and "Cancel".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to Buttons.OK and Buttons.Cancel.
          * 
          * @returns A promise of key/value pair of strings; the key is the button that was clicked and the value is the value of the text box.
          */
@@ -286,7 +272,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Prompt".
-         * @param buttonLabels An array of strings for specifying button labels, defaults to "OK" and "Cancel".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to Buttons.OK and Buttons.Cancel.
          * @param defaultText Default text box input value, default is an empty string.
          * 
          * @returns A promise of key/value pair of strings; the key is the button that was clicked and the value is the value of the text box.
@@ -298,7 +284,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Prompt".
-         * @param buttonLabels An array of strings for specifying button labels, defaults to "OK" and "Cancel".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to Buttons.OK and Buttons.Cancel.
          * @param defaultText Default text box input value, default is an empty string.
          * 
          * @returns A promise of key/value pair of strings; the key is the button that was clicked and the value is the value of the text box.
@@ -312,7 +298,7 @@
             title = title || "Prompt";
 
             // Default the buttons array.
-            buttonLabels = buttonLabels || ["OK", "Cancel"];
+            buttonLabels = buttonLabels || [Constants.Buttons.OK, Constants.Buttons.Cancel];
 
             // Define the callback that is executed when the dialog is closed.
             callback = (promptResult: NotificationPromptResult): void => {
@@ -365,11 +351,11 @@
                 throw new Error("A templatePath is required when registering a dialog.");
             }
 
-            if (this.dialogTemplateMap[dialogId]) {
+            if (UiHelper.dialogTemplateMap[dialogId]) {
                 console.warn(this.Utilities.format("A dialog with ID {0} has already been registered; it will be overwritten.", dialogId));
             }
 
-            this.dialogTemplateMap[dialogId] = templatePath;
+            UiHelper.dialogTemplateMap[dialogId] = templatePath;
         }
 
         /**
@@ -387,7 +373,7 @@
          * Used to open the modal dialog with the given dialog ID.
          * 
          * If a dialog with the given ID is already open, another will not be opened
-         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
          * @param dialogId The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
@@ -399,7 +385,7 @@
          * Used to open the modal dialog with the given dialog ID.
          * 
          * If a dialog with the given ID is already open, another will not be opened
-         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
          * @param dialogId The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
@@ -425,17 +411,17 @@
             // This ensures that only a single dialog with a given ID can be open
             // at one time.
             if (_.contains(UiHelper.openDialogIds, dialogId)) {
-                this.$q.reject(UiHelper.DIALOG_ALREADY_OPEN);
+                this.$q.reject(Constants.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
 
             // Lookup the template to use for this dialog based on the dialog ID.
-            template = this.dialogTemplateMap[dialogId];
+            template = UiHelper.dialogTemplateMap[dialogId];
 
             // If we were unable to find a dialog ID in the template map then we
             // can bail out here as there is nothing to do.
             if (!template) {
-                this.$q.reject(UiHelper.DIALOG_ID_NOT_REGISTERED);
+                this.$q.reject(Constants.DIALOG_ID_NOT_REGISTERED);
                 console.warn(this.Utilities.format("A call was made to openDialog with dialogId '{0}', but a template is not registered with that ID in the dialogTemplateMap.", dialogId));
                 return q.promise;
             }
@@ -515,7 +501,7 @@
 
             // If the PIN entry dialog then there is nothing to do.
             if (this.isPinEntryOpen) {
-                q.reject(UiHelper.DIALOG_ALREADY_OPEN);
+                q.reject(Constants.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
 

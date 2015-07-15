@@ -246,7 +246,7 @@
             title = title || "Alert";
 
             // Default the button label text.
-            buttonName = buttonName || "OK";
+            buttonName = buttonName || Constants.Buttons.OK;
 
             // Build each of the buttons.
             buttons.push({ text: buttonName });
@@ -270,7 +270,7 @@
             title = title || "Confirm";
 
             // Default the buttons array.
-            buttonLabels = buttonLabels || ["Yes", "No"];
+            buttonLabels = buttonLabels || [Constants.Buttons.Yes, Constants.Buttons.No];
 
             // Build each of the buttons.
             buttonLabels.forEach((value: string, index: number) => {
@@ -310,7 +310,7 @@
             title = title || "Prompt";
 
             // Default the buttons array.
-            buttonLabels = buttonLabels || ["OK", "Cancel"];
+            buttonLabels = buttonLabels || [Constants.Buttons.OK, Constants.Buttons.Cancel];
 
             // Build each of the buttons.
             buttonLabels.forEach((value: string, index: number) => {
