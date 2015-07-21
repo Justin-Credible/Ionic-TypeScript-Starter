@@ -39,7 +39,7 @@ module JustinCredible.SampleApp.Controllers {
         protected createAccount_click(): void {
 
             if (!this.viewModel.email) {
-                this.UiHelper.alert("Please enter an e-mail address.");
+                this.UiHelper.alert("Please enter a valid e-mail address.");
                 return;
             }
 
@@ -77,7 +77,7 @@ module JustinCredible.SampleApp.Controllers {
         protected signIn_click(): void {
 
             if (!this.viewModel.email) {
-                this.UiHelper.alert("Please enter an e-mail address.");
+                this.UiHelper.alert("Please enter a valid e-mail address.");
                 return;
             }
 
