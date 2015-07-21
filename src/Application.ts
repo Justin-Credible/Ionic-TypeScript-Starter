@@ -307,6 +307,11 @@ module JustinCredible.SampleApp.Application {
         // Register all of the dialogs with the UiHelper.
         registerDialogs(Utilities, UiHelper);
 
+        // We use this combination of settings so prevent the visual jank that
+        // would otherwise occur when tapping an input that shows the keyboard.
+        UiHelper.keyboard.disableScroll(true);
+        UiHelper.keyboard.hideKeyboardAccessoryBar(true);
+
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.

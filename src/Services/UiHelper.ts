@@ -89,6 +89,30 @@
             }
         }
 
+        /**
+         * Exposes an API for manipulating the device's native status bar.
+         */
+        get statusBar(): StatusBar {
+            if (window.StatusBar) {
+                return window.StatusBar;
+            }
+            else {
+                return this.MockPlatformApis.getStatusBarPlugin();
+            }
+        }
+
+        /**
+         * Exposes an API for adjusting keyboard behavior.
+         */
+        get keyboard(): Ionic.Keyboard {
+            if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
+                return cordova.plugins.Keyboard;
+            }
+            else {
+                return this.MockPlatformApis.getKeyboardPlugin();
+            }
+        }
+
         //#endregion
 
         //#region Native Dialogs
