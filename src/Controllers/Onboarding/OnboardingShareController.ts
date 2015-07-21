@@ -35,10 +35,8 @@ module JustinCredible.SampleApp.Controllers {
             // Set the preference value so onboarding doesn't occur again.
             this.Preferences.hasCompletedOnboarding = true;
 
-            // Tell Ionic to not animate and clear the history (hide the back button)
-            // for the next view that we'll be navigating to below.
+            // Tell Ionic to to hide the back button for the next view.
             this.$ionicHistory.nextViewOptions({
-                disableAnimate: true,
                 disableBack: true
             });
 
