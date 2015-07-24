@@ -55,7 +55,7 @@ Now you can use the various gulp tasks to obtain Cordova plugins, install third 
 	$ gulp tsd        # Install TypeScript definitions as defined in tsd.json
 	$ gulp ts         # Compiles TypeScript code as configured by src/tsconfig.json
 
-*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd/>B<kbd> to run the `ts` task.*
+*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>B</kbd> to run the `ts` task.*
 
 *By default, the debug variable will be set to true in `BuildVars.js`; for release builds use `gulp ts --scheme release`.*
 
@@ -65,7 +65,7 @@ The `npm test` command can be executed to run the TypeScript linter followed by 
 
 These operations can be performed independently using the `gulp lint` and `gulp test` tasks.
 
-*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd/>R<kbd> and type `lint` or `test` to run the lint or test tasks respectively.*
+*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `lint` or `test` to run the lint or test tasks respectively.*
 
 ## Platform Setup ##
 
@@ -106,7 +106,7 @@ You can run your application on the software emulator using the `emulate` comman
 
 *You can optionally specify a specific emuator using the target parameter: `--target="iPhone-6-Plus"`*
 
-*If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd/>R<kbd> and type `emulate` to run either the iOS or Android emulate targets.*
+*If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `emulate` to run either the iOS or Android emulate targets.*
 
 ## Running on Hardware ##
 
