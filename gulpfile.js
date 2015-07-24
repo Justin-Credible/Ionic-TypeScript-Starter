@@ -372,10 +372,17 @@ gulp.task("plugins", ["git-check"], function(cb) {
     var pluginList = JSON.parse(fs.readFileSync("package.json", "utf8")).cordovaPlugins;
 
     async.eachSeries(pluginList, function(plugin, eachCb) {
-        var pluginName;
+        var pluginName,
+            additionalArguments = "";
 
         if (typeof(plugin) === "object" && typeof(plugin.locator) === "string") {
             pluginName = plugin.locator;
+
+            if (plugin.variables) {
+                Object.keys(plugin.variables).forEach(function (variable) {
+                    additionalArguments += " --variable " + variable + "=\"" + plugin.variables[variable] + "\"";
+                });
+            }
         }
         else if (typeof(plugin) === "string") {
             pluginName = plugin;
@@ -385,7 +392,7 @@ gulp.task("plugins", ["git-check"], function(cb) {
             return;
         }
 
-        exec("cordova plugin add " + pluginName, function (err, stdout, stderr) {
+        exec("cordova plugin add " + pluginName + additionalArguments, function (err, stdout, stderr) {
             console.log(stdout);
             console.log(stderr);
             eachCb(err);
