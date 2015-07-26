@@ -42,7 +42,7 @@
             this.viewModel.userId = this.Preferences.userId;
             this.viewModel.token = this.Preferences.token;
 
-            this.viewModel.devicePlatform = this.Utilities.platform();
+            this.viewModel.devicePlatform = this.Utilities.platform;
             this.viewModel.defaultStoragePathId = this.FileUtilities.getDefaultRootPathId();
             this.viewModel.defaultStoragePath = this.FileUtilities.getDefaultRootPath();
 
