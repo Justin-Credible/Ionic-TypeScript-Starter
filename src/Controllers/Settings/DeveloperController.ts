@@ -182,7 +182,7 @@
         protected testNativeException_click(): void {
             this.UiHelper.confirm("Are you sure you want to cause a native crash? This requires the Crashlytics plug-in to be installed.").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
-                    //this.UiHelper.crashlytics.simulateCrash();//TODO
+                    this.UiHelper.crashlytics.simulateCrash();
                 }
             });
         }
