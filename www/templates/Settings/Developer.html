@@ -10,15 +10,79 @@
 
             <label class="item item-toggle">
                 Mock API Requests
-                <label class="toggle toggle-assertive">
-                    <input type="checkbox" ng-model="viewModel.mockApiRequests" ng-change="controller.mockApiRequests_change()">
+                <label class="toggle toggle-balanced">
+                    <input type="checkbox"
+                        ng-model="viewModel.mockApiRequests"
+                        ng-change="controller.mockApiRequests_change()">
                     <div class="track">
                         <div class="handle"></div>
                     </div>
                 </label>
             </label>
 
-            <button class="button button-block button-positive" ng-click="controller.apiGetToken_click()">GET /tokens/{currentToken}</button>
+            <label class="item item-toggle">
+                Log Request/Responses
+                <label class="toggle toggle-balanced">
+                    <input type="checkbox"
+                        ng-model="viewModel.enableFullHttpLogging"
+                        ng-change="controller.enableFullHttpLogging_change()">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </label>
+
+            <label class="item item-readonly-label" ng-click="controller.logResponseErrors_click()">
+                <span>Log Response Errors</span>
+                <span>true</span>
+            </label>
+
+            <label class="item item-text-wrap" ng-click="controller.apiUrl_click()">
+                API URL
+                <br/>
+                {{viewModel.apiUrl}}
+            </label>
+
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">Logging</div>
+
+            <div ui-sref="app.logs" class="item item-icon-left item-icon-right">
+                <i class="icon ion-ios-copy-outline"></i>
+                <i class="icon ion-ios-arrow-forward"></i>
+                View Logs
+            </div>
+
+            <label class="item item-toggle">
+                Log to Local Storage
+                <label class="toggle toggle-balanced">
+                    <input type="checkbox"
+                        ng-model="viewModel.logToLocalStorage"
+                        ng-change="controller.logToLocalStorage_change()">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </label>
+
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">Current User</div>
+
+            <label class="item item-readonly-label">
+                <span>User ID</span>
+                <span>{{viewModel.userId}}</span>
+            </label>
+
+            <label class="item item-readonly-label item-text-wrap"
+                ng-click="controller.userToken_click(viewModel.token)">
+                Token
+                <br/>
+                {{viewModel.token}}
+            </label>
+
         </div>
 
         <div class="list card">
@@ -29,69 +93,61 @@
                 <span>{{viewModel.devicePlatform}}</span>
             </label>
 
-            <label class="item item-readonly-label">
-                <span>Logging to Local Storage?</span>
-                <span>{{viewModel.loggingToLocalStorage}}</span>
-            </label>
-
-            <label class="item">
-                <span>Default Storage Path ID</span>
-                <br />
-                <span>{{viewModel.defaultStoragePathId}}</span>
-            </label>
-
-            <label class="item">
-                <span>Default Storage Path</span>
-                <br />
-                <span>{{viewModel.defaultStoragePath}}</span>
-            </label>
-
-            <button class="button button-block button-positive" ng-click="controller.setLoggingMode_click()">Set Logging Mode</button>
-            <button class="button button-block button-positive" ng-click="controller.setHttpLoggingMode_click()">Set HTTP Logging Mode</button>
-            <button class="button button-block button-positive" ng-click="controller.addModulesToGlobalScope_click()">Add Modules to Global Scope</button>
+            <button class="button button-block button-positive" ng-click="controller.addServicesToGlobalScope_click()">Add Services to Global Scope</button>
             <button class="button button-block button-positive" ng-click="controller.setRequirePinThreshold_click()">Set Require PIN Threshold</button>
             <button class="button button-block button-positive" ng-click="controller.resetPinTimeout_click()">Reset PIN Entry Timeout</button>
             <button class="button button-block button-positive" ng-click="controller.reEnableOnboarding_click()">Re-enable Onboarding</button>
+
         </div>
 
         <div class="list card">
-            <div class="item item-divider">Modal Dialogs</div>
-            <button class="button button-block button-energized" ng-click="controller.showPinEntry_click()">Show New PIN Entry</button>
-            <button class="button button-block button-energized" ng-click="controller.showPinEntry1234_click()">Show Confirm PIN Entry (1234)</button>
-        </div>
-
-        <div class="list card">
-            <div class="item item-divider">Test Exception Handling</div>
-            <div class="row">
-                <div class="col col-50">
-                    <button class="button button-block button-assertive" ng-click="controller.testJsException_click()">JS Exception</button>
+            <div class="item item-divider item-icon-right">
+                Test Exception Handling
+                <i class="icon ion-ios-help-outline"
+                    ng-click="controller.help_click('Used to simulate different exception types to test logging.')"></i>
                 </div>
-                <div class="col col-50">
-                    <button class="button button-block button-assertive" ng-click="controller.testAngularException_click()">Angular Exception</button>
+            <div class="row">
+                <div class="col col-33">
+                    <button class="button button-block button-assertive" ng-click="controller.testNativeException_click()">Native</button>
+                </div>
+                <div class="col col-33">
+                    <button class="button button-block button-assertive" ng-click="controller.testJsException_click()">JS</button>
+                </div>
+                <div class="col col-33">
+                    <button class="button button-block button-assertive" ng-click="controller.testAngularException_click()">Angular</button>
                 </div>
             </div>
         </div>
 
         <div class="list card">
-            <div class="item item-divider">HTTP Progress Bar</div>
+            <div class="item item-divider item-icon-right">
+                HTTP Progress Bar
+                <i class="icon ion-ios-help-outline"
+                    ng-click="controller.help_click('Used to test the progress indicator functionality that is utilized during HTTP requests.')"></i>
+            </div>
 
             <div class="row">
-                <div class="col col-33">
+                <div class="col col-25">
                     <button class="button button-block button-calm" ng-click="controller.startProgress_click()">Start</button>
                 </div>
-                <div class="col col-33">
-                    <button class="button button-block button-calm" ng-click="controller.incrementProgress_click()">Increment</button>
+                <div class="col col-25">
+                    <button class="button button-block button-calm" ng-click="controller.incrementProgress_click()">Inc.</button>
                 </div>
-                <div class="col col-33">
+                <div class="col col-25">
                     <button class="button button-block button-calm" ng-click="controller.doneProgress_click()">Done</button>
                 </div>
+                <div class="col col-25">
+                    <button class="button button-block button-calm" ng-click="controller.showFullScreenBlock_click()">Block</button>
+                </div>
             </div>
-
-            <button class="button button-block button-calm" ng-click="controller.showFullScreenBlock_click()">Show Full Screen Block</button>
         </div>
 
         <div class="list card">
-            <div class="item item-divider">Toast Notifications</div>
+            <div class="item item-divider item-icon-right">
+                Toast Notifications
+                <i class="icon ion-ios-help-outline"
+                    ng-click="controller.help_click('Used to test the native toast notification plugin.')"></i>
+            </div>
 
             <div class="row">
                 <div class="col col-33">
@@ -107,7 +163,11 @@
         </div>
 
         <div class="list card">
-            <div class="item item-divider">Clipboard</div>
+            <div class="item item-divider item-icon-right">
+                Clipboard
+                <i class="icon ion-ios-help-outline"
+                    ng-click="controller.help_click('Used to test the native clipboard plugin.')"></i>
+            </div>
             <div class="row">
                 <div class="col col-50">
                     <button class="button button-block button-calm" ng-click="controller.clipboard_copy()">Copy</button>
@@ -119,7 +179,24 @@
         </div>
 
         <div class="list card">
-            <div class="item item-divider">File System I/O</div>
+            <div class="item item-divider item-icon-right">
+                File System I/O
+                <i class="icon ion-ios-help-outline"
+                    ng-click="controller.help_click('Used to test the native file plugin.')"></i>
+            </div>
+
+            <label class="item item-text-wrap">
+                Default Storage Path ID
+                <br/>
+                {{viewModel.defaultStoragePathId}}
+            </label>
+
+            <label class="item item-text-wrap"
+                ng-click="controller.defaultStoragePath_click(viewModel.defaultStoragePath)">
+                Default Storage Path
+                <br/>
+                {{viewModel.defaultStoragePath}}
+            </label>
 
             <div class="row">
                 <div class="col col-50">

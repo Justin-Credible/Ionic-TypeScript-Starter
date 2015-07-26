@@ -113,6 +113,18 @@
             }
         }
 
+        /**
+         * Exposes an API for logging exception information to the Crashlytics backend service.
+         */
+        get crashlytics(): ICordovaCrashlyticsPlugin {
+            if (typeof(navigator) !== "undefined" && navigator.crashlytics) {
+                return navigator.crashlytics;
+            }
+            else {
+                return this.MockPlatformApis.getCrashlyticsPlugin();
+            }
+        }
+
         //#endregion
 
         //#region Native Dialogs

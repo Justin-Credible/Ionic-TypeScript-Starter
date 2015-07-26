@@ -23,9 +23,8 @@
             this.Utilities = Utilities;
             this.FileUtilities = FileUtilities;
 
-            // If we are in the running in Cordova, then we'll default to using local storage
-            // to store the log files.
-            this.logToLocalStorage = Utilities.isCordova;
+            //this.logToLocalStorage = Utilities.isCordova;
+            this.logToLocalStorage = false;
 
             this.logs = [];
         }

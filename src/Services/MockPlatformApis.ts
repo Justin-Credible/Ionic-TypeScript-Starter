@@ -116,6 +116,23 @@
             };
         }
 
+        public getCrashlyticsPlugin(): ICordovaCrashlyticsPlugin {
+            return {
+                logException: _.bind(this.crashlytics_logException, this),
+                log: _.bind(this.crashlytics_log, this),
+                setBool: _.bind(this.noOp, this),
+                setDouble: _.bind(this.noOp, this),
+                setFloat: _.bind(this.noOp, this),
+                setInt: _.bind(this.noOp, this),
+                setLong: _.bind(this.noOp, this),
+                setString: _.bind(this.noOp, this),
+                setUserEmail: _.bind(this.noOp, this),
+                setUserIdentifier: _.bind(this.noOp, this),
+                setUserName: _.bind(this.noOp, this),
+                simulateCrash: _.bind(this.noOp, this)
+            };
+        }
+
         //#endregion
 
         //#region Misc
@@ -447,6 +464,18 @@
                     this.$ionicLoading.hide();
                 }, timeout);
             }
+        }
+
+        //#endregion
+
+        //#region Crashlytics
+
+        private crashlytics_logException(exception: string): void {
+            console.error(exception);
+        }
+
+        private crashlytics_log(message: string): void {
+            console.warn(message);
         }
 
         //#endregion

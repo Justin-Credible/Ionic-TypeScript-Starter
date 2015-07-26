@@ -266,3 +266,71 @@ interface ICordovaProgressIndicator {
      */
     showText(dimBackground: boolean, label: string, position: string): void;
 }
+
+/**
+ * Describes the Crashlytics plugin.
+ * 
+ * https://github.com/smistry-toushay/cordova-crashlytics-plugin
+ */
+interface ICordovaCrashlyticsPlugin {
+
+    /**
+     * Sends an exception (non fatal) to the Crashlytics backend.
+     */
+    logException(exception: string): void;
+
+    /**
+     * Sends a standard log message (non fatal) to the Crashlytics backend.
+     */
+    log(message: string): void;
+
+    /**
+     * Sets a custom key/value pair for logging to Crashlytics backend.
+     */
+    setBool(key: string, value: boolean): void;
+
+    /**
+     * Sets a custom key/value pair for logging to Crashlytics backend.
+     */
+    setDouble(key: string, value: number): void;
+
+    /**
+     * Sets a custom key/value pair for logging to Crashlytics backend.
+     */
+    setFloat(key: string, value: number): void;
+
+    /**
+     * Sets a custom key/value pair for logging to Crashlytics backend.
+     */
+    setInt(key: string, value: number): void;
+
+    /**
+     * Sets a custom key/value pair for logging to Crashlytics backend.
+     */
+    setLong(key: string, value: number): void;
+
+    /**
+     * Sets a custom key/value pair for logging to Crashlytics backend.
+     */
+    setString(key: string, value: string): void;
+
+    /**
+     * Sets the user's email address for logging to Crashlytics backend.
+     */
+    setUserEmail(email: string): void;
+
+    /**
+     * Sets the user's identifier for logging to Crashlytics backend.
+     */
+    setUserIdentifier(userId: string): void;
+
+    /**
+     * Sets the user's name for logging to Crashlytics backend.
+     */
+    setUserName(userName: string): void;
+
+    /**
+     * Used to simulate a native platform crash (useful for testing Crashlytics logging).
+     */
+    simulateCrash(): void;
+}

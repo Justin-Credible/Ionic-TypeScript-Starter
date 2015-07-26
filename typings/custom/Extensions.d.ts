@@ -86,4 +86,12 @@ interface Plugins {
     toast: ICordovaToastPlugin;
 }
 
-
+/**
+ * These are the Cordova plug-ins that are available via the global navigator object.
+ */
+interface Navigator {
+    /**
+     * This plugin allows logging exception information to the Crashlytics backend service.
+     */
+    crashlytics: ICordovaCrashlyticsPlugin;
+}
