@@ -56,6 +56,11 @@ interface Window {
         majorVersion: number;
         minorVersion: number;
         buildVersion: number;
+
+        /**
+         * The URL to the APIs to use.
+         */
+        apiUrl: string;
     };
 }
 

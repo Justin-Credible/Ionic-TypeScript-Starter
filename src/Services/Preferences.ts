@@ -28,9 +28,28 @@
         // Default setting is 10 minutes.
         private static REQUIRE_PIN_THRESHOLD_DEFAULT = 10;
 
+        private _apiUrl = null;
+
+        /**
+         * Path to the mobile services.
+         */
         get apiUrl(): string {
-            //return localStorage.getItem(Preferences.API_URL);
-            return "sample-app.justin-credible.net/api";
+
+            // If an API URL has been set via the developer tools for this session,
+            // then use it, otherwise use the URL defined by the build configuration.
+            if (this._apiUrl) {
+                return this._apiUrl;
+            }
+            else {
+                return window.buildVars.apiUrl;
+            }
+        }
+
+        /**
+         * Allows for setting the API URL temporarily for the current session only.
+         */
+        set apiUrl(value: string) {
+            this._apiUrl = value;
         }
 
         get userId(): string {

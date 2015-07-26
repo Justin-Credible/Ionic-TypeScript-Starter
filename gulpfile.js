@@ -214,20 +214,24 @@ gulp.task("tsd:tests", function (cb) {
 
 /**
  * Used to generate the www/js/BuildVars.js file which contains information about
- * the build (such as version number, timestamp, and build scheme).
+ * the build (such as version number, timestamp, and build scheme) as well as any
+ * other variables that should be defined at build time (API URLs etc).
  * 
  * The version number is taken from the config.xml file.
  */
 gulp.task("ts:vars", function (cb) {
-  var majorVersion = 0,
-      minorVersion = 0,
-      buildVersion = 0;
+    var configXml,
+        configXmlDoc,
+        majorVersion = 0,
+        minorVersion = 0,
+        buildVersion = 0,
+        apiUrl;
 
     // Attempt to query and parse the version information from config.xml.
     // Default to 0.0.0 if there are any problems.
     try {
-        var configXml = fs.readFileSync("config.xml", "utf8");
-        var configXmlDoc = new XmlDom().parseFromString(configXml);
+        configXml = fs.readFileSync("config.xml", "utf8");
+        configXmlDoc = new XmlDom().parseFromString(configXml);
         var versionString = xpath.select1("/*[local-name() = 'widget']/@version", configXmlDoc).value;
         var versionParts = versionString.split(".");
         majorVersion = parseInt(versionParts[0], 10);
@@ -238,13 +242,30 @@ gulp.task("ts:vars", function (cb) {
         console.log("Error parsing version from config.xml; using 0.0.0 instead.", err);
     }
 
+    try {
+        configXml = fs.readFileSync('config.xml', 'utf8');
+        configXmlDoc = new XmlDom().parseFromString(configXml);
+
+        if (isDebugScheme()) {
+            apiUrl = xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'preference'][@name='ApiUrlDebug']/@value", configXmlDoc).value;
+        }
+        else {
+            apiUrl = xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'preference'][@name='ApiUrl']/@value", configXmlDoc).value;
+        }
+    }
+    catch (err) {
+        console.error("Unable to parse ApiUrl/ApiUrlDebug from the config.xml file.");
+        cb(err);
+    }
+
     // Create the structure of the buildVars variable.
     var buildVarsJson = JSON.stringify({
         majorVersion: majorVersion,
         minorVersion: minorVersion,
         buildVersion: buildVersion,
         debug: isDebugScheme(),
-        buildTimestamp: (new Date()).toUTCString()
+        buildTimestamp: (new Date()).toUTCString(),
+        apiUrl: apiUrl
     });
 
     // Write the buildVars variable with code that will define it as a global object.
