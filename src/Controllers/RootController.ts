@@ -25,15 +25,16 @@
 
             this.viewModel.categories = this.Utilities.categories;
 
-            $scope.$on("http.unauthorized", _.bind(this.http_unauthorized, this));
-            $scope.$on("http.forbidden", _.bind(this.http_forbidden, this));
-            $scope.$on("http.notFound", _.bind(this.http_notFound, this));
-            $scope.$on("http.unknownError", _.bind(this.http_unknownError, this));
+            $scope.$on(Constants.Events.HTTP_UNAUTHORIZED, _.bind(this.http_unauthorized, this));
+            $scope.$on(Constants.Events.HTTP_FORBIDDEN, _.bind(this.http_forbidden, this));
+            $scope.$on(Constants.Events.HTTP_NOT_FOUND, _.bind(this.http_notFound, this));
+            $scope.$on(Constants.Events.HTTP_UNKNOWN_ERROR, _.bind(this.http_unknownError, this));
+            $scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
         }
 
         //#region Event Handlers
 
-        private http_unauthorized() {
+        private http_unauthorized(response: ng.IHttpPromiseCallbackArg<any>) {
 
             // Unauthorized should mean that a token wasn't sent, but we'll null these out anyways.
             this.Preferences.userId = null;
@@ -42,7 +43,7 @@
             this.UiHelper.toast.showLongBottom("You do not have a token (401); please login.");
         }
 
-        private http_forbidden() {
+        private http_forbidden(response: ng.IHttpPromiseCallbackArg<any>) {
 
             // A token was sent, but was no longer valid. Null out the invalid token.
             this.Preferences.userId = null;
@@ -51,14 +52,22 @@
             this.UiHelper.toast.showLongBottom("Your token has expired (403); please login again.");
         }
 
-        private http_notFound() {
+        private http_notFound(response: ng.IHttpPromiseCallbackArg<any>) {
             // The restful API services are down maybe?
             this.UiHelper.toast.showLongBottom("Server not available (404); please contact your administrator.");
         }
 
-        private http_unknownError() {
+        private http_unknownError(response: ng.IHttpPromiseCallbackArg<any>) {
             // No network connection, invalid certificate, or other system level error.
             this.UiHelper.toast.showLongBottom("Network error; please try again later.");
+        }
+
+        /**
+         * A generic catch all for HTTP errors that are not handled above in the other
+         * error handlers.
+         */
+        private http_error(response: ng.IHttpPromiseCallbackArg<any>): void {
+            this.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
         }
 
         //#endregion

@@ -262,16 +262,19 @@
                 // For certain response codes, we'll broadcast an event to the rest of the app
                 // so that it can handle the event in whatever way is appropriate.
                 if (httpResponse.status === 401) {
-                    this.$rootScope.$broadcast("http.unauthorized");
+                    this.$rootScope.$broadcast(Constants.Events.HTTP_UNAUTHORIZED, httpResponse);
                 }
                 else if (httpResponse.status === 403) {
-                    this.$rootScope.$broadcast("http.forbidden");
+                    this.$rootScope.$broadcast(Constants.Events.HTTP_FORBIDDEN, httpResponse);
                 }
                 else if (httpResponse.status === 404) {
-                    this.$rootScope.$broadcast("http.notFound");
+                    this.$rootScope.$broadcast(Constants.Events.HTTP_NOT_FOUND, httpResponse);
                 }
                 else if (httpResponse.status === 0) {
-                    this.$rootScope.$broadcast("http.unknownError");
+                    this.$rootScope.$broadcast(Constants.Events.HTTP_UNKNOWN_ERROR, httpResponse);
+                }
+                else {
+                    this.$rootScope.$broadcast(Constants.Events.HTTP_ERROR, httpResponse);
                 }
             }
 

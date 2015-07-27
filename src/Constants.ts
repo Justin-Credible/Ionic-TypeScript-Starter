@@ -28,3 +28,14 @@ module JustinCredible.SampleApp.Constants.Buttons {
     export const OK = "OK";
     export const Cancel = "Cancel";
 }
+
+/**
+ * A collection of names of events used within the application.
+ */
+module JustinCredible.SampleApp.Constants.Events {
+    export const HTTP_UNAUTHORIZED = "http.unauthorized";
+    export const HTTP_FORBIDDEN = "http.forbidden";
+    export const HTTP_NOT_FOUND = "http.notFound";
+    export const HTTP_UNKNOWN_ERROR = "http.unknownError";
+    export const HTTP_ERROR = "http.error";
+}
