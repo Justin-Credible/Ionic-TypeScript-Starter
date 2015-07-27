@@ -38,4 +38,6 @@ module JustinCredible.SampleApp.Constants.Events {
     export const HTTP_NOT_FOUND = "http.notFound";
     export const HTTP_UNKNOWN_ERROR = "http.unknownError";
     export const HTTP_ERROR = "http.error";
+
+    export const APP_MENU_BUTTON = "app.menuButton";
 }
