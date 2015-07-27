@@ -1,8 +1,8 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export class MenuController extends BaseController<ViewModels.MenuViewModel> {
+    export class RootController extends BaseController<ViewModels.RootViewModel> {
 
-        public static ID = "MenuController";
+        public static ID = "RootController";
 
         public static get $inject(): string[] {
             return ["$scope", "$location", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
@@ -15,7 +15,7 @@
         private Preferences: Services.Preferences;
 
         constructor($scope: ng.IScope, $location: ng.ILocationService, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
-            super($scope, ViewModels.MenuViewModel);
+            super($scope, ViewModels.RootViewModel);
 
             this.$location = $location;
             this.$http = $http;

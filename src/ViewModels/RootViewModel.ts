@@ -1,6 +1,6 @@
 ﻿module JustinCredible.SampleApp.ViewModels {
 
-    export class MenuViewModel {
+    export class RootViewModel {
         public categories: ViewModels.CategoryItemViewModel[];
     }
 }

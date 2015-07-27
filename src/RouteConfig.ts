@@ -13,15 +13,15 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app", {
                 url: "/app",
                 abstract: true,
-                templateUrl: "templates/Menu.html",
-                controller: Controllers.MenuController.ID
+                templateUrl: "templates/Root.html",
+                controller: Controllers.RootController.ID
             });
 
             // An blank view useful as a place holder etc.
             $stateProvider.state("app.blank", {
                 url: "/blank",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Blank.html"
                     }
                 }
@@ -31,7 +31,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.category", {
                 url: "/category/:categoryNumber",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Category.html",
                         controller: Controllers.CategoryController.ID
                     }
@@ -43,7 +43,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.onboarding-splash", {
                 url: "/onboarding/splash",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Onboarding/Onboarding-Splash.html",
                         controller: Controllers.OnboardingSplashController.ID
                     }
@@ -53,7 +53,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.onboarding-register", {
                 url: "/onboarding/register",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Onboarding/Onboarding-Register.html",
                         controller: Controllers.OnboardingRegisterController.ID
                     }
@@ -63,7 +63,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.onboarding-share", {
                 url: "/onboarding/share",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Onboarding/Onboarding-Share.html",
                         controller: Controllers.OnboardingShareController.ID
                     }
@@ -77,7 +77,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.settings-list", {
                 url: "/settings/list",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Settings/Settings-List.html",
                         controller: Controllers.SettingsListController.ID
                     }
@@ -87,7 +87,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.cloud-sync", {
                 url: "/settings/cloud-sync",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Settings/Cloud-Sync.html",
                         controller: Controllers.CloudSyncController.ID
                     }
@@ -97,7 +97,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.configure-pin", {
                 url: "/settings/configure-pin",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Settings/Configure-Pin.html",
                         controller: Controllers.ConfigurePinController.ID
                     }
@@ -107,7 +107,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.developer", {
                 url: "/settings/developer",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Settings/Developer.html",
                         controller: Controllers.DeveloperController.ID
                     }
@@ -117,7 +117,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.logs", {
                 url: "/settings/logs",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Settings/Logs.html",
                         controller: Controllers.LogsController.ID
                     }
@@ -127,7 +127,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.log-entry", {
                 url: "/settings/log-entry/:id",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Settings/Log-Entry.html",
                         controller: Controllers.LogEntryController.ID
                     }
@@ -137,7 +137,7 @@ module JustinCredible.SampleApp {
             $stateProvider.state("app.about", {
                 url: "/settings/about",
                 views: {
-                    "menuContent": {
+                    "root-view": {
                         templateUrl: "templates/Settings/About.html",
                         controller: Controllers.AboutController.ID
                     }
