@@ -160,8 +160,8 @@ gulp.task("test", ["ts:tests"], function (done) {
  * directories and rebuild the tsd.d.ts typings bundle for both the app
  * as well as the unit tests.
  */
-gulp.task("tsd", ["tsd:app", "tsd:tests"], function (cb) {
-    cb();
+gulp.task("tsd", function (cb) {
+    runSequence("tsd:app", "tsd:tests", cb);
 });
 
 /**
