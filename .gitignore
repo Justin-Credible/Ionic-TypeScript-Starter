@@ -21,3 +21,4 @@
 /chrome
 /tests/**/*.js
 /tests/**/*.map
+/docs/*
