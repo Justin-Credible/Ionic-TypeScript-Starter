@@ -34,6 +34,10 @@
 
         public static ID = "iconPanel";
 
+        public static get $inject(): string[] {
+            return [Services.Utilities.ID];
+        }
+
         //#region Angular Directive Options
 
         public static restrict = "E";
@@ -57,6 +61,10 @@
         private _iconElement: ng.IAugmentedJQuery;
         private _textContainer: ng.IAugmentedJQuery;
 
+        constructor(private Utilities: Services.Utilities) {
+            super();
+        }
+
         public initialize(): void {
 
             // Grab a reference to the root div element.
@@ -71,7 +79,7 @@
             // Parent scopes can listen for this so they can obtain a reference
             // to the instance so they can call getters/setters etc.
             if (this.scope.name) {
-                this.scope.$emit("icon-panel." + this.scope.name + ".created", <IIconPanelDirectiveInstance>this);
+                this.scope.$emit(this.Utilities.format("icon-panel.{0}.created", this.scope.name), <IIconPanelDirectiveInstance>this);
             }
             else {
                 this.scope.$emit("icon-panel.created", <IIconPanelDirectiveInstance>this);

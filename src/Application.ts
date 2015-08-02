@@ -196,10 +196,18 @@ module JustinCredible.SampleApp.Application {
      * @param Directive A class reference (not instance) to a element directive class that implements Directives.IElementDirective.
      * @returns A factory function that can be used by Angular to create an instance of the element directive.
      */
-    function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): () => ng.IDirective {
-        var descriptor: ng.IDirective = {};
+    function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): any[] {
+        var params = [],
+            injectedArguments: IArguments = null,
+            descriptor: ng.IDirective = {};
 
         /* tslint:disable:no-string-literal */
+
+        // If the directive is annotated with an injection array, we'll add the injection
+        // array's values to the list first.
+        if (Directive["$inject"]) {
+            params = params.concat(Directive["$inject"]);
+        }
 
         // Here we set the options for the Angular directive descriptor object.
         // We get these values from the static fields on the class reference.
@@ -219,15 +227,40 @@ module JustinCredible.SampleApp.Application {
         // directive to the element.
         descriptor.link = (scope: ng.IScope, instanceElement: ng.IAugmentedJQuery, instanceAttributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction): void => {
 
-            // New up the instance of our directive class.
-            var instance = <Directives.IElementDirective>new Directive(scope, instanceElement, instanceAttributes, controller, transclude);
+            // New up an instance of the directive for to link to this element.
+            // Pass along the arguments that were injected so the instance can receive them.
+            var instance = <Directives.BaseElementDirective<any>>construct(Directive, injectedArguments);
 
-            // Delegate to the render method.
+            /* tslint:disable:no-string-literal */
+
+            // Set the protected properties.
+            instance["scope"] = scope;
+            instance["element"] = instanceElement;
+            instance["attributes"] = instanceAttributes;
+            instance["controller"] = controller;
+            instance["transclude"] = transclude;
+
+            /* tslint:enable:no-string-literal */
+
+            // Delegate to the initialize and render methods.
+            instance.initialize();
             instance.render();
         };
 
-        // Finally, return a function that returns this Angular directive descriptor object.
-        return function () { return descriptor; };
+        // The last parameter in the array is the function that will be executed by Angular
+        // when the directive is being used.
+        params.push(function () {
+
+            // Save off a reference to the array of injected objects so we can use them when
+            // constructing an instance of the directive (see above). These arguments are the
+            // objects that were injected via the $inject property.
+            injectedArguments = arguments;
+
+            // Return the descriptor object which describes the directive to Angular.
+            return descriptor;
+        });
+
+        return params;
     }
 
     /**
