@@ -13,15 +13,13 @@
         //#region Local Storage Keys
 
         private static USER_ID = "USER_ID";
-        private static USER_NAME = "USER_NAME";
-        private static USER_EMAIL = "USER_EMAIL";
         private static TOKEN = "TOKEN";
         private static PIN = "PIN";
         private static CATEGORY_ORDER = "CATEGORY_ORDER";
 
         //#endregion
 
-        //#region User ID/Name/Email/Token
+        //#region User ID/Token
 
         get userId(): string {
             return localStorage.getItem(Preferences.USER_ID);
