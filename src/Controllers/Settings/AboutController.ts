@@ -5,21 +5,21 @@
         public static ID = "AboutController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$ionicHistory", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID, "versionInfo"];
+            return ["$scope", "$ionicHistory", Services.Utilities.ID, Services.Configuration.ID, Services.UiHelper.ID, "versionInfo"];
         }
 
         private $ionicHistory: any;
         private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
+        private Configuration: Services.Configuration;
         private UiHelper: Services.UiHelper;
         private versionInfo: Interfaces.VersionInfo;
 
-        constructor($scope: ng.IScope, $ionicHistory: any, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper, versionInfo: Interfaces.VersionInfo) {
+        constructor($scope: ng.IScope, $ionicHistory: any, Utilities: Services.Utilities, Configuration: Services.Configuration, UiHelper: Services.UiHelper, versionInfo: Interfaces.VersionInfo) {
             super($scope, ViewModels.AboutViewModel);
 
             this.$ionicHistory = $ionicHistory;
             this.Utilities = Utilities;
-            this.Preferences = Preferences;
+            this.Configuration = Configuration;
             this.UiHelper = UiHelper;
             this.versionInfo = versionInfo;
         }
@@ -42,7 +42,7 @@
 
         protected logo_click() {
 
-            if (this.Preferences.enableDeveloperTools) {
+            if (this.Configuration.enableDeveloperTools) {
                 return;
             }
 
@@ -51,7 +51,7 @@
             // If they've clicked the logo 10 times, then enable development tools
             // and push them back to the settings page.
             if (this.viewModel.logoClickCount > 9) {
-                this.Preferences.enableDeveloperTools = true;
+                this.Configuration.enableDeveloperTools = true;
                 this.UiHelper.toast.showShortBottom("Development Tools Enabled!");
                 this.$ionicHistory.goBack();
             }

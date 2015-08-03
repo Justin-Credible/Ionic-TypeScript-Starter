@@ -50,7 +50,7 @@ module JustinCredible.SampleApp.Application {
         // Define our constants.
         ngModule.constant("isRipple", !!(window.parent && window.parent.ripple));
         ngModule.constant("isCordova", typeof(cordova) !== "undefined");
-        ngModule.constant("isDebug", window.buildVars.debug);
+        ngModule.constant("buildVars", window.buildVars);
         ngModule.constant("isChromeExtension", typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" && typeof (chrome.runtime.id) !== "undefined");
         ngModule.constant("versionInfo", versionInfo);
         ngModule.constant("apiVersion", "1.0");
@@ -312,22 +312,22 @@ module JustinCredible.SampleApp.Application {
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
      */
-    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockHttpApis: Services.MockHttpApis): void {
+    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, Configuration: Services.Configuration, MockHttpApis: Services.MockHttpApis): void {
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $location, $ionicHistory, $ionicPlatform, UiHelper, Utilities, Preferences);
+            ionicPlatform_ready($rootScope, $location, $ionicHistory, $ionicPlatform, UiHelper, Utilities, Preferences, Configuration);
         });
 
         // Mock up or allow HTTP responses.
-        MockHttpApis.mockHttpCalls(Preferences.enableMockHttpCalls);
+        MockHttpApis.mockHttpCalls(Configuration.enableMockHttpCalls);
     };
 
     /**
      * Fired once the Ionic framework determines that the device is ready.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences): void {
+    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences, Configuration: Services.Configuration): void {
 
         // Subscribe to device events.
         document.addEventListener("pause", _.bind(device_pause, null, Preferences));
@@ -348,7 +348,7 @@ module JustinCredible.SampleApp.Application {
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume($location, $ionicHistory, Utilities, UiHelper, Preferences);
+        device_resume($location, $ionicHistory, Utilities, UiHelper, Configuration);
     }
 
     /**
@@ -393,12 +393,12 @@ module JustinCredible.SampleApp.Application {
      * Fired when the OS decides to minimize or pause the application. This usually
      * occurs when the user presses the device's home button or switches applications.
      */
-    function device_pause(Preferences: Services.Preferences): void {
+    function device_pause(Configuration: Services.Configuration): void {
 
         if (!isShowingPinPrompt) {
             // Store the current date/time. This will be used to determine if we need to
             // show the PIN lock screen the next time the application is resumed.
-            Preferences.lastPausedAt = moment();
+            Configuration.lastPausedAt = moment();
         }
     }
 
@@ -407,7 +407,7 @@ module JustinCredible.SampleApp.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume($location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
+    function device_resume($location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Configuration: Services.Configuration): void {
 
         isShowingPinPrompt = true;
 
@@ -420,7 +420,7 @@ module JustinCredible.SampleApp.Application {
             // purposefully after the PIN screen for the case where the user may be upgrading
             // from a version of the application that doesn't have onboarding (we wouldn't
             // want them to be able to bypass the PIN entry in that case).
-            if (!Preferences.hasCompletedOnboarding) {
+            if (!Configuration.hasCompletedOnboarding) {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.

@@ -5,23 +5,23 @@ module JustinCredible.SampleApp.Controllers {
         public static ID = "OnboardingShareController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", "$ionicHistory", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
+            return ["$scope", "$location", "$ionicHistory", Services.Utilities.ID, Services.UiHelper.ID, Services.Configuration.ID];
         }
 
         private $location: ng.ILocationService;
         private $ionicHistory: any;
         private Utilities: Services.Utilities;
         private UiHelper: Services.UiHelper;
-        private Preferences: Services.Preferences;
+        private Configuration: Services.Configuration;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Configuration: Services.Configuration) {
             super($scope, ViewModels.EmptyViewModel);
 
             this.$location = $location;
             this.$ionicHistory = $ionicHistory;
             this.Utilities = Utilities;
             this.UiHelper = UiHelper;
-            this.Preferences = Preferences;
+            this.Configuration = Configuration;
         }
 
         //#region UI Events
@@ -33,7 +33,7 @@ module JustinCredible.SampleApp.Controllers {
         protected done_click(): void {
 
             // Set the preference value so onboarding doesn't occur again.
-            this.Preferences.hasCompletedOnboarding = true;
+            this.Configuration.hasCompletedOnboarding = true;
 
             // Tell Ionic to to hide the back button for the next view.
             this.$ionicHistory.nextViewOptions({

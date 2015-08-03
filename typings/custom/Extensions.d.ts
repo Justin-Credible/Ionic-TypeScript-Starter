@@ -41,29 +41,33 @@ interface Window {
     /**
      * Variables emitted at build time which contain useful application information.
      */
-    buildVars: {
-        /**
-         * True if the application was build in debug configuration, false if it was
-         * build a release or distribution configuration.
-         */
-        debug: boolean;
-
-        /**
-         * The time at which the application was built.
-         */
-        buildTimestamp: string;
-
-        majorVersion: number;
-        minorVersion: number;
-        buildVersion: number;
-
-        /**
-         * The URL to the APIs to use.
-         */
-        apiUrl: string;
-    };
+    buildVars: BuildVars
 }
 
+/**
+ * Variables emitted at build time which contain useful application information.
+ */
+interface BuildVars {
+    /**
+     * True if the application was build in debug configuration, false if it was
+     * build a release or distribution configuration.
+     */
+    debug: boolean;
+
+    /**
+     * The time at which the application was built.
+     */
+    buildTimestamp: string;
+
+    majorVersion: number;
+    minorVersion: number;
+    buildVersion: number;
+
+    /**
+     * The URL to the APIs to use.
+     */
+    apiUrl: string;
+}
 
 /**
  * These are the Cordova plug-ins that are available via the global Cordova.plugins object.

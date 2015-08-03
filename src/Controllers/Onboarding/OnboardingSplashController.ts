@@ -5,21 +5,21 @@ module JustinCredible.SampleApp.Controllers {
         public static ID = "OnboardingSplashController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", "$ionicHistory", Services.Utilities.ID, Services.Preferences.ID];
+            return ["$scope", "$location", "$ionicHistory", Services.Utilities.ID, Services.Configuration.ID];
         }
 
         private $location: ng.ILocationService;
         private $ionicHistory: any;
         private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
+        private Configuration: Services.Configuration;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, Configuration: Services.Configuration) {
             super($scope, ViewModels.EmptyViewModel);
 
             this.$location = $location;
             this.$ionicHistory = $ionicHistory;
             this.Utilities = Utilities;
-            this.Preferences = Preferences;
+            this.Configuration = Configuration;
         }
 
         //#region UI Events
@@ -27,7 +27,7 @@ module JustinCredible.SampleApp.Controllers {
         protected skip_click(): void {
 
             // Set the preference value so onboarding doesn't occur again.
-            this.Preferences.hasCompletedOnboarding = true;
+            this.Configuration.hasCompletedOnboarding = true;
 
             // Tell Ionic to to hide the back button for the next view.
             this.$ionicHistory.nextViewOptions({

@@ -10,47 +10,18 @@
 
         public static ID = "Preferences";
 
-        public static get $inject(): string[] {
-            return [];
-        }
+        //#region Local Storage Keys
 
         private static USER_ID = "USER_ID";
+        private static USER_NAME = "USER_NAME";
+        private static USER_EMAIL = "USER_EMAIL";
         private static TOKEN = "TOKEN";
-        private static ENABLE_DEVELOPER_TOOLS = "ENABLE_DEVELOPER_TOOLS";
-        private static ENABLE_FULL_HTTP_LOGGING = "ENABLE_FULL_HTTP_LOGGING";
-        private static ENABLE_MOCK_HTTP_CALLS = "ENABLE_MOCK_HTTP_CALLS";
-        private static REQUIRE_PIN_THRESHOLD = "REQUIRE_PIN_THRESHOLD";
-        private static LAST_PAUSED_AT = "LAST_PAUSED_AT";
         private static PIN = "PIN";
         private static CATEGORY_ORDER = "CATEGORY_ORDER";
-        private static HAS_COMPLETED_ONBOARDING = "HAS_COMPLETED_ONBOARDING";
 
-        // Default setting is 10 minutes.
-        private static REQUIRE_PIN_THRESHOLD_DEFAULT = 10;
+        //#endregion
 
-        private _apiUrl = null;
-
-        /**
-         * Path to the mobile services.
-         */
-        get apiUrl(): string {
-
-            // If an API URL has been set via the developer tools for this session,
-            // then use it, otherwise use the URL defined by the build configuration.
-            if (this._apiUrl) {
-                return this._apiUrl;
-            }
-            else {
-                return window.buildVars.apiUrl;
-            }
-        }
-
-        /**
-         * Allows for setting the API URL temporarily for the current session only.
-         */
-        set apiUrl(value: string) {
-            this._apiUrl = value;
-        }
+        //#region User ID/Name/Email/Token
 
         get userId(): string {
             return localStorage.getItem(Preferences.USER_ID);
@@ -78,75 +49,9 @@
             }
         }
 
-        get enableDeveloperTools(): boolean {
-            return sessionStorage.getItem(Preferences.ENABLE_DEVELOPER_TOOLS) === "true";
-        }
+        //#endregion
 
-        set enableDeveloperTools(value: boolean) {
-            if (value == null) {
-                sessionStorage.removeItem(Preferences.ENABLE_DEVELOPER_TOOLS);
-            }
-            else {
-                sessionStorage.setItem(Preferences.ENABLE_DEVELOPER_TOOLS, value.toString());
-            }
-        }
-
-        get enableFullHttpLogging(): boolean {
-            return localStorage.getItem(Preferences.ENABLE_FULL_HTTP_LOGGING) === "true";
-        }
-
-        set enableFullHttpLogging(value: boolean) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.ENABLE_FULL_HTTP_LOGGING);
-            }
-            else {
-                localStorage.setItem(Preferences.ENABLE_FULL_HTTP_LOGGING, value.toString());
-            }
-        }
-
-        get enableMockHttpCalls(): boolean {
-            return localStorage.getItem(Preferences.ENABLE_MOCK_HTTP_CALLS) === "true";
-        }
-
-        set enableMockHttpCalls(value: boolean) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.ENABLE_MOCK_HTTP_CALLS);
-            }
-            else {
-                localStorage.setItem(Preferences.ENABLE_MOCK_HTTP_CALLS, value.toString());
-            }
-        }
-
-        get requirePinThreshold(): number {
-            var value = localStorage.getItem(Preferences.REQUIRE_PIN_THRESHOLD);
-            return value == null ? Preferences.REQUIRE_PIN_THRESHOLD_DEFAULT : parseInt(value, 10);
-        }
-
-        set requirePinThreshold(value: number) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.REQUIRE_PIN_THRESHOLD);
-            }
-            else {
-                localStorage.setItem(Preferences.REQUIRE_PIN_THRESHOLD, value.toString());
-            }
-        }
-
-        set lastPausedAt(value: moment.Moment) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.LAST_PAUSED_AT);
-            }
-            else {
-                localStorage.setItem(Preferences.LAST_PAUSED_AT, moment(value).format());
-            }
-        }
-
-        get lastPausedAt(): moment.Moment {
-            var lastPausedAt: string;
-
-            lastPausedAt = localStorage.getItem(Preferences.LAST_PAUSED_AT);
-
-            return moment(lastPausedAt).isValid() ? moment(lastPausedAt) : null;
-        }
+        //#region Mobile Application Specific
 
         get pin(): string {
             return localStorage.getItem(Preferences.PIN);
@@ -181,17 +86,6 @@
             }
         }
 
-        get hasCompletedOnboarding(): boolean {
-            return localStorage.getItem(Preferences.HAS_COMPLETED_ONBOARDING) === "true";
-        }
-
-        set hasCompletedOnboarding(value: boolean) {
-            if (value == null) {
-                localStorage.removeItem(Preferences.HAS_COMPLETED_ONBOARDING);
-            }
-            else {
-                localStorage.setItem(Preferences.HAS_COMPLETED_ONBOARDING, value.toString());
-            }
-        }
+        //#endregion
     }
 }

@@ -5,17 +5,17 @@
         public static ID = "SettingsListController";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.Utilities.ID, Services.Preferences.ID];
+            return ["$scope", Services.Utilities.ID, Services.Configuration.ID];
         }
 
         private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
+        private Configuration: Services.Configuration;
 
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor($scope: ng.IScope, Utilities: Services.Utilities, Configuration: Services.Configuration) {
             super($scope, ViewModels.SettingsListViewModel);
 
             this.Utilities = Utilities;
-            this.Preferences = Preferences;
+            this.Configuration = Configuration;
         }
 
         //#region BaseController Overrides
@@ -24,7 +24,7 @@
             super.view_beforeEnter();
 
             this.viewModel.isDebugMode = this.Utilities.isDebugMode;
-            this.viewModel.isDeveloperMode = this.Preferences.enableDeveloperTools;
+            this.viewModel.isDeveloperMode = this.Configuration.enableDeveloperTools;
         }
 
         //#endregion
