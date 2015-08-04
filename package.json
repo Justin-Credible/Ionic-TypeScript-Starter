@@ -55,5 +55,9 @@
   "cordovaPlatforms": [
     "android",
     "ios"
-  ]
+  ],
+  "devDependencies": {
+    "gulp-typedoc": "^1.2.1",
+    "typedoc": "^0.3.8"
+  }
 }

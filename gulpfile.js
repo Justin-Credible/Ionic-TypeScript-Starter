@@ -13,11 +13,12 @@ var gutil = require("gulp-util");
 var rename = require("gulp-rename");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
+var typedoc = require("gulp-typedoc");
 
 // Other Modules
 var runSequence = require("run-sequence");
 var bower = require("bower");
-var sh = require("shelljs")
+var sh = require("shelljs");
 var async = require("async");
 var xpath = require("xpath");
 var XmlDom = require("xmldom").DOMParser;
@@ -539,4 +540,27 @@ gulp.task("git-check", function(done) {
     }
 
     done();
+});
+
+/**
+ * An gulp task to create documentation for typescript.
+ */
+gulp.task("typedoc", function() {
+    return gulp
+        .src(paths.ts)
+        .pipe(typedoc({
+            module: "commonjs",
+            target: "es5",
+            out: "docs/",
+            name: "Ionic TypeScript Starter"
+        }));
+});
+
+/**
+ * Removes the docs directory.
+ */
+gulp.task("clean:typedoc", function (cb) {
+    del([
+        "docs"
+    ], cb);
 });
