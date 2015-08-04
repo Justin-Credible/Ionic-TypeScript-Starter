@@ -170,8 +170,10 @@ gulp.task("tsd", function (cb) {
  * directory and rebuild the tsd.d.ts typings bundle (for the app).
  */
 gulp.task("tsd:app", function (cb) {
-    // First reinstall any missing definitions to the typings directory.
-    exec("tsd reinstall", function (err, stdout, stderr) {
+    // First update definitions to the typings directory.
+    // "tsd reinstall" can be executed in cmd.exe manually with caution:
+    //   it REMOVES any existing .d.ts files not listed in tsd.json
+    exec("tsd update", function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
 
@@ -503,13 +505,13 @@ gulp.task("clean:tsd", function (cb) {
     del([
         "src/tsd.d.ts",
         "typings/**/*.d.ts",
-        "!typings/custom/*.d.ts",
+        "!typings/custom{,/*.d.ts}",
         // "typings/**",
         // "!typings/custom/**",
 
         "tests/tsd.d.ts",
         "typings-tests/**/*.d.ts",
-        "!typings-tests/custom/*.d.ts",
+        "!typings-tests/custom{,/*.d.ts}",
         // "typings-tests/**",
         // "!typings/custom/**"
     ], cb);
