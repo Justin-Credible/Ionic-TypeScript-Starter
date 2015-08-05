@@ -11,6 +11,9 @@
 /typings-tests/*
 !/typings-tests/custom/
 
+# Visual Studio Artifacts
+*.suo
+
 # Development Artifacts
 /www/lib
 /www/js/bundle.*
