@@ -43,14 +43,15 @@
     "cordova-plugin-console@1.0.1",
     "cordova-plugin-whitelist@1.0.0",
     "cordova-plugin-splashscreen@2.1.0",
-    "cordova-plugin-file@2.1.0",
     "cordova-plugin-dialogs@1.1.1",
     "cordova-plugin-inappbrowser@1.0.1",
     "cordova-plugin-statusbar@1.0.1",
     "com.ionic.keyboard@1.0.4",
     "nl.x-services.plugins.toast@2.0.4",
     "com.verso.cordova.clipboard@0.1.0",
-    "org.pbernasconi.progressindicator@1.1.0"
+    {
+      "locator": "https://github.com/Justin-Credible/cordova-progressIndicator.git"
+    }
   ],
   "cordovaPlatforms": [
     "android",

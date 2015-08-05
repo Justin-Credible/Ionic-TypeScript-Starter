@@ -12,5 +12,6 @@
         public iconType: string;
         public time: string;
         public date: string;
+        public formattedStackTrace: string;
     }
 }

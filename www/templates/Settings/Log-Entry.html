@@ -22,8 +22,8 @@
                 <p>{{viewModel.error.message}}</p>
             </div>
 
-            <div class="item item-body" ng-show="viewModel.error != null && viewModel.error.stack">
-                <p>{{viewModel.error.stack}}</p>
+            <div class="item item-body" ng-show="viewModel.error != null && viewModel.formattedStackTrace">
+                <p>{{viewModel.formattedStackTrace}}</p>
             </div>
 
             <div class="item item-body" ng-show="viewModel.iconType === 'alert'">
