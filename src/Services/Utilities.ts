@@ -542,6 +542,50 @@
         }
 
         /**
+         * Used to format a stack trace provided by the stacktrace.js library.
+         * 
+         * @param stackTrace An array of stack items provided by stacktrace.js's printStackTrace() call.
+         * @returns A human readable stack trace.
+         */
+        public formatStackTrace(stackTrace: string[]): string {
+
+            if (!stackTrace) {
+                return "";
+            }
+
+            stackTrace.forEach((traceEntry: string, index: number) => {
+
+                // First, split the entry on the at symbol; each entry is the name of
+                // the function followed by the file name and line info.
+                var parts = traceEntry.split("@");
+                var functionName: string;
+                var fileAndLineInfo: string;
+
+                if (parts.length === 1) {
+                    // If there was only one part, then a function name was not specified
+                    // and we have only the file path and line info.
+                    functionName = "<Anonymous>";
+                    fileAndLineInfo = parts[0];
+                }
+                else {
+                    // If there was two parts, then we have the function name (first part)
+                    // and file path and line info (second part).
+                    functionName = parts[0];
+                    fileAndLineInfo = parts[1];
+                }
+
+                // Strip off the full path to the source file on the device, and just use
+                // a relative path so we can more easily read the stack trace.
+                fileAndLineInfo = fileAndLineInfo.substr(fileAndLineInfo.indexOf("/www/") + "/www/".length);
+
+                // Update the line with the shorter 
+                stackTrace[index] = functionName + "@" + fileAndLineInfo;
+            });
+
+            return stackTrace.join("\n\n");
+        }
+
+        /**
          * Returns the categories for the application in their default sort order.
          */
         public get categories(): ViewModels.CategoryItemViewModel[] {

@@ -63,6 +63,14 @@
             this.viewModel.httpUrl = logEntry.httpUrl;
             this.viewModel.httpMethod = logEntry.httpMethod;
 
+            // If an error property was available, use stacktrace.js and our helper method to
+            // format the stack trace into something that is more readable by removing long
+            // file paths etc.
+            if (logEntry.error) {
+                var stackTrace = window.printStackTrace({e: logEntry.error });
+                this.viewModel.formattedStackTrace = this.Utilities.formatStackTrace(stackTrace);
+            }
+
             // Format the date and time for display.
             this.viewModel.time = moment(logEntry.timestamp).format("h:mm:ss a");
             this.viewModel.date = formattedDate = moment(logEntry.timestamp).format("l");
