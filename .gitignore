@@ -13,6 +13,7 @@
 
 # Visual Studio Artifacts
 *.suo
+*.user
 
 # Development Artifacts
 /www/lib
@@ -26,3 +27,4 @@
 /tests/**/*.map
 /docs/*
 changeList.json
+.vs/config/applicationhost.config
