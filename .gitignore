@@ -25,3 +25,4 @@
 /tests/**/*.js
 /tests/**/*.map
 /docs/*
+changeList.json
