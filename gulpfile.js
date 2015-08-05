@@ -171,9 +171,7 @@ gulp.task("tsd", function (cb) {
  */
 gulp.task("tsd:app", function (cb) {
     // First update definitions to the typings directory.
-    // "tsd reinstall" can be executed in cmd.exe manually with caution:
-    //   it REMOVES any existing .d.ts files not listed in tsd.json
-    exec("tsd update", function (err, stdout, stderr) {
+    exec("tsd reinstall", function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
 
