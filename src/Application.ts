@@ -516,15 +516,15 @@ module JustinCredible.SampleApp.Application {
      * Fired when an unhandled JavaScript exception occurs outside of Angular.
      */
     function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number): void {
-        var Logger: Services.Logger,
-            UiHelper: Services.UiHelper;
 
         console.error("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
 
         try {
-            UiHelper = angular.element(document.body).injector().get(Services.UiHelper.ID);
-            UiHelper.toast.showLongBottom("An error has occurred; please try again.");
-            UiHelper.progressIndicator.hide();
+            // Show a generic message to the user.
+            services.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+
+            // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
+            services.UiHelper.progressIndicator.hide();
         }
         catch (ex) {
             console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
@@ -532,8 +532,7 @@ module JustinCredible.SampleApp.Application {
         }
 
         try {
-            Logger = angular.element(document.body).injector().get(Services.Logger.ID);
-            Logger.logWindowError(message, uri, lineNumber, columnNumber);
+            services.Logger.logWindowError(message, uri, lineNumber, columnNumber);
         }
         catch (ex) {
             console.error("An error occurred while attempting to log an exception.", ex);
@@ -546,9 +545,7 @@ module JustinCredible.SampleApp.Application {
      * This includes uncaught exceptions in ng-click methods for example.
      */
     function angular_exceptionHandler(exception: Error, cause: string): void {
-        var message = exception.message,
-            Logger: Services.Logger,
-            UiHelper: Services.UiHelper;
+        var message = exception.message;
 
         if (!cause) {
             cause = "[Unknown]";
@@ -557,9 +554,11 @@ module JustinCredible.SampleApp.Application {
         console.error("AngularJS Exception", exception, cause);
 
         try {
-            UiHelper = angular.element(document.body).injector().get(Services.UiHelper.ID);
-            UiHelper.toast.showLongBottom("An error has occurred; please try again.");
-            UiHelper.progressIndicator.hide();
+            // Show a generic message to the user.
+            services.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+
+            // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
+            services.UiHelper.progressIndicator.hide();
         }
         catch (ex) {
             console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
@@ -567,8 +566,7 @@ module JustinCredible.SampleApp.Application {
         }
 
         try {
-            Logger = angular.element(document.body).injector().get(Services.Logger.ID);
-            Logger.logError("Angular exception caused by " + cause, exception);
+            services.Logger.logError("Angular exception caused by " + cause, exception);
         }
         catch (ex) {
             console.error("An error occurred while attempting to log an Angular exception.", ex);
