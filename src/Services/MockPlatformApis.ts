@@ -27,7 +27,7 @@
 
         //#endregion
 
-        private isProgressIndicatorShown: boolean = false;
+        private _isProgressIndicatorShown: boolean = false;
 
         //#region Public API
 
@@ -430,7 +430,7 @@
             // happen after at least waiting one second.
             setTimeout(() => {
                 this.$ionicLoading.hide();
-                this.isProgressIndicatorShown = false;
+                this._isProgressIndicatorShown = false;
             }, 1000);
         }
 
@@ -438,11 +438,11 @@
             var label: string,
                 timeout: number;
 
-            if (this.isProgressIndicatorShown) {
+            if (this._isProgressIndicatorShown) {
                 return;
             }
 
-            this.isProgressIndicatorShown = true;
+            this._isProgressIndicatorShown = true;
 
             if (typeof (labelOrTimeout) === "string") {
                 label = labelOrTimeout;
@@ -462,7 +462,7 @@
 
             if (timeout) {
                 setTimeout(() => {
-                    this.isProgressIndicatorShown = false;
+                    this._isProgressIndicatorShown = false;
                     this.$ionicLoading.hide();
                 }, timeout);
             }

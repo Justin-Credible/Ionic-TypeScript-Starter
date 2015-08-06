@@ -233,14 +233,14 @@
          * Fired when a response completes with a non-200 level status code.
          * 
          * Additionally, this can fire when there are uncaught exceptions (eg JavaScript errors)
-         * in the HttpInterceptfor response method.
+         * in the HttpInterceptor response method.
          */
         public responseError(responseOrError: any) {
             var httpResponse: ng.IHttpPromiseCallbackArg<any>,
                 exception: Error,
                 config: Interfaces.RequestConfig;
 
-            console.log("HttpInterceptor.responseError", [httpResponse]);
+            console.log("HttpInterceptor.responseError", [responseOrError]);
 
             if (responseOrError instanceof Error) {
                 exception = <Error>responseOrError;
