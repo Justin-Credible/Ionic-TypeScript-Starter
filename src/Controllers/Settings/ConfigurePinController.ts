@@ -2,22 +2,26 @@
 
     export class ConfigurePinController extends BaseController<ViewModels.ConfigurePinViewModel> {
 
+        //#region Injection
+
         public static ID = "ConfigurePinController";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.UiHelper.ID, Services.Preferences.ID];
+            return [
+                "$scope",
+                Services.UiHelper.ID,
+                Services.Preferences.ID
+            ];
         }
 
-        private UiHelper: Services.UiHelper;
-        private Preferences: Services.Preferences;
-
-        constructor($scope: ng.IScope, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+        constructor(
+            $scope: ng.IScope,
+            private UiHelper: Services.UiHelper,
+            private Preferences: Services.Preferences) {
             super($scope, ViewModels.ConfigurePinViewModel);
-
-            this.UiHelper = UiHelper;
-            this.Preferences = Preferences;
         }
 
+        //#endregion
 
         //#region BaseController Overrides
 

@@ -7,19 +7,23 @@
      */
     export class FileUtilities {
 
+        //#region Injection
+
         public static ID = "FileUtilities";
 
         public static get $inject(): string[] {
-            return ["$q", Utilities.ID];
+            return [
+                "$q",
+                Utilities.ID
+            ];
         }
 
-        private $q: ng.IQService;
-        private Utilities: Utilities;
-
-        constructor($q: ng.IQService, Utilities: Utilities) {
-            this.$q = $q;
-            this.Utilities = Utilities;
+        constructor(
+            private $q: ng.IQService,
+            private Utilities: Utilities) {
         }
+
+        //#endregion
 
         /**
          * This helper provides a common location to manipulate the path before it is used. This is

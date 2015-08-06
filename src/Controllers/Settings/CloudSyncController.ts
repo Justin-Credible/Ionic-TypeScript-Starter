@@ -2,25 +2,29 @@
 
     export class CloudSyncController extends BaseController<ViewModels.CloudSyncViewModel> {
 
+        //#region Injection
+
         public static ID = "CloudSyncController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$ionicHistory"];
+            return [
+                "$scope",
+                "$ionicHistory"
+            ];
         }
 
-        private $ionicHistory: any;
-
-        private cloudIconPanel: Directives.IIconPanelDirectiveInstance;
-        private updateInterval: number;
-
-        constructor($scope: ng.IScope, $ionicHistory: any) {
+        constructor(
+            $scope: ng.IScope,
+            private $ionicHistory: any) {
             super($scope, ViewModels.CloudSyncViewModel);
 
-            this.$ionicHistory = $ionicHistory;
-
-            // Subscribe to the icon-panel's created event by name ("cloud-icon-panel").
             this.scope.$on("icon-panel.cloud-icon-panel.created", _.bind(this.iconPanel_created, this));
         }
+
+        //#endregion
+
+        private _cloudIconPanel: Directives.IIconPanelDirectiveInstance;
+        private _updateInterval: number;
 
         //#region BaseController Overrides
 
@@ -38,15 +42,15 @@
             super.view_leave();
 
             // Stop the toggleIcon function from firing.
-            clearInterval(this.updateInterval);
+            clearInterval(this._updateInterval);
         }
 
         private iconPanel_created(event: ng.IAngularEvent, instance: Directives.IIconPanelDirectiveInstance) {
             // Store a reference to the instance of this icon-panel so we can use it later.
-            this.cloudIconPanel = instance;
+            this._cloudIconPanel = instance;
 
             // Register the toggleIcon function to fire every second to swap the cloud icon.
-            this.updateInterval = setInterval(_.bind(this.toggleIcon, this), 1000);
+            this._updateInterval = setInterval(_.bind(this.toggleIcon, this), 1000);
         }
 
         //#endregion
@@ -56,11 +60,11 @@
         private toggleIcon() {
 
             // Simply switch the icon depending on which icon is currently set.
-            if (this.cloudIconPanel.getIcon() === "ion-ios-cloud-upload-outline") {
-                this.cloudIconPanel.setIcon("ion-ios-cloud-download-outline");
+            if (this._cloudIconPanel.getIcon() === "ion-ios-cloud-upload-outline") {
+                this._cloudIconPanel.setIcon("ion-ios-cloud-download-outline");
             }
             else {
-                this.cloudIconPanel.setIcon("ion-ios-cloud-upload-outline");
+                this._cloudIconPanel.setIcon("ion-ios-cloud-upload-outline");
             }
 
             // We have to notify Angular that we want an update manually since the
@@ -75,10 +79,10 @@
 
         protected setup_click() {
             // Stop the auto icon swapping.
-            clearInterval(this.updateInterval);
+            clearInterval(this._updateInterval);
 
             // Change the text on the icon panel using the instance directly.
-            this.cloudIconPanel.setText("Unable to contact the cloud!");
+            this._cloudIconPanel.setText("Unable to contact the cloud!");
 
             // Can change the icon via a setIcon call on the directive instance
             // or by changing the view model property that it is bound to.

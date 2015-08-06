@@ -5,26 +5,29 @@
      */
     export class Utilities {
 
+        //#region Injection
+
         public static ID = "Utilities";
 
         public static get $inject(): string[] {
-            return ["isRipple", "isCordova", "buildVars", "isChromeExtension", Preferences.ID];
+            return [
+                "isRipple",
+                "isCordova",
+                "buildVars",
+                "isChromeExtension",
+                Preferences.ID
+            ];
         }
 
-        private Preferences: Preferences;
-
-        private _isRipple: boolean;
-        private _isCordova: boolean;
-        private _buildVars: BuildVars;
-        private _isChromeExtension: boolean;
-
-        constructor(isRipple: boolean, isCordova: boolean, buildVars: BuildVars, isChromeExtension: boolean, Preferences: Preferences) {
-            this._isRipple = isRipple;
-            this._isCordova = isCordova;
-            this._buildVars = buildVars;
-            this._isChromeExtension = isChromeExtension;
-            this.Preferences = Preferences;
+        constructor(
+            private _isRipple_: boolean,
+            private _isCordova_: boolean,
+            private buildVars: BuildVars,
+            private _isChromeExtension_: boolean,
+            private Preferences: Preferences) {
         }
+
+        //#endregion
 
         //#region Platforms
 
@@ -35,7 +38,7 @@
          * @returns True if the application is running in the Ripple emulator, false otherwise.
          */
         public get isRipple(): boolean {
-            return this._isRipple;
+            return this._isRipple_;
         }
 
         /**
@@ -45,7 +48,7 @@
          * @returns True if the application is running in the Apache Cordova runtime, false otherwise.
          */
         public get isCordova(): boolean {
-            return this._isCordova;
+            return this._isCordova_;
         }
 
         /**
@@ -54,7 +57,7 @@
          * @returns True if the application is in debug mode, false otherwise.
          */
         public get isDebugMode(): boolean {
-            return this._buildVars.debug;
+            return this.buildVars.debug;
         }
 
         /**
@@ -63,7 +66,7 @@
          * @returns True if the application is running as a Chrome Extension, false otherwise.
          */
         public get isChromeExtension(): boolean {
-            return this._isChromeExtension;
+            return this._isChromeExtension_;
         }
 
         /**

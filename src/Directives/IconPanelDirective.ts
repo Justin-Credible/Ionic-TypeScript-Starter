@@ -32,11 +32,22 @@
      */
     export class IconPanelDirective extends BaseElementDirective<IIconPanelDirectiveScope> implements IIconPanelDirectiveInstance {
 
+        //#region Injection
+
         public static ID = "iconPanel";
 
         public static get $inject(): string[] {
-            return [Services.Utilities.ID];
+            return [
+                Services.Utilities.ID
+            ];
         }
+
+        constructor(
+            private Utilities: Services.Utilities) {
+            super();
+        }
+
+        //#endregion
 
         //#region Angular Directive Options
 
@@ -60,10 +71,6 @@
         private _iconContainer: ng.IAugmentedJQuery;
         private _iconElement: ng.IAugmentedJQuery;
         private _textContainer: ng.IAugmentedJQuery;
-
-        constructor(private Utilities: Services.Utilities) {
-            super();
-        }
 
         public initialize(): void {
 

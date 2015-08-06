@@ -5,29 +5,28 @@
      */
     export class Logger {
 
+        //#region Injection
+
         public static ID = "Logger";
 
         public static get $inject(): string[] {
-            return ["$q", Utilities.ID, FileUtilities.ID];
+            return [
+                "$q",
+                Utilities.ID,
+                FileUtilities.ID
+            ];
         }
 
-        private $q: ng.IQService;
-        private Utilities: Utilities;
-        private FileUtilities: FileUtilities;
-
-        private logToLocalStorage: boolean;
-        private logs: Models.LogEntry[];
-
-        constructor($q: ng.IQService, Utilities: Utilities, FileUtilities: FileUtilities) {
-            this.$q = $q;
-            this.Utilities = Utilities;
-            this.FileUtilities = FileUtilities;
-
-            //this.logToLocalStorage = Utilities.isCordova;
-            this.logToLocalStorage = false;
-
-            this.logs = [];
+        constructor(
+            private $q: ng.IQService,
+            private Utilities: Utilities,
+            private FileUtilities: FileUtilities) {
         }
+
+        //#endregion
+
+        private _logToLocalStorage: boolean = false;
+        private _logs: Models.LogEntry[] = [];
 
         private addLogEntry(logEntry: Models.LogEntry): ng.IPromise<void> {
             var q = this.$q.defer<void>(),
@@ -35,8 +34,8 @@
 
             // Lets handle the simple case first. If we are not logging
             // to disk, then all we need to do is add to the in-memory array.
-            if (!this.logToLocalStorage) {
-                this.logs.push(logEntry);
+            if (!this._logToLocalStorage) {
+                this._logs.push(logEntry);
                 q.resolve();
                 return q.promise;
             }
@@ -46,9 +45,9 @@
             // Define our common error callback; if something goes wrong then we can just
             // use the in-memory array and fall back to in-memory logging.
             errorCallback = (error: any) => {
-                this.logToLocalStorage = false;
+                this._logToLocalStorage = false;
                 console.warn("Reverting to in-memory logging because an error occurred during file I/O in addLogEntry().", error);
-                this.logs.push(logEntry);
+                this._logs.push(logEntry);
                 q.resolve();
             };
 
@@ -85,7 +84,7 @@
 
             // Lets handle the simple case first. If the log entry is already
             // available in-memory, then we can just return it.
-            logEntry = _.find(this.logs, (logEntry: Models.LogEntry) => {
+            logEntry = _.find(this._logs, (logEntry: Models.LogEntry) => {
                 return logEntry.id === id;
             });
 
@@ -96,7 +95,7 @@
 
             // If we didn't find the log entry in-memory AND we aren't using local
             // storage for logs, then there is no log entry available.
-            if (!this.logToLocalStorage) {
+            if (!this._logToLocalStorage) {
                 q.resolve(null);
                 return q.promise;
             }
@@ -107,7 +106,7 @@
             // Define our common error callback; if something goes wrong then we can just
             // use the in-memory array and fall back to in-memory logging.
             errorCallback = (error: any) => {
-                this.logToLocalStorage = false;
+                this._logToLocalStorage = false;
                 console.warn("Reverting to in-memory logging because an error occurred during file I/O in getLog().", error);
                 q.resolve(null);
             };
@@ -133,8 +132,8 @@
 
             // Lets handle the simple case first. If we are not logging
             // to disk, then all we need to do is return the in-memory array.
-            if (!this.logToLocalStorage) {
-                q.resolve(this.logs);
+            if (!this._logToLocalStorage) {
+                q.resolve(this._logs);
                 return q.promise;
             }
 
@@ -143,12 +142,12 @@
             // Define our common error callback; if something goes wrong then we can just
             // use the in-memory array and fall back to in-memory logging.
             errorCallback = (error: any) => {
-                this.logToLocalStorage = false;
+                this._logToLocalStorage = false;
                 console.warn("Reverting to in-memory logging because an error occurred during file I/O in getLogs().", error);
-                q.resolve(this.logs);
+                q.resolve(this._logs);
             };
 
-            this.logs = [];
+            this._logs = [];
 
             // First, we need to ensure the log directory is available.
             this.FileUtilities.createDirectory("/logs").then(() => {
@@ -173,7 +172,7 @@
 
                             logEntry = <Models.LogEntry>JSON.parse(text);
 
-                            this.logs.push(logEntry);
+                            this._logs.push(logEntry);
 
                         }, errorCallback);
 
@@ -187,7 +186,7 @@
                     // resolving this promise.
                     this.$q.all(promises).then(() => {
 
-                        q.resolve(this.logs);
+                        q.resolve(this._logs);
 
                     }, q.reject);
 
@@ -204,8 +203,8 @@
 
             // Lets handle the simple case first. If we are not logging
             // to disk, then all we need to do is clear the in-memory array.
-            if (!this.logToLocalStorage) {
-                this.logs = [];
+            if (!this._logToLocalStorage) {
+                this._logs = [];
                 q.resolve();
                 return q.promise;
             }
@@ -215,9 +214,9 @@
             // Define our common error callback; if something goes wrong then we can just
             // clear the in-memory array and fall back to in-memory logging.
             errorCallback = (error: any) => {
-                this.logToLocalStorage = false;
+                this._logToLocalStorage = false;
                 console.warn("Reverting to in-memory logging because an error occurred during file I/O in clearLogs().", error);
-                this.logs = [];
+                this._logs = [];
                 q.resolve();
             };
 
@@ -227,7 +226,7 @@
                 // If the local storage logs directory is available then lets remove all of its files.
                 this.FileUtilities.emptyDirectory("/logs").then(() => {
 
-                    this.logs = [];
+                    this._logs = [];
 
                     q.resolve();
 
@@ -304,11 +303,11 @@
         }
 
         public setLogToLocalStorage(logToLocalStorage: boolean): void {
-            this.logToLocalStorage = logToLocalStorage;
+            this._logToLocalStorage = logToLocalStorage;
         }
 
         public getLogToLocalStorage(): boolean {
-            return this.logToLocalStorage;
+            return this._logToLocalStorage;
         }
     }
 }

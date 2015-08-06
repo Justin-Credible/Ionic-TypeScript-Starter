@@ -2,27 +2,32 @@ module JustinCredible.SampleApp.Controllers {
 
     export class OnboardingRegisterController extends BaseController<ViewModels.OnboardingRegisterViewModel> {
 
+        //#region Injection
+
         public static ID = "OnboardingRegisterController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", "$ionicHistory", Services.Utilities.ID, Services.UiHelper.ID, Services.Configuration.ID];
+            return [
+                "$scope",
+                "$location",
+                "$ionicHistory",
+                Services.Utilities.ID,
+                Services.UiHelper.ID,
+                Services.Configuration.ID
+            ];
         }
 
-        private $location: ng.ILocationService;
-        private $ionicHistory: any;
-        private Utilities: Services.Utilities;
-        private UiHelper: Services.UiHelper;
-        private Configuration: Services.Configuration;
-
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Configuration: Services.Configuration) {
+        constructor(
+            $scope: ng.IScope,
+            private $location: ng.ILocationService,
+            private $ionicHistory: any,
+            private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
+            private Configuration: Services.Configuration) {
             super($scope, ViewModels.OnboardingRegisterViewModel);
-
-            this.$location = $location;
-            this.$ionicHistory = $ionicHistory;
-            this.Utilities = Utilities;
-            this.UiHelper = UiHelper;
-            this.Configuration = Configuration;
         }
+
+        //#endregion
 
         //#region BaseController Events
 

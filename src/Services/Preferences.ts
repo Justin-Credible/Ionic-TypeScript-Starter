@@ -8,7 +8,11 @@
      */
     export class Preferences {
 
+        //#region Injection
+
         public static ID = "Preferences";
+
+        //#endregion
 
         //#region Local Storage Keys
 

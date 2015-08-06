@@ -2,22 +2,29 @@
 
     export class ReorderCategoriesController extends BaseDialogController<ViewModels.ReorderCategoriesViewModel, void, void> {
 
+        //#region Injection
+
         public static ID = "ReorderCategoriesController";
         public static TemplatePath = "templates/Dialogs/Reorder-Categories.html";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
+            return [
+                "$scope",
+                Services.Utilities.ID,
+                Services.Preferences.ID,
+                Services.UiHelper.ID
+            ];
         }
 
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
-
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
+        constructor(
+            $scope: ng.IScope,
+            private Utilities: Services.Utilities,
+            private Preferences: Services.Preferences,
+            private UiHelper: Services.UiHelper) {
             super($scope, ViewModels.ReorderCategoriesViewModel, ReorderCategoriesController.ID);
-
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
         }
+
+        //#endregion
 
         //#region BaseDialogController Overrides
 

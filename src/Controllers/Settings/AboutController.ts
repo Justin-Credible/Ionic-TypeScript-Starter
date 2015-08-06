@@ -2,27 +2,32 @@
 
     export class AboutController extends BaseController<ViewModels.AboutViewModel> {
 
+        //#region Injection
+
         public static ID = "AboutController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$ionicHistory", Services.Utilities.ID, Services.Configuration.ID, Services.UiHelper.ID, "versionInfo"];
+            return [
+                "$scope",
+                "$ionicHistory",
+                Services.Utilities.ID,
+                Services.Configuration.ID,
+                Services.UiHelper.ID,
+                "versionInfo"
+            ];
         }
 
-        private $ionicHistory: any;
-        private Utilities: Services.Utilities;
-        private Configuration: Services.Configuration;
-        private UiHelper: Services.UiHelper;
-        private versionInfo: Interfaces.VersionInfo;
-
-        constructor($scope: ng.IScope, $ionicHistory: any, Utilities: Services.Utilities, Configuration: Services.Configuration, UiHelper: Services.UiHelper, versionInfo: Interfaces.VersionInfo) {
+        constructor(
+            $scope: ng.IScope,
+            private $ionicHistory: any,
+            private Utilities: Services.Utilities,
+            private Configuration: Services.Configuration,
+            private UiHelper: Services.UiHelper,
+            private versionInfo: Interfaces.VersionInfo) {
             super($scope, ViewModels.AboutViewModel);
-
-            this.$ionicHistory = $ionicHistory;
-            this.Utilities = Utilities;
-            this.Configuration = Configuration;
-            this.UiHelper = UiHelper;
-            this.versionInfo = versionInfo;
         }
+
+        //#endregion
 
         //#region BaseController Overrides
 

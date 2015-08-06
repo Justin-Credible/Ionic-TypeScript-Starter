@@ -5,27 +5,29 @@
      */
     export class MockPlatformApis {
 
+        //#region Injection
+
         public static ID = "MockPlatformApis";
 
         public static get $inject(): string[] {
-            return ["$q", "$ionicPopup", "$ionicLoading", Utilities.ID];
+            return [
+                "$q",
+                "$ionicPopup",
+                "$ionicLoading",
+                Utilities.ID
+            ];
         }
 
-        private $q: ng.IQService;
-        private Utilities: Utilities;
-        private $ionicPopup: any;
-        private $ionicLoading: any;
-
-        private isProgressIndicatorShown: boolean;
-
-        constructor($q: ng.IQService, $ionicPopup: any, $ionicLoading: any, Utilities: Utilities) {
-            this.$q = $q;
-            this.Utilities = Utilities;
-            this.$ionicPopup = $ionicPopup;
-            this.$ionicLoading = $ionicLoading;
-
-            this.isProgressIndicatorShown = false;
+        constructor(
+            private $q: ng.IQService,
+            private $ionicPopup: any,
+            private $ionicLoading: any,
+            private Utilities: Utilities) {
         }
+
+        //#endregion
+
+        private isProgressIndicatorShown: boolean = false;
 
         //#region Public API
 

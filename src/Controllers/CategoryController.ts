@@ -6,19 +6,24 @@
 
     export class CategoryController extends BaseController<ViewModels.CategoryViewModel> {
 
+        //#region Injection
+
         public static ID = "CategoryController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$stateParams"];
+            return [
+                "$scope",
+                "$stateParams"
+            ];
         }
 
-        private $stateParams: ICategoryStateParams;
-
-        constructor($scope: ng.IScope, $stateParams: ICategoryStateParams) {
+        constructor(
+            $scope: ng.IScope,
+            private $stateParams: ICategoryStateParams) {
             super($scope, ViewModels.CategoryViewModel);
-
-            this.$stateParams = $stateParams;
         }
+
+        //#endregion
 
         //#region BaseController Events
 

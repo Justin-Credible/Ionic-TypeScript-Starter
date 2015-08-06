@@ -8,17 +8,21 @@ module JustinCredible.SampleApp.Services {
      */
     export class MockHttpApis {
 
+        //#region Injection
+
         public static ID = "MockHttpApis";
 
         public static get $inject(): string[] {
-            return ["$httpBackend"];
+            return [
+                "$httpBackend"
+            ];
         }
 
-        private $httpBackend: ng.IHttpBackendService;
-
-        constructor($httpBackend: ng.IHttpBackendService) {
-            this.$httpBackend = $httpBackend;
+        constructor(
+            private $httpBackend: ng.IHttpBackendService) {
         }
+
+        //#endregion
 
         //#region Public API
 

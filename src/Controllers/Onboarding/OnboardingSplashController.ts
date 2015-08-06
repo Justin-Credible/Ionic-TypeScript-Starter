@@ -2,25 +2,30 @@ module JustinCredible.SampleApp.Controllers {
 
     export class OnboardingSplashController extends BaseController<ViewModels.EmptyViewModel> {
 
+        //#region Injection
+
         public static ID = "OnboardingSplashController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", "$ionicHistory", Services.Utilities.ID, Services.Configuration.ID];
+            return [
+                "$scope",
+                "$location",
+                "$ionicHistory",
+                Services.Utilities.ID,
+                Services.Configuration.ID
+            ];
         }
 
-        private $location: ng.ILocationService;
-        private $ionicHistory: any;
-        private Utilities: Services.Utilities;
-        private Configuration: Services.Configuration;
-
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, Configuration: Services.Configuration) {
+        constructor(
+            $scope: ng.IScope,
+            private $location: ng.ILocationService,
+            private $ionicHistory: any,
+            private Utilities: Services.Utilities,
+            private Configuration: Services.Configuration) {
             super($scope, ViewModels.EmptyViewModel);
-
-            this.$location = $location;
-            this.$ionicHistory = $ionicHistory;
-            this.Utilities = Utilities;
-            this.Configuration = Configuration;
         }
+
+        //#endregion
 
         //#region UI Events
 

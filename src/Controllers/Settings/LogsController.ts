@@ -2,23 +2,28 @@
 
     export class LogsController extends BaseController<ViewModels.LogsViewModel> {
 
+        //#region Injection
+
         public static ID = "LogsController";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.Logger.ID, Services.Utilities.ID, Services.UiHelper.ID];
+            return [
+                "$scope",
+                Services.Logger.ID,
+                Services.Utilities.ID,
+                Services.UiHelper.ID
+            ];
         }
 
-        private Logger: Services.Logger;
-        private Utilities: Services.Utilities;
-        private UiHelper: Services.UiHelper;
-
-        constructor($scope: ng.IScope, Logger: Services.Logger, Utilities: Services.Utilities, UiHelper: Services.UiHelper) {
+        constructor(
+            $scope: ng.IScope,
+            private Logger: Services.Logger,
+            private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper) {
             super($scope, ViewModels.LogsViewModel);
-
-            this.Logger = Logger;
-            this.Utilities = Utilities;
-            this.UiHelper = UiHelper;
         }
+
+        //#endregion
 
         //#region BaseController Overrides
 

@@ -7,24 +7,26 @@ module JustinCredible.SampleApp.Directives {
      */
     export class OnLoadDirective implements ng.IDirective {
 
+        //#region Injection
+
         public static ID = "onLoad";
 
         public static get $inject(): string[] {
             return ["$parse"];
         }
 
-        private $parse: ng.IParseService;
-
-        public restrict = "A";
-
-        constructor($parse: ng.IParseService) {
-            this.$parse = $parse;
+        constructor(
+            private $parse: ng.IParseService) {
 
             // Ensure that the link function is bound to this instance so we can
             // access instance variables like $parse. AngularJs normally executes
             // the link function in the context of the global scope.
             this.link = _.bind(this.link, this);
         }
+
+        //#endregion
+
+        public restrict = "A";
 
         public link(scope: ng.IScope, element: ng.IAugmentedJQuery, attributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction): void {
 

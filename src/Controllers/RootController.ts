@@ -2,35 +2,47 @@
 
     export class RootController extends BaseController<ViewModels.RootViewModel> {
 
+        //#region Injection
+
         public static ID = "RootController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$location", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.Preferences.ID];
+            return [
+                "$scope",
+                "$location",
+                "$http",
+                Services.Utilities.ID,
+                Services.UiHelper.ID,
+                Services.Preferences.ID
+            ];
         }
 
-        private $location: ng.ILocationService;
-        private $http: ng.IHttpService;
-        private Utilities: Services.Utilities;
-        private UiHelper: Services.UiHelper;
-        private Preferences: Services.Preferences;
-
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+        constructor(
+            $scope: ng.IScope,
+            private $location: ng.ILocationService,
+            private $http: ng.IHttpService,
+            private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
+            private Preferences: Services.Preferences) {
             super($scope, ViewModels.RootViewModel);
+        }
 
-            this.$location = $location;
-            this.$http = $http;
-            this.Utilities = Utilities;
-            this.UiHelper = UiHelper;
-            this.Preferences = Preferences;
+        //#endregion
+
+        //#region BaseController Overrides
+
+        protected initialize(): void {
+
+            this.scope.$on(Constants.Events.HTTP_UNAUTHORIZED, _.bind(this.http_unauthorized, this));
+            this.scope.$on(Constants.Events.HTTP_FORBIDDEN, _.bind(this.http_forbidden, this));
+            this.scope.$on(Constants.Events.HTTP_NOT_FOUND, _.bind(this.http_notFound, this));
+            this.scope.$on(Constants.Events.HTTP_UNKNOWN_ERROR, _.bind(this.http_unknownError, this));
+            this.scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
 
             this.viewModel.categories = this.Utilities.categories;
-
-            $scope.$on(Constants.Events.HTTP_UNAUTHORIZED, _.bind(this.http_unauthorized, this));
-            $scope.$on(Constants.Events.HTTP_FORBIDDEN, _.bind(this.http_forbidden, this));
-            $scope.$on(Constants.Events.HTTP_NOT_FOUND, _.bind(this.http_notFound, this));
-            $scope.$on(Constants.Events.HTTP_UNKNOWN_ERROR, _.bind(this.http_unknownError, this));
-            $scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
         }
+
+        //#endregion
 
         //#region Event Handlers
 

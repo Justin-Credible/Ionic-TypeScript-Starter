@@ -12,26 +12,15 @@
      */
     export class HttpInterceptor {
 
+        //#region Injection
+
         public static ID = "HttpInterceptor";
 
-        private $rootScope: ng.IRootScopeService;
-        private $injector: ng.auto.IInjectorService;
-        private $q: ng.IQService;
-        private apiVersion: string;
-
-        private requestsInProgress: number;
-        private blockingRequestsInProgress: number;
-        private spinnerRequestsInProgress: number;
-
-        constructor($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, apiVersion: string) {
-            this.$rootScope = $rootScope;
-            this.$injector = $injector;
-            this.$q = $q;
-            this.apiVersion = apiVersion;
-
-            this.requestsInProgress = 0;
-            this.blockingRequestsInProgress = 0;
-            this.spinnerRequestsInProgress = 0;
+        constructor(
+            private $rootScope: ng.IRootScopeService,
+            private $injector: ng.auto.IInjectorService,
+            private $q: ng.IQService,
+            private apiVersion: string) {
         }
 
         private get Utilities(): Utilities {
@@ -67,7 +56,8 @@
 
             // Angular expects the factory function to return the object that is used
             // for the factory when it is injected into other objects.
-            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, Configuration: Configuration, Utilities: Utilities, UiHelper: UiHelper, Logger: Logger, apiVersion: string) {
+            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, apiVersion: string) {
+
                 // Create an instance our strongly-typed service.
                 var instance = new HttpInterceptor($rootScope, $injector, $q, apiVersion);
 
@@ -83,10 +73,21 @@
             };
 
             // Annotate the factory function with the things that should be injected.
-            factory.$inject = ["$rootScope", "$injector", "$q", "apiVersion"];
+            factory.$inject = [
+                "$rootScope",
+                "$injector",
+                "$q",
+                "apiVersion"
+            ];
 
             return factory;
         }
+
+        //#endregion
+
+        private requestsInProgress: number = 0;
+        private blockingRequestsInProgress: number = 0;
+        private spinnerRequestsInProgress: number = 0;
 
         //#region HttpInterceptor specific methods
 

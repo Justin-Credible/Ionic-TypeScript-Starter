@@ -2,33 +2,38 @@
 
     export class DeveloperController extends BaseController<ViewModels.DeveloperViewModel> {
 
+        //#region Injection
+
         public static ID = "DeveloperController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$http", Services.Utilities.ID, Services.UiHelper.ID, Services.FileUtilities.ID, Services.Logger.ID, Services.Preferences.ID, Services.Configuration.ID, Services.MockPlatformApis.ID];
+            return [
+                "$scope",
+                "$http",
+                Services.Utilities.ID,
+                Services.UiHelper.ID,
+                Services.FileUtilities.ID,
+                Services.Logger.ID,
+                Services.Preferences.ID,
+                Services.Configuration.ID,
+                Services.MockPlatformApis.ID
+            ];
         }
 
-        private $http: ng.IHttpService;
-        private Utilities: Services.Utilities;
-        private UiHelper: Services.UiHelper;
-        private FileUtilities: Services.FileUtilities;
-        private Logger: Services.Logger;
-        private Preferences: Services.Preferences;
-        private Configuration: Services.Configuration;
-        private MockPlatformApis: Services.MockPlatformApis;
-
-        constructor($scope: ng.IScope, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, FileUtilities: Services.FileUtilities, Logger: Services.Logger, Preferences: Services.Preferences, Configuration: Services.Configuration, MockPlatformApis: Services.MockPlatformApis) {
+        constructor(
+            $scope: ng.IScope,
+            private $http: ng.IHttpService,
+            private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
+            private FileUtilities: Services.FileUtilities,
+            private Logger: Services.Logger,
+            private Preferences: Services.Preferences,
+            private Configuration: Services.Configuration,
+            private MockPlatformApis: Services.MockPlatformApis) {
             super($scope, ViewModels.DeveloperViewModel);
-
-            this.$http = $http;
-            this.Utilities = Utilities;
-            this.UiHelper = UiHelper;
-            this.FileUtilities = FileUtilities;
-            this.Logger = Logger;
-            this.Preferences = Preferences;
-            this.Configuration = Configuration;
-            this.MockPlatformApis = MockPlatformApis;
         }
+
+        //#endregion
 
         //#region BaseController Overrides
 

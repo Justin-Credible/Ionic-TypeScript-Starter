@@ -2,24 +2,29 @@
 
     export class PinEntryController extends BaseDialogController<ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel> {
 
+        //#region Injection
+
         public static ID = "PinEntryController";
         public static TemplatePath = "templates/Dialogs/Pin-Entry.html";
 
         public static get $inject(): string[] {
-            return ["$scope", Services.Utilities.ID, Services.Preferences.ID, Services.UiHelper.ID];
+            return [
+                "$scope",
+                Services.Utilities.ID,
+                Services.Preferences.ID,
+                Services.UiHelper.ID
+            ];
         }
 
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
-        private UiHelper: Services.UiHelper;
-
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
+        constructor(
+            $scope: ng.IScope,
+            private Utilities: Services.Utilities,
+            private Preferences: Services.Preferences,
+            private UiHelper: Services.UiHelper) {
             super($scope, ViewModels.PinEntryViewModel, PinEntryController.ID);
-
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
-            this.UiHelper = UiHelper;
         }
+
+        //#endregion
 
         //#region BaseDialogController Overrides
 

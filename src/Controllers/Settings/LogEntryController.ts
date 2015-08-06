@@ -6,29 +6,33 @@
 
     export class LogEntryController extends BaseController<ViewModels.LogEntryViewModel> {
 
+        //#region Injection
+
         public static ID = "LogEntryController";
 
         public static get $inject(): string[] {
-            return ["$scope", "$stateParams", Services.Logger.ID, Services.UiHelper.ID, Services.Utilities.ID, "versionInfo"];
+            return [
+                "$scope",
+                "$stateParams",
+                Services.Logger.ID,
+                Services.UiHelper.ID,
+                Services.Utilities.ID,
+                "versionInfo"];
         }
 
-        private $stateParams: ILogEntryStateParams;
-        private Logger: Services.Logger;
-        private UiHelper: Services.UiHelper;
-        private Utilities: Services.Utilities;
-        private versionInfo: Interfaces.VersionInfo;
+        constructor(
+            $scope: ng.IScope,
+            private $stateParams: ILogEntryStateParams,
+            private Logger: Services.Logger,
+            private UiHelper: Services.UiHelper,
+            private Utilities: Services.Utilities,
+            private versionInfo: Interfaces.VersionInfo) {
+            super($scope, ViewModels.LogEntryViewModel);
+        }
+
+        //#endregion
 
         private _fullLogEntry: Models.LogEntry;
-
-        constructor($scope: ng.IScope, $stateParams: ILogEntryStateParams, Logger: Services.Logger, UiHelper: Services.UiHelper, Utilities: Services.Utilities, versionInfo: Interfaces.VersionInfo) {
-            super($scope, ViewModels.LogEntryViewModel);
-
-            this.$stateParams = $stateParams;
-            this.Logger = Logger;
-            this.UiHelper = UiHelper;
-            this.Utilities = Utilities;
-            this.versionInfo = versionInfo;
-        }
 
         //#region BaseController Overrides
 
