@@ -71,7 +71,7 @@
             // format the stack trace into something that is more readable by removing long
             // file paths etc.
             if (logEntry.error) {
-                var stackTrace = window.printStackTrace({e: logEntry.error });
+                var stackTrace = window.printStackTrace({ e: logEntry.error });
                 this.viewModel.formattedStackTrace = this.Utilities.formatStackTrace(stackTrace);
             }
 

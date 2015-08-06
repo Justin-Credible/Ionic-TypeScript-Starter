@@ -87,7 +87,7 @@
         //#region Controller Methods
 
         protected reorder_click() {
-            this.UiHelper.showDialog(Controllers.ReorderCategoriesController.ID).then(() => {
+            this.UiHelper.showDialog(ReorderCategoriesController.ID).then(() => {
                 // After the re-order dialog is closed, re-populate the category
                 // items since they may have been re-ordered.
                 this.viewModel.categories = this.Utilities.categories;
