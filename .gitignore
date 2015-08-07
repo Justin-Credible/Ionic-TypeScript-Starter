@@ -11,6 +11,10 @@
 /typings-tests/*
 !/typings-tests/custom/
 
+# Visual Studio Artifacts
+*.suo
+*.user
+
 # Development Artifacts
 /www/lib
 /www/js/bundle.*
@@ -22,3 +26,5 @@
 /tests/**/*.js
 /tests/**/*.map
 /docs/*
+changeList.json
+.vs/config/applicationhost.config
