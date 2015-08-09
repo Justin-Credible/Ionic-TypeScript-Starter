@@ -258,7 +258,7 @@ gulp.task("remote-emulate-ios", function(cb) {
                                 isDebugScheme() ? "debug" : "release",
                                 config.logLevel);
 
-        var payloadStream = fs.createReadStream("tmp/payload.tgz.gz");
+        var payloadStream = fs.createReadStream("tmp/taco-payload.tgz.gz");
 
         console.log(format("Uploading build to: {0}", payloadUploadUrl));
 
