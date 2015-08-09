@@ -10,6 +10,7 @@ var fs = require("fs");
 // Gulp & Gulp Plugins
 var gulp = require("gulp");
 var gutil = require("gulp-util");
+var gulpif = require("gulp-if");
 var rename = require("gulp-rename");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
@@ -666,14 +667,14 @@ gulp.task("plugins", ["git-check"], function(cb) {
 
 /**
  * Used to create a payload that can be sent to an OS X machine for build.
- * The payload will be placed in tmp/taco-payload.tgz
+ * The payload will be placed in tmp/taco-payload.tgz.gz
  */
 gulp.task("package-remote-build", function () {
-    // Note that we use the eol plugin here to transform line endings to the OS X style
-    // of \r instead of \r\n. We need to do this mainly for the scripts in the hooks
-    // directory so they can be executed as scripts on OS X.
+    // Note that we use the eol plugin here to transform line endings for js files to
+    // the OS X style of \r instead of \r\n. We need to do this mainly for the scripts
+    // in the hooks directory so they can be executed as scripts on OS X.
     return gulp.src(paths.remoteBuildFiles, { base: "../" })
-            .pipe(eol("\r"))
+            .pipe(gulpif("*.js", eol("\r")))
             .pipe(tar("taco-payload.tgz"))
             .pipe(gzip())
             .pipe(gulp.dest("tmp"));
