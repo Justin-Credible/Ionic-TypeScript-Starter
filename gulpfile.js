@@ -1,5 +1,5 @@
 
-/*globals Buffer, __dirname*/
+/*globals Buffer, __dirname, process*/
 
 
 // Native Node Modules
@@ -14,10 +14,14 @@ var rename = require("gulp-rename");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
 var typedoc = require("gulp-typedoc");
+var tar = require("gulp-tar");
+var gzip = require("gulp-gzip");
+var eol = require("gulp-eol");
 
 // Other Modules
 var runSequence = require("run-sequence");
 var bower = require("bower");
+var request = require("request");
 var sh = require("shelljs");
 var async = require("async");
 var xpath = require("xpath");
@@ -30,7 +34,16 @@ var paths = {
     www: ["./www/**/*.*"],
     tests: ["./tests/**/*.ts"],
     chromeIcon: ["./resources/icon.png"],
-    chromeManifest: ["./chrome-manifest.json"]
+    chromeManifest: ["./chrome-manifest.json"],
+    remoteBuildFiles: [
+        "./merges/**",
+        "./resources/**",
+        "./hooks/**",
+        "./plugins/**",
+        "./www/**",
+        "./config.xml",
+        "package.json"
+    ]
 };
 
 /**
@@ -92,6 +105,30 @@ function string_src(filename, str) {
 }
 
 /**
+ * Used to format a string by replacing values with the given arguments.
+ * Arguments should be provided in the format of {x} where x is the index
+ * of the argument to be replaced corresponding to the arguments given.
+ * 
+ * For example, the string t = "Hello there {0}, it is {1} to meet you!"
+ * used like this: Utilities.format(t, "dude", "nice") would result in:
+ * "Hello there dude, it is nice to meet you!".
+ * 
+ * @param str The string value to use for formatting.
+ * @param args The values to inject into the format string.
+ */
+function format(formatString) {
+    var i, reg;
+    i = 0;
+
+    for (i = 0; i < arguments.length - 1; i += 1) {
+        reg = new RegExp("\\{" + i + "\\}", "gm");
+        formatString = formatString.replace(reg, arguments[i + 1]);
+    }
+
+    return formatString;
+}
+
+/**
  * The default task downloads Cordova plugins, Bower libraries, TypeScript definitions,
  * and then lints and builds the TypeScript source code.
  */
@@ -117,6 +154,210 @@ gulp.task("watch", function() {
 gulp.task("emulate-ios", ["ts"], function(cb) {
     exec("ionic emulate ios");
     cb();
+});
+
+/**
+ * Used to launch the iOS simulator on a remote OS X machine.
+ * 
+ * The remote machine must be running the remotebuild server:
+ * https://www.npmjs.com/package/remotebuild
+ * 
+ * Server configuration is located in remote-build.json
+ * 
+ * Useful to quickly execute from Visual Studio Code"s task launcher:
+ * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
+ */
+gulp.task("remote-emulate-ios", function(cb) {
+
+    // First we'll compile the TypeScript and build the application payload.
+    runSequence("ts", "package-remote-build", function (err) {
+
+        if (err) {
+            cb(err);
+            return;
+        }
+
+        // Load the remote build configuration.
+        var config = JSON.parse(fs.readFileSync("remote-build.json", "utf8"));
+
+        // Ignore invalid/self-signed certificates based on configuration.
+        if (config.allowInvalidSslCerts) {
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        }
+
+        // Build the base URL for all subsequent requests. This is the machine
+        // that is running the remotebuild server.
+        var baseUrl = format("{0}://{1}:{2}{3}",
+                        config.ssl ? "https" : "http",
+                        config.host,
+                        config.port,
+                        config.path);
+
+        // This will keep track of the number of times we've checked the build status.
+        var statusCheckCount = 0;
+
+        // Define a helper function that we'll use to poll the build status.
+        var waitOnRemoteBuild = function (buildNumber, waitOnRemoteBuildCallback) {
+
+            var tasksUrl = format("{0}cordova/build/tasks/{1}",
+                                baseUrl,
+                                buildNumber);
+
+            // Make a request to get the status.
+            request.get(tasksUrl, function (err, tasksResponse) {
+
+                if (err) {
+                    cb(err);
+                    return;
+                }
+
+                // Increment the counter so we know when to stop checking.
+                statusCheckCount += 1;
+
+                // If we've gotten to the max number of checks, the bail out.
+                if (statusCheckCount > config.maxStatusChecks) {
+                    cb(new Error(format("The build was not marked as completed after {0} status checks.", config.maxStatusChecks)));
+                    return;
+                }
+
+                var tasksResponseData = JSON.parse(tasksResponse.body);
+
+                // If the task is still building or in the upload phase, wait to poll again.
+                // Otherwise we can bail out.
+                if (tasksResponseData.status === "Building"
+                    || tasksResponseData.status === "Uploaded"
+                    || tasksResponseData.status === "Uploading") {
+
+                    console.log(format("{0}: Checking status ({1}/{2}): {3} - {4}",
+                                    tasksResponseData.statusTime,
+                                    statusCheckCount,
+                                    config.maxStatusChecks,
+                                    tasksResponseData.status,
+                                    tasksResponseData.message));
+
+                    setTimeout(function () {
+                        waitOnRemoteBuild(buildNumber, waitOnRemoteBuildCallback);
+                    }, config.statusCheckDelayMs);
+                }
+                else {
+
+                    console.log(format("{0}: {1} - {2}",
+                                    tasksResponseData.statusTime,
+                                    tasksResponseData.status,
+                                    tasksResponseData.message));
+                    
+                    waitOnRemoteBuildCallback(null, tasksResponseData);
+                }
+            });
+        };
+
+        var payloadUploadUrl = format("{0}cordova/build/tasks?command={1}&vcordova={2}&cfg={3}&loglevel={4}",
+                                baseUrl,
+                                "build",
+                                config.cordovaVersion,
+                                isDebugScheme() ? "debug" : "release",
+                                config.logLevel);
+
+        var payloadStream = fs.createReadStream("tmp/payload.tgz.gz");
+
+        console.log(format("Uploading build to: {0}", payloadUploadUrl));
+
+        // Make the HTTP POST request with the payload in the body.
+        payloadStream.pipe(request.post(payloadUploadUrl, function (err, uploadResponse) {
+
+            if (err) {
+                cb(err);
+                return;
+            }
+
+            // A successful upload is a 202 Accepted, but we'll treat any 200 status as OK.
+            if (uploadResponse.statusCode < 200 || uploadResponse.statusCode >= 300) {
+                cb(new Error(format("Error when uploading payload: HTTP {0} - {1}", uploadResponse.statusCode, payloadStream)));
+                return;
+            }
+
+            var uploadResponseData = JSON.parse(uploadResponse.body);
+
+            // If it wasn't uploaded, then we can't continue.
+            if (uploadResponseData.status !== "Uploaded") {
+                console.log(uploadResponseData);
+                cb(new Error(format("A non-'Uploaded' status was received after uploading the payload: {0} - {1}", uploadResponseData.status, uploadResponseData.message)));
+                return;
+            }
+
+            // Grab the build number for this payload; we'll need it for subsequent calls.
+            var buildNumber = uploadResponseData.buildNumber;
+
+            if (!buildNumber) {
+                cb(new Error("A build number was not received after uploading the payload."));
+                return;
+            }
+
+            console.log(format("Payload uploaded; waiting for build {0} to complete...", buildNumber));
+
+            // Here we'll wait until the build process has completed before continuing.
+            waitOnRemoteBuild(buildNumber, function (err, taskStatus) {
+
+                if (err) {
+                    cb(err);
+                    return;
+                }
+
+                var logsUrl = format("{0}cordova/build/tasks/{1}/log", baseUrl, buildNumber);
+
+                console.log(format("Build ended with status: {0} - {1}", taskStatus.status, taskStatus.message));
+
+                console.log(format("Now retreiving logs for build {0}...", buildNumber));
+
+                // The build has finished, so lets go get the logs.
+                request.get(logsUrl, function (err, logsResponse) {
+
+                    if (err) {
+                        cb(err);
+                        return;
+                    }
+
+                    // Write the logs to disk.
+                    console.log(format("Writing server build logs to: {0}", config.logFile));
+                    fs.writeFile(config.logFile, logsResponse.body);
+
+                    // If the build wasn't successful, then bail out here.
+                    if (taskStatus.status !== "Complete") {
+                        console.log(taskStatus);
+                        cb(new Error(format("A non-'Complete' status was received after waiting for a build to complete: {0} - {1}", taskStatus.status, taskStatus.message)));
+                        return;
+                    }
+
+                    var emulateUrl = format("{0}cordova/build/{1}/emulate?target={2}",
+                                        baseUrl,
+                                        buildNumber,
+                                        encodeURIComponent(config.emulationTarget));
+
+                    console.log(format("Starting emulator for build {0}...", buildNumber));
+
+                    // Now make a call to start the emulator.
+                    request.get(emulateUrl, function (err, emulateResponse) {
+
+                        if (err) {
+                            cb(err);
+                            return;
+                        }
+
+                        var emulateResponseData = JSON.parse(emulateResponse.body);
+
+                        if (emulateResponseData.status === "Emulated") {
+                            console.log(format("{0} - {1}", emulateResponseData.status, emulateResponseData.message));
+                            cb();
+                        }
+                        else {
+                            console.log(emulateResponse);
+                            cb(new Error(format("A non-'Emulated' response was received when requesting emulation: {0} - {1}", emulateResponseData.status, emulateResponseData.message)));
+                        }
+                    });
+                });
+            });
+        }));
+    });
 });
 
 /**
@@ -424,11 +665,35 @@ gulp.task("plugins", ["git-check"], function(cb) {
 });
 
 /**
+ * Used to create a payload that can be sent to an OS X machine for build.
+ * The payload will be placed in tmp/taco-payload.tgz
+ */
+gulp.task("package-remote-build", function () {
+    // Note that we use the eol plugin here to transform line endings to the OS X style
+    // of \r instead of \r\n. We need to do this mainly for the scripts in the hooks
+    // directory so they can be executed as scripts on OS X.
+    return gulp.src(paths.remoteBuildFiles, { base: "../" })
+            .pipe(eol("\r"))
+            .pipe(tar("taco-payload.tgz"))
+            .pipe(gzip())
+            .pipe(gulp.dest("tmp"));
+});
+
+/**
  * Used to perform a file clean-up of the project. This removes all files and directories
- * that don"t need to be committed to source control by delegating to several of the clean
+ * that don't need to be committed to source control by delegating to several of the clean
  * sub-tasks.
  */
-gulp.task("clean", ["clean:node", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd"]);
+gulp.task("clean", ["clean:tmp", "clean:node", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd"]);
+
+/**
+ * Removes the tmp directory.
+ */
+gulp.task("clean:tmp", function (cb) {
+    del([
+        "tmp"
+    ], cb);
+});
 
 /**
  * Removes the node_modules directory.

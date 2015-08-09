@@ -16,11 +16,13 @@ In-browser development and debugging is possible via the [Apache Ripple](http://
 
 This starter project targets iOS, Android, and Chrome (as an extension).
 
+If you are developing on Windows but want to compile and run your application on OS X via the iOS simulator, you can use the built-in `gulp remote-emulate-ios` task. See below for more details.
+
 This readme contains information that will allow you to get started with the starter project, such as environment setup and code compilation. For more information on the project layout and project features, please see the [wiki](https://github.com/Justin-Credible/Ionic-TypeScript-Starter/wiki).
 
 Screenshots can be found on the project page [here](http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter).
 
-*If you are looking for a version of this project that uses the full Visual Studio IDE and the Apache Cordova project template, you can check out it's sister project: [Ionic-TypeScript-MDHA-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter).*
+*If you are looking for a version of this project that uses the full Visual Studio IDE and the Apache Cordova project template, you can check out its sister project: [Ionic-TypeScript-MDHA-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter).*
 
 ## Environment Setup ##
 
@@ -104,9 +106,23 @@ You can run your application on the software emulator using the `emulate` comman
 
 	$ ionic emulate ios
 
-*You can optionally specify a specific emuator using the target parameter: `--target="iPhone-6-Plus"`*
+*You can optionally specify a specific emulator using the target parameter: `--target="iPhone-6-Plus"`*
 
 *If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `emulate` to run either the iOS or Android emulate targets.*
+
+## Running on the iOS Simulator remotely from Windows ##
+
+If you are developing your application on a Windows machine, but want to test and run your application on iOS, you can do so using the `gulp remote-emulate-ios` task and target a remote OS X machine.
+
+First, you'll need to install the `remotebuild` package via npm on the OS X machine on which you want to run the simulator. Note that since the Cordova project will be built on the OS X machine, you'll need to make sure you have all the build prerequisites installed (Xcode etc).
+
+	$ npm install -g remotebuild
+
+Next, you'll want to edit `remote-build.json` located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS machine, as well as configure other settings.
+
+Finally, you can execute `gulp remote-emulate-ios` from the root of the starter project which will take care of TypeScript compilation, building a payload, and uploading it to the OS X machine so it can be built and emulated.
+
+*If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `remote` to run the iOS remote emulate target*
 
 ## Running on Hardware ##
 

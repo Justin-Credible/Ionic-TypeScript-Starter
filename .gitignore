@@ -22,3 +22,4 @@
 /tests/**/*.js
 /tests/**/*.map
 /docs/*
+/tmp/*

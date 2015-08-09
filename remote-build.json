@@ -1,0 +1,17 @@
+{
+    "host": "192.168.1.64",
+    "port": 3000,
+    "path": "/",
+
+    "ssl": true,
+    "allowInvalidSslCerts": true,
+
+    "statusCheckDelayMs": 1000,
+    "maxStatusChecks": 40,
+
+    "logLevel": "warn",
+    "logFile": "tmp/remote-build.log",
+
+    "cordovaVersion": "5.1.1",
+    "emulationTarget": "iPhone 6"
+}

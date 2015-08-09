@@ -16,7 +16,10 @@
     "cordova": "5.1.1",
     "del": "1.2.0",
     "gulp": "3.9.0",
+    "gulp-eol": "0.1.1",
+    "gulp-gzip": "1.2.0",
     "gulp-rename": "1.2.0",
+    "gulp-tar": "^1.4.0",
     "gulp-tslint": "3.0.1-beta",
     "gulp-typescript": "2.7.5",
     "gulp-util": "2.2.14",
@@ -26,6 +29,7 @@
     "karma-jasmine": "0.3.6",
     "karma-phantomjs-launcher": "0.2.0",
     "phantomjs": "1.9.17",
+    "request": "2.60.0",
     "run-sequence": "1.1.1",
     "shelljs": "0.3.0",
     "tsd": "0.6.1",
@@ -47,7 +51,7 @@
     "cordova-plugin-inappbrowser@1.0.1",
     "cordova-plugin-statusbar@1.0.1",
     "com.ionic.keyboard@1.0.4",
-    "nl.x-services.plugins.toast@2.0.4",
+    "cordova-plugin-x-toast@2.0.4",
     "com.verso.cordova.clipboard@0.1.0",
     {
       "locator": "https://github.com/Justin-Credible/cordova-progressIndicator.git"

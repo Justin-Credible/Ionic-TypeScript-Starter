@@ -35,6 +35,10 @@
             "showOutput": "never"
         },
         {
+            "taskName": "remote-emulate-ios",
+            "showOutput": "never"
+        },
+        {
             "taskName": "emulate-android",
             "showOutput": "never"
         },
