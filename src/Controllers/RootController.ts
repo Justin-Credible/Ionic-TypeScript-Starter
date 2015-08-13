@@ -29,9 +29,22 @@
 
         //#endregion
 
+        private _hasLoaded = false;
+
         //#region BaseController Overrides
 
-        protected initialize(): void {
+        protected view_loaded(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_loaded(event, eventArgs);
+
+            // In most cases Ionic's load event only fires once, the first time the controller is
+            // initialize and attached to the DOM. However, abstract controllers (eg this one) will
+            // have their Ionic view events fired for child views as well. Here we ensure that we
+            // don't run the code below if we've already loaded before and a child is loading.
+            if (this._hasLoaded) {
+                return;
+            }
+
+            this._hasLoaded = true;
 
             this.scope.$on(Constants.Events.HTTP_UNAUTHORIZED, _.bind(this.http_unauthorized, this));
             this.scope.$on(Constants.Events.HTTP_FORBIDDEN, _.bind(this.http_forbidden, this));

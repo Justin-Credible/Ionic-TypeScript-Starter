@@ -28,8 +28,8 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(): void {
-            super.view_beforeEnter();
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_beforeEnter(event, eventArgs);
 
             // Setup the view model.
             this.viewModel.showButton = true;
@@ -38,8 +38,8 @@
             this.viewModel.userCount = 2344;
         }
 
-        protected view_leave(): void {
-            super.view_leave();
+        protected view_leave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_leave(event, eventArgs);
 
             // Stop the toggleIcon function from firing.
             clearInterval(this._updateInterval);

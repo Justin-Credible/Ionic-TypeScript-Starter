@@ -31,8 +31,8 @@ module JustinCredible.SampleApp.Controllers {
 
         //#region BaseController Events
 
-        protected view_beforeEnter(): void {
-            super.view_beforeEnter();
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_beforeEnter(event, eventArgs);
 
             this.viewModel.showSignIn = false;
         }

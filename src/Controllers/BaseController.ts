@@ -14,6 +14,10 @@
         public viewModel: T;
 
         constructor(scope: ng.IScope, ModelType: { new (): T; }) {
+
+            // Uncomment for debugging view events.
+            //console.log("ctor()  " + this.constructor["ID"]);
+
             // Save a reference to Angular's scope object.
             this.scope = scope;
 
@@ -42,24 +46,6 @@
             this.scope.$on("$ionicView.afterLeave", _.bind(this.view_afterLeave, this));
             this.scope.$on("$ionicView.unloaded", _.bind(this.view_unloaded, this));
             this.scope.$on("$destroy", _.bind(this.destroy, this));
-
-            // Now that everything else is done, we can initialize.
-            // We defer here so that the initialize event occurs after the constructor
-            // of the child class has had a chance to execute.
-            _.defer(() => {
-                this.initialize();
-                this.scope.$apply();
-            });
-        }
-
-        /**
-         * Fired after the constructor has completed. Used to setup the controller.
-         * 
-         * Can be overridden by implementing controllers.
-         */
-        protected initialize(): void {
-            /* tslint:disable:no-empty */
-            /* tslint:enable:no-empty */
         }
 
         /**
@@ -67,9 +53,12 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_loaded(): void {
+        protected view_loaded(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("view_loaded " + this.constructor["ID"]);
         }
 
         /**
@@ -77,9 +66,12 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_enter(): void {
+        protected view_enter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("view_enter " + this.constructor["ID"]);
         }
 
         /**
@@ -87,9 +79,12 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_leave(): void {
+        protected view_leave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("view_leave " + this.constructor["ID"]);
         }
 
         /**
@@ -97,9 +92,12 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_beforeEnter(): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("view_beforeEnter " + this.constructor["ID"]);
         }
 
         /**
@@ -107,9 +105,12 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_beforeLeave(): void {
+        protected view_beforeLeave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("view_beforeLeave " + this.constructor["ID"]);
         }
 
         /**
@@ -117,9 +118,12 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_afterEnter(): void {
+        protected view_afterEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("view_afterEnter " + this.constructor["ID"]);
         }
 
         /**
@@ -127,9 +131,12 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_afterLeave(): void {
+        protected view_afterLeave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("view_afterLeave " + this.constructor["ID"]);
         }
 
         /**
@@ -137,9 +144,12 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_unloaded(): void {
+        protected view_unloaded(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("view_unloaded " + this.constructor["ID"]);
         }
 
         /**
@@ -150,6 +160,9 @@
         protected destroy(): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
+
+            // Uncomment for debugging view events.
+            // console.log("destroy " + this.constructor["ID"]);
         }
     }
 }
