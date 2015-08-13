@@ -7,6 +7,7 @@
         "plugins": true,
         "www/js/bundle.js": true,
         "www/js/bundle.js.map": true,
+        "www/js/bundle.d.ts": true,
         "www/js/src": true,
         "chrome": true
     },
