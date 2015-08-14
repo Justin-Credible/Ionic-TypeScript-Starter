@@ -31,12 +31,12 @@ The following prerequisites are required (I've listed the versions of the packag
 *While the following node modules can be installed globally, I recommend using them directly from the project directory. You can do so by adding `./node_modules/.bin` to your path.*
 
 * Node.js (0.10.28)
-* Cordova (5.0.0)
-* Ionic (1.4.5)
+* Cordova (5.1.1)
+* Ionic CLI (1.5.5)
 * TypeScript (1.5.0-beta)
 * Bower (1.4.1)
 * bower-installer (1.2.0)
-* tsd (0.6.0-beta.5)
+* tsd (0.6.1)
 
 *In addition, if you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.*
 
