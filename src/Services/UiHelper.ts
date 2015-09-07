@@ -60,7 +60,7 @@
          * Exposes an API for showing toast messages.
          */
         get toast(): ICordovaToastPlugin {
-            if (!this.Utilities.isRipple && window.plugins && window.plugins.toast) {
+            if (!this.Utilities.isRipple && !this.Utilities.isWindows && !this.Utilities.isWindows8 && window.plugins && window.plugins.toast) {
                 return window.plugins.toast;
             }
             else {

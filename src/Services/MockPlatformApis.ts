@@ -155,29 +155,39 @@
         //#region Toast
 
         private toast(message: string) {
-            var div: HTMLDivElement,
-                existingToasts: number;
 
-            existingToasts = document.querySelectorAll(".mockToast").length;
-
-            div = document.createElement("div");
+            var div = document.createElement("div");
             div.className = "mockToast";
             div.style.position = "absolute";
-            div.style.bottom = (existingToasts === 0 ? 0 : (35 * existingToasts)) + "px";
+            div.style.bottom = "60px";
             div.style.width = "100%";
-            div.style.backgroundColor = "#444444";
-            div.style.opacity = "0.8";
             div.style.textAlign = "center";
-            div.style.color = "#fff";
-            div.style.padding = "10px";
             div.style.zIndex = "9000";
-            div.innerText = message;
+
+            var span = document.createElement("span");
+            span.style.backgroundColor = "#444444";
+            span.style.opacity = "0.8";
+            span.style.color = "#fff";
+            span.style.padding = "10px";
+            span.style.borderRadius = "40px";
+            span.innerText = message;
+            div.appendChild(span);
 
             document.body.appendChild(div);
 
-            setTimeout(() => {
-                document.body.removeChild(div);
-            }, 3000);
+            var removeToast = function () {
+                try {
+                    document.body.removeChild(div);
+                }
+                catch (err) {
+                    /* tslint:disable:no-empty */
+                    /* tslint:enable:no-empty */
+                }
+            };
+
+            div.addEventListener("click", removeToast);
+
+            setTimeout(removeToast, 3000);
         }
 
         //#endregion
