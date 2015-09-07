@@ -109,6 +109,25 @@
             }
         }
 
+        /**
+         * Used to return the global device object.
+         */
+        public get device(): Device {
+            if (typeof(device) === "undefined") {
+                return {
+                    cordova: "unknown",
+                    platform: "unknown",
+                    model: "unknown",
+                    uuid: "unknown",
+                    version: "unknown",
+                    capture: null
+                };
+            }
+            else {
+                return device;
+            }
+        }
+
         //#endregion
 
         //#region String Manipulation

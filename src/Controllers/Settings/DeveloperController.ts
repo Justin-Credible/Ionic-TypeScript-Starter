@@ -50,6 +50,11 @@
             this.viewModel.token = this.Preferences.token;
 
             this.viewModel.devicePlatform = this.Utilities.platform;
+            this.viewModel.deviceModel = this.Utilities.device.model;
+            this.viewModel.deviceOsVersion = this.Utilities.device.version;
+            this.viewModel.deviceUuid = this.Utilities.device.uuid;
+            this.viewModel.deviceCordovaVersion = this.Utilities.device.cordova;
+
             this.viewModel.defaultStoragePathId = this.FileUtilities.getDefaultRootPathId();
             this.viewModel.defaultStoragePath = this.FileUtilities.getDefaultRootPath();
 

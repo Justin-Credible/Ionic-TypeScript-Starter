@@ -89,15 +89,37 @@
             <div class="item item-divider">Platform Tools</div>
 
             <label class="item item-readonly-label">
-                <span>Device.Platform</span>
+                <span>Platform</span>
                 <span>{{viewModel.devicePlatform}}</span>
             </label>
 
-            <button class="button button-block button-positive" ng-click="controller.addServicesToGlobalScope_click()">Add Services to Global Scope</button>
-            <button class="button button-block button-positive" ng-click="controller.setRequirePinThreshold_click()">Set Require PIN Threshold</button>
-            <button class="button button-block button-positive" ng-click="controller.resetPinTimeout_click()">Reset PIN Entry Timeout</button>
-            <button class="button button-block button-positive" ng-click="controller.reEnableOnboarding_click()">Re-enable Onboarding</button>
+            <label class="item item-readonly-label">
+                <span>Model</span>
+                <span>{{viewModel.deviceModel}}</span>
+            </label>
 
+            <label class="item item-readonly-label">
+                <span>OS Version</span>
+                <span>{{viewModel.deviceOsVersion}}</span>
+            </label>
+
+            <label class="item item-readonly-label"
+                ng-click="controller.copyValue_click(viewModel.deviceUuid, 'Device UUID')">
+                <span>UUID</span>
+                <span>{{viewModel.deviceUuid}}</span>
+            </label>
+
+            <label class="item item-readonly-label">
+                <span>Cordova</span>
+                <span>{{viewModel.deviceCordovaVersion}}</span>
+            </label>
+
+            <div class="item">
+                <button class="button button-block button-positive" ng-click="controller.addServicesToGlobalScope_click()">Add Services to Global Scope</button>
+                <button class="button button-block button-positive" ng-click="controller.setRequirePinThreshold_click()">Set Require PIN Threshold</button>
+                <button class="button button-block button-positive" ng-click="controller.resetPinTimeout_click()">Reset PIN Entry Timeout</button>
+                <button class="button button-block button-positive" ng-click="controller.reEnableOnboarding_click()">Re-enable Onboarding</button>
+            </div>
         </div>
 
         <div class="list card">

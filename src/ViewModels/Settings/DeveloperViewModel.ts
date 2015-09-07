@@ -8,6 +8,10 @@
         logToLocalStorage: boolean;
 
         devicePlatform: string;
+        deviceModel: string;
+        deviceOsVersion: string;
+        deviceUuid: string;
+        deviceCordovaVersion: string;
 
         userId: string;
         token: string;
