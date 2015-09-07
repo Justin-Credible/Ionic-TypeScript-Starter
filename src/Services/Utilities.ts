@@ -91,10 +91,17 @@
         }
 
         /**
-         * Used to check if the current platform is Windows 8 (desktop OS).
+         * Used to check if the current platform is Windows 8.
          */
         public get isWindows8(): boolean {
             return typeof(device) !== "undefined" && device.platform === "Windows8";
+        }
+
+        /**
+         * Used to check if the current platform is Windows 10 / UWP.
+         */
+        public get isWindows(): boolean {
+            return typeof(device) !== "undefined" && device.platform === "windows";
         }
 
         /**
