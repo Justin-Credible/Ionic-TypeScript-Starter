@@ -84,7 +84,10 @@
          * Exposes an API for working with the operating system's clipboard.
          */
         get clipboard(): ICordovaClipboardPlugin {
-            if (!this.Utilities.isRipple && typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
+            if (this.Utilities.isWindows) {
+                return this.MockPlatformApis.getClipboardPluginForWindows();
+            }
+            else if (!this.Utilities.isRipple && typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
                 return cordova.plugins.clipboard;
             }
             else if (this.Utilities.isChromeExtension) {

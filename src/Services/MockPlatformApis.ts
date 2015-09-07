@@ -58,6 +58,13 @@
             };
         }
 
+        public getClipboardPluginForWindows(): ICordovaClipboardPlugin {
+            return {
+                copy: _.bind(this.clipboard_windows_copy, this),
+                paste: _.bind(this.clipboard_windows_paste, this)
+            };
+        }
+
         public getClipboardPluginForChromeExtension(): ICordovaClipboardPlugin {
             return {
                 copy: _.bind(this.clipboard_chromeExtension_copy, this),
@@ -225,6 +232,26 @@
             }
         }
 
+        private clipboard_windows_copy(text: string, onSuccess: () => void, onFail: (err: Error) => void): void {
+
+            try {
+                // Obtain a reference to the UWP API namespace.
+                /* tslint:disable:no-string-literal */
+                var Windows = window["Windows"];
+                /* tslint:enable:no-string-literal */
+
+                var dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
+                dataPackage.setText(text);
+
+                Windows.ApplicationModel.DataTransfer.Clipboard.setContent(dataPackage);
+
+                onSuccess();
+            }
+            catch (exception) {
+                onFail(exception);
+            }
+        }
+
         private clipboard_chromeExtension_copy(text: string, onSuccess: () => void, onFail: (err: Error) => void): void {
             // The following is based on http://stackoverflow.com/a/12693636
 
@@ -277,6 +304,22 @@
                         onSuccess(result);
                     }
                 });
+            }
+        }
+
+        private clipboard_windows_paste(onSuccess: (result: string) => void, onFail: (err: Error) => void): void {
+
+            try {
+                // Obtain a reference to the UWP API namespace.
+                /* tslint:disable:no-string-literal */
+                var Windows = window["Windows"];
+                /* tslint:enable:no-string-literal */
+                var dataPackage = Windows.ApplicationModel.DataTransfer.Clipboard.getContent();
+
+                dataPackage.getTextAsync().then(onSuccess, onFail);
+            }
+            catch (exception) {
+                onFail(exception);
             }
         }
 
