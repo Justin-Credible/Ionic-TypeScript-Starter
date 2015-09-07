@@ -510,7 +510,7 @@
             }
 
             this.$ionicLoading.show({
-                template: label
+                template: "<div class='progress-spinner'></div><br/>" + label
             });
 
             if (timeout) {

@@ -72,7 +72,7 @@
          * Exposes an API for working with progress indicators.
          */
         get progressIndicator(): ICordovaProgressIndicator {
-            if (!this.Utilities.isRipple && window.ProgressIndicator && !this.Utilities.isAndroid) {
+            if (!this.Utilities.isRipple && !this.Utilities.isWindows && window.ProgressIndicator && !this.Utilities.isAndroid) {
                 return window.ProgressIndicator;
             }
             else {
