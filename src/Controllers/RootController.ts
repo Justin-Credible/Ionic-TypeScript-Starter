@@ -11,6 +11,7 @@
                 "$scope",
                 "$location",
                 "$http",
+                Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
                 Services.Preferences.ID
@@ -21,6 +22,7 @@
             $scope: ng.IScope,
             private $location: ng.ILocationService,
             private $http: ng.IHttpService,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
             private Preferences: Services.Preferences) {
@@ -65,7 +67,7 @@
             this.Preferences.userId = null;
             this.Preferences.token = null;
 
-            this.UiHelper.toast.showLongBottom("You do not have a token (401); please login.");
+            this.Plugins.toast.showLongBottom("You do not have a token (401); please login.");
         }
 
         private http_forbidden(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
@@ -74,17 +76,17 @@
             this.Preferences.userId = null;
             this.Preferences.token = null;
 
-            this.UiHelper.toast.showLongBottom("Your token has expired (403); please login again.");
+            this.Plugins.toast.showLongBottom("Your token has expired (403); please login again.");
         }
 
         private http_notFound(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
             // The restful API services are down maybe?
-            this.UiHelper.toast.showLongBottom("Server not available (404); please contact your administrator.");
+            this.Plugins.toast.showLongBottom("Server not available (404); please contact your administrator.");
         }
 
         private http_unknownError(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
             // No network connection, invalid certificate, or other system level error.
-            this.UiHelper.toast.showLongBottom("Network error; please try again later.");
+            this.Plugins.toast.showLongBottom("Network error; please try again later.");
         }
 
         /**
@@ -92,7 +94,7 @@
          * error handlers.
          */
         private http_error(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>): void {
-            this.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+            this.Plugins.toast.showLongBottom("An error has occurred; please try again.");
         }
 
         //#endregion

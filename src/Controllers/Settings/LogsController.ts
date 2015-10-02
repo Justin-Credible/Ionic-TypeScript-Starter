@@ -9,6 +9,7 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
+                Services.Plugins.ID,
                 Services.Logger.ID,
                 Services.Utilities.ID,
                 Services.UiHelper.ID
@@ -17,6 +18,7 @@
 
         constructor(
             $scope: ng.IScope,
+            private Plugins: Services.Plugins,
             private Logger: Services.Logger,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper) {
@@ -96,7 +98,7 @@
         }
 
         private getLogs_failure(error: Error): void {
-            this.UiHelper.toast.showShortBottom("An error occurred while retrieving the logs.");
+            this.Plugins.toast.showShortBottom("An error occurred while retrieving the logs.");
         }
 
         //#endregion

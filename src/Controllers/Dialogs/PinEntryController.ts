@@ -10,17 +10,17 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
+                Services.Plugins.ID,
                 Services.Utilities.ID,
-                Services.Preferences.ID,
-                Services.UiHelper.ID
+                Services.Preferences.ID
             ];
         }
 
         constructor(
             $scope: ng.IScope,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
-            private Preferences: Services.Preferences,
-            private UiHelper: Services.UiHelper) {
+            private Preferences: Services.Preferences) {
             super($scope, ViewModels.PinEntryViewModel, PinEntryController.ID);
         }
 
@@ -57,7 +57,7 @@
                     // If the PIN values do not match, then clear the fields and remain
                     // open so the user can try again.
                     this.viewModel.pin = "";
-                    this.UiHelper.toast.showShortTop("Invalid pin; please try again.");
+                    this.Plugins.toast.showShortTop("Invalid pin; please try again.");
                     this.scope.$apply();
                 }
             }

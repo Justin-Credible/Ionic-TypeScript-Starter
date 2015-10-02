@@ -11,6 +11,7 @@ module JustinCredible.SampleApp.Controllers {
                 "$scope",
                 "$location",
                 "$ionicHistory",
+                Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
                 Services.Configuration.ID
@@ -21,6 +22,7 @@ module JustinCredible.SampleApp.Controllers {
             $scope: ng.IScope,
             private $location: ng.ILocationService,
             private $ionicHistory: any,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
             private Configuration: Services.Configuration) {
@@ -60,12 +62,12 @@ module JustinCredible.SampleApp.Controllers {
                 return;
             }
 
-            this.UiHelper.progressIndicator.showSimpleWithLabel(true, "Creating Account...");
+            this.Plugins.progressIndicator.showSimpleWithLabel(true, "Creating Account...");
 
             // Simulate a wait period for an HTTP request.
             // This is where you'd use a service to interact with your API.
             setTimeout(() => {
-                this.UiHelper.progressIndicator.hide();
+                this.Plugins.progressIndicator.hide();
 
                 // Tell Ionic to to hide the back button for the next view.
                 this.$ionicHistory.nextViewOptions({
@@ -91,12 +93,12 @@ module JustinCredible.SampleApp.Controllers {
                 return;
             }
 
-            this.UiHelper.progressIndicator.showSimpleWithLabel(true, "Signing in...");
+            this.Plugins.progressIndicator.showSimpleWithLabel(true, "Signing in...");
 
             // Simulate a wait period for an HTTP request.
             // This is where you'd use a service to interact with your API.
             setTimeout(() => {
-                this.UiHelper.progressIndicator.hide();
+                this.Plugins.progressIndicator.hide();
 
                 // Tell Ionic to to hide the back button for the next view.
                 this.$ionicHistory.nextViewOptions({

@@ -15,7 +15,7 @@
                 "$scope",
                 "$stateParams",
                 Services.Logger.ID,
-                Services.UiHelper.ID,
+                Services.Plugins.ID,
                 Services.Utilities.ID,
                 "versionInfo"];
         }
@@ -24,7 +24,7 @@
             $scope: ng.IScope,
             private $stateParams: ILogEntryStateParams,
             private Logger: Services.Logger,
-            private UiHelper: Services.UiHelper,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private versionInfo: Interfaces.VersionInfo) {
             super($scope, ViewModels.LogEntryViewModel);
@@ -101,8 +101,8 @@
         //#region Controller Methods
 
         protected copy_click(): void {
-            this.UiHelper.clipboard.copy(JSON.stringify(this._fullLogEntry), () => {
-                this.UiHelper.toast.showShortBottom("Log copied to clipboard!");
+            this.Plugins.clipboard.copy(JSON.stringify(this._fullLogEntry), () => {
+                this.Plugins.toast.showShortBottom("Log copied to clipboard!");
             }, null);
         }
 

@@ -27,8 +27,8 @@
             return this.$injector.get(Utilities.ID);
         }
 
-        private get UiHelper(): UiHelper {
-            return this.$injector.get(UiHelper.ID);
+        private get Plugins(): Plugins {
+            return this.$injector.get(Plugins.ID);
         }
 
         private get Preferences(): Preferences {
@@ -319,15 +319,15 @@
                 // If this wasn't the first blocking HTTP request, we need to hide the previous
                 // blocking progress indicator before we show the new one.
                 if (this.blockingRequestsInProgress > 1) {
-                    this.UiHelper.progressIndicator.hide();
+                    this.Plugins.progressIndicator.hide();
                 }
 
                 // Show the blocking progress indicator with or without text.
                 if (config.blockingText) {
-                    this.UiHelper.progressIndicator.showSimpleWithLabel(true, config.blockingText);
+                    this.Plugins.progressIndicator.showSimpleWithLabel(true, config.blockingText);
                 }
                 else {
-                    this.UiHelper.progressIndicator.showSimple(true);
+                    this.Plugins.progressIndicator.showSimple(true);
                 }
             }
 
@@ -355,7 +355,7 @@
             this.blockingRequestsInProgress = 0;
             this.spinnerRequestsInProgress = 0;
             NProgress.done();
-            this.UiHelper.progressIndicator.hide();
+            this.Plugins.progressIndicator.hide();
         }
 
         /**
@@ -378,7 +378,7 @@
 
             // If there are no more blocking requests in progress, then hide the blocker.
             if (config.blocking && this.blockingRequestsInProgress === 0) {
-                this.UiHelper.progressIndicator.hide();
+                this.Plugins.progressIndicator.hide();
             }
 
             if (config.showSpinner && this.spinnerRequestsInProgress === 0) {

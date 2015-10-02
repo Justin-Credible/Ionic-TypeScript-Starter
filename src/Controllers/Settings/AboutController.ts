@@ -12,7 +12,7 @@
                 "$ionicHistory",
                 Services.Utilities.ID,
                 Services.Configuration.ID,
-                Services.UiHelper.ID,
+                Services.Plugins.ID,
                 "versionInfo"
             ];
         }
@@ -22,7 +22,7 @@
             private $ionicHistory: any,
             private Utilities: Services.Utilities,
             private Configuration: Services.Configuration,
-            private UiHelper: Services.UiHelper,
+            private Plugins: Services.Plugins,
             private versionInfo: Interfaces.VersionInfo) {
             super($scope, ViewModels.AboutViewModel);
         }
@@ -57,7 +57,7 @@
             // and push them back to the settings page.
             if (this.viewModel.logoClickCount > 9) {
                 this.Configuration.enableDeveloperTools = true;
-                this.UiHelper.toast.showShortBottom("Development Tools Enabled!");
+                this.Plugins.toast.showShortBottom("Development Tools Enabled!");
                 this.$ionicHistory.goBack();
             }
         }

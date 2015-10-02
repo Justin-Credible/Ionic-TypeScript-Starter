@@ -10,6 +10,7 @@
             return [
                 "$scope",
                 "$http",
+                Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
                 Services.FileUtilities.ID,
@@ -23,6 +24,7 @@
         constructor(
             $scope: ng.IScope,
             private $http: ng.IHttpService,
+            private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
             private FileUtilities: Services.FileUtilities,
@@ -119,7 +121,7 @@
 
                 this.Configuration.apiUrl = result.value;
                 this.viewModel.apiUrl = result.value;
-                this.UiHelper.toast.showShortBottom("API URL changed for this session only.");
+                this.Plugins.toast.showShortBottom("API URL changed for this session only.");
             });
         }
 
@@ -134,8 +136,8 @@
         protected userToken_click(token: string): void {
             this.UiHelper.confirm("Copy token to clipboard?").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
-                    this.UiHelper.clipboard.copy(token);
-                    this.UiHelper.toast.showShortBottom("Token copied to clipboard.");
+                    this.Plugins.clipboard.copy(token);
+                    this.Plugins.toast.showShortBottom("Token copied to clipboard.");
                 }
             });
         }
@@ -148,6 +150,7 @@
                 "Logger": this.Logger,
                 "Utilities": this.Utilities,
                 "UiHelper": this.UiHelper,
+                "Plugins": this.Plugins,
                 "Preferences": this.Preferences,
                 "MockPlatformApis": this.MockPlatformApis
             };
@@ -194,7 +197,7 @@
         protected testNativeException_click(): void {
             this.UiHelper.confirm("Are you sure you want to cause a native crash? This requires the Crashlytics plug-in to be installed.").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
-                    this.UiHelper.crashlytics.simulateCrash();
+                    this.Plugins.crashlytics.simulateCrash();
                 }
             });
         }
@@ -221,23 +224,23 @@
         }
 
         protected showFullScreenBlock_click(): void {
-            this.UiHelper.progressIndicator.showSimpleWithLabel(true, "Blocking...");
+            this.Plugins.progressIndicator.showSimpleWithLabel(true, "Blocking...");
 
             setTimeout(() => {
-                this.UiHelper.progressIndicator.hide();
+                this.Plugins.progressIndicator.hide();
             }, 4000);
         }
 
         protected showToast_top(): void {
-            this.UiHelper.toast.showShortTop("This is a test toast notification.");
+            this.Plugins.toast.showShortTop("This is a test toast notification.");
         }
 
         protected showToast_center(): void {
-            this.UiHelper.toast.showShortCenter("This is a test toast notification.");
+            this.Plugins.toast.showShortCenter("This is a test toast notification.");
         }
 
         protected showToast_bottom(): void {
-            this.UiHelper.toast.showShortBottom("This is a test toast notification.");
+            this.Plugins.toast.showShortBottom("This is a test toast notification.");
         }
 
         protected clipboard_copy(): void {
@@ -248,7 +251,7 @@
                     return;
                 }
 
-                this.UiHelper.clipboard.copy(result.value, () => {
+                this.Plugins.clipboard.copy(result.value, () => {
                     this.UiHelper.alert("Copy OK!");
                 }, (err: Error) => {
                     this.UiHelper.alert("Copy Failed!\n\n" + (err ? err.message : "Unknown Error"));
@@ -257,7 +260,7 @@
         }
 
         protected clipboard_paste(): void {
-            this.UiHelper.clipboard.paste((result: string) => {
+            this.Plugins.clipboard.paste((result: string) => {
                 this.UiHelper.alert("Paste OK! Value retrieved is:\n\n" + result);
             }, (err: Error) => {
                 this.UiHelper.alert("Paste Failed!\n\n" + (err ? err.message : "Unknown Error"));
@@ -361,8 +364,8 @@
         protected defaultStoragePath_click(path: string): void {
             this.UiHelper.confirm("Copy path to clipboard?").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
-                    this.UiHelper.clipboard.copy(path);
-                    this.UiHelper.toast.showShortBottom("Path copied to clipboard.");
+                    this.Plugins.clipboard.copy(path);
+                    this.Plugins.toast.showShortBottom("Path copied to clipboard.");
                 }
             });
         }

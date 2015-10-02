@@ -16,6 +16,7 @@ module JustinCredible.SampleApp.Application {
         $rootScope: ng.IRootScopeService,
         $location: ng.ILocationService,
         $ionicHistory: any,
+        Plugins: Services.Plugins,
         Utilities: Services.Utilities,
         UiHelper: Services.UiHelper,
         Preferences: Services.Preferences,
@@ -325,6 +326,7 @@ module JustinCredible.SampleApp.Application {
         $location: ng.ILocationService,
         $ionicHistory: any,
         $ionicPlatform: Ionic.IPlatform,
+        Plugins: Services.Plugins,
         Utilities: Services.Utilities,
         UiHelper: Services.UiHelper,
         Preferences: Services.Preferences,
@@ -338,6 +340,7 @@ module JustinCredible.SampleApp.Application {
             $rootScope: $rootScope,
             $location: $location,
             $ionicHistory: $ionicHistory,
+            Plugins: Plugins,
             Utilities: Utilities,
             UiHelper: UiHelper,
             Preferences: Preferences,
@@ -374,8 +377,8 @@ module JustinCredible.SampleApp.Application {
 
         // We use this combination of settings so prevent the visual jank that
         // would otherwise occur when tapping an input that shows the keyboard.
-        services.UiHelper.keyboard.disableScroll(true);
-        services.UiHelper.keyboard.hideKeyboardAccessoryBar(false);
+        services.Plugins.keyboard.disableScroll(true);
+        services.Plugins.keyboard.hideKeyboardAccessoryBar(false);
 
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
@@ -521,10 +524,10 @@ module JustinCredible.SampleApp.Application {
 
         try {
             // Show a generic message to the user.
-            services.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+            services.Plugins.toast.showLongBottom("An error has occurred; please try again.");
 
             // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
-            services.UiHelper.progressIndicator.hide();
+            services.Plugins.progressIndicator.hide();
         }
         catch (ex) {
             console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
@@ -555,10 +558,10 @@ module JustinCredible.SampleApp.Application {
 
         try {
             // Show a generic message to the user.
-            services.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+            services.Plugins.toast.showLongBottom("An error has occurred; please try again.");
 
             // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
-            services.UiHelper.progressIndicator.hide();
+            services.Plugins.progressIndicator.hide();
         }
         catch (ex) {
             console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
