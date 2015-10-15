@@ -79,7 +79,7 @@ module JustinCredible.SampleApp.Services {
                     showBarWithLabel: _.bind(show, this),
                     showSuccess: _.bind(show, this),
                     showText: _.bind(show, this),
-                    show: _.bind(show, this)
+                    show: _.bind(show, this, false)
                 };
             }
             else {
