@@ -97,7 +97,8 @@
                 showBar: _.bind(this.progressIndicator_show, this),
                 showBarWithLabel: _.bind(this.progressIndicator_show, this),
                 showSuccess: _.bind(this.progressIndicator_show, this),
-                showText: _.bind(this.progressIndicator_show, this)
+                showText: _.bind(this.progressIndicator_show, this),
+                show: _.bind(this.progressIndicator_show, this, false)
             };
         }
 

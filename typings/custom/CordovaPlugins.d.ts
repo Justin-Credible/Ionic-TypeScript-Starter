@@ -166,7 +166,7 @@ interface ICordovaClipboardPlugin {
  * 
  * https://github.com/pbernasconi/cordova-progressIndicator/
  */
-interface ICordovaProgressIndicator {
+interface ICordovaProgressIndicator extends ICordovaActivityIndicator {
 
     /**
      * Used to hide an indicator.
@@ -265,6 +265,28 @@ interface ICordovaProgressIndicator {
      * @position The position of the element; top, center, or bottom.
      */
     showText(dimBackground: boolean, label: string, position: string): void;
+
+}
+
+/**
+ * A very simple progress indicator plugin.
+ * It works on both IOS as well as Android
+ * https://github.com/Initsogar/cordova-activityindicator 
+ */
+interface ICordovaActivityIndicator {
+
+    /**
+     * Used to hide an indicator.
+     */
+    hide(): void;
+    
+    /**
+     * Shows a simple progress indicator
+     * 
+     * @param text The text to use as a label inside the indicator.
+     */
+    show(label: string): void;
+    
 }
 
 /**
