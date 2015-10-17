@@ -11,303 +11,314 @@
 
         public static get $inject(): string[] {
             return [
-                "$q",
-                Utilities.ID,
-                FileUtilities.ID
+                Utilities.ID
             ];
         }
 
         constructor(
-            private $q: ng.IQService,
-            private Utilities: Utilities,
-            private FileUtilities: FileUtilities) {
+            private Utilities: Utilities) {
+
+            this._logs = [];
         }
 
         //#endregion
 
-        private _logToLocalStorage: boolean = false;
-        private _logs: Models.LogEntry[] = [];
+        private _logs: Models.LogEntry[];
+        private _maxLogEntries = 20;
 
-        private addLogEntry(logEntry: Models.LogEntry): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                errorCallback;
+        //#region Logging Convenience Methods
 
-            // Lets handle the simple case first. If we are not logging
-            // to disk, then all we need to do is add to the in-memory array.
-            if (!this._logToLocalStorage) {
-                this._logs.push(logEntry);
-                q.resolve();
-                return q.promise;
-            }
-
-            // If we are utilizing local storage, then we have more work to do.
-
-            // Define our common error callback; if something goes wrong then we can just
-            // use the in-memory array and fall back to in-memory logging.
-            errorCallback = (error: any) => {
-                this._logToLocalStorage = false;
-                console.warn("Reverting to in-memory logging because an error occurred during file I/O in addLogEntry().", error);
-                this._logs.push(logEntry);
-                q.resolve();
-            };
-
-            // First, we need to ensure the log directory is available.
-            this.FileUtilities.createDirectory("/logs").then(() => {
-                var logFileName: string,
-                    json: string;
-
-                logFileName = this.Utilities.format("/logs/{0}.log", moment(logEntry.timestamp).format("YYYY-MM-DD_hh-mm-ss-SSS-a"));
-
-                try {
-                    json = JSON.stringify(logEntry);
-                } catch (exception) {
-                    // If for some reason we couldn't stringify the log entry (circular reference perhaps?)
-                    // then we'll just emit the log entry and error to the console.
-                    console.error("Unable to stringify the log entry.", logEntry, exception);
-                    q.resolve();
-                    return;
-                }
-
-                this.FileUtilities.writeTextFile(logFileName, json).then(() => {
-
-                    q.resolve();
-
-                }, errorCallback);
-
-            }, errorCallback);
+        /**
+         * Used to log debbuging information (like method timings etc).
+         * 
+         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
+         * @param tag The tag for the log (normally the name of the method).
+         * @param message The descriptive text for the log entry.
+         * @param metadata An optional object to be logged with the log entry.
+         */
+        public trace(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.TRACE, tagPrefix, tag, message, metadata);
         }
 
-        public getLog(id: string): ng.IPromise<Models.LogEntry> {
-            var q = this.$q.defer<Models.LogEntry>(),
-                logEntry: Models.LogEntry,
-                errorCallback;
+        /**
+         * Used to log debugging information.
+         * 
+         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
+         * @param tag The tag for the log (normally the name of the method).
+         * @param message The descriptive text for the log entry.
+         * @param metadata An optional object to be logged with the log entry.
+         */
+        public debug(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.DEBUG, tagPrefix, tag, message, metadata);
+        }
 
-            // Lets handle the simple case first. If the log entry is already
-            // available in-memory, then we can just return it.
-            logEntry = _.find(this._logs, (logEntry: Models.LogEntry) => {
+        /**
+         * Used to log an informational message.
+         * 
+         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
+         * @param tag The tag for the log (normally the name of the method).
+         * @param message The descriptive text for the log entry.
+         * @param metadata An optional object to be logged with the log entry.
+         */
+        public info(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.INFO, tagPrefix, tag, message, metadata);
+        }
+
+        /**
+         * Used to log a warning.
+         * 
+         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
+         * @param tag The tag for the log (normally the name of the method).
+         * @param message The descriptive text for the log entry.
+         * @param metadata An optional object to be logged with the log entry.
+         */
+        public warn(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.WARN, tagPrefix, tag, message, metadata);
+        }
+
+        /**
+         * Used to log an error.
+         * 
+         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
+         * @param tag The tag for the log (normally the name of the method).
+         * @param message The descriptive text for the log entry.
+         * @param metadata An optional object to be logged with the log entry.
+         */
+        public error(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.ERROR, tagPrefix, tag, message, metadata);
+        }
+
+        /**
+         * Used to log a fatal error.
+         * 
+         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
+         * @param tag The tag for the log (normally the name of the method).
+         * @param message The descriptive text for the log entry.
+         * @param metadata An optional object to be logged with the log entry.
+         */
+        public fatal(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.FATAL, tagPrefix, tag, message, metadata);
+        }
+
+        //#endregion
+
+        //#region Public Methods
+
+        /**
+         * Used to clear the logs that are current in memory.
+         */
+        public clear(): void {
+            this._logs = [];
+        }
+
+        /**
+         * Used to return all of the logs that are currently in memory.
+         * 
+         * @returns An array of log entries.
+         */
+        public get logs(): Models.LogEntry[] {
+            return this._logs;
+        }
+
+        /**
+         * Used to get a single log entry by log ID.
+         * 
+         * @param id The log ID of the log to retrieve.
+         * @returns A single log entry with the given ID.
+         */
+        public getLog(id: string): Models.LogEntry {
+            return _.find(this._logs, (logEntry: Models.LogEntry) => {
                 return logEntry.id === id;
             });
-
-            if (logEntry != null) {
-                q.resolve(logEntry);
-                return q.promise;
-            }
-
-            // If we didn't find the log entry in-memory AND we aren't using local
-            // storage for logs, then there is no log entry available.
-            if (!this._logToLocalStorage) {
-                q.resolve(null);
-                return q.promise;
-            }
-
-            // If we didn't find the log entry in-memory and we are using local storage
-            // then we'll read in the logs to see if it is available in storage.
-
-            // Define our common error callback; if something goes wrong then we can just
-            // use the in-memory array and fall back to in-memory logging.
-            errorCallback = (error: any) => {
-                this._logToLocalStorage = false;
-                console.warn("Reverting to in-memory logging because an error occurred during file I/O in getLog().", error);
-                q.resolve(null);
-            };
-
-            // Delegate to getLogs() and then try to find the specific log entry.
-            this.getLogs().then((logEntries: Models.LogEntry[]) => {
-
-                logEntry = _.find(logEntries, (logEntry: Models.LogEntry) => {
-                    return logEntry.id === id;
-                });
-
-                q.resolve(logEntry);
-
-            }, errorCallback);
-
-            return q.promise;
         }
 
-        public getLogs(): ng.IPromise<Models.LogEntry[]> {
-            var q = this.$q.defer<Models.LogEntry[]>(),
-                promises: ng.IPromise<string>[] = [],
-                errorCallback;
+        /**
+         * A helper used to get an icon name for the given log level.
+         * 
+         * @param level The level of the log to get an icon name for.
+         * @returns A string of an icon name for the given log level.
+         */
+        public getIconForLevel(level: number): string {
 
-            // Lets handle the simple case first. If we are not logging
-            // to disk, then all we need to do is return the in-memory array.
-            if (!this._logToLocalStorage) {
-                q.resolve(this._logs);
-                return q.promise;
+            if (level == null) {
+                return "";
             }
 
-            // If we are utilizing local storage, then we have more work to do.
-
-            // Define our common error callback; if something goes wrong then we can just
-            // use the in-memory array and fall back to in-memory logging.
-            errorCallback = (error: any) => {
-                this._logToLocalStorage = false;
-                console.warn("Reverting to in-memory logging because an error occurred during file I/O in getLogs().", error);
-                q.resolve(this._logs);
-            };
-
-            this._logs = [];
-
-            // First, we need to ensure the log directory is available.
-            this.FileUtilities.createDirectory("/logs").then(() => {
-
-                // If the log directory was available, then get all of its files.
-                this.FileUtilities.getFiles("/logs").then((entries: Entry[]) => {
-
-                    // Filter it down to just .log files.
-                    entries = _.filter(entries, (entry: Entry) => {
-                        return this.Utilities.endsWith(entry.name, ".log");
-                    });
-
-                    // Read in the contents of each file (which will be JSON).
-                    entries.forEach((entry: Entry) => {
-                        var promise: ng.IPromise<string>;
-
-                        // Read in the file and deserialize its JSON contents back to
-                        // a log model object.
-                        promise = this.FileUtilities.readTextFile(entry.fullPath);
-                        promise.then((text: string) => {
-                            var logEntry: Models.LogEntry;
-
-                            logEntry = <Models.LogEntry>JSON.parse(text);
-
-                            this._logs.push(logEntry);
-
-                        }, errorCallback);
-
-                        // Store a reference to this file I/O promise because we have
-                        // to wait until all the I/O operations have completed before
-                        // we can resolve this method's promise.
-                        promises.push(promise);
-                    });
-
-                    // We need to wait until all of the I/O operations have completed before
-                    // resolving this promise.
-                    this.$q.all(promises).then(() => {
-
-                        q.resolve(this._logs);
-
-                    }, q.reject);
-
-                }, errorCallback);
-
-            }, errorCallback);
-
-            return q.promise;
+            switch (level) {
+                case Models.LogLevel.TRACE:
+                    return "ion-code-working";
+                    break;
+                case Models.LogLevel.DEBUG:
+                    return "ion-bug";
+                    break;
+                case Models.LogLevel.INFO:
+                    return "ion-information-circled";
+                    break;
+                case Models.LogLevel.WARN:
+                    return "ion-alert-circled";
+                    break;
+                case Models.LogLevel.ERROR:
+                    return "ion-alert";
+                    break;
+                case Models.LogLevel.FATAL:
+                    return "ion-nuclear";
+                    break;
+                default:
+                    return "ion-alert";
+                    break;
+            }
         }
 
-        public clearLogs(): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                errorCallback;
+        /**
+         * A helper used to get a color in hex value for the given log level.
+         * 
+         * @param level The level of the log to get a color for.
+         * @returns A hex value of a color for the given log level.
+         */
+        public getColorForLevel(level: number): string {
 
-            // Lets handle the simple case first. If we are not logging
-            // to disk, then all we need to do is clear the in-memory array.
-            if (!this._logToLocalStorage) {
-                this._logs = [];
-                q.resolve();
-                return q.promise;
+            if (level == null) {
+                return "";
             }
 
-            // If we are utilizing local storage, then we have more work to do.
-
-            // Define our common error callback; if something goes wrong then we can just
-            // clear the in-memory array and fall back to in-memory logging.
-            errorCallback = (error: any) => {
-                this._logToLocalStorage = false;
-                console.warn("Reverting to in-memory logging because an error occurred during file I/O in clearLogs().", error);
-                this._logs = [];
-                q.resolve();
-            };
-
-            // First, we need to ensure the log directory is available.
-            this.FileUtilities.createDirectory("/logs").then(() => {
-
-                // If the local storage logs directory is available then lets remove all of its files.
-                this.FileUtilities.emptyDirectory("/logs").then(() => {
-
-                    this._logs = [];
-
-                    q.resolve();
-
-                }, errorCallback);
-
-            }, errorCallback);
-
-            return q.promise;
+            switch (level) {
+                case Models.LogLevel.TRACE:
+                    return "#551A8B"; // Purple
+                    break;
+                case Models.LogLevel.DEBUG:
+                    return "#000080"; // Navy
+                    break;
+                case Models.LogLevel.INFO:
+                    return "#000000"; // Black
+                    break;
+                case Models.LogLevel.WARN:
+                    return "#ff8000"; // Orange
+                    break;
+                case Models.LogLevel.ERROR:
+                    return "#ff0000"; // Red
+                    break;
+                case Models.LogLevel.FATAL:
+                    return "#ff0000"; // Red
+                    break;
+                default:
+                    return "#000000"; // Black
+                    break;
+            }
         }
 
-        public logWindowError(message: string, uri: string, lineNumber: number, colNumber: number): void {
-            var logEntry: Models.LogEntry;
+        /**
+         * A helper used to get friendly name for display for the given log level.
+         * 
+         * @param level The level of the log to get a display name for.
+         * @returns A display name of for the given log level.
+         */
+        public getDisplayLevelForLevel(level: number): string {
 
-            logEntry = new Models.LogEntry();
+            if (level == null) {
+                return "";
+            }
+
+            switch (level) {
+                case Models.LogLevel.TRACE:
+                    return "Trace";
+                    break;
+                case Models.LogLevel.DEBUG:
+                    return "Debug";
+                    break;
+                case Models.LogLevel.INFO:
+                    return "Info";
+                    break;
+                case Models.LogLevel.WARN:
+                    return "Warning";
+                    break;
+                case Models.LogLevel.ERROR:
+                    return "Error";
+                    break;
+                case Models.LogLevel.FATAL:
+                    return "Fatal";
+                    break;
+                default:
+                    return "Unknown";
+                    break;
+            }
+        }
+
+        //#endregion
+
+        //#region Base logging method
+
+        /**
+         * Logs a log entry.
+         * 
+         * Currently logs to an in-memory array whose max size is _maxLogEntries.
+         * 
+         * This can easily be modified to use a third party logging service (eg Ouralabs).
+         * 
+         * @param logLevel The severity of the log (see Models.LogLevel for possible values).
+         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
+         * @param tag The tag for the log (normally the name of the method).
+         * @param message The descriptive text for the log entry.
+         * @param metadata An optional object to be logged with the log entry.
+         */
+        private log(logLevel: Models.LogLevel, tagPrefix: string, tag: string, message: string, metadata?: any): void {
+
+            if (logLevel == null) {
+                logLevel = Models.LogLevel.DEBUG;
+            }
+
+            if (!tag) {
+                tag = "[No Tag]";
+            }
+
+            if (!tagPrefix) {
+                tagPrefix = "";
+            }
+
+            if (!message) {
+                message = "[No Message]";
+            }
+
+            var logEntry = new Models.LogEntry();
+
             logEntry.id = this.Utilities.generateGuid();
-            logEntry.timestamp = new Date();
-            logEntry.message = "Unhandled JS Exception: " + message;
-            logEntry.uri = uri;
-            logEntry.lineNumber = lineNumber;
-            logEntry.colNumber = colNumber;
-
-            this.addLogEntry(logEntry);
-        }
-
-        public logError(message: string, error: Error): void {
-            var logEntry: Models.LogEntry;
-
-            logEntry = new Models.LogEntry();
-            logEntry.id = this.Utilities.generateGuid();
-            logEntry.timestamp = new Date();
+            logEntry.level = logLevel;
+            logEntry.tag = tagPrefix ? tagPrefix + "." + tag : tag;
             logEntry.message = message;
-            logEntry.error = error;
+            logEntry.metadata = metadata;
 
-            // This won't tell us what script file the error came from, but it
-            // will at least let us know which URL and hash tag they're on.
-            logEntry.uri = window.location.toString();
+            if (this._logs.length >= this._maxLogEntries) {
+                this._logs = this._logs.slice(1);
+            }
 
-            this.addLogEntry(logEntry);
+            this._logs.push(logEntry);
+
+            var consoleMessage = this.Utilities.format("[{0}] {1}", tagPrefix ? tagPrefix + "." + tag : tag, message);
+
+            switch (logLevel) {
+                case Models.LogLevel.TRACE:
+                    console.trace.call(console, consoleMessage, metadata);
+                    break;
+                case Models.LogLevel.DEBUG:
+                    console.debug(consoleMessage, metadata);
+                    break;
+                case Models.LogLevel.INFO:
+                    console.info(consoleMessage, metadata);
+                    break;
+                case Models.LogLevel.WARN:
+                    console.warn(consoleMessage, metadata);
+                    break;
+                case Models.LogLevel.ERROR:
+                    console.error(consoleMessage, metadata);
+                    break;
+                case Models.LogLevel.FATAL:
+                    console.error(consoleMessage + " (FATAL)", metadata);
+                    break;
+                default:
+                    console.debug(consoleMessage, metadata);
+                    break;
+            }
         }
 
-        public logHttpRequestConfig(config: Interfaces.RequestConfig): void {
-            var logEntry: Models.LogEntry;
-
-            logEntry = new Models.LogEntry();
-            logEntry.id = this.Utilities.generateGuid();
-            logEntry.timestamp = new Date();
-            logEntry.uri = window.location.href;
-            logEntry.message = "HTTP Request";
-
-            logEntry.httpMethod = config.method;
-            logEntry.httpUrl = config.url;
-            logEntry.httpBody = typeof (config.data) === "string" ? config.data : JSON.stringify(config.data);
-            logEntry.httpHeaders = JSON.stringify(config.headers);
-
-            this.addLogEntry(logEntry);
-        }
-
-        public logHttpResponse(httpResponse: ng.IHttpPromiseCallbackArg<any>): void {
-            var logEntry: Models.LogEntry;
-
-            logEntry = new Models.LogEntry();
-            logEntry.id = this.Utilities.generateGuid();
-            logEntry.timestamp = new Date();
-            logEntry.uri = window.location.href;
-            logEntry.message = "HTTP Response";
-
-            logEntry.httpUrl = httpResponse.config.url;
-            logEntry.httpStatus = httpResponse.status;
-            logEntry.httpStatusText = httpResponse.statusText;
-            logEntry.httpBody = typeof (httpResponse.data) === "string" ? httpResponse.data : JSON.stringify(httpResponse.data);
-            logEntry.httpHeaders = JSON.stringify(httpResponse.headers);
-
-            this.addLogEntry(logEntry);
-        }
-
-        public setLogToLocalStorage(logToLocalStorage: boolean): void {
-            this._logToLocalStorage = logToLocalStorage;
-        }
-
-        public getLogToLocalStorage(): boolean {
-            return this._logToLocalStorage;
-        }
+        //#endregion
     }
 }

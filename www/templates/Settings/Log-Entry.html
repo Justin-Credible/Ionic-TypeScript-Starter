@@ -7,43 +7,17 @@
         <div class="list card">
 
             <div class="item item-avatar item-icon-left">
-                <i class="icon ion-{{viewModel.iconType}}"></i>
-                <h2 ng-show="viewModel.iconType === 'alert'">Unhandled JS Exception</h2>
-                <h2 ng-show="viewModel.iconType === 'alert-circled'">Angular JS Exception</h2>
-                <h2 ng-show="viewModel.iconType === 'android-wifi'">{{viewModel.message}}</h2>
+                <i class="icon {{viewModel.icon}}" style="color: {{viewModel.color}}"></i>
+                <h2 style="color: {{viewModel.color}}">{{viewModel.levelDisplay}}</h2>
                 <p>{{viewModel.date}}&nbsp;&nbsp;&nbsp;{{viewModel.time}}</p>
             </div>
 
-            <div class="item item-body" ng-hide="viewModel.iconType === 'android-wifi'">
-                <p>{{viewModel.message}}</p>
+            <div class="item item-body">
+                <p>{{viewModel.logEntry.message}}</p>
             </div>
 
-            <div class="item item-body" ng-show="viewModel.error != null && viewModel.error.message">
-                <p>{{viewModel.error.message}}</p>
-            </div>
-
-            <div class="item item-body" ng-show="viewModel.error != null && viewModel.formattedStackTrace">
-                <p>{{viewModel.formattedStackTrace}}</p>
-            </div>
-
-            <div class="item item-body" ng-show="viewModel.iconType === 'alert'">
-                <p>URI: {{viewModel.uri}}</p>
-                <p>Line: {{viewModel.lineNumber}}</p>
-                <p>Column: {{viewModel.colNumber}}</p>
-            </div>
-
-            <div class="item item-body" ng-show="viewModel.iconType === 'alert-circled'">
-                <p>URI: {{viewModel.uri}}</p>
-            </div>
-
-            <div class="item item-body" ng-show="viewModel.iconType === 'android-wifi'">
-                <p>HTTP Information</p>
-                <p ng-show="viewModel.httpMethod != null">Method: {{viewModel.httpMethod}}</p>
-                <p>URL: {{viewModel.httpUrl}}</p>
-                <p>Status: {{viewModel.httpStatus}}</p>
-                <p>Status Text: {{viewModel.httpStatusText}}</p>
-                <p>Headers: {{viewModel.httpHeaders}}</p>
-                <p>Body: {{viewModel.httpBody}}</p>
+            <div class="item item-body">
+                <p>{{viewModel.formattedMetadata}}</p>
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left">

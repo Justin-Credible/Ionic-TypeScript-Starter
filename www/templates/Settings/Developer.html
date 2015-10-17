@@ -20,23 +20,6 @@
                 </label>
             </label>
 
-            <label class="item item-toggle">
-                Log Request/Responses
-                <label class="toggle toggle-balanced">
-                    <input type="checkbox"
-                        ng-model="viewModel.enableFullHttpLogging"
-                        ng-change="controller.enableFullHttpLogging_change()">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </label>
-
-            <label class="item item-readonly-label" ng-click="controller.logResponseErrors_click()">
-                <span>Log Response Errors</span>
-                <span>true</span>
-            </label>
-
             <label class="item item-text-wrap" ng-click="controller.apiUrl_click()">
                 API URL
                 <br/>
@@ -53,18 +36,6 @@
                 <i class="icon ion-ios-arrow-forward"></i>
                 View Logs
             </div>
-
-            <label class="item item-toggle">
-                Log to Local Storage
-                <label class="toggle toggle-balanced">
-                    <input type="checkbox"
-                        ng-model="viewModel.logToLocalStorage"
-                        ng-change="controller.logToLocalStorage_change()">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </label>
 
         </div>
 
