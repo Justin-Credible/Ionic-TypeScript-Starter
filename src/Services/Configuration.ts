@@ -19,7 +19,7 @@ module JustinCredible.SampleApp.Services {
         }
 
         constructor(
-            private buildVars: BuildVars) {
+            private buildVars: Interfaces.BuildVars) {
         }
 
         //#endregion

@@ -22,7 +22,7 @@
         constructor(
             private _isRipple_: boolean,
             private _isCordova_: boolean,
-            private buildVars: BuildVars,
+            private buildVars: Interfaces.BuildVars,
             private _isChromeExtension_: boolean,
             private Preferences: Preferences) {
         }
