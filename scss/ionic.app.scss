@@ -22,3 +22,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic"; 
 
+
+/** Icon Panel Directive *************************************************************************/
+
+.icon-panel {
+	text-align: center;
+}
+
+.icon-panel .icon-container {
+	text-align: center;
+	font-size: 120pt;
+}
+

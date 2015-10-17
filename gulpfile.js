@@ -19,6 +19,7 @@ var tar = require("gulp-tar");
 var gzip = require("gulp-gzip");
 var eol = require("gulp-eol");
 var sass = require('gulp-sass');
+var minifyCss = require('gulp-minify-css');
 
 // Other Modules
 var runSequence = require("run-sequence");
@@ -838,6 +839,11 @@ gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
     .on('error', sass.logError)
+    .pipe(gulp.dest('./www/css/'))
+        .pipe(minifyCss({
+      keepSpecialComments: 0
+    }))
+    .pipe(rename({ extname: '.min.css' }))
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
