@@ -450,6 +450,8 @@ module JustinCredible.SampleApp.Application {
      */
     function device_pause(): void {
 
+        appIsInBackground = true;
+
         if (!isShowingPinPrompt) {
             // Store the current date/time. This will be used to determine if we need to
             // show the PIN lock screen the next time the application is resumed.
@@ -463,6 +465,8 @@ module JustinCredible.SampleApp.Application {
      * to switch back to the application.
      */
     function device_resume(): void {
+
+        appIsInBackground = false;
 
         isShowingPinPrompt = true;
 

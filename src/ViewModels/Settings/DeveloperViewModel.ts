@@ -3,10 +3,6 @@
     export class DeveloperViewModel {
         mockApiRequests: boolean;
 
-        enableFullHttpLogging: boolean;
-
-        logToLocalStorage: boolean;
-
         devicePlatform: string;
         deviceModel: string;
         deviceOsVersion: string;
