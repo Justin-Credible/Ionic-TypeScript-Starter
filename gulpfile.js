@@ -395,7 +395,7 @@ gulp.task("lint", function (cb) {
  * https://github.com/johnpapa/gulp-patterns/blob/master/gulpfile.js
  */
 gulp.task("test", ["ts:tests"], function (done) {
-    var child = fork("./www/js/src/Main.js");
+    var child = fork("./www/js/bundle.js");
     var karmaCompleted = function (karmaResult) {
         console.log('Karma completed');
         if (child) {
