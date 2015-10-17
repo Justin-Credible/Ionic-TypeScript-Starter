@@ -42,7 +42,7 @@ interface Window {
     /**
      * Variables emitted at build time which contain useful application information.
      */
-    buildVars: BuildVars;
+    buildVars: JustinCredible.SampleApp.Interfaces.BuildVars;
 
     /**
      * Prints a stack trace at the given location.
@@ -61,31 +61,6 @@ interface Window {
      * @param data An object containing the error on a property named "e".
      */
     printStackTrace(data: { e: Error }): string[];
-}
-
-/**
- * Variables emitted at build time which contain useful application information.
- */
-interface BuildVars {
-    /**
-     * True if the application was build in debug configuration, false if it was
-     * build a release or distribution configuration.
-     */
-    debug: boolean;
-
-    /**
-     * The time at which the application was built.
-     */
-    buildTimestamp: string;
-
-    majorVersion: number;
-    minorVersion: number;
-    buildVersion: number;
-
-    /**
-     * The URL to the APIs to use.
-     */
-    apiUrl: string;
 }
 
 /**

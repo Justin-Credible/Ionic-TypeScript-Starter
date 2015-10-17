@@ -121,6 +121,7 @@
             return {
                 hideKeyboardAccessoryBar: _.bind(this.noOp, this),
                 close: _.bind(this.noOp, this),
+                show: _.bind(this.noOp, this),
                 disableScroll: _.bind(this.noOp, this),
                 isVisible: false
             };
