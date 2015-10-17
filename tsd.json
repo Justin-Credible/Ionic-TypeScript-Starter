@@ -18,7 +18,7 @@
       "commit": "aadd63ecae3feb76ea2d4be80511e266b5c2c4a7"
     },
     "cordova-ionic/cordova-ionic.d.ts": {
-      "commit": "aadd63ecae3feb76ea2d4be80511e266b5c2c4a7"
+      "commit": "af5b8275d1f2b92738b93fddabc461fc20c553a1"
     },
     "cordova/cordova.d.ts": {
       "commit": "aadd63ecae3feb76ea2d4be80511e266b5c2c4a7"
@@ -81,7 +81,7 @@
       "commit": "aadd63ecae3feb76ea2d4be80511e266b5c2c4a7"
     },
     "cordova-ionic/plugins/keyboard.d.ts": {
-      "commit": "aadd63ecae3feb76ea2d4be80511e266b5c2c4a7"
+      "commit": "af5b8275d1f2b92738b93fddabc461fc20c553a1"
     },
     "jquery/jquery.d.ts": {
       "commit": "aadd63ecae3feb76ea2d4be80511e266b5c2c4a7"
