@@ -63,6 +63,7 @@
     "ios"
   ],
   "devDependencies": {
+    "gulp-sass": "^2.0.4",
     "gulp-typedoc": "^1.2.1",
     "typedoc": "^0.3.8"
   }

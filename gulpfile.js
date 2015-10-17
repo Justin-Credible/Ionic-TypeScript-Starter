@@ -18,6 +18,7 @@ var typedoc = require("gulp-typedoc");
 var tar = require("gulp-tar");
 var gzip = require("gulp-gzip");
 var eol = require("gulp-eol");
+var sass = require('gulp-sass');
 
 // Other Modules
 var runSequence = require("run-sequence");
@@ -44,7 +45,8 @@ var paths = {
         "./www/**",
         "./config.xml",
         "package.json"
-    ]
+    ],
+    sass: ["./scss/*.scss"]
 };
 
 /**
@@ -134,7 +136,7 @@ function format(formatString) {
  * and then lints and builds the TypeScript source code.
  */
 gulp.task("default", function (cb) {
-    runSequence("plugins", "libs", "tsd", "ts", cb);
+    runSequence("plugins", "libs", "sass", "tsd", "ts", cb);
 });
 
 /**
@@ -144,6 +146,7 @@ gulp.task("default", function (cb) {
  */
 gulp.task("watch", function() {
     gulp.watch(paths.ts, ["ts"]);
+    gulp.watch(paths.sass, ["sass"]);
 });
 
 /**
@@ -829,4 +832,12 @@ gulp.task("clean:typedoc", function (cb) {
     del([
         "docs"
     ], cb);
+});
+
+gulp.task('sass', function(done) {
+  gulp.src('./scss/ionic.app.scss')
+    .pipe(sass())
+    .on('error', sass.logError)
+    .pipe(gulp.dest('./www/css/'))
+    .on('end', done);
 });
