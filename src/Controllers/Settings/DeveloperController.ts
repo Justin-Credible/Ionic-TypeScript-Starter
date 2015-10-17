@@ -265,8 +265,8 @@
                 }
 
                 this.FileUtilities.readTextFile(result.value)
-                    .then((text: string) => { console.log(text); this.UiHelper.alert(text); },
-                    (err: Error) => { console.error(err); this.alertFileIoError(err); });
+                    .then((text: string) => { this.Logger.debug(DeveloperController.ID, "readFile_click", "Read OK.", text); this.UiHelper.alert(text); },
+                    (err: Error) => { this.Logger.error(DeveloperController.ID, "readFile_click", "An error occurred.", err); this.alertFileIoError(err); });
             });
         }
 
@@ -291,8 +291,8 @@
                     contents = result.value;
 
                     this.FileUtilities.writeTextFile(path, contents, false)
-                        .then(() => { console.log("WRITE OK"); this.UiHelper.alert("WRITE OK"); },
-                        (err: Error) => { console.error(err); this.alertFileIoError(err); });
+                        .then(() => { this.Logger.debug(DeveloperController.ID, "writeFile_click", "Write OK.", { path: path, contents: contents }); this.UiHelper.alert("Write OK."); },
+                        (err: Error) => { this.Logger.error(DeveloperController.ID, "writeFile_click", "An error occurred.", err); this.alertFileIoError(err); });
                 });
             });
         }
@@ -316,8 +316,8 @@
                     contents = result.value;
 
                     this.FileUtilities.writeTextFile(path, contents, true)
-                        .then(() => { console.log("APPEND OK"); this.UiHelper.alert("APPEND OK"); },
-                        (err: Error) => { console.error(err); this.alertFileIoError(err); });
+                        .then(() => { this.Logger.debug(DeveloperController.ID, "appendFile_click", "Append OK.", { path: path, contents: contents }); this.UiHelper.alert("Append OK."); },
+                        (err: Error) => { this.Logger.error(DeveloperController.ID, "appendFile_click", "An error occurred.", err); this.alertFileIoError(err); });
                 });
             });
         }
@@ -334,17 +334,8 @@
                 path = result.value;
 
                 this.FileUtilities.createDirectory(path)
-                    .then(() => { console.log("CREATE DIR OK"); this.UiHelper.alert("CREATE DIR OK"); },
-                    (err: Error) => { console.error(err); this.alertFileIoError(err); });
-            });
-        }
-
-        protected defaultStoragePath_click(path: string): void {
-            this.UiHelper.confirm("Copy path to clipboard?").then((result: string) => {
-                if (result === Constants.Buttons.Yes) {
-                    this.Plugins.clipboard.copy(path);
-                    this.Plugins.toast.showShortBottom("Path copied to clipboard.");
-                }
+                    .then(() => { this.Logger.debug(DeveloperController.ID, "createDir_click", "Create directory OK.", path); this.UiHelper.alert("Create directory OK."); },
+                    (err: Error) => { this.Logger.error(DeveloperController.ID, "createDir_click", "An error occurred.", err); this.alertFileIoError(err); });
             });
         }
 
@@ -362,7 +353,7 @@
 
                 this.FileUtilities.getFilePaths(path)
                     .then((files: any) => {
-                        console.log(files);
+                        this.Logger.debug(DeveloperController.ID, "listFiles_click", "Get file paths OK.", files);
 
                         files.forEach((value: string) => {
                             list += "\n" + value;
@@ -371,7 +362,7 @@
                         this.UiHelper.alert(list);
                     },
                     (err: Error) => {
-                        console.error(err);
+                        this.Logger.error(DeveloperController.ID, "listFiles_click", "An error occurred.", err);
                         this.alertFileIoError(err);
                     });
             });
@@ -391,7 +382,7 @@
 
                 this.FileUtilities.getDirectoryPaths(path)
                     .then((dirs: any) => {
-                        console.log(dirs);
+                        this.Logger.debug(DeveloperController.ID, "listDirs_click", "Get directory paths OK.", dirs);
 
                         dirs.forEach((value: string) => {
                             list += "\n" + value;
@@ -400,7 +391,7 @@
                         this.UiHelper.alert(list);
                     },
                     (err: Error) => {
-                        console.error(err);
+                        this.Logger.error(DeveloperController.ID, "listDirs_click", "An error occurred.", err);
                         this.alertFileIoError(err);
                     });
             });
@@ -418,8 +409,8 @@
                 path = result.value;
 
                 this.FileUtilities.deleteFile(path)
-                    .then(() => { console.log("DELETE FILE OK"); this.UiHelper.alert("DELETE FILE OK"); },
-                    (err: Error) => { console.error(err); this.alertFileIoError(err); });
+                    .then(() => { this.Logger.debug(DeveloperController.ID, "deleteFile_click", "Delete file OK.", path); this.UiHelper.alert("Delete file OK."); },
+                    (err: Error) => { this.Logger.error(DeveloperController.ID, "deleteFile_click", "An error occurred.", err); this.alertFileIoError(err); });
             });
         }
 
@@ -435,8 +426,8 @@
                 path = result.value;
 
                 this.FileUtilities.deleteDirectory(path)
-                    .then(() => { console.log("DELETE DIR OK"); this.UiHelper.alert("DELETE FILE OK"); },
-                    (err: Error) => { console.error(err); this.alertFileIoError(err); });
+                    .then(() => { this.Logger.debug(DeveloperController.ID, "deleteDir_click", "Delete directory OK.", path); this.UiHelper.alert("Delete directory OK"); },
+                    (err: Error) => { this.Logger.error(DeveloperController.ID, "deleteDir_click", "An error occurred.", err); this.alertFileIoError(err); });
             });
         }
 
