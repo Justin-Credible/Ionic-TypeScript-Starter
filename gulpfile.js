@@ -4,6 +4,7 @@
 
 // Native Node Modules
 var exec = require("child_process").exec;
+var fork = require("child_process").fork;
 var del = require("del");
 var fs = require("fs");
 
@@ -29,7 +30,7 @@ var sh = require("shelljs");
 var async = require("async");
 var xpath = require("xpath");
 var XmlDom = require("xmldom").DOMParser;
-var karma = require("karma").server;
+var Karma = require("karma").Server;
 
 
 var paths = {
@@ -391,15 +392,28 @@ gulp.task("lint", function (cb) {
  * Run all of the unit tests once and then exit.
  * 
  * A Karma test server instance must be running first (eg karma start).
+ * https://github.com/johnpapa/gulp-patterns/blob/master/gulpfile.js
  */
 gulp.task("test", ["ts:tests"], function (done) {
-    karma.start({
+    var child = fork("./www/js/src/Main.js");
+    var karmaCompleted = function (karmaResult) {
+        console.log('Karma completed');
+        if (child) {
+            console.log('shutting down the child process');
+            child.kill();
+        }
+        if (karmaResult === 1) {
+            console.log('karma: tests failed with code ' + karmaResult);
+            done(karmaResult);
+        } else {
+            done();
+        }
+    };
+    
+    new Karma({
         configFile: __dirname + "/karma.conf.js",
         singleRun: true
-    }, function (err, result) {
-        // When a non-zero code is returned by Karma something went wrong.
-        done(err === 0 ? null : "There are failing unit tests");
-    });
+    }, karmaCompleted).start();
 });
 
 /**
