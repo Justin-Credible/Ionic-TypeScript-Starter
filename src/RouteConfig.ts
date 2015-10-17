@@ -118,8 +118,8 @@ module JustinCredible.SampleApp {
                 url: "/settings/logs",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Settings/Logs.html",
-                        controller: Controllers.LogsController.ID
+                        templateUrl: "templates/Settings/Logs-List.html",
+                        controller: Controllers.LogsListController.ID
                     }
                 }
             });

@@ -44,10 +44,6 @@
 
             this.viewModel.mockApiRequests = this.Configuration.enableMockHttpCalls;
 
-            this.viewModel.enableFullHttpLogging = this.Configuration.enableFullHttpLogging;
-
-            this.viewModel.logToLocalStorage = this.Logger.getLogToLocalStorage();
-
             this.viewModel.userId = this.Preferences.userId;
             this.viewModel.token = this.Preferences.token;
 
@@ -102,14 +98,6 @@
             });
         }
 
-        protected enableFullHttpLogging_change(): void {
-            this.Configuration.enableFullHttpLogging = this.viewModel.enableFullHttpLogging;
-        }
-
-        protected logResponseErrors_click(): void {
-            this.UiHelper.alert("HTTP response errors are always logged.");
-        }
-
         protected apiUrl_click(): void {
             var message = "Here you can edit the API URL for this session.";
 
@@ -123,14 +111,6 @@
                 this.viewModel.apiUrl = result.value;
                 this.Plugins.toast.showShortBottom("API URL changed for this session only.");
             });
-        }
-
-        protected logToLocalStorage_change(): void {
-            this.Logger.setLogToLocalStorage(this.viewModel.logToLocalStorage);
-
-            if (this.viewModel.logToLocalStorage) {
-                this.UiHelper.alert("Logs will now be written to local storage for this session only.");
-            }
         }
 
         protected userToken_click(token: string): void {

@@ -1,28 +1,24 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
-    export class LogsController extends BaseController<ViewModels.LogsViewModel> {
+    export class LogsListController extends BaseController<ViewModels.LogsListViewModel> {
 
         //#region Injection
 
-        public static ID = "LogsController";
+        public static ID = "LogsListController";
 
         public static get $inject(): string[] {
             return [
                 "$scope",
-                Services.Plugins.ID,
                 Services.Logger.ID,
-                Services.Utilities.ID,
                 Services.UiHelper.ID
             ];
         }
 
         constructor(
             $scope: ng.IScope,
-            private Plugins: Services.Plugins,
             private Logger: Services.Logger,
-            private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper) {
-            super($scope, ViewModels.LogsViewModel);
+            super($scope, ViewModels.LogsListViewModel);
         }
 
         //#endregion
@@ -32,14 +28,14 @@
         protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
-            this.Logger.getLogs().then(_.bind(this.getLogs_success, this), _.bind(this.getLogs_failure, this));
+            this.setupViewModel(this.Logger.logs);
         }
 
         //#endregion
 
         //#region Private Helper Methods
 
-        private getLogs_success(logEntries: Models.LogEntry[]): void {
+        private setupViewModel(logEntries: Models.LogEntry[]): void {
 
             if (logEntries == null) {
                 logEntries = [];
@@ -56,34 +52,36 @@
                 var formattedDate: string,
                     viewModel: ViewModels.LogEntryViewModel;
 
-                viewModel = new ViewModels.LogEntryViewModel();
-                viewModel.id = logEntry.id;
-                viewModel.message = logEntry.message;
-                viewModel.lineNumber = logEntry.lineNumber;
-                viewModel.colNumber = logEntry.colNumber;
-                viewModel.uri = logEntry.uri;
-                viewModel.error = logEntry.error;
+                // Put the actual log entry into the view model.
+                viewModel.logEntry = logEntry;
+
+                // Determine the icon based on the log level.
+                switch (logEntry.level) {
+                    case Models.LogLevel.TRACE:
+                        viewModel.icon = "ion-code-working";
+                        break;
+                    case Models.LogLevel.DEBUG:
+                        viewModel.icon = "ion-bug";
+                        break;
+                    case Models.LogLevel.INFO:
+                        viewModel.icon = "ion-information-circled";
+                        break;
+                    case Models.LogLevel.WARN:
+                        viewModel.icon = "ion-alert-circled";
+                        break;
+                    case Models.LogLevel.ERROR:
+                        viewModel.icon = "ion-alert";
+                        break;
+                    case Models.LogLevel.FATAL:
+                        viewModel.icon = "ion-nuclear";
+                        break;
+                    default:
+                        viewModel.icon = "ion-alert";
+                        break;
+                }
 
                 // Format the date and time for display.
-                viewModel.time = moment(logEntry.timestamp).format("h:mm:ss a");
                 formattedDate = moment(logEntry.timestamp).format("l");
-                viewModel.date = formattedDate;
-
-                if (logEntry.error == null) {
-                    // If an error object isn't present, then this is likely one of the
-                    // unhandled JS exceptions (eg window.onerror).
-                    viewModel.iconType = "alert";
-                }
-                else {
-                    // If an error object is present then this error either came from Angular
-                    // or it was a manually logged error object.
-                    viewModel.iconType = "alert-circled";
-                }
-
-                // If this error has HTTP response data, then it came from a RESTful API request.
-                if (logEntry.httpUrl) {
-                    viewModel.iconType = "android-wifi";
-                }
 
                 // The view model is a dictionary of formatted dates to an
                 // array of log entries that happened on that date. So first,
@@ -97,18 +95,14 @@
             });
         }
 
-        private getLogs_failure(error: Error): void {
-            this.Plugins.toast.showShortBottom("An error occurred while retrieving the logs.");
-        }
-
         //#endregion
 
         //#region Controller Methods
 
-        protected clearLogs() {
-            this.UiHelper.confirm("Are you sure you want to delete the logs?", "Delete Logs").then((result: string) => {
+        protected clear_click() {
+            this.UiHelper.confirm("Are you sure you want to clear the logs?", "Clear Logs").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
-                    this.Logger.clearLogs();
+                    this.Logger.clear();
                     this.viewModel.logs = {};
                 }
             });
