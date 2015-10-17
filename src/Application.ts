@@ -530,7 +530,7 @@ module JustinCredible.SampleApp.Application {
         // Save off the current route so we can use it for logging.
         currentRoute = newRoute;
 
-        services.Logger.debug("Application", "angular_locationChangeStart", "Angular location changed.", { oldRoute: oldRoute, newRoute: newRoute });
+        services.Logger.trace("Application", "angular_locationChangeStart", "Angular location changed.", { oldRoute: oldRoute, newRoute: newRoute });
     };
 
     /**
@@ -554,7 +554,7 @@ module JustinCredible.SampleApp.Application {
             services.Plugins.progressIndicator.hide();
         }
         catch (ex) {
-            console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
+            services.Logger.warn("Application", "window_onerror", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
             alert("An error has occurred; please try again.");
         }
     }
@@ -587,7 +587,7 @@ module JustinCredible.SampleApp.Application {
             services.Plugins.progressIndicator.hide();
         }
         catch (ex) {
-            console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
+            services.Logger.warn("Application", "angular_exceptionHandler", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
             alert("An error has occurred; please try again.");
         }
     }

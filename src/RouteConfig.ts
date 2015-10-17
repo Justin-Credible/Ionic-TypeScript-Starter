@@ -126,6 +126,12 @@ module JustinCredible.SampleApp {
 
             $stateProvider.state("app.log-entry", {
                 url: "/settings/log-entry/:id",
+                params: {
+                    id: {
+                        value: "",
+                        squash: false
+                    }
+                },
                 views: {
                     "root-view": {
                         templateUrl: "templates/Settings/Log-Entry.html",

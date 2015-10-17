@@ -9,7 +9,6 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
-                "$http",
                 Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
@@ -23,7 +22,6 @@
 
         constructor(
             $scope: ng.IScope,
-            private $http: ng.IHttpService,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,

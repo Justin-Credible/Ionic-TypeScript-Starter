@@ -6,5 +6,7 @@ module JustinCredible.SampleApp.ViewModels {
         public date: string;
         public time: string;
         public levelDisplay: string;
+        public color: string;
+        public formattedMetadata: string;
     }
 }

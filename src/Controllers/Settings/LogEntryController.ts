@@ -38,33 +38,20 @@
             super.view_beforeEnter(event, eventArgs);
 
             this.viewModel.logEntry = this.Logger.getLog(this.$stateParams.id);
-            //TODO populate the rest of the properties here. date, time, leveldisplay via logger.getLevelDisplayText()
-            //TODO Format the metadata (pretty json?)
 
-            //TODO: MOve this to logger.getIcon
-            switch (this.viewModel.logEntry.logLevel) {
-                case Models.LogLevel.TRACE:
-                    this.viewModel.icon = "ion-code-working";
-                    break;
-                case Models.LogLevel.DEBUG:
-                    this.viewModel.icon = "ion-bug";
-                    break;
-                case Models.LogLevel.INFO:
-                    this.viewModel.icon = "ion-information-circled";
-                    break;
-                case Models.LogLevel.WARN:
-                    this.viewModel.icon = "ion-alert-circled";
-                    break;
-                case Models.LogLevel.ERROR:
-                    this.viewModel.icon = "ion-alert";
-                    break;
-                case Models.LogLevel.FATAL:
-                    this.viewModel.icon = "ion-nuclear";
-                    break;
-                default:
-                    this.viewModel.icon = "ion-alert";
-                    break;
+            this.viewModel.date = moment(this.viewModel.logEntry.timestamp).format("MMMM Do YYYY");
+            this.viewModel.time = moment(this.viewModel.logEntry.timestamp).format("h:mm:ss a");
+
+            try {
+                this.viewModel.formattedMetadata = JSON.stringify(this.viewModel.logEntry.metadata, null, 4);
             }
+            catch (exception) {
+                this.viewModel.formattedMetadata = "Unable to stringify metadata: " + exception;
+            }
+
+            this.viewModel.icon = this.Logger.getIconForLevel(this.viewModel.logEntry.level);
+            this.viewModel.color = this.Logger.getColorForLevel(this.viewModel.logEntry.level);
+            this.viewModel.levelDisplay = this.Logger.getDisplayLevelForLevel(this.viewModel.logEntry.level);
         }
 
         //#endregion

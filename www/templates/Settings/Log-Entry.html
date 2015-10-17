@@ -7,17 +7,17 @@
         <div class="list card">
 
             <div class="item item-avatar item-icon-left">
-                <i class="icon {{viewModel.iconType}}"></i>
-                <h2>{{viewModel.levelDisplay}}</h2>
+                <i class="icon {{viewModel.icon}}" style="color: {{viewModel.color}}"></i>
+                <h2 style="color: {{viewModel.color}}">{{viewModel.levelDisplay}}</h2>
                 <p>{{viewModel.date}}&nbsp;&nbsp;&nbsp;{{viewModel.time}}</p>
             </div>
 
             <div class="item item-body">
-                <p>{{viewModel.message}}</p>
+                <p>{{viewModel.logEntry.message}}</p>
             </div>
 
             <div class="item item-body">
-                <p>{{viewModel.metadata}}</p>
+                <p>{{viewModel.formattedMetadata}}</p>
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left">
