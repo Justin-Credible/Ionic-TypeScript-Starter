@@ -4,6 +4,7 @@
 
 // Native Node Modules
 var exec = require("child_process").exec;
+var fork = require("child_process").fork;
 var del = require("del");
 var fs = require("fs");
 
@@ -18,6 +19,8 @@ var typedoc = require("gulp-typedoc");
 var tar = require("gulp-tar");
 var gzip = require("gulp-gzip");
 var eol = require("gulp-eol");
+var sass = require('gulp-sass');
+var minifyCss = require('gulp-minify-css');
 
 // Other Modules
 var runSequence = require("run-sequence");
@@ -27,7 +30,7 @@ var sh = require("shelljs");
 var async = require("async");
 var xpath = require("xpath");
 var XmlDom = require("xmldom").DOMParser;
-var karma = require("karma").server;
+var Karma = require("karma").Server;
 
 
 var paths = {
@@ -44,7 +47,8 @@ var paths = {
         "./www/**",
         "./config.xml",
         "package.json"
-    ]
+    ],
+    sass: ["./scss/*.scss"]
 };
 
 /**
@@ -134,7 +138,7 @@ function format(formatString) {
  * and then lints and builds the TypeScript source code.
  */
 gulp.task("default", function (cb) {
-    runSequence("plugins", "libs", "tsd", "ts", cb);
+    runSequence("plugins", "libs", "sass", "tsd", "ts", cb);
 });
 
 /**
@@ -144,6 +148,7 @@ gulp.task("default", function (cb) {
  */
 gulp.task("watch", function() {
     gulp.watch(paths.ts, ["ts"]);
+    gulp.watch(paths.sass, ["sass"]);
 });
 
 /**
@@ -387,15 +392,28 @@ gulp.task("lint", function (cb) {
  * Run all of the unit tests once and then exit.
  * 
  * A Karma test server instance must be running first (eg karma start).
+ * https://github.com/johnpapa/gulp-patterns/blob/master/gulpfile.js
  */
 gulp.task("test", ["ts:tests"], function (done) {
-    karma.start({
+    var child = fork("./www/js/bundle.js");
+    var karmaCompleted = function (karmaResult) {
+        console.log('Karma completed');
+        if (child) {
+            console.log('shutting down the child process');
+            child.kill();
+        }
+        if (karmaResult === 1) {
+            console.log('karma: tests failed with code ' + karmaResult);
+            done(karmaResult);
+        } else {
+            done();
+        }
+    };
+    
+    new Karma({
         configFile: __dirname + "/karma.conf.js",
         singleRun: true
-    }, function (err, result) {
-        // When a non-zero code is returned by Karma something went wrong.
-        done(err === 0 ? null : "There are failing unit tests");
-    });
+    }, karmaCompleted).start();
 });
 
 /**
@@ -829,4 +847,17 @@ gulp.task("clean:typedoc", function (cb) {
     del([
         "docs"
     ], cb);
+});
+
+gulp.task('sass', function(done) {
+  gulp.src('./scss/ionic.app.scss')
+    .pipe(sass())
+    .on('error', sass.logError)
+    .pipe(gulp.dest('./www/css/'))
+        .pipe(minifyCss({
+      keepSpecialComments: 0
+    }))
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest('./www/css/'))
+    .on('end', done);
 });
