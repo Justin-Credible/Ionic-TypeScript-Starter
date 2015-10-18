@@ -55,8 +55,30 @@ module JustinCredible.SampleApp.Services {
          * Exposes an API for working with progress indicators.
          */
         get progressIndicator(): ICordovaProgressIndicator {
-            if (!this.Utilities.isRipple && !this.Utilities.isWindows && window.ProgressIndicator && !this.Utilities.isAndroid) {
-                return window.ProgressIndicator;
+            if (!this.Utilities.isRipple && !this.Utilities.isWindows && window.ActivityIndicator) {
+                var show = function (dimBackground: boolean, label: any, text: string) {
+                        var msg: string = (typeof label === "string") ? label : text;
+                        msg =  (null == msg) ? "Please Wait..." : msg;
+                        return window.ActivityIndicator.show(msg);
+                };
+                var hide = function () {
+                    return window.ActivityIndicator.hide();
+                };
+                return {
+                    hide: _.bind(hide, this),
+                    showSimple: _.bind(show, this),
+                    showSimpleWithLabel: _.bind(show, this),
+                    showSimpleWithLabelDetail: _.bind(show, this),
+                    showDeterminate: _.bind(show, this),
+                    showDeterminateWithLabel: _.bind(show, this),
+                    showAnnular: _.bind(show, this),
+                    showAnnularWithLabel: _.bind(show, this),
+                    showBar: _.bind(show, this),
+                    showBarWithLabel: _.bind(show, this),
+                    showSuccess: _.bind(show, this),
+                    showText: _.bind(show, this),
+                    show: _.bind(show, this, false)
+                };
             }
             else {
                 return this.MockPlatformApis.getProgressIndicatorPlugin();
@@ -116,7 +138,6 @@ module JustinCredible.SampleApp.Services {
                 return this.MockPlatformApis.getCrashlyticsPlugin();
             }
         }
-
         //#endregion
     }
 }

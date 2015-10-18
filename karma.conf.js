@@ -20,14 +20,17 @@ module.exports = function(config) {
             // This list should match the order defined in index.html
             "www/js/BuildVars.js",
             "www/js/RippleMockApi.js",
-            "www/lib/ionic/js/ionic.bundle.min.js",
+            "bower_components/angular/angular.js",
+            "bower_components/angular-animate/angular-animate.js",
+            "bower_components/angular-sanitize/angular-sanitize.js",
+            "bower_components/angular-ui-router/release/angular-ui-router.js",
+            "bower_components/ionic/release/js/ionic.bundle.js",
             "www/lib/angular-mocks/angular-mocks.js",
             "www/lib/lodash/lodash.js",
             "www/lib/moment/moment.js",
             "www/lib/nprogress/nprogress.js",
             "www/js/bundle.js",
             "www/js/Main.js",
-
             // Tests
             "tests/bundle.tests.js",
 
@@ -87,6 +90,8 @@ module.exports = function(config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: ["PhantomJS"],
 
+        // added to prevent failures in karma timing out
+        browserNoActivityTimeout: 0,
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
