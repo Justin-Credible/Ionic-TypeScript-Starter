@@ -20,7 +20,7 @@
                     "owner": "gulp",
                     "fileLocation": ["absolute"],
                     "pattern": {
-                        "regexp": "^\\[gulp\\] \\[gulp-tslint\\] (.*) \\(.*\\) (.*)\\[(\\d*), (\\d*)\\]: (.*)$",
+                        "regexp": "^\\[\\d\\d:\\d\\d:\\d\\d\\] \\[gulp-tslint\\] (.*) \\(.*\\) (.*)\\[(\\d*), (\\d*)\\]: (.*)$",
                         "file": 2,
                         "line": 3,
                         "column": 4,
