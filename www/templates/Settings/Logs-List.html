@@ -1,0 +1,29 @@
+﻿<ion-view view-title="Logs">
+
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-search" ng-click="controller.filter_click($event)"></button>
+        <button class="button icon ion-trash-a" ng-click="controller.clear_click()"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header">
+        <ion-list>
+
+            <div ng-repeat="(logGroup, logEntryViewModels) in viewModel.logs">
+
+                <div class="item item-divider">
+                    {{logGroup}} - {{logEntries.length}} Logs
+                </div>
+
+                <ion-item ng-repeat="logEntryViewModel in logEntryViewModels" ui-sref="app.log-entry({ id: logEntryViewModel.logEntry.id })" class="item-icon-left item-icon-right">
+                    <i class="icon {{logEntryViewModel.icon}}" style="color: {{logEntryViewModel.color}}"></i>
+                    {{logEntryViewModel.time}} - {{logEntryViewModel.levelDisplay}}
+                    <p>{{logEntryViewModel.logEntry.message}}</p>
+                    <i class="icon ion-ios-arrow-forward"></i>
+                </ion-item>
+
+            </div>
+
+        </ion-list>
+    </ion-content>
+
+</ion-view>

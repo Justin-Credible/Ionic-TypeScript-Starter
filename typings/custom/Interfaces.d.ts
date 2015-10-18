@@ -27,6 +27,13 @@ declare module JustinCredible.SampleApp.Interfaces {
          * HttpInterceptor defaults this to true.
          */
         showSpinner?: boolean;
+
+        /**
+         * Used to control if the HttpInterceptor will log the body of the request before it goes
+         * out. Useful for skipping logs that contain sensitive data (eg passwords). If not provided,
+         * the default value is false.
+         */
+        logRequestBody?: boolean;
     }
 
     /**

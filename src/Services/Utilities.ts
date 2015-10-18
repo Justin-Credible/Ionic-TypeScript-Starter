@@ -615,6 +615,63 @@
         }
 
         /**
+         * This is a helper method for removing sensitive data from a request response body for logging.
+         * 
+         * If the given config object has its logRequestBody property set to false, the data property
+         * will be set to "[FILTERED]" so that it can be logged without the data.
+         * 
+         * It is important to note that this method returns a deep copy of the given object if
+         * logRequestBody is false so that it will not mutate the object. In the case of logRequestBody
+         * being set to true, the original, unaltered object will be passed through.
+         * 
+         * @param config The HTTP configuration object to be sanitized for logging.
+         * @returns A deep copy with the request body removed or a unaltered pass through of the object.
+         */
+        public sanitizeConfigForLogging(config: Interfaces.RequestConfig): Interfaces.RequestConfig {
+
+            if (config && config.logRequestBody === false) {
+
+                let filteredConfig = _.cloneDeep(config);
+                filteredConfig.data = "[FILTERED]";
+                return filteredConfig;
+            }
+            else {
+                return config;
+            }
+        }
+
+        /**
+         * This is a helper method for removing sensitive data from a request response body (on the HTTP
+         * response object) for logging.
+         * 
+         * If the given response's config object has its logRequestBody property set to false, the data
+         * config.data will be set to "[FILTERED]" so that it can be logged without the data.
+         * 
+         * It is important to note that this method returns a deep copy of the given object if
+         * logRequestBody is false so that it will not mutate the object. In the case of logRequestBody
+         * being set to true, the original, unaltered object will be passed through.
+         * 
+         * @param config The HTTP response's request configuration object to be sanitized for logging.
+         * @returns A deep copy with the request body removed or a unaltered pass through of the object.
+         */
+        public sanitizeResponseForLogging(httpResponse: ng.IHttpPromiseCallbackArg<any>): ng.IHttpPromiseCallbackArg<any> {
+
+            /* tslint:disable:no-string-literal */
+
+            if (httpResponse && httpResponse.config && httpResponse.config.data && httpResponse.config["logRequestBody"] === false) {
+
+                let filteredResponse = _.cloneDeep(httpResponse);
+                filteredResponse.config.data = "[FILTERED]";
+                return filteredResponse;
+            }
+            else {
+                return httpResponse;
+            }
+
+            /* tslint:enable:no-string-literal */
+        }
+
+        /**
          * Returns the categories for the application in their default sort order.
          */
         public get categories(): ViewModels.CategoryItemViewModel[] {

@@ -1,0 +1,67 @@
+<ion-popover-view style="height: 325px; width: 240px;">
+    <ion-content>
+        <ion-list>
+
+            <ion-item
+                class="item-icon-left item-icon-right"
+                ng-click="controller.trace_click()">
+                <i class="icon {{controller.Logger.getIconForLevel(0)}}"
+                    style="color: {{controller.Logger.getColorForLevel(0)}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showTrace }"></i>
+                Trace
+            </ion-item>
+
+            <ion-item
+                class="item-icon-left item-icon-right"
+                ng-click="controller.debug_click()">
+                <i class="icon {{controller.Logger.getIconForLevel(1)}}"
+                    style="color: {{controller.Logger.getColorForLevel(1)}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showDebug }"></i>
+                Debug
+            </ion-item>
+
+            <ion-item
+                class="item-icon-left item-icon-right"
+                ng-click="controller.info_click()">
+                <i class="icon {{controller.Logger.getIconForLevel(2)}}"
+                    style="color: {{controller.Logger.getColorForLevel(2)}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showInfo }"></i>
+                Info
+            </ion-item>
+
+            <ion-item
+                class="item-icon-left item-icon-right"
+                ng-click="controller.warn_click()">
+                <i class="icon {{controller.Logger.getIconForLevel(3)}}"
+                    style="color: {{controller.Logger.getColorForLevel(3)}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showWarn }"></i>
+                Warning
+            </ion-item>
+
+            <ion-item
+                class="item-icon-left item-icon-right"
+                ng-click="controller.error_click()">
+                <i class="icon {{controller.Logger.getIconForLevel(4)}}"
+                    style="color: {{controller.Logger.getColorForLevel(4)}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showError }"></i>
+                Error
+            </ion-item>
+
+            <ion-item
+                class="item-icon-left item-icon-right"
+                ng-click="controller.fatal_click()">
+                <i class="icon {{controller.Logger.getIconForLevel(5)}}"
+                    style="color: {{controller.Logger.getColorForLevel(5)}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showFatal }"></i>
+                Fatal
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+</ion-popover-view>

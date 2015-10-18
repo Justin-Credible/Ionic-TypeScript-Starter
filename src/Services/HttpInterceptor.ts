@@ -104,13 +104,6 @@
                 return config;
             }
 
-            console.log("HttpInterceptor.request: " + config.url, [config]);
-
-            // Log the request data to disk.
-            if (this.Configuration.enableFullHttpLogging) {
-                this.Logger.logHttpRequestConfig(config);
-            }
-
             // Keep track of how many requests are in progress and show spinners etc.
             this.handleRequestStart(config);
 
@@ -181,12 +174,7 @@
                 return httpResponse;
             }
 
-            console.log("HttpInterceptor.response: " + httpResponse.config.url, [httpResponse]);
-
-            // Log the response data to disk.
-            if (this.Configuration.enableFullHttpLogging) {
-                this.Logger.logHttpResponse(httpResponse);
-            }
+            this.Logger.debug(HttpInterceptor.ID, "response", "A response was received.", this.Utilities.sanitizeResponseForLogging(httpResponse));
 
             // Keep track of how many requests are still in progress and hide spinners etc.
             this.handleResponseEnd(config);
@@ -203,22 +191,20 @@
                 exception: Error,
                 config: Interfaces.RequestConfig;
 
-            console.error("HttpInterceptor.requestError", [rejection]);
-
             if (rejection instanceof Error) {
                 // Occurs for any uncaught exceptions that occur in other interceptors.
                 exception = <Error>rejection;
-                this.Logger.logError("An request exception was encountered in the HttpInterceptor.requestError().", exception);
+                this.Logger.error(HttpInterceptor.ID, "requestError", "An uncaught exception occurred during an HTTP interceptor's request method.", exception);
                 this.handleFatalError();
             }
             else {
                 // Occurs if any other interceptors reject the request.
-                this.Logger.logError("An request rejection was encountered in the HttpInterceptor.requestError().", null);
-
                 httpResponse = <ng.IHttpPromiseCallbackArg<any>>rejection;
 
                 // Cast to our custom type which includes some extra flags.
                 config = <Interfaces.RequestConfig>httpResponse.config;
+
+                this.Logger.error(HttpInterceptor.ID, "requestError", "A request rejection was encountered.", this.Utilities.sanitizeResponseForLogging(httpResponse));
 
                 // Keep track of how many requests are still in progress and hide spinners etc.
                 if (config) {
@@ -240,11 +226,9 @@
                 exception: Error,
                 config: Interfaces.RequestConfig;
 
-            console.log("HttpInterceptor.responseError", [responseOrError]);
-
             if (responseOrError instanceof Error) {
                 exception = <Error>responseOrError;
-                this.Logger.logError("An response error was encountered in the HttpInterceptor.responseError().", exception);
+                this.Logger.error(HttpInterceptor.ID, "responseError", "An uncaught exception occurred during an HTTP interceptor's response method.", exception);
                 this.handleFatalError();
             }
             else {
@@ -258,8 +242,7 @@
                     return this.$q.reject(responseOrError);
                 }
 
-                // Always log error responses.
-                this.Logger.logHttpResponse(httpResponse);
+                this.Logger.debug(HttpInterceptor.ID, "responseError", "A non-200 level status code was received.", this.Utilities.sanitizeResponseForLogging(httpResponse));
 
                 // Keep track of how many requests are still in progress and hide spinners etc.
                 this.handleResponseEnd(config);

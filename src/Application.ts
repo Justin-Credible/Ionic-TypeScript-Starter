@@ -33,6 +33,17 @@ module JustinCredible.SampleApp.Application {
      */
     var isShowingPinPrompt: boolean;
 
+    /**
+     * Keeps track of the application being in the background or not.
+     * This flag is updated via the device_pause and device_resume events.
+     */
+    var appIsInBackground: boolean = false;
+
+    /**
+     * Stores the current Angular route for debugging.
+     */
+    var currentRoute: string = "";
+
     //#endregion
 
     /**
@@ -439,6 +450,8 @@ module JustinCredible.SampleApp.Application {
      */
     function device_pause(): void {
 
+        appIsInBackground = true;
+
         if (!isShowingPinPrompt) {
             // Store the current date/time. This will be used to determine if we need to
             // show the PIN lock screen the next time the application is resumed.
@@ -452,6 +465,8 @@ module JustinCredible.SampleApp.Application {
      * to switch back to the application.
      */
     function device_resume(): void {
+
+        appIsInBackground = false;
 
         isShowingPinPrompt = true;
 
@@ -511,8 +526,15 @@ module JustinCredible.SampleApp.Application {
      * Fired when Angular's route/location (eg URL hash) is changing.
      */
     function angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string): void {
-        console.log("Location change, old Route: " + oldRoute);
-        console.log("Location change, new Route: " + newRoute);
+
+        // Chop off the long "file://..." prefix (we only care about the hash tag).
+        newRoute = newRoute.substring(newRoute.indexOf("#"));
+        oldRoute = oldRoute.substring(oldRoute.indexOf("#"));
+
+        // Save off the current route so we can use it for logging.
+        currentRoute = newRoute;
+
+        services.Logger.trace("Application", "angular_locationChangeStart", "Angular location changed.", { oldRoute: oldRoute, newRoute: newRoute });
     };
 
     /**
@@ -520,7 +542,13 @@ module JustinCredible.SampleApp.Application {
      */
     function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number): void {
 
-        console.error("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
+        // Log the exception using the built-in logger.
+        try {
+            services.Logger.error("Application", "window_onerror", message, { uri: uri, lineNumber: lineNumber, columnNumber: columnNumber });
+        }
+        catch (ex) {
+            // If logging failed there is no use trying to log the failure.
+        }
 
         try {
             // Show a generic message to the user.
@@ -530,15 +558,8 @@ module JustinCredible.SampleApp.Application {
             services.Plugins.progressIndicator.hide();
         }
         catch (ex) {
-            console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
+            services.Logger.warn("Application", "window_onerror", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
             alert("An error has occurred; please try again.");
-        }
-
-        try {
-            services.Logger.logWindowError(message, uri, lineNumber, columnNumber);
-        }
-        catch (ex) {
-            console.error("An error occurred while attempting to log an exception.", ex);
         }
     }
 
@@ -554,7 +575,13 @@ module JustinCredible.SampleApp.Application {
             cause = "[Unknown]";
         }
 
-        console.error("AngularJS Exception", exception, cause);
+        // Log the exception using the built-in logger.
+        try {
+            services.Logger.error("Application", "angular_exceptionHandler", "Angular Exception occurred.", { cause: cause, exception: exception });
+        }
+        catch (ex) {
+            // If logging failed there is no use trying to log the failure.
+        }
 
         try {
             // Show a generic message to the user.
@@ -564,15 +591,8 @@ module JustinCredible.SampleApp.Application {
             services.Plugins.progressIndicator.hide();
         }
         catch (ex) {
-            console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
+            services.Logger.warn("Application", "angular_exceptionHandler", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
             alert("An error has occurred; please try again.");
-        }
-
-        try {
-            services.Logger.logError("Angular exception caused by " + cause, exception);
-        }
-        catch (ex) {
-            console.error("An error occurred while attempting to log an Angular exception.", ex);
         }
     }
 

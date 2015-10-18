@@ -27,7 +27,6 @@ module JustinCredible.SampleApp.Services {
         //#region Local Storage Keys
 
         private static ENABLE_DEVELOPER_TOOLS = "ENABLE_DEVELOPER_TOOLS";
-        private static ENABLE_FULL_HTTP_LOGGING = "ENABLE_FULL_HTTP_LOGGING";
         private static ENABLE_MOCK_HTTP_CALLS = "ENABLE_MOCK_HTTP_CALLS";
         private static REQUIRE_PIN_THRESHOLD = "REQUIRE_PIN_THRESHOLD";
         private static LAST_PAUSED_AT = "LAST_PAUSED_AT";
@@ -81,19 +80,6 @@ module JustinCredible.SampleApp.Services {
             }
             else {
                 sessionStorage.setItem(Configuration.ENABLE_DEVELOPER_TOOLS, value.toString());
-            }
-        }
-
-        get enableFullHttpLogging(): boolean {
-            return localStorage.getItem(Configuration.ENABLE_FULL_HTTP_LOGGING) === "true";
-        }
-
-        set enableFullHttpLogging(value: boolean) {
-            if (value == null) {
-                localStorage.removeItem(Configuration.ENABLE_FULL_HTTP_LOGGING);
-            }
-            else {
-                localStorage.setItem(Configuration.ENABLE_FULL_HTTP_LOGGING, value.toString());
             }
         }
 
