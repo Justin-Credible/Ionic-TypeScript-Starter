@@ -147,25 +147,18 @@
             switch (level) {
                 case Models.LogLevel.TRACE:
                     return "ion-code-working";
-                    break;
                 case Models.LogLevel.DEBUG:
                     return "ion-bug";
-                    break;
                 case Models.LogLevel.INFO:
                     return "ion-information-circled";
-                    break;
                 case Models.LogLevel.WARN:
                     return "ion-alert-circled";
-                    break;
                 case Models.LogLevel.ERROR:
                     return "ion-alert";
-                    break;
                 case Models.LogLevel.FATAL:
                     return "ion-nuclear";
-                    break;
                 default:
                     return "ion-alert";
-                    break;
             }
         }
 
@@ -184,25 +177,18 @@
             switch (level) {
                 case Models.LogLevel.TRACE:
                     return "#551A8B"; // Purple
-                    break;
                 case Models.LogLevel.DEBUG:
                     return "#000080"; // Navy
-                    break;
                 case Models.LogLevel.INFO:
                     return "#000000"; // Black
-                    break;
                 case Models.LogLevel.WARN:
                     return "#ff8000"; // Orange
-                    break;
                 case Models.LogLevel.ERROR:
                     return "#ff0000"; // Red
-                    break;
                 case Models.LogLevel.FATAL:
                     return "#ff0000"; // Red
-                    break;
                 default:
                     return "#000000"; // Black
-                    break;
             }
         }
 
@@ -221,25 +207,18 @@
             switch (level) {
                 case Models.LogLevel.TRACE:
                     return "Trace";
-                    break;
                 case Models.LogLevel.DEBUG:
                     return "Debug";
-                    break;
                 case Models.LogLevel.INFO:
                     return "Info";
-                    break;
                 case Models.LogLevel.WARN:
                     return "Warning";
-                    break;
                 case Models.LogLevel.ERROR:
                     return "Error";
-                    break;
                 case Models.LogLevel.FATAL:
                     return "Fatal";
-                    break;
                 default:
                     return "Unknown";
-                    break;
             }
         }
 
@@ -294,6 +273,8 @@
 
             var consoleMessage = this.Utilities.format("[{0}] {1}", tagPrefix ? tagPrefix + "." + tag : tag, message);
 
+            /* tslint:disable:no-console */
+
             switch (logLevel) {
                 case Models.LogLevel.TRACE:
                     console.trace.call(console, consoleMessage, metadata);
@@ -317,6 +298,8 @@
                     console.debug(consoleMessage, metadata);
                     break;
             }
+
+            /* tslint:enable:no-console */
         }
 
         //#endregion
