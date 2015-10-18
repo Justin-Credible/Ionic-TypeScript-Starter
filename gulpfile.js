@@ -27,7 +27,7 @@ var sh = require("shelljs");
 var async = require("async");
 var xpath = require("xpath");
 var XmlDom = require("xmldom").DOMParser;
-var karma = require("karma").server;
+var KarmaServer = require("karma").Server;
 
 
 var paths = {
@@ -389,13 +389,16 @@ gulp.task("lint", function (cb) {
  * A Karma test server instance must be running first (eg karma start).
  */
 gulp.task("test", ["ts:tests"], function (done) {
-    karma.start({
+
+    var server = new KarmaServer({
         configFile: __dirname + "/karma.conf.js",
         singleRun: true
     }, function (err, result) {
         // When a non-zero code is returned by Karma something went wrong.
         done(err === 0 ? null : "There are failing unit tests");
     });
+
+    server.start();
 });
 
 /**
