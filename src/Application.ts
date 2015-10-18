@@ -529,7 +529,7 @@ module JustinCredible.SampleApp.Application {
 
         // Chop off the long "file://..." prefix (we only care about the hash tag).
         newRoute = newRoute.substring(newRoute.indexOf("#"));
-        oldRoute = newRoute.substring(newRoute.indexOf("#"));
+        oldRoute = oldRoute.substring(oldRoute.indexOf("#"));
 
         // Save off the current route so we can use it for logging.
         currentRoute = newRoute;
