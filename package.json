@@ -25,11 +25,6 @@
     "gulp-typescript": "2.9.2",
     "gulp-util": "3.0.6",
     "ionic": "1.7.6",
-    "jasmine-core": "2.3.4",
-    "karma": "0.13.11",
-    "karma-jasmine": "0.3.6",
-    "karma-phantomjs-launcher": "0.2.1",
-    "phantomjs": "1.9.18",
     "request": "2.65.0",
     "run-sequence": "1.1.4",
     "shelljs": "0.5.3",
@@ -66,6 +61,11 @@
     "gulp-minify-css": "^0.3.13",
     "gulp-sass": "^2.0.4",
     "gulp-typedoc": "^1.2.1",
-    "typedoc": "^0.3.8"
+    "typedoc": "^0.3.8",
+    "jasmine-core": "2.3.4",
+    "karma": "0.13.11",
+    "karma-jasmine": "0.3.6",
+    "karma-phantomjs-launcher": "0.2.1",
+    "phantomjs": "1.9.18"    
   }
 }
