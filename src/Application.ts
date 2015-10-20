@@ -544,7 +544,7 @@ module JustinCredible.SampleApp.Application {
 
         // Log the exception using the built-in logger.
         try {
-            services.Logger.error("Application", "window_onerror", message, { uri: uri, lineNumber: lineNumber, columnNumber: columnNumber });
+            services.Logger.error("Application", "window_onerror", message, { uri: uri, lineNumber: lineNumber, columnNumber: columnNumber, currentRoute: currentRoute });
         }
         catch (ex) {
             // If logging failed there is no use trying to log the failure.
@@ -569,7 +569,12 @@ module JustinCredible.SampleApp.Application {
      * This includes uncaught exceptions in ng-click methods for example.
      */
     function angular_exceptionHandler(exception: Error, cause: string): void {
+
         var message = exception.message;
+
+        if (!message) {
+            message = "An unknown error ocurred in an Angular event.";
+        }
 
         if (!cause) {
             cause = "[Unknown]";
@@ -577,7 +582,7 @@ module JustinCredible.SampleApp.Application {
 
         // Log the exception using the built-in logger.
         try {
-            services.Logger.error("Application", "angular_exceptionHandler", "Angular Exception occurred.", { cause: cause, exception: exception });
+            services.Logger.error("Application", "angular_exceptionHandler", message, { cause: cause, exception: exception, route: currentRoute });
         }
         catch (ex) {
             // If logging failed there is no use trying to log the failure.
