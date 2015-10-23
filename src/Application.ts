@@ -474,12 +474,15 @@ module JustinCredible.SampleApp.Application {
         services.UiHelper.showPinEntryAfterResume().then(() => {
             isShowingPinPrompt = false;
 
-            // If the user hasn't completed onboarding (eg new, first-time use of the app)
-            // then we'll push them straight into the onboarding flow. Note that we do this
-            // purposefully after the PIN screen for the case where the user may be upgrading
-            // from a version of the application that doesn't have onboarding (we wouldn't
-            // want them to be able to bypass the PIN entry in that case).
-            if (!services.Configuration.hasCompletedOnboarding) {
+            // We should show onboarding if the user hasn't completed it yet and they are not
+            // already in the process of working through it. Note that we do this purposefully
+            // after the PIN screen for the case where the user may be upgrading from a version
+            // of the application that doesn't have onboarding (we wouldn't want them to be able
+            // to bypass the PIN entry in that case).
+            let shouldShowOnboarding = !services.Configuration.hasCompletedOnboarding
+                                            && services.$location.path().indexOf("/app/onboarding") === -1;
+
+            if (shouldShowOnboarding) {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
