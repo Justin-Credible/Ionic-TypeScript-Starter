@@ -12,7 +12,9 @@
 
     </ion-pane>
 
-    <ion-side-menu side="left" expose-aside-when="(min-width: 768px) and (orientation: landscape)">
+    <ion-side-menu side="left"
+        expose-aside-when="{{controller.UiHelper.sideMenuMediaQuery}}">
+
         <ion-content scroll="true">
 
             <ion-list>

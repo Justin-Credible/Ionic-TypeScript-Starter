@@ -125,6 +125,9 @@ module JustinCredible.SampleApp.Controllers {
 
         protected skip_click(): void {
 
+            // Allow the side menu to be shown again.
+            this.UiHelper.setAllowSideMenu(true);
+
             // Set the preference value so onboarding doesn't occur again.
             this.Configuration.hasCompletedOnboarding = true;
 

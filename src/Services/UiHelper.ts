@@ -11,8 +11,10 @@
 
         public static get $inject(): string[] {
             return [
+                "$window",
                 "$q",
                 "$ionicModal",
+                "$ionicSideMenuDelegate",
                 Plugins.ID,
                 Logger.ID,
                 Preferences.ID,
@@ -21,8 +23,10 @@
         }
 
         constructor(
+            private $window: Window,
             private $q: ng.IQService,
             private $ionicModal: any,
+            private $ionicSideMenuDelegate: any,
             private Plugins: Plugins,
             private Logger: Logger,
             private Preferences: Preferences,
@@ -420,6 +424,55 @@
             });
 
             return q.promise;
+        }
+
+        //#endregion
+
+        //#region Side Menu
+
+        /**
+         * The media query used to show the side menu on a tablet in landscape.
+         */
+        private _sideMenuMediaQueryVisibleOnLandscapeTablet: string = "(min-width: 768px) and (orientation: landscape)";
+
+        /**
+         * Media query used to ensure the side menu is always hidden.
+         */
+        private _sideMenuMediaQueryNeverVisible: string = "(min-width: 99999999px) and (orientation: landscape)";
+
+        /**
+         * The actual media query that is exposed via the sideMenuMediaQuery property.
+         * 
+         * This value is manipulated via the setAllowSideMenu() method.
+         */
+        private _sideMenuMediaQuery: string = this._sideMenuMediaQueryVisibleOnLandscapeTablet;
+
+        /**
+         * Property used to expose the media query for the side menu.
+         */
+        public get sideMenuMediaQuery(): string {
+            return this._sideMenuMediaQuery;
+        }
+
+        /**
+         * Sets a flag that indicates if the side menu should be available.
+         * 
+         * By default a media query is used to show the side menu when the device is in landscape
+         * and has a minimum width of 768px (eg a tablet).
+         * 
+         * @param allow Set to true to use the media query to determine if the menu is available, false to ensure the menu isn't available.
+         */
+        public setAllowSideMenu(allow: boolean): void {
+
+            if (allow) {
+                this._sideMenuMediaQuery = this._sideMenuMediaQueryVisibleOnLandscapeTablet;
+            }
+            else {
+                this._sideMenuMediaQuery = this._sideMenuMediaQueryNeverVisible;
+            }
+
+            this.$ionicSideMenuDelegate._instances[0].exposeAside(this.$window.matchMedia(this._sideMenuMediaQuery).matches);
+            this.$ionicSideMenuDelegate.canDragContent(allow);
         }
 
         //#endregion

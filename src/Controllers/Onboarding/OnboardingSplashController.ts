@@ -12,6 +12,7 @@ module JustinCredible.SampleApp.Controllers {
                 "$location",
                 "$ionicHistory",
                 Services.Utilities.ID,
+                Services.UiHelper.ID,
                 Services.Configuration.ID
             ];
         }
@@ -21,8 +22,22 @@ module JustinCredible.SampleApp.Controllers {
             private $location: ng.ILocationService,
             private $ionicHistory: any,
             private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
             private Configuration: Services.Configuration) {
             super($scope, ViewModels.EmptyViewModel);
+        }
+
+        //#endregion
+
+        //#region BaseController Overrides
+
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+            super.view_beforeEnter(event, eventArgs);
+
+            // During onboarding the menu shouldn't be visible.
+            _.defer(() => {
+                this.UiHelper.setAllowSideMenu(false);
+            });
         }
 
         //#endregion
@@ -30,6 +45,9 @@ module JustinCredible.SampleApp.Controllers {
         //#region UI Events
 
         protected skip_click(): void {
+
+            // Allow the side menu to be shown again.
+            this.UiHelper.setAllowSideMenu(true);
 
             // Set the preference value so onboarding doesn't occur again.
             this.Configuration.hasCompletedOnboarding = true;

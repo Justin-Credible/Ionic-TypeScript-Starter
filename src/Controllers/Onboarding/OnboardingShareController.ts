@@ -12,6 +12,7 @@ module JustinCredible.SampleApp.Controllers {
                 "$location",
                 "$ionicHistory",
                 Services.Utilities.ID,
+                Services.UiHelper.ID,
                 Services.Plugins.ID,
                 Services.Configuration.ID
             ];
@@ -22,6 +23,7 @@ module JustinCredible.SampleApp.Controllers {
             private $location: ng.ILocationService,
             private $ionicHistory: any,
             private Utilities: Services.Utilities,
+            private UiHelper: Services.UiHelper,
             private Plugins: Services.Plugins,
             private Configuration: Services.Configuration) {
             super($scope, ViewModels.EmptyViewModel);
@@ -36,6 +38,9 @@ module JustinCredible.SampleApp.Controllers {
         }
 
         protected done_click(): void {
+
+            // Allow the side menu to be shown again.
+            this.UiHelper.setAllowSideMenu(true);
 
             // Set the preference value so onboarding doesn't occur again.
             this.Configuration.hasCompletedOnboarding = true;
