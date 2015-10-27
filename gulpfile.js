@@ -18,6 +18,8 @@ var typedoc = require("gulp-typedoc");
 var tar = require("gulp-tar");
 var gzip = require("gulp-gzip");
 var eol = require("gulp-eol");
+var sass = require("gulp-sass");
+var sourcemaps = require("gulp-sourcemaps");
 
 // Other Modules
 var runSequence = require("run-sequence");
@@ -32,6 +34,8 @@ var KarmaServer = require("karma").Server;
 
 var paths = {
     ts: ["./src/**/*.ts"],
+    sassIndex: "./styles/Index.scss",
+    sass: ["./styles/**/*.scss"],
     www: ["./www/**/*.*"],
     tests: ["./tests/**/*.ts"],
     chromeIcon: ["./resources/icon.png"],
@@ -76,18 +80,29 @@ function logTsError(message, level) {
 
 /**
  * A custom reporter for the TypeScript linter so we can pass "warn" instead of
- * "error" to be recognized by Visual Studio Code"s pattern matcher as warnings
+ * "error" to be recognized by Visual Studio Code's pattern matcher as warnings
  * instead of errors. This was copied and modified from gulp-tslint.
  */
 var tsLintReporter = function(failures, file) {
     failures.forEach(function(failure) {
-        // line + 1 because TSLint"s first line and character is 0
+        // line + 1 because TSLint's first line and character is 0
         logTsError("(" + failure.ruleName + ") " + file.path +
             "[" + (failure.startPosition.line + 1) + ", " +
             (failure.startPosition.character + 1) + "]: " +
             failure.failure, "warn");
     });
 };
+
+/**
+ * A custom reporter for the sass compilation task so we can control the formatting
+ * of the message for our custom problem matcher in Visual Studio Code.
+ */
+var sassReporter = function (failure) {
+    var file = failure.message.split("\n")[0];
+    var message = failure.message.split("\n")[1];
+
+    console.log("[sass] [" + failure.name.toLowerCase() + "] " + file + ":" + message);
+}
 
 /**
  * Helper used to pipe an arbitrary string value into a file.
@@ -134,7 +149,7 @@ function format(formatString) {
  * and then lints and builds the TypeScript source code.
  */
 gulp.task("default", function (cb) {
-    runSequence("plugins", "libs", "tsd", "ts", cb);
+    runSequence("plugins", "libs", "tsd", "sass", "ts", cb);
 });
 
 /**
@@ -143,16 +158,17 @@ gulp.task("default", function (cb) {
  * refresh the browser window during development.
  */
 gulp.task("watch", function() {
+    gulp.watch(paths.sass, ["sass"]);
     gulp.watch(paths.ts, ["ts"]);
 });
 
 /**
  * Simply delegates to the "ionic emulate ios" command.
  * 
- * Useful to quickly execute from Visual Studio Code"s task launcher:
+ * Useful to quickly execute from Visual Studio Code's task launcher:
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
-gulp.task("emulate-ios", ["ts"], function(cb) {
+gulp.task("emulate-ios", ["sass", "ts"], function(cb) {
     exec("ionic emulate ios");
     cb();
 });
@@ -165,13 +181,13 @@ gulp.task("emulate-ios", ["ts"], function(cb) {
  * 
  * Server configuration is located in remote-build.json
  * 
- * Useful to quickly execute from Visual Studio Code"s task launcher:
+ * Useful to quickly execute from Visual Studio Code's task launcher:
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
 gulp.task("remote-emulate-ios", function(cb) {
 
     // First we'll compile the TypeScript and build the application payload.
-    runSequence("ts", "package-remote-build", function (err) {
+    runSequence("sass", "ts", "package-remote-build", function (err) {
 
         if (err) {
             cb(err);
@@ -364,10 +380,10 @@ gulp.task("remote-emulate-ios", function(cb) {
 /**
  * Simply delegates to the "ionic emulate android" command.
  * 
- * Useful to quickly execute from Visual Studio Code"s task launcher:
+ * Useful to quickly execute from Visual Studio Code's task launcher:
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
-gulp.task("emulate-android", ["ts"], function(cb) {
+gulp.task("emulate-android", ["sass", "ts"], function(cb) {
     exec("ionic emulate android");
     cb();
 });
@@ -617,6 +633,24 @@ gulp.task("ts:tests", ["ts"], function (cb) {
 });
 
 /**
+ * Used to perform compilation of the SASS styles in the styles directory (using
+ * Index.scss as the root file) and output the CSS to www/css/index.css.
+ */
+gulp.task("sass", function (cb) {
+
+    var sassConfig = {
+        outputStyle: isDebugScheme() ? "nested" : "compressed",
+        errLogToConsole: false
+    };
+
+    return gulp.src(paths.sassIndex)
+        .pipe(sourcemaps.init())
+        .pipe(sass(sassConfig).on("error", sassReporter))
+        .pipe(sourcemaps.write("./"))
+        .pipe(gulp.dest("./www/css"));
+});
+
+/**
  * Used to download all of the bower dependencies as defined in bower.json and place
  * the consumable pieces in the www/lib directory.
  */
@@ -688,7 +722,7 @@ gulp.task("package-remote-build", function () {
  * that don't need to be committed to source control by delegating to several of the clean
  * sub-tasks.
  */
-gulp.task("clean", ["clean:tmp", "clean:node", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd"]);
+gulp.task("clean", ["clean:tmp", "clean:node", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:sass"]);
 
 /**
  * Removes the tmp directory.
@@ -781,6 +815,16 @@ gulp.task("clean:tsd", function (cb) {
         "!typings-tests/custom/*.d.ts",
         // "typings-tests/**",
         // "!typings/custom/**"
+    ], cb);
+});
+
+/**
+ * Removes the generated css from the SASS target.
+ */
+gulp.task("clean:sass", function (cb) {
+    del([
+        "www/css/index.css",
+        "www/css/index.css.map"
     ], cb);
 });
 

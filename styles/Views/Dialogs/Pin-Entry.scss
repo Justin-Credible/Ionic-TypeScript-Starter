@@ -1,0 +1,45 @@
+
+.pin-entry {
+
+    .button.button-block, .button.button-full {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .portrait-container {
+        // This padding matches the height of the top bar to make it look centered.
+        // We need this because our CSS that centers the content is 100% height of the view port.
+        padding-top: 44px;
+
+        .button.button-block, .button.button-full {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
+
+    .landscape-container {
+        padding-top: 10px;
+
+        .button.button-block, .button.button-full {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+
+    .input-row {
+
+        button {
+            font-size: 60pt;
+        }
+    }
+
+    .numpad-container {
+        font-size: 30pt;
+
+        button {
+            font-size: 28pt;
+        }
+    }
+}

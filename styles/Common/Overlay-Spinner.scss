@@ -1,0 +1,18 @@
+
+// Classes used for the mocked up version of the progress indicator plugin.
+
+.progress-spinner {
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 28px;
+    width: 28px;
+    animation: progress-spinner-animation 0.8s infinite linear;
+    border: 8px solid #fff;
+    border-right-color: transparent;
+    border-radius: 50%;
+}
+
+@keyframes progress-spinner-animation {
+    0%    { transform: rotate(0deg); }
+    100%  { transform: rotate(360deg); }
+}

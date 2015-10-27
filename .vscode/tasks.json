@@ -31,6 +31,24 @@
             ]
         },
         {
+            "taskName": "sass",
+            "showOutput": "silent",
+            "problemMatcher": [
+                {
+                    "owner": "gulp",
+                    "fileLocation": ["relative", "${workspaceRoot}"],
+                    "pattern": {
+                        "regexp": "^\\[sass\\] \\[(.*)\\] (.*):  (\\d+):(\\d+)  (.*)$",
+                        "file": 2,
+                        "line": 3,
+                        "column": 4,
+                        "message": 5,
+                        "severity": 1
+                    }
+                }
+            ]
+        },
+        {
             "taskName": "emulate-ios",
             "showOutput": "never"
         },

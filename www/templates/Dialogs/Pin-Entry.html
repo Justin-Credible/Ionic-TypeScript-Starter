@@ -6,9 +6,9 @@
 
     <ion-content has-header="true" padding="false" scroll="false" class="pin-entry content-vertical-center">
 
-        <div class="pin-entry-portrait phone-portrait-tablet-both">
+        <div class="portrait-container phone-portrait-tablet-both">
 
-            <div class="row pin-entry-input">
+            <div class="row input-row">
                 <div class="col col-25">
                     <button class="button button-large button-light">
                         <span ng-show="viewModel.pin.length > 0">•</span>
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="pin-entry-numpad">
+            <div class="numpad-container">
                 <div class="row">
                     <div class="col col-33">
                         <button class="button button-block button-positive" ng-click="controller.number_click(1)">1</button>
@@ -87,11 +87,11 @@
 
         </div>
 
-        <div class="pin-entry-landscape phone-landscape">
+        <div class="landscape-container phone-landscape">
 
             <div class="row">
                 <div class="col col-50 content-vertical-center">
-                    <div class="row pin-entry-input" style="float:left;">
+                    <div class="row input-row" style="float:left;">
                         <div class="col col-25">
                             <button class="button button-large button-light">
                                 <span ng-show="viewModel.pin.length > 0">•</span>
@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="col col-50">
-                    <div class="pin-entry-numpad" style="float:right;">
+                    <div class="numpad-container" style="float:right;">
                         <div class="row">
                             <div class="col col-33">
                                 <button class="button button-block button-positive" ng-click="controller.number_click(1)">1</button>

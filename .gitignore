@@ -16,6 +16,7 @@
 /www/js/bundle.*
 /www/js/BuildVars.js
 /www/js/src/
+/www/css/index.*
 /src/tsd.d.ts
 /tests/tsd.d.ts
 /chrome
