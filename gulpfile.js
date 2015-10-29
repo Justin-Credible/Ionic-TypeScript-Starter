@@ -4,8 +4,8 @@
 
 // Native Node Modules
 var exec = require("child_process").exec;
-var del = require("del");
 var fs = require("fs");
+var path = require("path");
 
 // Gulp & Gulp Plugins
 var gulp = require("gulp");
@@ -20,8 +20,10 @@ var gzip = require("gulp-gzip");
 var eol = require("gulp-eol");
 var sass = require("gulp-sass");
 var sourcemaps = require("gulp-sourcemaps");
+var uglify = require("gulp-uglify");
 
 // Other Modules
+var del = require("del");
 var runSequence = require("run-sequence");
 var bower = require("bower");
 var request = require("request");
@@ -543,17 +545,23 @@ gulp.task("ts:vars", function (cb) {
  * Used to copy the entire TypeScript source into the www/js/src directory so that
  * it can be used for debugging purposes.
  * 
- * This will only copy the files if the build scheme is not set to release.
+ * This will only copy the files if the build scheme is not set to release. A release
+ * build will ensure that the files are deleted if they are present.
  */
 gulp.task("ts:src", ["ts:src-read-me"], function (cb) {
 
-    if (!isDebugScheme()) {
-        cb();
-        return;
+    if (isDebugScheme()) {
+        return gulp.src(paths.ts)
+            .pipe(gulp.dest("www/js/src"));
     }
-
-    return gulp.src(paths.ts)
-        .pipe(gulp.dest("www/js/src"));
+    else {
+        del([
+            "www/js/src",
+            "www/js/bundle.js.map",
+        ]).then(function () {
+            cb();
+        });
+    }
 });
 
 /**
@@ -601,8 +609,8 @@ gulp.task("chrome", ["ts"], function (cb) {
 
 /**
  * Used to perform compliation of the TypeScript source in the src directory and
- * output the JavaScript to www/js/bundle.js. Compilation parameters are located
- * in src/tsconfig.json.
+ * output the JavaScript to the out location as specified in tsconfig.json (usually
+ * www/js/bundle.js).
  * 
  * It will also delegate to the vars and src tasks to copy in the original source
  * which can be used for debugging purposes. This will only occur if the build scheme
@@ -612,8 +620,34 @@ gulp.task("ts", ["ts:vars", "ts:src"], function (cb) {
     exec("tsc -p src", function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
-        cb(err);
+
+        // For debug builds, we are done, but for release builds, minify the bundle.
+        if (isDebugScheme()) {
+            cb(err);
+        }
+        else {
+            runSequence("minify", function () {
+                cb(err);
+            });
+        }
     });
+});
+
+/**
+ * Used to minify the JavaScript bundle.js built from the "ts" TypeScript compilation
+ * target. This will use the bundle that is already on disk whose location is determined
+ * from the out property of the compiler options in tsconfig.json.
+ */
+gulp.task("minify", function () {
+
+    // Read tsconfig.json to determine the bundle output location.
+    var config = JSON.parse(fs.readFileSync("src/tsconfig.json", "utf8"));
+    var bundleLocation = config.compilerOptions.out;
+
+    // Minify to a temporary location and the move to the bundle location.
+    return gulp.src(bundleLocation)
+        .pipe(uglify())
+        .pipe(gulp.dest(path.dirname(bundleLocation)));
 });
 
 /**
@@ -729,8 +763,10 @@ gulp.task("clean", ["clean:tmp", "clean:node", "clean:bower", "clean:platforms",
  */
 gulp.task("clean:tmp", function (cb) {
     del([
-        "tmp"
-    ], cb);
+        "tmp",
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -739,7 +775,9 @@ gulp.task("clean:tmp", function (cb) {
 gulp.task("clean:node", function (cb) {
     del([
         "node_modules"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -748,7 +786,9 @@ gulp.task("clean:node", function (cb) {
 gulp.task("clean:bower", function (cb) {
     del([
         "bower_components"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -757,7 +797,9 @@ gulp.task("clean:bower", function (cb) {
 gulp.task("clean:platforms", function (cb) {
     del([
         "platforms"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -766,7 +808,9 @@ gulp.task("clean:platforms", function (cb) {
 gulp.task("clean:plugins", function (cb) {
     del([
         "plugins"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -775,7 +819,9 @@ gulp.task("clean:plugins", function (cb) {
 gulp.task("clean:libs", function (cb) {
     del([
         "www/lib"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -784,10 +830,13 @@ gulp.task("clean:libs", function (cb) {
 gulp.task("clean:ts", function (cb) {
     del([
         "www/js/bundle.js",
+        "www/js/bundle.d.ts",
         "www/js/bundle.js.map",
         "www/js/BuildVars.js",
         "www/js/src"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -815,7 +864,9 @@ gulp.task("clean:tsd", function (cb) {
         "!typings-tests/custom/*.d.ts",
         // "typings-tests/**",
         // "!typings/custom/**"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -825,7 +876,9 @@ gulp.task("clean:sass", function (cb) {
     del([
         "www/css/index.css",
         "www/css/index.css.map"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -834,7 +887,9 @@ gulp.task("clean:sass", function (cb) {
 gulp.task("clean:chrome", function (cb) {
     del([
         "chrome"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });
 
 /**
@@ -875,5 +930,7 @@ gulp.task("typedoc", function() {
 gulp.task("clean:typedoc", function (cb) {
     del([
         "docs"
-    ], cb);
+    ]).then(function () {
+        cb();
+    });
 });

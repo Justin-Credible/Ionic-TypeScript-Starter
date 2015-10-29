@@ -37,7 +37,7 @@ module JustinCredible.SampleApp.Services {
 
             // Example taken from the following blog post:
             // http://endlessindirection.wordpress.com/2013/05/18/angularjs-delay-response-from-httpbackend/
-            $provide.decorator("$httpBackend", function ($delegate) {
+            $provide.decorator("$httpBackend", ["$delegate", function ($delegate) {
                 var proxy = function (method, url, data, callback, headers) {
                     var interceptor = function () {
                         var _this = this,
@@ -67,7 +67,7 @@ module JustinCredible.SampleApp.Services {
                 /* tslint:enable:forin */
 
                 return proxy;
-            });
+            }]);
         }
 
         /**

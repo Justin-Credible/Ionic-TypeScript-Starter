@@ -89,9 +89,39 @@ module JustinCredible.SampleApp.Application {
         registerFilters();
         registerControllers();
 
+        // Define the injection parameters for the initialize method.
+        var $inject_angular_initialize: any[] = [
+            "$rootScope",
+            "$location",
+            "$ionicHistory",
+            "$ionicPlatform",
+            Services.Plugins.ID,
+            Services.Utilities.ID,
+            Services.UiHelper.ID,
+            Services.Preferences.ID,
+            Services.Configuration.ID,
+            Services.MockHttpApis.ID,
+            Services.Logger.ID,
+
+            // The method we are annotating.
+            angular_initialize
+        ];
+
+        // Define the injection parameters for the configure method.
+        var $inject_angular_configure: any[] = [
+            "$stateProvider",
+            "$urlRouterProvider",
+            "$provide",
+            "$httpProvider",
+            "$compileProvider",
+
+            // The method we are annotating.
+            angular_configure
+        ];
+
         // Specify the initialize/run and configuration functions.
-        ngModule.run(angular_initialize);
-        ngModule.config(angular_configure);
+        ngModule.run($inject_angular_initialize);
+        ngModule.config($inject_angular_configure);
     }
 
     //#region Helpers
@@ -412,7 +442,7 @@ module JustinCredible.SampleApp.Application {
         ): void {
 
         // Intercept the default Angular exception handler.
-        $provide.decorator("$exceptionHandler", function ($delegate: ng.IExceptionHandlerService) {
+        $provide.decorator("$exceptionHandler", ["$delegate", function ($delegate: ng.IExceptionHandlerService) {
             return function (exception, cause) {
                 // Delegate to our custom handler.
                 angular_exceptionHandler(exception, cause);
@@ -420,7 +450,7 @@ module JustinCredible.SampleApp.Application {
                 // Delegate to the default/base Angular behavior.
                 $delegate(exception, cause);
             };
-        });
+        }]);
 
         // Whitelist several URI schemes to prevent Angular from marking them as un-safe.
         // http://stackoverflow.com/questions/19590818/angularjs-and-windows-8-route-error
