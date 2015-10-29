@@ -626,6 +626,9 @@ gulp.task("ts", ["ts:vars", "ts:src"], function (cb) {
     });
 });
 
+/**
+ * Used to minify the JavaScript file  www/js/bundle.js specified in src/tsconfig.json
+ */
 gulp.task("minify", function () {
     var config = JSON.parse(fs.readFileSync("src/tsconfig.json", "utf8"));
     var file = config.compilerOptions.out; // == "www/js/bundle.js"
