@@ -52,6 +52,7 @@ Now you can use the various gulp tasks to obtain Cordova plugins, install third 
 
 *You can also just run `gulp` without any arguments which will run the below targets.*
 
+	$ gulp sass       # Compiles SASS from /styles/index.scss to /www/css/index.css
 	$ gulp libs       # Install 3rd Party JS libraries as defined in bower.json
 	$ gulp plugins    # Install Cordova plugins as defined in package.json
 	$ gulp tsd        # Install TypeScript definitions as defined in tsd.json
