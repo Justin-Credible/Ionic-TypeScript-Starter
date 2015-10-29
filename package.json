@@ -66,6 +66,7 @@
   ],
   "devDependencies": {
     "gulp-typedoc": "^1.2.1",
+    "gulp-uglify": "^1.4.2",
     "typedoc": "^0.3.8"
   }
 }
