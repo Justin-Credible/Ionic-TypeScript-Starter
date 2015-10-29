@@ -762,7 +762,7 @@ gulp.task("clean:tmp", function (cb) {
     del([
         "tmp",
         "tmpjs"
-    ]).then(function() {
+    ]).then(function () {
         cb();
         });
 });
