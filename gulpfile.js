@@ -20,6 +20,7 @@ var gzip = require("gulp-gzip");
 var eol = require("gulp-eol");
 var sass = require("gulp-sass");
 var sourcemaps = require("gulp-sourcemaps");
+var uglify = require('gulp-uglify');
 
 // Other Modules
 var runSequence = require("run-sequence");
@@ -612,8 +613,35 @@ gulp.task("ts", ["ts:vars", "ts:src"], function (cb) {
     exec("tsc -p src", function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
-        cb(err);
+
+        //minify JavaScript
+        if (!isDebugScheme()) {
+            runSequence("minify", function () {
+                cb(err);
+            });
+        }
+        else {
+            cb(err);
+        }
     });
+});
+
+gulp.task("minify", function () {
+    var config = JSON.parse(fs.readFileSync("src/tsconfig.json", "utf8"));
+    var file = config.compilerOptions.out; // == "www/js/bundle.js"
+    return gulp.src(file)
+        .pipe(uglify())
+        .pipe(gulp.dest("tmpjs"))
+        .on("end", function () {
+            del([file]).then(function () {
+                gulp.src("tmpjs/*.js")
+                    .pipe(rename(file))
+                    .pipe(gulp.dest("./"))
+                    .on("end", function () {
+                        del(["tmpjs"]);
+                    });
+            });
+        });
 });
 
 /**
@@ -729,8 +757,11 @@ gulp.task("clean", ["clean:tmp", "clean:node", "clean:bower", "clean:platforms",
  */
 gulp.task("clean:tmp", function (cb) {
     del([
-        "tmp"
-    ], cb);
+        "tmp",
+        "tmpjs"
+    ]).then(function() {
+        cb();
+        });
 });
 
 /**
