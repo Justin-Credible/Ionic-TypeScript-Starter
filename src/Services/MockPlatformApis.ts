@@ -86,7 +86,7 @@
 
         public getSpinnerPlugin(): SpinnerPlugin.SpinnerPluginStatic {
             return {
-                activityStart: _.bind(this.spinner_activityStop, this),
+                activityStart: _.bind(this.spinner_activityStart, this),
                 activityStop: _.bind(this.spinner_activityStop, this)
             };
         }
@@ -465,7 +465,7 @@
 
         //#endregion
 
-        //#region ProgressIndicator
+        //#region Spinner
 
         private spinner_activityStop(successCallback?: () => void, falureCallback?: (error: string) => void) {
             // There seems to be a bug in the Ionic framework when you close the loading panel
