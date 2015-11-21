@@ -302,16 +302,11 @@
                 // If this wasn't the first blocking HTTP request, we need to hide the previous
                 // blocking progress indicator before we show the new one.
                 if (this.blockingRequestsInProgress > 1) {
-                    this.Plugins.progressIndicator.hide();
+                    this.Plugins.spinner.activityStop();
                 }
 
                 // Show the blocking progress indicator with or without text.
-                if (config.blockingText) {
-                    this.Plugins.progressIndicator.showSimpleWithLabel(true, config.blockingText);
-                }
-                else {
-                    this.Plugins.progressIndicator.showSimple(true);
-                }
+                this.Plugins.spinner.activityStart(config.blockingText ? config.blockingText : null);
             }
 
             // If this request should show the spinner, then we have extra work to do.
@@ -338,7 +333,7 @@
             this.blockingRequestsInProgress = 0;
             this.spinnerRequestsInProgress = 0;
             NProgress.done();
-            this.Plugins.progressIndicator.hide();
+            this.Plugins.spinner.activityStop();
         }
 
         /**
@@ -361,7 +356,7 @@
 
             // If there are no more blocking requests in progress, then hide the blocker.
             if (config.blocking && this.blockingRequestsInProgress === 0) {
-                this.Plugins.progressIndicator.hide();
+                this.Plugins.spinner.activityStop();
             }
 
             if (config.showSpinner && this.spinnerRequestsInProgress === 0) {

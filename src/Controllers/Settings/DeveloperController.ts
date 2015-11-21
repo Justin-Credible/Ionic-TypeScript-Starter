@@ -202,10 +202,10 @@
         }
 
         protected showFullScreenBlock_click(): void {
-            this.Plugins.progressIndicator.showSimpleWithLabel(true, "Blocking...");
+            this.Plugins.spinner.activityStart("Blocking...");
 
             setTimeout(() => {
-                this.Plugins.progressIndicator.hide();
+                this.Plugins.spinner.activityStop();
             }, 4000);
         }
 

@@ -588,7 +588,7 @@ module JustinCredible.SampleApp.Application {
             services.Plugins.toast.showLongBottom("An error has occurred; please try again.");
 
             // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
-            services.Plugins.progressIndicator.hide();
+            services.Plugins.spinner.activityStop();
         }
         catch (ex) {
             services.Logger.warn("Application", "window_onerror", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
@@ -626,7 +626,7 @@ module JustinCredible.SampleApp.Application {
             services.Plugins.toast.showLongBottom("An error has occurred; please try again.");
 
             // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
-            services.Plugins.progressIndicator.hide();
+            services.Plugins.spinner.activityStop();
         }
         catch (ex) {
             services.Logger.warn("Application", "angular_exceptionHandler", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);

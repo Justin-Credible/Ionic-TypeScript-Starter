@@ -54,12 +54,10 @@
     "cordova-plugin-dialogs@1.1.1",
     "cordova-plugin-inappbrowser@1.0.1",
     "cordova-plugin-statusbar@1.0.1",
+    "cordova-plugin-spinner@1.0.0",
     "ionic-plugin-keyboard@1.0.7",
     "cordova-plugin-x-toast@2.2.1",
     "com.verso.cordova.clipboard@0.1.0",
-    {
-      "locator": "https://github.com/Justin-Credible/cordova-progressIndicator.git"
-    }
   ],
   "cordovaPlatforms": [
     "android",

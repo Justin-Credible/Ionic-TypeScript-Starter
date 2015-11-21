@@ -54,12 +54,12 @@ module JustinCredible.SampleApp.Services {
         /**
          * Exposes an API for working with progress indicators.
          */
-        get progressIndicator(): ICordovaProgressIndicator {
-            if (!this.Utilities.isRipple && !this.Utilities.isWindows && window.ProgressIndicator && !this.Utilities.isAndroid) {
-                return window.ProgressIndicator;
+        get spinner(): SpinnerPlugin.SpinnerPluginStatic {
+            if (typeof(SpinnerPlugin) !== "undefined") {
+                return SpinnerPlugin;
             }
             else {
-                return this.MockPlatformApis.getProgressIndicatorPlugin();
+                return this.MockPlatformApis.getSpinnerPlugin();
             }
         }
 

@@ -62,12 +62,12 @@ module JustinCredible.SampleApp.Controllers {
                 return;
             }
 
-            this.Plugins.progressIndicator.showSimpleWithLabel(true, "Creating Account...");
+            this.Plugins.spinner.activityStart("Creating Account...");
 
             // Simulate a wait period for an HTTP request.
             // This is where you'd use a service to interact with your API.
             setTimeout(() => {
-                this.Plugins.progressIndicator.hide();
+                this.Plugins.spinner.activityStop();
 
                 // Tell Ionic to to hide the back button for the next view.
                 this.$ionicHistory.nextViewOptions({
@@ -93,12 +93,12 @@ module JustinCredible.SampleApp.Controllers {
                 return;
             }
 
-            this.Plugins.progressIndicator.showSimpleWithLabel(true, "Signing in...");
+            this.Plugins.spinner.activityStart("Signing in...");
 
             // Simulate a wait period for an HTTP request.
             // This is where you'd use a service to interact with your API.
             setTimeout(() => {
-                this.Plugins.progressIndicator.hide();
+                this.Plugins.spinner.activityStop();
 
                 // Tell Ionic to to hide the back button for the next view.
                 this.$ionicHistory.nextViewOptions({

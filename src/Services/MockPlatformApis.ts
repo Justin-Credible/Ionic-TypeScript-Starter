@@ -84,20 +84,10 @@
             };
         }
 
-        public getProgressIndicatorPlugin(): ICordovaProgressIndicator {
+        public getSpinnerPlugin(): SpinnerPlugin.SpinnerPluginStatic {
             return {
-                hide: _.bind(this.progressIndicator_hide, this),
-                showSimple: _.bind(this.progressIndicator_show, this),
-                showSimpleWithLabel: _.bind(this.progressIndicator_show, this),
-                showSimpleWithLabelDetail: _.bind(this.progressIndicator_show, this),
-                showDeterminate: _.bind(this.progressIndicator_show, this),
-                showDeterminateWithLabel: _.bind(this.progressIndicator_show, this),
-                showAnnular: _.bind(this.progressIndicator_show, this),
-                showAnnularWithLabel: _.bind(this.progressIndicator_show, this),
-                showBar: _.bind(this.progressIndicator_show, this),
-                showBarWithLabel: _.bind(this.progressIndicator_show, this),
-                showSuccess: _.bind(this.progressIndicator_show, this),
-                showText: _.bind(this.progressIndicator_show, this)
+                activityStart: _.bind(this.spinner_activityStop, this),
+                activityStop: _.bind(this.spinner_activityStop, this)
             };
         }
 
@@ -477,7 +467,7 @@
 
         //#region ProgressIndicator
 
-        private progressIndicator_hide() {
+        private spinner_activityStop(successCallback?: () => void, falureCallback?: (error: string) => void) {
             // There seems to be a bug in the Ionic framework when you close the loading panel
             // very quickly (before it has fully been shown) that the backdrop will remain visible
             // and the user won't be able to click anything. Here we ensure that all calls to hide
@@ -488,9 +478,7 @@
             }, 1000);
         }
 
-        private progressIndicator_show(dimBackground: boolean, labelOrTimeout: any, labelOrPosition: string) {
-            var label: string,
-                timeout: number;
+        private spinner_activityStart(labelText?: string, successCallback?: () => void, falureCallback?: (error: string) => void) {
 
             if (this._isProgressIndicatorShown) {
                 return;
@@ -498,27 +486,16 @@
 
             this._isProgressIndicatorShown = true;
 
-            if (typeof (labelOrTimeout) === "string") {
-                label = labelOrTimeout;
-            }
-
-            if (typeof (labelOrTimeout) === "number") {
-                timeout = labelOrTimeout;
-            }
-
-            if (!label) {
-                label = "Please Wait...";
+            if (!labelText) {
+                labelText = "Please Wait...";
             }
 
             this.$ionicLoading.show({
-                template: "<div class='progress-spinner'></div><br/>" + label
+                template: "<div class='progress-spinner'></div><br/>" + labelText
             });
 
-            if (timeout) {
-                setTimeout(() => {
-                    this._isProgressIndicatorShown = false;
-                    this.$ionicLoading.hide();
-                }, timeout);
+            if (successCallback) {
+                successCallback();
             }
         }
 
