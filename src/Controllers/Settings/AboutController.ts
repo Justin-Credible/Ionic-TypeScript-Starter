@@ -12,8 +12,7 @@
                 "$ionicHistory",
                 Services.Utilities.ID,
                 Services.Configuration.ID,
-                Services.Plugins.ID,
-                "versionInfo"
+                Services.Plugins.ID
             ];
         }
 
@@ -22,8 +21,7 @@
             private $ionicHistory: any,
             private Utilities: Services.Utilities,
             private Configuration: Services.Configuration,
-            private Plugins: Services.Plugins,
-            private versionInfo: Interfaces.VersionInfo) {
+            private Plugins: Services.Plugins) {
             super($scope, ViewModels.AboutViewModel);
         }
 
@@ -36,9 +34,10 @@
 
             this.viewModel.logoClickCount = 0;
 
-            this.viewModel.applicationName = this.versionInfo.applicationName;
-            this.viewModel.versionString = this.Utilities.format("{0}.{1}.{2}", this.versionInfo.majorVersion, this.versionInfo.minorVersion, this.versionInfo.buildVersion);
-            this.viewModel.timestamp = this.versionInfo.buildTimestamp;
+            this.viewModel.applicationName = this.Configuration.buildVars.applicationName;
+            this.viewModel.versionString = this.Utilities.format("{0}.{1}.{2}", this.Configuration.buildVars.majorVersion, this.Configuration.buildVars.minorVersion, this.Configuration.buildVars.buildVersion);
+            this.viewModel.timestamp = this.Configuration.buildVars.buildTimestamp;
+            this.viewModel.commitShortSha = this.Configuration.buildVars.commitShortSha;
         }
 
         //#endregion
@@ -63,15 +62,15 @@
         }
 
         protected copyrightInfo_click(): void {
-            window.open(this.versionInfo.copyrightInfoUrl, "_system");
+            window.open(this.Configuration.buildVars.properties.copyrightUrl, "_system");
         }
 
         protected website_click(): void {
-            window.open(this.versionInfo.websiteUrl, "_system");
+            window.open(this.Configuration.buildVars.websiteUrl, "_system");
         }
 
         protected gitHubRepo_click(): void {
-            window.open(this.versionInfo.githubUrl, "_system");
+            window.open(this.Configuration.buildVars.properties.githubUrl, "_system");
         }
 
         //#endregion

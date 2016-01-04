@@ -53,34 +53,18 @@ module JustinCredible.SampleApp.Application {
      * It is invoked via the Main.js script included from the index.html page.
      */
     export function main(): void {
-        var versionInfo: Interfaces.VersionInfo;
 
         // Set the default error handler for all uncaught exceptions.
         window.onerror = window_onerror;
-
-        versionInfo = {
-            applicationName: "Sample App",
-            copyrightInfoUrl: "https://github.com/Justin-Credible/Ionic-TypeScript-Starter/blob/master/LICENSE",
-            websiteUrl: "http://www.justin-credible.net",
-            githubUrl: "https://github.com/Justin-Credible",
-            email: "justin.unterreiner@gmail.com",
-            majorVersion: window.buildVars.majorVersion,
-            minorVersion: window.buildVars.minorVersion,
-            buildVersion: window.buildVars.buildVersion,
-            versionString: window.buildVars.majorVersion + "." + window.buildVars.minorVersion + "." + window.buildVars.buildVersion,
-            buildTimestamp: window.buildVars.buildTimestamp
-        };
 
         // Define the top level Angular module for the application.
         // Here we also specify the Angular modules this module depends upon.
         ngModule = angular.module("JustinCredible.SampleApp.Application", ["ui.router", "ionic", "ngMockE2E"]);
 
         // Define our constants.
-        ngModule.constant("isRipple", !!(window.parent && window.parent.ripple));
         ngModule.constant("isCordova", typeof(cordova) !== "undefined");
         ngModule.constant("buildVars", window.buildVars);
         ngModule.constant("isChromeExtension", typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" && typeof (chrome.runtime.id) !== "undefined");
-        ngModule.constant("versionInfo", versionInfo);
         ngModule.constant("apiVersion", "1.0");
 
         // Register the services, directives, filters, and controllers with Angular.

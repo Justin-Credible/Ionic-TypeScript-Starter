@@ -31,6 +31,7 @@ var sh = require("shelljs");
 var async = require("async");
 var xpath = require("xpath");
 var XmlDom = require("xmldom").DOMParser;
+var xmlSerializer = new (require("xmldom")).XMLSerializer;
 var KarmaServer = require("karma").Server;
 
 
@@ -55,13 +56,89 @@ var paths = {
 
 /**
  * Used to determine if the gulp operation was launched for a debug or release build.
- * This is controlled by the scheme parameter, if no scheme is provided, it will default
- * to debug. For example, to specify release build for the ts task you"d use:
- * 
- * gulp ts --scheme release
+ * This is controlled by the scheme's debug flag.
  */
-function isDebugScheme() {
-    return gutil.env.scheme === "release" ? false : true;
+function isDebugBuild() {
+
+    // Crack open the config master file that we start with.
+    var configMasterRaw = fs.readFileSync("config.master.xml", "utf8");
+    var configMasterXmlDoc = new XmlDom().parseFromString(configMasterRaw);
+
+    // Grab the scheme name as defined via an argument (eg gulp config --scheme scheme_name).
+    var schemeName = gutil.env.scheme;
+
+    // If a scheme name was supplied via the command line, then use the default from config.
+    if (!schemeName) {
+        schemeName = xpath.select1("*[local-name() = 'widget']/*[local-name() = 'schemes']", configMasterXmlDoc).getAttribute("default");
+    }
+
+    // Grab the scheme by name.
+    var schemeNode = getSchemeNodeByName(schemeName);
+
+    // If we didn't find a scheme by name, then fail fast.
+    if (!schemeNode) {
+        throw new Error("Could not locate a scheme with name '" + schemeName + "' in config.master.xml.");
+    }
+
+    // Grab the debug flag.
+    var isDebug = schemeNode.getAttribute("debug") === "true";
+
+    return isDebug;
+}
+
+/**
+ * Used to get the scheme node from config.xml with the given scheme name.
+ * 
+ * eg /widgets/schemes/scheme@name
+ */
+function getSchemeNodeByName(schemeName) {
+
+    // Open the master config XML file.
+    var configRaw = fs.readFileSync("config.master.xml", "utf8");
+    var configXmlDoc = new XmlDom().parseFromString(configRaw);
+
+    // Build the XPath query.
+    var schemePath = "/*[local-name() = 'widget']"  +
+                        "/*[local-name() = 'schemes']" + 
+                        "/*[local-name() = 'scheme'][@name='" + schemeName + "']";
+
+    // Attempt to grab the single scheme node.
+    var schemeNode = xpath.select1(schemePath, configXmlDoc);
+
+    return schemeNode;
+}
+
+/**
+ * Used to get a the replacement XML nodes from the config.xml file for the given
+ * scheme name.
+ * 
+ * eg /widgets/schemes/scheme@name/replacement
+ */
+function getReplacementNodesForScheme(schemeName) {
+
+    // Open the master config XML file.
+    var configRaw = fs.readFileSync("config.master.xml", "utf8");
+    var configXmlDoc = new XmlDom().parseFromString(configRaw);
+
+    // Build the XPath query.
+    var replacementNodePath = "/*[local-name() = 'widget']"  +
+                        "/*[local-name() = 'schemes']" + 
+                        "/*[local-name() = 'scheme'][@name='" + schemeName + "']" + 
+                        "/*[local-name() = 'replacement']";
+
+    // Attempt to grab all of the replacement nodes for this scheme.
+    var replacementNodes = xpath.select(replacementNodePath, configXmlDoc);
+
+    return replacementNodes;
+}
+
+/**
+ * Used to determine if a prep flag was set to Android.
+ * 
+ * gulp init --prep android
+ */
+function isPrepAndroid() {
+    return gutil.env.prep === "android" ? true : false;
 }
 
 /**
@@ -152,6 +229,67 @@ function format(formatString) {
  */
 gulp.task("default", function (cb) {
     runSequence("plugins", "libs", "tsd", "sass", "ts", cb);
+});
+
+/**
+ * Used to initialize or re-initialize the development environment.
+ * 
+ * This involves delegating to all of the clean tasks EXCEPT clean:node. It then adds
+ * the platforms using cordova and finally executes the default gulp task.
+ */
+gulp.task("init", ["clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:sass"], function (cb) {
+
+    // First, build out config.xml so that Cordova can read it. We do this here instead
+    // of as a child task above because it must start after all of the clean tasks have
+    // completed, otherwise it will just get blown away.
+    runSequence("config", function () {
+
+        var platforms = JSON.parse(fs.readFileSync("package.json", "utf8")).cordovaPlatforms;
+
+        var platformCommand = "";
+
+        for (var i = 0; i < platforms.length; i++) {
+
+            if (typeof(platforms[i]) === "string") {
+                platformCommand += "ionic platform add " + platforms[i];
+            }
+            else if (platforms[i].locator) {
+                platformCommand += "ionic platform add " + platforms[i].locator;
+            }
+
+            if (i !== platforms.length - 1) {
+                platformCommand += " && ";
+            }
+        }
+
+        // Next, run the "ionic platform add ..." commands.
+        exec(platformCommand, function (err, stdout, stderr) {
+
+            console.log(stdout);
+            console.log(stderr);
+
+            if (err) {
+                cb(err);
+                return;
+            }
+
+            // Delegate to the default gulp task.
+            runSequence("default", function () {
+
+                // Finally, if the special "--prep android" flag was provided, run a few extra commands.
+                if (isPrepAndroid()) {
+                    exec("ionic browser add crosswalk", function (err, stdout, stderr) {
+                        console.log(stdout);
+                        console.log(stderr);
+                        cb(err);
+                    });
+                }
+                else {
+                    cb();
+                }
+            });
+        });
+    });
 });
 
 /**
@@ -274,7 +412,7 @@ gulp.task("remote-emulate-ios", function(cb) {
                                 baseUrl,
                                 "build",
                                 config.cordovaVersion,
-                                isDebugScheme() ? "debug" : "release",
+                                isDebugBuild() ? "debug" : "release",
                                 config.logLevel);
 
         var payloadStream = fs.createReadStream("tmp/taco-payload.tgz.gz");
@@ -477,25 +615,151 @@ gulp.task("tsd:tests", function (cb) {
 });
 
 /**
- * Used to generate the www/js/BuildVars.js file which contains information about
- * the build (such as version number, timestamp, and build scheme) as well as any
- * other variables that should be defined at build time (API URLs etc).
+ * Used to perform configuration based on different build schemes listed in config.xml
+ * under the schemes element.
  * 
- * The version number is taken from the config.xml file.
+ * It responsible for generating config.xml from config.master.xml, generating
+ * www/index.html from www/index.master.html, performing variable replacements based
+ * on scheme name in these two files, and building the www/js/BuildVars.js file.
+ * 
+ * gulp config --scheme scheme_name
  */
-gulp.task("ts:vars", function (cb) {
-    var configXml,
-        configXmlDoc,
+gulp.task("config", function (cb) {
+
+    // Crack open the config master files that we start with.
+    var indexMasterRaw = fs.readFileSync("www/index.master.html", "utf8");
+    var configMasterRaw = fs.readFileSync("config.master.xml", "utf8");
+    var configMasterXmlDoc = new XmlDom().parseFromString(configMasterRaw);
+
+    // Grab the scheme name as defined via an argument (eg gulp config --scheme scheme_name).
+    var schemeName = gutil.env.scheme;
+
+    // If a scheme name was supplied via the command line, then use the default from config.
+    if (!schemeName) {
+        schemeName = xpath.select1("*[local-name() = 'widget']/*[local-name() = 'schemes']", configMasterXmlDoc).getAttribute("default");
+    }
+
+    // Grab the scheme by name.
+    var schemeNode = getSchemeNodeByName(schemeName);
+
+    // If we didn't find a scheme by name, then fail fast.
+    if (!schemeNode) {
+        throw new Error("Could not locate a scheme with name '" + schemeName + "' in config.master.xml.");
+    }
+
+    // Grab the debug flag.
+    var isDebug = schemeNode.getAttribute("debug") === "true";
+
+    var replacementNodes = getReplacementNodesForScheme(schemeName);
+
+    // If we didn't find a scheme replacement nodes, then fail fast.
+    if (!replacementNodes == null) {
+        throw new Error("Could not locate a scheme with name '" + schemeName + "' in config.master.xml.");
+    }
+
+    // Merge in any parent scheme configuration.
+
+    var baseSchemeName = schemeNode.getAttribute("base-scheme");
+
+    if (baseSchemeName) {
+        var baseSchemeNode = getSchemeNodeByName(baseSchemeName);
+
+        if (baseSchemeNode) {
+
+            // If debug wasn't explicitly set on the taret scheme, use the one from the parent.
+            if (isDebug == null && baseSchemeNode.getAttribute("debug") != null) {
+                isDebug = schemeNode.getAttribute("debug") === "true";;
+            }
+
+            var baseSchemeReplacementNodes = getReplacementNodesForScheme(baseSchemeName);
+
+            // If we didn't find a scheme replacement nodes, then fail fast.
+            if (!baseSchemeReplacementNodes == null) {
+                throw new Error("Could not locate a scheme with name '" + schemeName + "' in config.master.xml.");
+            }
+
+            // Merge the base replacement nodes into the target scheme.
+            baseSchemeReplacementNodes.forEach(function(baseReplacementNode) {
+
+                // Search for the base node in the target scheme.
+                var nodeExists = !!_.find(replacementNodes, function (replacementNode) {
+                    return baseReplacementNode.getAttribute("target") === replacementNode.getAttribute("target");
+                });
+
+                // If the base node doesn't exist in the target, add it.
+                if (!nodeExists) {
+                    replacementNodes.push(baseReplacementNode);
+                }
+            });
+        }
+    }
+
+    // If the debug flag was never set, then default to true.
+    if (isDebug == null) {
+        isDebug = true;
+    }
+
+    // Loop through each replacement variable we have defined.
+    replacementNodes.forEach(function(replacementNode) {
+
+        var replacementTarget = "\\${" + replacementNode.getAttribute("target") + "}";
+        var replacementValue = replacementNode.getAttribute("value");
+
+        // Search and replace the ${TARGET} with the value in the files.
+        configMasterRaw = configMasterRaw.replace(new RegExp(replacementTarget, "g"), replacementValue);
+        indexMasterRaw = indexMasterRaw.replace(new RegExp(replacementTarget, "g"), replacementValue);
+    });
+
+    // Write out the files that have replacements.
+    fs.writeFileSync("config.xml", configMasterRaw, "utf8");
+    fs.writeFileSync("www/index.html", indexMasterRaw, "utf8");
+
+    // Remove the schemes node from the config.xml file.
+    var configRaw = fs.readFileSync("config.xml", "utf8");
+    var configXmlDoc = new XmlDom().parseFromString(configRaw);
+    configXmlDoc.removeChild(xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'schemes']", configXmlDoc));
+    configRaw = xmlSerializer.serializeToString(configXmlDoc);
+    fs.writeFileSync("config.xml", configRaw, "utf8");
+
+    // Grab values out of config.xml used to build www/js/BuildVars.js
+
+    var applicationName,
+        email,
+        websiteUrl,
         majorVersion = 0,
         minorVersion = 0,
-        buildVersion = 0,
-        apiUrl;
+        buildVersion = 0;
+
+    // Attempt to grab the name element from config.xml.
+    try {
+        applicationName = xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'name']/text()", configXmlDoc).toString();
+    }
+    catch (err) {
+        console.error("Unable to parse name from the config.xml file.");
+        cb(err);
+    }
+
+    // Attempt to grab the e-mail address.
+    try {
+        email = xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'author']/@email", configXmlDoc).value;
+    }
+    catch (err) {
+        console.error("Unable to parse email from the author node from the config.xml file.");
+        cb(err);
+    }
+
+    // Attempt to grab the website URL.
+    try {
+        websiteUrl = xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'author']/@href", configXmlDoc).value;
+    }
+    catch (err) {
+        console.error("Unable to parse href from the author node from the config.xml file.");
+        cb(err);
+    }
 
     // Attempt to query and parse the version information from config.xml.
     // Default to 0.0.0 if there are any problems.
     try {
-        configXml = fs.readFileSync("config.xml", "utf8");
-        configXmlDoc = new XmlDom().parseFromString(configXml);
         var versionString = xpath.select1("/*[local-name() = 'widget']/@version", configXmlDoc).value;
         var versionParts = versionString.split(".");
         majorVersion = parseInt(versionParts[0], 10);
@@ -506,39 +770,43 @@ gulp.task("ts:vars", function (cb) {
         console.log("Error parsing version from config.xml; using 0.0.0 instead.", err);
     }
 
-    try {
-        configXml = fs.readFileSync('config.xml', 'utf8');
-        configXmlDoc = new XmlDom().parseFromString(configXml);
-
-        if (isDebugScheme()) {
-            apiUrl = xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'preference'][@name='ApiUrlDebug']/@value", configXmlDoc).value;
-        }
-        else {
-            apiUrl = xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'preference'][@name='ApiUrl']/@value", configXmlDoc).value;
-        }
-    }
-    catch (err) {
-        console.error("Unable to parse ApiUrl/ApiUrlDebug from the config.xml file.");
-        cb(err);
-    }
-
     // Create the structure of the buildVars variable.
-    var buildVarsJson = JSON.stringify({
+    var buildVars = {
+        applicationName: applicationName,
+        email: email,
+        websiteUrl,
         majorVersion: majorVersion,
         minorVersion: minorVersion,
         buildVersion: buildVersion,
-        debug: isDebugScheme(),
+        debug: isDebugBuild(),
         buildTimestamp: (new Date()).toUTCString(),
-        apiUrl: apiUrl
+        properties: {}
+    };
+
+    var preferenceNodes = xpath.select("/*[local-name() = 'widget']/*[local-name() = 'preference']", configXmlDoc);
+
+    // Populate the configuration object with all of the preference nodes.
+    preferenceNodes.forEach(function(preferenceNode) {
+
+        var name = preferenceNode.getAttribute("name");
+        var value = preferenceNode.getAttribute("value");
+
+        buildVars.properties[name] = value;
     });
 
-    // Write the buildVars variable with code that will define it as a global object.
-    var buildVarsJs = "window.buildVars = " + buildVarsJson  + ";";
+    // Grab the git commit hash.
+    exec("git rev-parse --short HEAD", function (err, stdout, stderr) {
 
-    // Write the file out to disk.
-    fs.writeFileSync("www/js/BuildVars.js", buildVarsJs, { encoding: "utf8" });
+        buildVars.commitShortSha = err ? "unknown" : stdout.replace("\n", "");
 
-    cb();
+        // Write the buildVars variable with code that will define it as a global object.
+        var buildVarsJs = "window.buildVars = " + JSON.stringify(buildVars)  + ";";
+
+        // Write the file out to disk.
+        fs.writeFileSync('www/js/BuildVars.js', buildVarsJs, { encoding: 'utf8' });
+
+        cb();
+    });
 });
 
 /**
@@ -550,7 +818,7 @@ gulp.task("ts:vars", function (cb) {
  */
 gulp.task("ts:src", ["ts:src-read-me"], function (cb) {
 
-    if (isDebugScheme()) {
+    if (isDebugBuild()) {
         return gulp.src(paths.ts)
             .pipe(gulp.dest("www/js/src"));
     }
@@ -571,7 +839,7 @@ gulp.task("ts:src", ["ts:src-read-me"], function (cb) {
  */
 gulp.task("ts:src-read-me", function (cb) {
 
-    if (!isDebugScheme()) {
+    if (!isDebugBuild()) {
         cb();
         return;
     }
@@ -616,13 +884,13 @@ gulp.task("chrome", ["ts"], function (cb) {
  * which can be used for debugging purposes. This will only occur if the build scheme
  * is not set to release.
  */
-gulp.task("ts", ["ts:vars", "ts:src"], function (cb) {
+gulp.task("ts", ["config", "ts:src"], function (cb) {
     exec("tsc -p src", function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
 
         // For debug builds, we are done, but for release builds, minify the bundle.
-        if (isDebugScheme()) {
+        if (isDebugBuild()) {
             cb(err);
         }
         else {
@@ -673,7 +941,7 @@ gulp.task("ts:tests", ["ts"], function (cb) {
 gulp.task("sass", function (cb) {
 
     var sassConfig = {
-        outputStyle: isDebugScheme() ? "nested" : "compressed",
+        outputStyle: isDebugBuild() ? "nested" : "compressed",
         errLogToConsole: false
     };
 

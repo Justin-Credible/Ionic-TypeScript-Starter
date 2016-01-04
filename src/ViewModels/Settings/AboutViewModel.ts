@@ -5,5 +5,6 @@
         public applicationName: string;
         public versionString: string;
         public timestamp: string;
+        public commitShortSha: string;
     }
 }

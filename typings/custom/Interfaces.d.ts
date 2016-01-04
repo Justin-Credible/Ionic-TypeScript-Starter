@@ -56,21 +56,40 @@ declare module JustinCredible.SampleApp.Interfaces {
         buildVersion: number;
 
         /**
-        * The URL to the APIs to use.
-        */
-        apiUrl: string;
-    }
+         * The short SHA for the git commit that this build was created from.
+         * 
+         * Will be 'unknown' if the commit couldn't be determined or the machine
+         * that made the build did not have git installed.
+         */
+        commitShortSha: string;
 
-    interface VersionInfo {
-        majorVersion: number;
-        minorVersion: number;
-        buildVersion: number;
-        versionString: string;
-        buildTimestamp: string;
+        /**
+         * The display name of the application.
+         */
         applicationName: string;
-        copyrightInfoUrl: string;
-        websiteUrl: string;
-        githubUrl: string;
+
+        /**
+         * The contact email address for the app.
+         */
         email: string;
+
+        /**
+         * The author's website for the app.
+         */
+        websiteUrl: string;
+
+        /**
+         * Holds all of the preference node name/value pairs from config.xml.
+         */
+        properties: {
+
+            apiUrl: string;
+
+            apiVersion: string;
+
+            copyrightUrl: string;
+
+            githubUrl: string;
+        }
     }
 }

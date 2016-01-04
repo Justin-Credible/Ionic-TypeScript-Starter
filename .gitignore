@@ -12,6 +12,8 @@
 !/typings-tests/custom/
 
 # Development Artifacts
+/config.xml
+/www/index.html
 /www/lib
 /www/js/bundle.*
 /www/js/BuildVars.js

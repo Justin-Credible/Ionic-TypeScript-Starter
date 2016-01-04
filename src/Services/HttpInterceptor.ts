@@ -19,8 +19,7 @@
         constructor(
             private $rootScope: ng.IRootScopeService,
             private $injector: ng.auto.IInjectorService,
-            private $q: ng.IQService,
-            private apiVersion: string) {
+            private $q: ng.IQService) {
         }
 
         private get Utilities(): Utilities {
@@ -56,10 +55,10 @@
 
             // Angular expects the factory function to return the object that is used
             // for the factory when it is injected into other objects.
-            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, apiVersion: string) {
+            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService) {
 
                 // Create an instance our strongly-typed service.
-                var instance = new HttpInterceptor($rootScope, $injector, $q, apiVersion);
+                var instance = new HttpInterceptor($rootScope, $injector, $q);
 
                 // Return an object that exposes the functions that we want to be exposed.
                 // We use bind here so that the correct context is used (Angular normally
@@ -76,8 +75,7 @@
             factory.$inject = [
                 "$rootScope",
                 "$injector",
-                "$q",
-                "apiVersion"
+                "$q"
             ];
 
             return factory;
@@ -114,7 +112,7 @@
                 /* tslint:disable:no-string-literal */
 
                 // Specify the version of the API we can consume.
-                config.headers["X-API-Version"] = this.apiVersion;
+                config.headers["X-API-Version"] = this.Configuration.buildVars.properties.apiVersion;
 
                 // Specify the content type we are sending and the payload type that we want to receive.
                 config.headers["Content-Type"] = "application/json";

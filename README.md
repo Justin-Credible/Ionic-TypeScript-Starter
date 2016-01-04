@@ -10,9 +10,9 @@ It utilizes the [Ionic](http://ionicframework.com/) framework to achieve a user 
 
 The application is written primarily in [TypeScript](http://www.typescriptlang.org/) which brings object oriented paradigms, type-safety, compile-time checking, and IDE tooling (refactoring! code completion! huzzah!).
 
-This project is IDE and platform agnostic. I recommend using the free and lightweight [Visual Studio Code](https://www.visualstudio.com/products/code-vs) editor as it has superb support for TypeScript, but any editor will do.
+This project is IDE and platform agnostic. I recommend using the free and lightweight [Visual Studio Code](https://code.visualstudio.com) editor as it has superb support for TypeScript, but any editor will do.
 
-In-browser development and debugging is possible via the [Apache Ripple](http://ripple.incubator.apache.org/) emulator. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container.
+In-browser development and debugging is possible via the Chrome developer tools. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container.
 
 This starter project targets iOS, Android, and Chrome (as an extension).
 
@@ -26,41 +26,54 @@ Screenshots can be found on the project page [here](http://www.justin-credible.n
 
 ## Environment Setup ##
 
-The following prerequisites are required (I've listed the versions of the packages I've tested with).
+The following external prerequisites are required:
 
-*While the following node modules can be installed globally, I recommend using them directly from the project directory. You can do so by adding `./node_modules/.bin` to your path.*
-
-* Node.js (0.10.38 or 0.12.7)
-* Cordova (5.3.3)
-* Ionic CLI (1.7.6)
-* TypeScript (1.6.2)
-* Bower (1.6.3)
-* bower-installer (1.2.0)
-* tsd (0.6.5)
+* [Node.js](https://nodejs.org/dist/v4.2.2/) 4.2.2
 
 *In addition, if you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.*
 
-To begin, clone the repository and install the node packages:
+Recommended IDEs:
 
-	$ git clone https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git
+* [Visual Studio Code](https://code.visualstudio.com/)
+* Chrome (developer debugging tools)
+
+All other dependencies are installed in the project directory via `npm`. To use them you'll need to add `./node_modules/.bin` to your path. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.
+
+To begin, edit your path, clone the repository, install the node packages, and initialize the development environment.
+
+    $ PATH=$PATH:./node_modules/.bin
+    $ git clone https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git
     $ cd Ionic-TypeScript-Starter
-	$ npm install
+    $ npm install
+    $ gulp init
+
+The `gulp init` task adds the platforms from `package.json` using the `ionic platform add` command and then runs the default gulp task (as shown in the compilation section below).
+
+If you are going to be developing on iOS, you'll probably want two additional packages with allow you to run the your application on the iOS simulator as well as a physical device:
+
+    $ npm install -g ios-sim
+    $ npm install -g ios-deploy
+
+At this point your environment should be ready for development!
 
 ## Compilation ##
 
-Now you can use the various gulp tasks to obtain Cordova plugins, install third party libraries via Bower, download TypeScript definition files and compile the TypeScript code.
+The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.
 
 *You can also just run `gulp` without any arguments which will run the below targets.*
 
-	$ gulp sass       # Compiles SASS from /styles/index.scss to /www/css/index.css
-	$ gulp libs       # Install 3rd Party JS libraries as defined in bower.json
-	$ gulp plugins    # Install Cordova plugins as defined in package.json
-	$ gulp tsd        # Install TypeScript definitions as defined in tsd.json
-	$ gulp ts         # Compiles TypeScript code as configured by src/tsconfig.json
+    $ gulp config     # Creates config.xml, www/index.html (from their *.master files) and www/js/BuildVars.js
+    $ gulp sass       # Compiles SASS from /styles/index.scss to /www/css/index.css
+    $ gulp libs       # Install 3rd Party JS libraries as defined in bower.json
+    $ gulp plugins    # Install Cordova plugins as defined in package.json
+    $ gulp tsd        # Install TypeScript definitions as defined in tsd.json
+    $ gulp ts         # Compiles TypeScript code as configured by src/tsconfig.json
 
-*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>B</kbd> to run the `ts` task.*
+You can specify a configuration scheme using the scheme flag when running the configuration task, where the scheme name is one of the schemes listed in `config.master.xml`:
 
-*By default, the debug variable will be set to true in `BuildVars.js`; for release builds use `gulp ts --scheme release`.*
+    $ gulp config --scheme development
+
+*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>B</kbd> to run the `ts` task with the default scheme.*
 
 ## Testing ##
 
@@ -70,44 +83,31 @@ These operations can be performed independently using the `gulp lint` and `gulp 
 
 *If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `lint` or `test` to run the lint or test tasks respectively.*
 
-## Platform Setup ##
-
-Next you'll need to add the platforms you'll be running/building for.
-
-	$ ionic platform add ios
-
-If you are going to be developing on iOS, you'll probably want  two additional packages with allow you to run the your application on the iOS simulator as well as a physical device:
-
-	$ npm install ios-sim
-	$ npm install ios-deploy
-
-For best performance on Android, you'll may wish to add the [Crosswalk](https://crosswalk-project.org/) plugin which will use an up to date version of Chromium instead Android's built-in WebView:
-
-	$ ionic browser add crosswalk
-
 ## Running in Browser ##
 
 Development can be done quickly using your desktop web browser with live reloading of code. Chrome is recommended for best results.
 
-	$ ionic serve
-
-You can also use the Apache Ripple emulator which adds features when debugging in your browser (screen resolutions, hardware simulation, etc). It is available via `npm` or as a [Chrome Plugin](https://chrome.google.com/webstore/detail/geelfhphabnejjhdalkjhgipohgpdnoc).
+    $ ionic serve
 
 To avoid [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) issues, you'll need to to mock up your API responses via `MockHttpApis.ts` or disable CORS by launching Chrome with the `--disable-web-security` argument.
 
 You may also find it useful to ignore all SSL certificate errors so you don't have to trust certificates on your machine by using `--ignore-certificate-errors`.
 
-	$ open -a "Google Chrome.app" --args --ignore-certificate-errors --disable-web-security
+    $ open -a "Google Chrome.app" --args --ignore-certificate-errors --disable-web-security
 
-*NOTE: You shouldn't use these flags on a browser you use to browse the internet as they disable important security measures. It is recommended to download an setup a separate Chrome instance when using these flags (I use the [Canary](https://www.google.com/chrome/browser/canary.html) builds).*
+*NOTE: You shouldn't use these flags on a browser you use to browse the internet as they disable important security measures. It is recommended to setup a separate Chrome instance when using these flags. I use the following AppleScript to point to a different data directory. *
+
+```
+do shell script "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --user-data-dir=/Users/$USER/Library/Application\\ Support/Google/ChromePersonal > /dev/null 2>&1 &"
+```
 
 ## Running on Emulators ##
 
 You can run your application on the software emulator using the `emulate` command.
 
-	$ ionic emulate ios
+    $ ionic emulate ios
 
-*You can optionally specify a specific emulator using the target parameter: `--target="iPhone-6-Plus"`*
+*You can optionally specify a specific emulator using the target parameter: `--target="iPhone-6-Plus"`. A list of installed emulators can be obtained using `ionic emulate ios --list`.*
 
 *If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `emulate` to run either the iOS or Android emulate targets.*
 
@@ -117,7 +117,7 @@ If you are developing your application on a Windows machine, but want to test an
 
 First, you'll need to install the `remotebuild` package via npm on the OS X machine on which you want to run the simulator. Note that since the Cordova project will be built on the OS X machine, you'll need to make sure you have all the build prerequisites installed (Xcode etc).
 
-	$ npm install -g remotebuild
+    $ npm install -g remotebuild
 
 Next, you'll want to edit `remote-build.json` located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS machine, as well as configure other settings.
 
@@ -129,22 +129,28 @@ Finally, you can execute `gulp remote-emulate-ios` from the root of the starter 
 
 Before running on a device you'll want to make sure it is visible via XCode (for iOS) or via `adb devices -l` (for Android) otherwise the simulator may launch instead.
 
-	$ ionic run ios --device
+    $ ionic run ios --device
 
 ## Creating a Build ##
 
-To create production build, it is first a good idea to re-run all of the gulp tasks to ensure that all of the plugins and libraries are up to date at the TypeScript code has been compiled.
+To create build for release on the app stores, it is first a good idea to start with a clean environment to ensure that unintended changes are not picked up, the plugins and libraries are up to date, and the TypeScript code has been compiled.
 
-	$ gulp --scheme release
+    $ gulp clean
+    $ npm install
+    $ gulp init --scheme production
+    $ ionic build ios --release
 
-*Usage of the `--scheme release` flag here will set the `debug` flag to false in the `BuildVars.js` file.*
+*Usage of the `--scheme production` flag here will set the `debug` flag to false in the `BuildVars.js` file as well as use the production scheme for `config.xml` replacements.*
 
-Then, to create a native build, use Ionic's build command:
+To create a native build for Android, it is recommended to bundle the [Crosswalk webview](https://crosswalk-project.org/documentation/cordova.html) for better performance.
 
-	$ ionic build ios --release
-	
-Or to create a Chrome extension, use the `chrome` gulp task:
+Luckily this extra task is handled by the `--prep android` flag when running the `init` task.
 
-	$ gulp chrome --scheme release
-	
+````
+$ gulp clean
+$ npm install
+$ gulp init --scheme production --prep android
+$ ionic build android --release
+````
+
 Native build artifacts will be located in the `platforms/<platform name>` directory and an unpacked Chrome extension will be located in the `chrome` directory.

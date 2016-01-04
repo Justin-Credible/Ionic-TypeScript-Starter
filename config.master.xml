@@ -1,26 +1,78 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="net.justincredible.sampleapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+  <schemes default="localdev">
+    <!-- Different build schemes used by "gulp config --scheme scheme_name". -->
+    <!-- These are used to set the debug flag and perform variable replacement to generate config.xml and index.html. -->
+
+    <!-- Used for development on a host entry pointing to localhost. -->
+    <scheme name="localdev" debug="true">
+      <replacement target="API_URL" value="http://localhost.your-company.com/api"/>
+      <replacement target="API_VERSION" value="v1"/>
+
+      <!-- See: http://content-security-policy.com/ -->
+      <!-- Allows connecting to Ionic serve's LiveReload service via port 35279 and unsafe-inline script block. -->
+      <replacement target="CONTENT_SECURITY_POLICY" value="default-src 'self' data: gap: https://ssl.gstatic.com; script-src * 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src *; connect-src 'self' https://localhost.your-company.com http://localhost.your-company.com ws://localhost:35279 ws://localhost:35729"/>
+    </scheme>
+
+    <!-- Same as localdev, but points at an internal development server. -->
+    <scheme name="development" debug="true" base-scheme="localdev">
+      <replacement target="API_URL" value="http://development.your-company.com/api"/>
+    </scheme>
+
+    <!-- Same as localdev, but points at an internal staging server. -->
+    <scheme name="staging" debug="true" base-scheme="localdev">
+      <replacement target="API_URL" value="http://development.your-company.com/api"/>
+    </scheme>
+
+    <!-- Used for shipping the application. -->
+    <scheme name="production" debug="false">
+      <replacement target="API_URL" value="http://www.your-company.com/api"/>
+      <replacement target="API_VERSION" value="v1"/>
+
+      <!-- See: http://content-security-policy.com/ -->
+      <replacement target="CONTENT_SECURITY_POLICY" value="default-src 'self' data: gap: https://ssl.gstatic.com; script-src * 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src *; connect-src 'self' https://www.your-company.com http://www.your-company.com"/>
+    </scheme>
+
+  </schemes>
+
+
+  <!-- Basic application information -->
   <name>SampleApp</name>
-  <description>
-        SampleApp: A starter application using Ionic and TypeScript.
-    </description>
-  <author email="justin.unterreiner@gmail.com" href="https://github.com/Justin-Credible/Ionic-TypeScript-Starter">
-      Justin Unterreiner
-    </author>
+  <description>SampleApp: A starter application using Ionic and TypeScript.</description>
+  <author email="justin.unterreiner@gmail.com" href="http://www.justin-credible.net">
+    Justin Unterreiner
+  </author>
+
+  <!-- The first page that is loaded when Cordova boots. -->
   <content src="index.html"/>
+
+  <!-- Controls the domains that Cordova can load content from; see also content-security-policy. -->
   <access origin="*"/>
+
+  <!-- Built-in Cordova preferences -->
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
+
+  <!-- cordova-plugin-splashscreen -->
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
-  <preference name="ApiUrl" value="https://services.yoursite.com/api"/>
-  <preference name="ApiUrlDebug" value="https://services.devel.yoursite.com/api"/>
+
+  <!-- Application Specific Configuration -->
+  <preference name="apiUrl" value="${API_URL}"/>
+  <preference name="apiVersion" value="${API_VERSION}"/>
+  <preference name="githubUrl" value="https://github.com/Justin-Credible/Ionic-TypeScript-Starter"/>
+  <preference name="copyrightUrl" value="https://github.com/Justin-Credible/Ionic-TypeScript-Starter/blob/master/LICENSE"/>
+
+  <!-- Preferences for cordova-plugin-statusbar plugin -->
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
+
+  <!-- iOS Specific Configuration -->
   <platform name="ios">
     <icon src="resources/ios/icon/icon.png" width="57" height="57"/>
     <icon src="resources/ios/icon/icon@2x.png" width="114" height="114"/>
@@ -49,6 +101,7 @@
     <splash src="resources/ios/splash/Default@2x~iphone.png" height="960" width="640"/>
     <splash src="resources/ios/splash/Default~iphone.png" height="480" width="320"/>
   </platform>
+
   <platform name="android">
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
@@ -69,4 +122,5 @@
     <splash src="resources/android/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
     <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
+
 </widget>

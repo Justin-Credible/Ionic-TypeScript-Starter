@@ -11,7 +11,6 @@
 
         public static get $inject(): string[] {
             return [
-                "isRipple",
                 "isCordova",
                 "buildVars",
                 "isChromeExtension",
@@ -20,7 +19,6 @@
         }
 
         constructor(
-            private _isRipple_: boolean,
             private _isCordova_: boolean,
             private buildVars: Interfaces.BuildVars,
             private _isChromeExtension_: boolean,
@@ -30,16 +28,6 @@
         //#endregion
 
         //#region Platforms
-
-        /**
-         * Can be used to determine if this application is being run in the Apache
-         * Ripple Emulator, which runs in a desktop browser, and not Cordova.
-         * 
-         * @returns True if the application is running in the Ripple emulator, false otherwise.
-         */
-        public get isRipple(): boolean {
-            return this._isRipple_;
-        }
 
         /**
          * Can be used to determine if this application is being run in the Apache
@@ -109,7 +97,7 @@
         */
         public get platform(): string {
             if (typeof (device) === "undefined") {
-                return typeof(window.ripple) !== "undefined" ? "Ripple" : "Unknown";
+                return "Unknown";
             }
             else {
                 return device.platform;

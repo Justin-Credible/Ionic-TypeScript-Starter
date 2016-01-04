@@ -17,7 +17,7 @@
                 Services.Logger.ID,
                 Services.Plugins.ID,
                 Services.Utilities.ID,
-                "versionInfo"];
+                Services.Configuration.ID];
         }
 
         constructor(
@@ -26,7 +26,7 @@
             private Logger: Services.Logger,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
-            private versionInfo: Interfaces.VersionInfo) {
+            private Configuration: Services.Configuration) {
             super($scope, ViewModels.LogEntryViewModel);
         }
 
@@ -65,7 +65,7 @@
         }
 
         protected email_click(): void {
-            var uri = this.Utilities.format("mailto:{0}?subject={1} Error Log&body={2}", this.versionInfo.email, this.versionInfo.applicationName, JSON.stringify(this.viewModel.logEntry));
+            var uri = this.Utilities.format("mailto:{0}?subject={1} Error Log&body={2}", this.Configuration.buildVars.email, this.Configuration.buildVars.applicationName, JSON.stringify(this.viewModel.logEntry));
             uri = encodeURI(uri);
             window.open(uri, "_system");
         }

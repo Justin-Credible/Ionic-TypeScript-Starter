@@ -29,11 +29,6 @@ interface Window {
     //plugins: ICordovaWindowPlugins;
 
     /**
-     * The Ripple API for the Apache Ripple Emulator.
-     */
-    ripple: Object;
-
-    /**
      * Variables emitted at build time which contain useful application information.
      */
     buildVars: JustinCredible.SampleApp.Interfaces.BuildVars;

@@ -19,7 +19,7 @@ module JustinCredible.SampleApp.Services {
         }
 
         constructor(
-            private buildVars: Interfaces.BuildVars) {
+            private _buildVars_: Interfaces.BuildVars) {
         }
 
         //#endregion
@@ -40,6 +40,13 @@ module JustinCredible.SampleApp.Services {
 
         //#endregion
 
+        /**
+         * Can be used to get the build variables that were generated at build time.
+         */
+        public get buildVars(): Interfaces.BuildVars {
+            return this._buildVars_;
+        }
+
         //#region apiUrl - Path to the application's services
 
         private _apiUrl: string = null;
@@ -55,7 +62,7 @@ module JustinCredible.SampleApp.Services {
                 return this._apiUrl;
             }
             else {
-                return this.buildVars.apiUrl;
+                return this.buildVars.properties.apiUrl;
             }
         }
 
