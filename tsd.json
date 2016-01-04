@@ -100,6 +100,9 @@
     },
     "webrtc/MediaStream.d.ts": {
       "commit": "c50b111ded0a3a18b87b5abffea3150d6aca94da"
+    },
+    "cordova-plugin-spinner/cordova-plugin-spinner.d.ts": {
+      "commit": "7a3d6944036902996b87981e6150900952b35628"
     }
   }
 }
