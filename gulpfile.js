@@ -774,7 +774,7 @@ gulp.task("config", function (cb) {
     var buildVars = {
         applicationName: applicationName,
         email: email,
-        websiteUrl,
+        websiteUrl: websiteUrl,
         majorVersion: majorVersion,
         minorVersion: minorVersion,
         buildVersion: buildVersion,
