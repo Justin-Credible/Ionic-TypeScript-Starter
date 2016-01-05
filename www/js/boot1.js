@@ -13,5 +13,5 @@ if (typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" &
     document.head.appendChild(style);
 }
 
-// Start the application by invoking the main entry point method defined in Application.ts.
-JustinCredible.SampleApp.Application.main();
+// Invoke the second level boot loader.
+JustinCredible.SampleApp.Boot2.boot();

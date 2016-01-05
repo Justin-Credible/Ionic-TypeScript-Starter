@@ -26,7 +26,7 @@ module.exports = function(config) {
             "www/lib/moment/moment.js",
             "www/lib/nprogress/nprogress.js",
             "www/js/bundle.js",
-            "www/js/Main.js",
+            "www/js/boot1.js",
 
             // Tests
             "tests/bundle.tests.js",
