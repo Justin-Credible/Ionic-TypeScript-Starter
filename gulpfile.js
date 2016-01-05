@@ -620,7 +620,7 @@ gulp.task("tsd:tests", function (cb) {
  * 
  * It responsible for generating config.xml from config.master.xml, generating
  * www/index.html from www/index.master.html, performing variable replacements based
- * on scheme name in these two files, and building the www/js/BuildVars.js file.
+ * on scheme name in these two files, and building the www/js/build-vars.js file.
  * 
  * gulp config --scheme scheme_name
  */
@@ -721,7 +721,7 @@ gulp.task("config", function (cb) {
     configRaw = xmlSerializer.serializeToString(configXmlDoc);
     fs.writeFileSync("config.xml", configRaw, "utf8");
 
-    // Grab values out of config.xml used to build www/js/BuildVars.js
+    // Grab values out of config.xml used to build www/js/build-vars.js
 
     var applicationName,
         email,
@@ -803,7 +803,7 @@ gulp.task("config", function (cb) {
         var buildVarsJs = "window.buildVars = " + JSON.stringify(buildVars)  + ";";
 
         // Write the file out to disk.
-        fs.writeFileSync('www/js/BuildVars.js', buildVarsJs, { encoding: 'utf8' });
+        fs.writeFileSync('www/js/build-vars.js', buildVarsJs, { encoding: 'utf8' });
 
         cb();
     });
@@ -1100,7 +1100,7 @@ gulp.task("clean:ts", function (cb) {
         "www/js/bundle.js",
         "www/js/bundle.d.ts",
         "www/js/bundle.js.map",
-        "www/js/BuildVars.js",
+        "www/js/build-vars.js",
         "www/js/src"
     ]).then(function () {
         cb();

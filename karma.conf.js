@@ -19,7 +19,7 @@ module.exports = function(config) {
 
             // Application Source Files
             // This list should match the order defined in index.html
-            "www/js/BuildVars.js",
+            "www/js/build-vars.js",
             "www/lib/ionic/js/ionic.bundle.min.js",
             "www/lib/angular-mocks/angular-mocks.js",
             "www/lib/lodash/lodash.js",
