@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES5",
+        "target": "es5",
         "out": "tests/bundle.tests.js",
         "sourceMap": true,
         "removeComments": true,
