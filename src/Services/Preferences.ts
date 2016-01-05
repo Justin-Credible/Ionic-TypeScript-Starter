@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Services {
+﻿namespace JustinCredible.SampleApp.Services {
 
     /**
      * Provides a way to easily get/set user preferences.

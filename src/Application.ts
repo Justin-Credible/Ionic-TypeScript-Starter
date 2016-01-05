@@ -1,5 +1,5 @@
 
-module JustinCredible.SampleApp {
+namespace JustinCredible.SampleApp {
 
     export class Application {
 

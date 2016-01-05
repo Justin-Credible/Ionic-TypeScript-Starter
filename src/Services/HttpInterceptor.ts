@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Services {
+﻿namespace JustinCredible.SampleApp.Services {
 
     /**
      * This is a custom interceptor for Angular's $httpProvider.

@@ -1,4 +1,4 @@
-module JustinCredible.SampleApp.Services {
+namespace JustinCredible.SampleApp.Services {
 
     /**
      * Provides access to Cordova plugins.

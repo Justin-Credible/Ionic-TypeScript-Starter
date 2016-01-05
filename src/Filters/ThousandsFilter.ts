@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Filters {
+﻿namespace JustinCredible.SampleApp.Filters {
 
     /**
      * Formats numbers greater than one thousand to include the K suffix.

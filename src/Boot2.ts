@@ -6,7 +6,7 @@
  * 
  * After Angular is initialized it will delegate to the Application.ts->start().
  */
-module JustinCredible.SampleApp.Boot2 {
+namespace JustinCredible.SampleApp.Boot2 {
 
     //#region Variables
 

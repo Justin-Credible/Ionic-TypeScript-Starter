@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.ViewModels {
+﻿namespace JustinCredible.SampleApp.ViewModels {
 
     export class CategoryItemViewModel {
         public name: string;

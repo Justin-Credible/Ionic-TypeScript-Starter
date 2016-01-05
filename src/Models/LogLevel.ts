@@ -1,4 +1,4 @@
-module JustinCredible.SampleApp.Models {
+namespace JustinCredible.SampleApp.Models {
 
     export enum LogLevel {
         TRACE = 0,

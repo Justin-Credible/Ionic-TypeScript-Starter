@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Controllers {
+﻿namespace JustinCredible.SampleApp.Controllers {
 
     export class RootController extends BaseController<ViewModels.RootViewModel> {
 

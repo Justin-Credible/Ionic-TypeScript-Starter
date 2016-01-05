@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Controllers {
+﻿namespace JustinCredible.SampleApp.Controllers {
 
     export class CloudSyncController extends BaseController<ViewModels.CloudSyncViewModel> {
 

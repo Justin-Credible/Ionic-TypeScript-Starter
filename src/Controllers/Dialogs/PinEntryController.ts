@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Controllers {
+﻿namespace JustinCredible.SampleApp.Controllers {
 
     export class PinEntryController extends BaseDialogController<ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel> {
 

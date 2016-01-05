@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.ViewModels {
+﻿namespace JustinCredible.SampleApp.ViewModels {
 
     export class PinEntryViewModel {
         public pin: string;

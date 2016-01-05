@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Models {
+﻿namespace JustinCredible.SampleApp.Models {
 
     export class PinEntryDialogResultModel {
         matches: boolean;

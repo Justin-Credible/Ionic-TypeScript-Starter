@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Directives {
+﻿namespace JustinCredible.SampleApp.Directives {
 
     //#region TypeScript Declarations
 

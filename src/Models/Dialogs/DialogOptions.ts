@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Models {
+﻿namespace JustinCredible.SampleApp.Models {
 
     /**
      * Used to specify options for a dialog.

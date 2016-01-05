@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.ViewModels {
+﻿namespace JustinCredible.SampleApp.ViewModels {
 
     export class DeveloperViewModel {
         mockApiRequests: boolean;

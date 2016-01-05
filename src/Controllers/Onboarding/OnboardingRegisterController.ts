@@ -1,4 +1,4 @@
-module JustinCredible.SampleApp.Controllers {
+namespace JustinCredible.SampleApp.Controllers {
 
     export class OnboardingRegisterController extends BaseController<ViewModels.OnboardingRegisterViewModel> {
 

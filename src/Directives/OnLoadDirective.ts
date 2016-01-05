@@ -1,4 +1,4 @@
-module JustinCredible.SampleApp.Directives {
+namespace JustinCredible.SampleApp.Directives {
 
     /**
      * A directive for handling an element's onload event (eg an image tag).

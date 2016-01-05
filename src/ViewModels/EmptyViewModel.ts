@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.ViewModels {
+﻿namespace JustinCredible.SampleApp.ViewModels {
 
     /**
      * A ViewModel that has no properties. Useful for controllers that

@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Services {
+﻿namespace JustinCredible.SampleApp.Services {
 
     /**
      * Provides mock implementation APIs that may not be available on all platforms.

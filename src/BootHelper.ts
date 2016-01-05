@@ -1,7 +1,7 @@
 /**
  * This is a helper for the second level boot loader.
  */
-module JustinCredible.SampleApp.BootHelper {
+namespace JustinCredible.SampleApp.BootHelper {
 
     //#region Registration Helpers
 
