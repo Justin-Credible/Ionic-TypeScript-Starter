@@ -13,7 +13,7 @@ namespace JustinCredible.SampleApp {
             $stateProvider.state("app", {
                 url: "/app",
                 abstract: true,
-                templateUrl: "templates/Root.html",
+                templateUrl: "Views/Root/Root.html",
                 controller: Controllers.RootController.ID
             });
 
@@ -22,7 +22,7 @@ namespace JustinCredible.SampleApp {
                 url: "/blank",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Blank.html"
+                        templateUrl: "Views/Blank.html"
                     }
                 }
             });
@@ -32,7 +32,7 @@ namespace JustinCredible.SampleApp {
                 url: "/category/:categoryNumber",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Category.html",
+                        templateUrl: "Views/Category/Category.html",
                         controller: Controllers.CategoryController.ID
                     }
                 }
@@ -44,7 +44,7 @@ namespace JustinCredible.SampleApp {
                 url: "/onboarding/splash",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Onboarding/Onboarding-Splash.html",
+                        templateUrl: "Views/Onboarding/Onboarding-Splash/Onboarding-Splash.html",
                         controller: Controllers.OnboardingSplashController.ID
                     }
                 }
@@ -54,7 +54,7 @@ namespace JustinCredible.SampleApp {
                 url: "/onboarding/register",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Onboarding/Onboarding-Register.html",
+                        templateUrl: "Views/Onboarding/Onboarding-Register/Onboarding-Register.html",
                         controller: Controllers.OnboardingRegisterController.ID
                     }
                 }
@@ -64,7 +64,7 @@ namespace JustinCredible.SampleApp {
                 url: "/onboarding/share",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Onboarding/Onboarding-Share.html",
+                        templateUrl: "Views/Onboarding/Onboarding-Share/Onboarding-Share.html",
                         controller: Controllers.OnboardingShareController.ID
                     }
                 }
@@ -78,7 +78,7 @@ namespace JustinCredible.SampleApp {
                 url: "/settings/list",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Settings/Settings-List.html",
+                        templateUrl: "Views/Settings/Settings-List/Settings-List.html",
                         controller: Controllers.SettingsListController.ID
                     }
                 }
@@ -88,7 +88,7 @@ namespace JustinCredible.SampleApp {
                 url: "/settings/cloud-sync",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Settings/Cloud-Sync.html",
+                        templateUrl: "Views/Settings/Cloud-Sync/Cloud-Sync.html",
                         controller: Controllers.CloudSyncController.ID
                     }
                 }
@@ -98,7 +98,7 @@ namespace JustinCredible.SampleApp {
                 url: "/settings/configure-pin",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Settings/Configure-Pin.html",
+                        templateUrl: "Views/Settings/Configure-Pin/Configure-Pin.html",
                         controller: Controllers.ConfigurePinController.ID
                     }
                 }
@@ -108,7 +108,7 @@ namespace JustinCredible.SampleApp {
                 url: "/settings/developer",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Settings/Developer.html",
+                        templateUrl: "Views/Settings/Developer/Developer.html",
                         controller: Controllers.DeveloperController.ID
                     }
                 }
@@ -118,7 +118,7 @@ namespace JustinCredible.SampleApp {
                 url: "/settings/logs",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Settings/Logs-List.html",
+                        templateUrl: "Views/Settings/Logs-List/Logs-List.html",
                         controller: Controllers.LogsListController.ID
                     }
                 }
@@ -134,7 +134,7 @@ namespace JustinCredible.SampleApp {
                 },
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Settings/Log-Entry.html",
+                        templateUrl: "Views/Settings/Log-Entry/Log-Entry.html",
                         controller: Controllers.LogEntryController.ID
                     }
                 }
@@ -144,7 +144,7 @@ namespace JustinCredible.SampleApp {
                 url: "/settings/about",
                 views: {
                     "root-view": {
-                        templateUrl: "templates/Settings/About.html",
+                        templateUrl: "Views/Settings/About/About.html",
                         controller: Controllers.AboutController.ID
                     }
                 }

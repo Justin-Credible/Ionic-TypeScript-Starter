@@ -32,7 +32,7 @@
         protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
-            this.$ionicPopover.fromTemplateUrl("templates/Settings/Log-Filter-Menu.html", {
+            this.$ionicPopover.fromTemplateUrl("Views/Settings/Logs-List/Log-Filter-Menu.html", {
                 scope: this.scope
             }).then((popover: any) => {
                 this._popover = popover;

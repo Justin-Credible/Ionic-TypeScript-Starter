@@ -5,7 +5,7 @@
         //#region Injection
 
         public static ID = "ReorderCategoriesController";
-        public static TemplatePath = "templates/Dialogs/Reorder-Categories.html";
+        public static TemplatePath = "Views/Dialogs/Reorder-Categories/Reorder-Categories.html";
 
         public static get $inject(): string[] {
             return [

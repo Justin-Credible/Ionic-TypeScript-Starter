@@ -63,6 +63,7 @@ The following tasks can be used to perform code configuration, library and plugi
 *You can also just run `gulp` without any arguments which will run the below targets.*
 
     $ gulp config     # Creates config.xml, www/index.html (from their *.master files) and www/js/build-vars.js
+    $ gulp templates  # Compiles Angluar HTML templates from Views/**/*.html to www/js/templates.js
     $ gulp sass       # Compiles SASS from /styles/index.scss to /www/css/index.css
     $ gulp libs       # Install 3rd Party JS libraries as defined in bower.json
     $ gulp plugins    # Install Cordova plugins as defined in package.json

@@ -3,6 +3,7 @@
 // For a full list of variables that can be overridden see:
 // bower_components/ionic/scss/_variables.scss
 
+// NOTE: This path is relative to the bundled CSS at runtime (eg www/css).
 $ionicons-font-path: "../lib/ionic/fonts";
 
 $light:                           #fff;

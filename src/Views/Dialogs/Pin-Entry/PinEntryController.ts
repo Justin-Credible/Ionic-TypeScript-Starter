@@ -5,7 +5,7 @@
         //#region Injection
 
         public static ID = "PinEntryController";
-        public static TemplatePath = "templates/Dialogs/Pin-Entry.html";
+        public static TemplatePath = "Views/Dialogs/Pin-Entry/Pin-Entry.html";
 
         public static get $inject(): string[] {
             return [

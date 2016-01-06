@@ -21,6 +21,7 @@ var eol = require("gulp-eol");
 var sass = require("gulp-sass");
 var sourcemaps = require("gulp-sourcemaps");
 var uglify = require("gulp-uglify");
+var templateCache = require("gulp-angular-templatecache");
 
 // Other Modules
 var del = require("del");
@@ -37,6 +38,7 @@ var KarmaServer = require("karma").Server;
 
 var paths = {
     ts: ["./src/**/*.ts"],
+    templates: ["./src/**/*.html"],
     sassIndex: "./styles/Index.scss",
     sass: ["./styles/**/*.scss"],
     www: ["./www/**/*.*"],
@@ -228,7 +230,7 @@ function format(formatString) {
  * and then lints and builds the TypeScript source code.
  */
 gulp.task("default", function (cb) {
-    runSequence("plugins", "libs", "tsd", "sass", "ts", cb);
+    runSequence("plugins", "libs", "tsd", "templates", "sass", "ts", cb);
 });
 
 /**
@@ -237,7 +239,7 @@ gulp.task("default", function (cb) {
  * This involves delegating to all of the clean tasks EXCEPT clean:node. It then adds
  * the platforms using cordova and finally executes the default gulp task.
  */
-gulp.task("init", ["clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:sass"], function (cb) {
+gulp.task("init", ["clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"], function (cb) {
 
     // First, build out config.xml so that Cordova can read it. We do this here instead
     // of as a child task above because it must start after all of the clean tasks have
@@ -255,6 +257,10 @@ gulp.task("init", ["clean:bower", "clean:platforms", "clean:plugins", "clean:chr
             }
             else if (platforms[i].locator) {
                 platformCommand += "ionic platform add " + platforms[i].locator;
+            }
+            else {
+                console.warn("Unsupported platform declaration in package.json; expected string or object with locator string property.");
+                continue;
             }
 
             if (i !== platforms.length - 1) {
@@ -935,6 +941,20 @@ gulp.task("ts:tests", ["ts"], function (cb) {
 });
 
 /**
+ * Used to concatenate all of the HTML templates into a single JavaScript module.
+ */
+gulp.task("templates", function() {
+    return gulp.src(paths.templates)
+        .pipe(templateCache({
+            "filename": "templates.js",
+            "root": "",
+            "module": "templates",
+            standalone: true
+        }))
+        .pipe(gulp.dest("./www/js"));
+});
+
+/**
  * Used to perform compilation of the SASS styles in the styles directory (using
  * Index.scss as the root file) and output the CSS to www/css/index.css.
  */
@@ -1024,7 +1044,7 @@ gulp.task("package-remote-build", function () {
  * that don't need to be committed to source control by delegating to several of the clean
  * sub-tasks.
  */
-gulp.task("clean", ["clean:tmp", "clean:node", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:sass"]);
+gulp.task("clean", ["clean:tmp", "clean:node", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"]);
 
 /**
  * Removes the tmp directory.
@@ -1132,6 +1152,17 @@ gulp.task("clean:tsd", function (cb) {
         "!typings-tests/custom/*.d.ts",
         // "typings-tests/**",
         // "!typings/custom/**"
+    ]).then(function () {
+        cb();
+    });
+});
+
+/**
+ * Removes the generated templates JavaScript from the templates target.
+ */
+gulp.task("clean:templates", function (cb) {
+    del([
+        "www/js/templates.js"
     ]).then(function () {
         cb();
     });
