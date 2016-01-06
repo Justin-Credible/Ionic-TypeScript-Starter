@@ -39,8 +39,8 @@ var KarmaServer = require("karma").Server;
 var paths = {
     ts: ["./src/**/*.ts"],
     templates: ["./src/**/*.html"],
-    sassIndex: "./styles/Index.scss",
-    sass: ["./styles/**/*.scss"],
+    sassIndex: "./src/Styles/Index.scss",
+    sass: ["./src/Styles/**/*.scss"],
     www: ["./www/**/*.*"],
     tests: ["./tests/**/*.ts"],
     chromeIcon: ["./resources/icon.png"],
@@ -956,7 +956,7 @@ gulp.task("templates", function() {
 
 /**
  * Used to perform compilation of the SASS styles in the styles directory (using
- * Index.scss as the root file) and output the CSS to www/css/index.css.
+ * Index.scss as the root file) and output the CSS to www/css/bundle.css.
  */
 gulp.task("sass", function (cb) {
 
@@ -968,6 +968,7 @@ gulp.task("sass", function (cb) {
     return gulp.src(paths.sassIndex)
         .pipe(sourcemaps.init())
         .pipe(sass(sassConfig).on("error", sassReporter))
+        .pipe(rename("bundle.css"))
         .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest("./www/css"));
 });
@@ -1173,8 +1174,8 @@ gulp.task("clean:templates", function (cb) {
  */
 gulp.task("clean:sass", function (cb) {
     del([
-        "www/css/index.css",
-        "www/css/index.css.map"
+        "www/css/bundle.css",
+        "www/css/bundle.css.map"
     ]).then(function () {
         cb();
     });

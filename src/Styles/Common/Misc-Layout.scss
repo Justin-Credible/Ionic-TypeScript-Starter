@@ -1,23 +1,7 @@
 
-/* Custom styling for the back navigation button to make it look like other buttons. */
-.nav-back-button {
-    border-color: #145fd7 !important;
-    background-color: #4a87ee !important;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-}
-
 /* Custom container to enable padding for buttons; useful in ion-content directives when padding="false". */
 .button-container {
     padding: 10px;
-}
-
-/* Useful for making icons clickable anchors without the default anchor color styling. */
-.anchor-icon:link,
-.anchor-icon:visited,
-.anchor-icon:hover,
-.anchor-icon:active {
-    color: #444;
 }
 
 /* Useful for a label in a read-only list item. */
