@@ -25,6 +25,7 @@ module.exports = function(config) {
             "www/lib/lodash/lodash.js",
             "www/lib/moment/moment.js",
             "www/lib/nprogress/nprogress.js",
+            "www/js/templates.js",
             "www/js/bundle.js",
             "www/js/boot1.js",
 
