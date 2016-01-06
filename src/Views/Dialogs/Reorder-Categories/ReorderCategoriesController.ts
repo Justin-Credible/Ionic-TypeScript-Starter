@@ -39,7 +39,7 @@
 
         //#region Controller Methods
 
-        protected item_reorder(item: ViewModels.CategoryItemViewModel, fromIndex: number, toIndex: number) {
+        protected item_reorder(item: Models.Category, fromIndex: number, toIndex: number) {
             this.viewModel.categories.splice(fromIndex, 1);
             this.viewModel.categories.splice(toIndex, 0, item);
         }
@@ -47,7 +47,7 @@
         protected done_click() {
             var categoryOrder: string[] = [];
 
-            this.viewModel.categories.forEach((categoryItem: ViewModels.CategoryItemViewModel) => {
+            this.viewModel.categories.forEach((categoryItem: Models.Category) => {
                 categoryOrder.push(categoryItem.name);
             });
 

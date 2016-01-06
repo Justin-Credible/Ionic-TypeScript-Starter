@@ -1,6 +1,6 @@
 ﻿namespace JustinCredible.SampleApp.ViewModels {
 
     export class RootViewModel {
-        public categories: ViewModels.CategoryItemViewModel[];
+        public categories: Models.Category[];
     }
 }

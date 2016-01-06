@@ -662,14 +662,14 @@
         /**
          * Returns the categories for the application in their default sort order.
          */
-        public get categories(): ViewModels.CategoryItemViewModel[] {
+        public get categories(): Models.Category[] {
 
             // Define the default set of categories.
             var categories = [
-                new ViewModels.CategoryItemViewModel("Category 1", "#/app/category/1", "ios-pricetags-outline", 0),
-                new ViewModels.CategoryItemViewModel("Category 2", "#/app/category/2", "ios-pricetags-outline", 1),
-                new ViewModels.CategoryItemViewModel("Category 3", "#/app/category/3", "ios-pricetags-outline", 2),
-                new ViewModels.CategoryItemViewModel("Category 4", "#/app/category/4", "ios-pricetags-outline", 3)
+                new Models.Category("Category 1", "#/app/category/1", "ios-pricetags-outline", 0),
+                new Models.Category("Category 2", "#/app/category/2", "ios-pricetags-outline", 1),
+                new Models.Category("Category 3", "#/app/category/3", "ios-pricetags-outline", 2),
+                new Models.Category("Category 4", "#/app/category/4", "ios-pricetags-outline", 3)
             ];
 
             // If the user has ordering preferences, then apply their custom ordering.
@@ -694,7 +694,7 @@
          * 
          * Currently, this is the category that is set in the first position.
          */
-        public get defaultCategory(): ViewModels.CategoryItemViewModel {
+        public get defaultCategory(): Models.Category {
             return this.categories[0];
         }
 

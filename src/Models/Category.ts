@@ -1,6 +1,6 @@
-﻿namespace JustinCredible.SampleApp.ViewModels {
+﻿namespace JustinCredible.SampleApp.Models {
 
-    export class CategoryItemViewModel {
+    export class Category {
         public name: string;
         public href: string;
         public icon: string;
