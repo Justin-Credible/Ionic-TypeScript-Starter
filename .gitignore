@@ -17,8 +17,9 @@
 /www/lib
 /www/js/bundle.*
 /www/js/build-vars.js
+/www/js/templates.js
 /www/js/src/
-/www/css/index.*
+/www/css/bundle.*
 /src/tsd.d.ts
 /tests/tsd.d.ts
 /chrome

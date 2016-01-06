@@ -16,6 +16,7 @@
     "cordova": "5.4.1",
     "del": "2.0.2",
     "gulp": "3.9.0",
+    "gulp-angular-templatecache": "1.8.0",
     "gulp-eol": "0.1.1",
     "gulp-gzip": "1.2.0",
     "gulp-if": "2.0.0",
