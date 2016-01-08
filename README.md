@@ -44,6 +44,7 @@ To begin, edit your path, clone the repository, install the node packages, and i
     $ PATH=$PATH:./node_modules/.bin
     $ git clone https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git
     $ cd Ionic-TypeScript-Starter
+    $ npm install -g bower-installer 
     $ npm install
     $ gulp init
 
