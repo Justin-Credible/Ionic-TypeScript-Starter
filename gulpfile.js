@@ -34,6 +34,7 @@ var xpath = require("xpath");
 var XmlDom = require("xmldom").DOMParser;
 var xmlSerializer = new (require("xmldom")).XMLSerializer;
 var KarmaServer = require("karma").Server;
+var _ = require("lodash");
 
 
 var paths = {
