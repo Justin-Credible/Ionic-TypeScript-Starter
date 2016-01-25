@@ -22,7 +22,7 @@ This readme contains information that will allow you to get started with the sta
 
 Screenshots can be found on the project page [here](http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter).
 
-*If you are looking for a version of this project that uses the full Visual Studio IDE and the Apache Cordova project template, you can check out its sister project: [Ionic-TypeScript-MDHA-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter).*
+> Note: If you are looking for a version of this project that uses the full Visual Studio IDE and the Apache Cordova project template, you can check out its sister project: [Ionic-TypeScript-MDHA-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter).
 
 ## Environment Setup ##
 
@@ -30,14 +30,14 @@ The following external prerequisites are required:
 
 * [Node.js](https://nodejs.org/dist/v4.2.2/) 4.2.2
 
-*In addition, if you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.*
+> Note: If you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.
 
 Recommended IDEs:
 
 * [Visual Studio Code](https://code.visualstudio.com/)
 * Chrome (developer debugging tools)
 
-All other dependencies are installed in the project directory via `npm`. To use them you'll need to add `./node_modules/.bin` to your path. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.
+All other dependencies are installed in the project directory via `npm`. To use them **you'll need to add `./node_modules/.bin` to your path**. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.
 
 To begin, edit your path, clone the repository, install the node packages, and initialize the development environment.
 
@@ -46,6 +46,8 @@ To begin, edit your path, clone the repository, install the node packages, and i
     $ cd Ionic-TypeScript-Starter
     $ npm install
     $ gulp init
+
+> Note: Windows users should note that the path should be appended via the System > Environment Variables GUI and should restart their command prompt instance for the changes to take effect.
 
 The `gulp init` task adds the platforms from `package.json` using the `ionic platform add` command and then runs the default gulp task (as shown in the compilation section below).
 
@@ -60,8 +62,6 @@ At this point your environment should be ready for development!
 
 The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.
 
-*You can also just run `gulp` without any arguments which will run the below targets.*
-
     $ gulp config     # Creates config.xml, www/index.html (from their *.master files) and www/js/build-vars.js
     $ gulp templates  # Compiles Angluar HTML templates from Views/**/*.html to www/js/templates.js
     $ gulp sass       # Compiles SASS from src/Styles/Index.scss to www/css/bundle.css
@@ -70,11 +70,13 @@ The following tasks can be used to perform code configuration, library and plugi
     $ gulp tsd        # Install TypeScript definitions as defined in tsd.json
     $ gulp ts         # Compiles TypeScript code as configured by src/tsconfig.json
 
+> Note: You can also just run `gulp` without any arguments which will run all of the above targets.
+
 You can specify a configuration scheme using the scheme flag when running the configuration task, where the scheme name is one of the schemes listed in `config.master.xml`:
 
     $ gulp config --scheme development
 
-*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>B</kbd> to run the `ts` task with the default scheme.*
+> Note: If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>B</kbd> to run the `ts` task with the default scheme.
 
 ## Testing ##
 
@@ -82,7 +84,7 @@ The `npm test` command can be executed to run the TypeScript linter followed by 
 
 These operations can be performed independently using the `gulp lint` and `gulp test` tasks.
 
-*If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `lint` or `test` to run the lint or test tasks respectively.*
+> Note: If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `lint` or `test` to run the lint or test tasks respectively.
 
 ## Running in Browser ##
 
@@ -96,7 +98,7 @@ You may also find it useful to ignore all SSL certificate errors so you don't ha
 
     $ open -a "Google Chrome.app" --args --ignore-certificate-errors --disable-web-security
 
-*NOTE: You shouldn't use these flags on a browser you use to browse the internet as they disable important security measures. It is recommended to setup a separate Chrome instance when using these flags. I use the following AppleScript to point to a different data directory. *
+> Note: You shouldn't use these flags on a browser you use to browse the internet as they disable important security measures. It is recommended to setup a separate Chrome instance when using these flags. I use the following AppleScript to point to a different data directory.
 
 ```
 do shell script "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --user-data-dir=/Users/$USER/Library/Application\\ Support/Google/ChromePersonal > /dev/null 2>&1 &"
@@ -108,9 +110,9 @@ You can run your application on the software emulator using the `emulate` comman
 
     $ ionic emulate ios
 
-*You can optionally specify a specific emulator using the target parameter: `--target="iPhone-6-Plus"`. A list of installed emulators can be obtained using `ionic emulate ios --list`.*
+> Note: You can optionally specify a specific emulator using the target parameter: `--target="iPhone-6-Plus"`. A list of installed emulators can be obtained using `ionic emulate ios --list`.
 
-*If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `emulate` to run either the iOS or Android emulate targets.*
+> Note: If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `emulate` to run either the iOS or Android emulate targets.
 
 ## Running on the iOS Simulator remotely from Windows ##
 
@@ -124,7 +126,7 @@ Next, you'll want to edit `remote-build.json` located in the root of the starter
 
 Finally, you can execute `gulp remote-emulate-ios` from the root of the starter project which will take care of TypeScript compilation, building a payload, and uploading it to the OS X machine so it can be built and emulated.
 
-*If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `remote` to run the iOS remote emulate target*
+> Note: If you are using VSCode you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and type `remote` to run the iOS remote emulate target.
 
 ## Running on Hardware ##
 
@@ -141,7 +143,7 @@ To create build for release on the app stores, it is first a good idea to start 
     $ gulp init --scheme production
     $ ionic build ios --release
 
-*Usage of the `--scheme production` flag here will set the `debug` flag to false in the `build-vars.js` file as well as use the production scheme for `config.xml` replacements.*
+> Note: Usage of the `--scheme production` flag here will set the `debug` flag to false in the `build-vars.js` file as well as use the production scheme for `config.xml` replacements.
 
 To create a native build for Android, it is recommended to bundle the [Crosswalk webview](https://crosswalk-project.org/documentation/cordova.html) for better performance.
 
