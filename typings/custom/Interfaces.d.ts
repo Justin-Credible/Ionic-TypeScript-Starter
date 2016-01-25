@@ -37,18 +37,18 @@ declare namespace JustinCredible.SampleApp.Interfaces {
     }
 
     /**
-    * Variables emitted at build time which contain useful application information.
-    */
+     * Variables emitted at build time which contain useful application information.
+     */
     interface BuildVars {
         /**
-        * True if the application was build in debug configuration, false if it was
-        * build a release or distribution configuration.
-        */
+         * True if the application was build in debug configuration, false if it was
+         * build a release or distribution configuration.
+         */
         debug: boolean;
 
         /**
-        * The time at which the application was built.
-        */
+         * The time at which the application was built.
+         */
         buildTimestamp: string;
 
         majorVersion: number;
