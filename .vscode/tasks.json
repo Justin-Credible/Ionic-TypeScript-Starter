@@ -49,6 +49,10 @@
             ]
         },
         {
+            "taskName": "templates",
+            "showOutput": "never"
+        },
+        {
             "taskName": "emulate-ios",
             "showOutput": "never"
         },
