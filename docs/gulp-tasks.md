@@ -4,7 +4,7 @@ The following tasks can be used to perform code configuration, library and plugi
 
 > Note: If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and being typing the name of the task your want to run. See `.vscode/tasks.config` for more task shortcuts.
 
-## `gulp init`
+## gulp init
 
 The init task is used to initialize the Cordova project by adding platforms, plugins, obtain third party libraries, and perform code compilation.
 
@@ -18,7 +18,7 @@ Finally, this task can perform custom initialization based on a `prep` flag. For
 
 This task is useful for cleaning up your environment if you run into issues during development.
 
-## `gulp config`
+## gulp config
 
 The config task is used to perform customization of configuration files based on the given scheme. Schemes are defined in `config.master.xml` in the `schemes` node. If a scheme name is not defined, the default will be used.
 
@@ -32,13 +32,13 @@ These files will be generated from their master files and variable substitution 
 
 Example Usage: `gulp config --scheme production`
 
-## `gulp templates`
+## gulp templates
 
 The templates task compiles Angular HTML templates from `src/Views/**/*.html` into a single JavaScript file at `www/js/templates.js`.
 
 You'll need to re-run this task to see any HTML template changes during development.
 
-## `gulp sass`
+## gulp sass
 
 The sass task compiles the SASS files using `src/Styles/Index.scss`. The resulting CSS bundle will be output to `www/css/bundle.css`.
 
@@ -48,7 +48,7 @@ The SASS output will be minified if the debug flag is set to true via the curren
 
 > Note: If you run this task from VSCode sass problems will be shown in VSCode's error console.
 
-## `gulp libs`
+## gulp libs
 
 The libs task uses [Bower](http://bower.io/) and [bower-installer](https://www.npmjs.com/package/bower-installer) to download JavaScript libraries for use within the application.
 
@@ -56,13 +56,13 @@ Initially Bower will download the file to `bower_components` and `bower-installe
 
 See `bower.json` for more details.
 
-## `gulp plugins`
+## gulp plugins
 
 The plugins task is used to install all of the Cordova plugins as defined in `package.json`'s `plugins` property.
 
 This task is simply a shortcut for running `cordova plugin add plugin_name` for each of the plugins.
 
-## `gulp tsd`
+## gulp tsd
 
 The tsd task is used to download and setup TypeScript definition files for JavaScript libraries so we can reference them from TypeScript. The `tsd` tool uses the [DefinitelyTyped](http://definitelytyped.org/) repository.
 
@@ -70,7 +70,7 @@ The `tsd.json` and `tsd.tests.json` files are used to specify the typing files t
 
 After downloading the definitions, the `tsd` tool will generate a reference file at `src/tsd.d.ts` (or `tests/tsd.d.ts` for unit tests) that the TypeScript compiler will read during compilation.
 
-## `gulp ts`
+## gulp ts
 
 The ts task is used to perform compilation of the TypeScript using configuration from `src/tsconfig.json`.
 
@@ -80,13 +80,13 @@ The JavaScript output will be minifed if the debug flag is set to true via the c
 
 > Note: If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>B</kbd> to run the `ts` task with the default scheme. Any compilation problems will be shown in VSCode's error console.
 
-## `gulp minify`
+## gulp minify
 
 The minify task will minify the JavaScript bundle at `src/js/bundle.js`.
 
 This task can be run directly, but can be delegated to via the ts task as well.
 
-## `gulp lint`
+## gulp lint
 
 The lint task performs [linting](https://en.wikipedia.org/wiki/Lint_(software)) of the TypeScript source files.
 
@@ -94,7 +94,7 @@ Lint parameters are defined in `tslint.json`.
 
 > Note: If you run this task from VSCode lint problems will be shown in VSCode's warning console.
 
-## `gulp chrome`
+## gulp chrome
 
 The chrome task is used to generate a `chrome` directory with the application that can be loaded as a Chrome extension.
 
@@ -104,37 +104,37 @@ The following tasks can be used to perform various tasks that aren't necessarily
 
 > Note: If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and being typing the name of the task your want to run. See `.vscode/tasks.config` for more task shortcuts.
 
-## `gulp watch`
+## gulp watch
 
 This task is used internally via Ionic's serve command (`ionic serve`). This allows Ionic to reload the web browser when the specified files change during development.
 
-## `gulp emulate-ios`
+## gulp emulate-ios
 
 This task is a shortcut for `cordova emulate ios` which is a useful shortcut to use from VSCode's task runner.
 
-## `gulp emulate-android`
+## gulp emulate-android
 
 This task is a shortcut for `cordova emulate android` which is a useful shortcut to use from VSCode's task runner.
 
-## `gulp remote-emulate-ios`
+## gulp remote-emulate-ios
 
 This task allows Windows developers to run the iOS simulator on a remote Mac OS X computer.
 
 See [TODO] for more details.
 
-## `gulp test`
+## gulp test
 
 The test task is used to compile the TypeScript unit tests and run them via the Karma test runner. See `karma.conf.js` for Karma configuration.
 
 See [TODO] for more details on unit tests.
 
-## `gulp typedoc`
+## gulp typedoc
 
 The typedoc task uses [TypeDoc](http://typedoc.io/) to generate documentation for the TypeScript source code.
 
 The documentation file are output to `typedoc-output`.
 
-## `gulp clean`
+## gulp clean
 
 The clean task is used to remove all of the generated files, included the `node_modules` directory.
 

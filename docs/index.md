@@ -18,7 +18,7 @@ To begin, you can check out the [Features](features.md) page to get an idea for 
 
 Next, you can look at the [Getting Started](getting-started.md) for information on pre-requisites and instructions on how to setup your development environment.
 
-Finally, dive into the rest of the documentation to see how things work. I recommend starting out getting familiar with the [Project Layout](project-layout-directories.md) and [Gulp Tasks](gulp-tasks.md).
+Finally, dive into the rest of the documentation to see how things work. I recommend starting out getting familiar with the project layout and [Gulp Tasks](gulp-tasks.md).
 
 ## Why?
 

@@ -1,6 +1,6 @@
 # Overview
 
-This page lists the job of each of the files in the root directory.
+This section will cover the functionality of each of the files in the root directory.
 
 # .gitignore
 
@@ -15,6 +15,18 @@ If you do not use Travis CI you can remove this file.
 # bower.json
 
 This file is used by [Bower](http://bower.io/) to specify the third party JavaScript libraries used by your application. It's install section can be used which files to copy into `www/lib` when running the `gulp libs` task.
+
+# config.master.xml
+
+This is the master config file that is used to generate `config.xml` when running the `gulp config` task.
+
+The config task will perform variable substitution based on the current scheme.
+
+# config.xml _(generated)_
+
+This file is generated from `config.master.xml` when running the `gulp config` task. This is the main configuration file that Cordova uses to build and run the application.
+
+This file will be removed when executing the `gulp clean` or `gulp clean:config` tasks and should not be comitted to source control.
 
 # ionic.project
 

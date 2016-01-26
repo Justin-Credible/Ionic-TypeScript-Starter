@@ -64,7 +64,7 @@ All other dependencies are installed in the project directory via `npm`. To use 
 
 > Note: Windows users should note that the path should be appended via the System > Environment Variables GUI and should restart their command prompt instance for the changes to take effect.
 
-# IDEs and Text Editors
+## IDEs and Text Editors
 
 This project is platform and IDE agnostic. You can use any IDE or text editor.
 

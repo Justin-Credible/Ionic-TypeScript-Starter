@@ -7,10 +7,13 @@ pages:
 - Home: index.md
 - Features: features.md
 - Getting Started: getting-started.md
+- Project Layout:
+  - Root Files: project-layout-root-files.md
+  - src Directory: project-layout-src-directory.md
+  - www Directory: project-layout-www-directory.md
+  - Other Directories: project-layout-other-directories.md
 - Documentation:
   - Gulp Tasks: gulp-tasks.md
-  - Project Layout (Directories): project-layout-directories.md
-  - Project Layout (Root Files): project-layout-root.md
   - Base Framework: base-framework.md
   - Unit Testing: unit-testing.md
   - Development Tips: development-tips.md
