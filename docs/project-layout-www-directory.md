@@ -12,7 +12,8 @@ The config task will perform variable substitution based on the current scheme.
 
 This file is generated from `www/index.master.html` when running the `gulp config` task. This is the initial page that will be loaded by Cordova when the application starts.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:config` tasks and should not be commited to source control.
+!!!warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:config` tasks and should not be commited to source control.
 
 # js
 
@@ -24,7 +25,8 @@ This directory is generated when running the `gulp ts` task in a scheme where th
 
 This directory will not be present in non-debug builds.
 
-This directory will be removed well as when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
+!!! warning
+	This directory will be removed well as when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
 
 ## js/boot1.js
 
@@ -34,11 +36,12 @@ This is the first level boot loader loaded by `www/index.html`. It handles any l
 
 This file is generated when running the `gulp config` task. It contains build information such as version number, build timestamp, debug flag etc. It also contains all of the preference element values from `config.xml`.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
-
 It's contents are accessible via the Configuration service (or as an Angular constant).
 
 See [Base Framework](base-framework.md) for more details.
+
+!!! warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
 
 ## js/bundle.js _(generated)_
 
@@ -46,7 +49,8 @@ This file is generated when running the `gulp ts` task. It will contain all of t
 
 Its contents will be minified in non-debug builds.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
+!!!warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
 
 ## js/bundle.d.ts _(generated)_
 
@@ -54,7 +58,8 @@ This file is generated when running the `gulp ts` task. It will contain the Type
 
 It is primarily used by unit tests and will only be present during a debug build.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
+!!! warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
 
 ## js/bundle.js.map _(generated)_
 
@@ -62,7 +67,8 @@ This file is generated when running the `gulp ts` task. It will contain mapping 
 
 It is used when debugging the source in a browser and will only be present during a debug build.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
+!!! warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
 
 ## js/templates.js
 
@@ -76,7 +82,8 @@ This directory is generated when running the `gulp libs` task. It will contain a
 
 See `gulp libs` in [Gulp Tasks](gulp-tasks.md) for more details.
 
-This directory will be removed in when executing the `gulp clean` or `gulp clean:libs` tasks and should not be committed to source control.
+!!!warning
+	This directory will be removed in when executing the `gulp clean` or `gulp clean:libs` tasks and should not be committed to source control.
 
 # images
 
@@ -94,7 +101,8 @@ See `gulp sass` in [Gulp Tasks](gulp-tasks.md) for more details.
 
 Its contents will be minified in non-debug builds.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:sass` tasks and should not be committed to source control.
+!!!warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:sass` tasks and should not be committed to source control.
 
 ## css/bundle.css.map _(generated)_
 
@@ -102,4 +110,5 @@ This file is generated when running the `gulp sass` task. It will contain mappin
 
 See `gulp sass` in [Gulp Tasks](gulp-tasks.md) for more details.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:sass` tasks and should not be committed to source control.
+!!!warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:sass` tasks and should not be committed to source control.

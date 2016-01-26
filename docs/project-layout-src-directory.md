@@ -10,11 +10,12 @@ In most example Angular applications you'll commonly see seperate directories fo
 
 Instead, this project groups files by feature rather than type. So instead of having to look in multiple directories for all of the files applicable for a given view, you'll be able to find all applicable files in the same location.
 
-> A Note on Namespaces: As you explore the directory structure you'll notice that the namespaces and directory paths do not match as they would in other languages (Java for example).
->
-> Instead we use directories for grouping files by feature and namespaces for determining the behavior of a given file.
->
-> For example, a class in the `Controllers` namespace will be treated as an Angular controller. Instead of placing it in a controllers directory it can be placed in the same directory as the view model and template to which it belongs.
+!!! note "Note about namepsaces"
+	As you explore the directory structure you'll notice that the namespaces and directory paths do not match as they would in other languages (Java for example).
+
+	Instead we use directories for grouping files by feature and namespaces for determining the behavior of a given file.
+
+	For example, a class in the `Controllers` namespace will be treated as an Angular controller. Instead of placing it in a controllers directory it can be placed in the same directory as the view model and template to which it belongs.
 
 ## tsconfig.json
 
@@ -26,7 +27,8 @@ This file contains references to all of the [TypeScript definition](http://www.t
 
 These are installed by the `tsd` tool via the `gulp tsd` task. The definition files that are downloaded are specified in `tsd.json`.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:tsd` tasks and should not be committed to source control.
+!!! warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:tsd` tasks and should not be committed to source control.
 
 ## _references.ts
 

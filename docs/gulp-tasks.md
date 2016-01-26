@@ -2,7 +2,8 @@
 
 The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.
 
-> Note: If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and being typing the name of the task your want to run. See `.vscode/tasks.config` for more task shortcuts.
+!!! note
+	If you are using VSCode, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>R</kbd> and being typing the name of the task your want to run. See `.vscode/tasks.config` for more task shortcuts.
 
 ## gulp init
 
@@ -78,7 +79,8 @@ The resulting JavaScript bundle will be written to `www/js/bundle.js`.
 
 The JavaScript output will be minifed if the debug flag is set to true via the current build scheme. Minification is done by delegating to the minify task.
 
-> Note: If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>B</kbd> to run the `ts` task with the default scheme. Any compilation problems will be shown in VSCode's error console.
+!!! note
+	If you are using VSCode, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to run the `ts` task with the default scheme. Any compilation problems will be shown in VSCode's error console.
 
 ## gulp minify
 
@@ -92,7 +94,8 @@ The lint task performs [linting](https://en.wikipedia.org/wiki/Lint_(software)) 
 
 Lint parameters are defined in `tslint.json`.
 
-> Note: If you run this task from VSCode lint problems will be shown in VSCode's warning console.
+!!! note
+	If you run this task from VSCode lint problems will be shown in VSCode's warning console.
 
 ## gulp chrome
 
@@ -102,7 +105,8 @@ The chrome task is used to generate a `chrome` directory with the application th
 
 The following tasks can be used to perform various tasks that aren't necessarily related to compilation.
 
-> Note: If you are using VSCode, you can use <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>R</kbd> and being typing the name of the task your want to run. See `.vscode/tasks.config` for more task shortcuts.
+!!! note
+	If you are using VSCode, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd> <kbd>R</kbd> and being typing the name of the task your want to run. See `.vscode/tasks.config` for more task shortcuts.
 
 ## gulp watch
 
@@ -120,13 +124,13 @@ This task is a shortcut for `cordova emulate android` which is a useful shortcut
 
 This task allows Windows developers to run the iOS simulator on a remote Mac OS X computer.
 
-See [TODO] for more details.
+See [Development Tips](development-tips.md#remote-emulate-ios) for more details.
 
 ## gulp test
 
 The test task is used to compile the TypeScript unit tests and run them via the Karma test runner. See `karma.conf.js` for Karma configuration.
 
-See [TODO] for more details on unit tests.
+See [Unit Testing](unit-testing.md) for more details on unit tests.
 
 ## gulp typedoc
 
@@ -140,4 +144,4 @@ The clean task is used to remove all of the generated files, included the `node_
 
 If you don't want to remove everything, there are subtasks for each of the gulp tasks to clean specific artifacts. For example: `gulp clean:ts` or `gulp clean:plugins`.
 
-See also `gulp init`.
+[See also: `gulp init`](gulp-tasks.md#gulp-init).

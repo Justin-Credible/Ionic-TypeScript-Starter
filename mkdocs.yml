@@ -3,6 +3,9 @@ theme: flatly
 repo_url: https://github.com/Justin-Credible/Ionic-TypeScript-Starter
 site_dir: docs-output
 
+markdown_extensions:
+  - admonition:
+
 pages:
 - Home: index.md
 - Features: features.md

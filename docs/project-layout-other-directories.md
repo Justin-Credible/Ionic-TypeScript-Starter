@@ -14,7 +14,8 @@ This is a generated directory that is created by running the `gulp libs` task. T
 
 The libs task also takes care of copying the needed files to `www/js/libs` so they can be used at runtime.
 
-This directory will be removed when executing the `gulp clean` or `gulp clean:libs` tasks and should not be commited to source control.
+!!! warning
+	This directory will be removed when executing the `gulp clean` or `gulp clean:libs` tasks and should not be commited to source control.
 
 # docs
 
@@ -34,7 +35,8 @@ This starter project does not currently ship with any custom build hooks.
 
 This is a generated directory that is created when you run `npm install` from the project directory. It contains all of the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).
 
-This directory will be removed when executing the `gulp clean` task and should not be committed to source control.
+!!! warning
+	This directory will be removed when executing the `gulp clean` task and should not be committed to source control.
 
 # plugins _(generated)_
 
@@ -44,7 +46,8 @@ It contains any [Cordova plugins](https://cordova.apache.org/docs/en/latest/cord
 
 Plugins are installed via the `cordovaPlugins` property in `package.json.
 
-This directory will be removed when executing the `gulp clean` or `gulp clean:plugins` tasks and should not be committed to source control.
+!!! warning
+	This directory will be removed when executing the `gulp clean` or `gulp clean:plugins` tasks and should not be committed to source control.
 
 # resources
 
@@ -74,7 +77,8 @@ This file contains references to all of the [TypeScript definition](http://www.t
 
 These are installed by the `tsd` tool via the `gulp tsd` task. The definition files that are downloaded are specified in `tsd.tests.json`.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:tsd` tasks and should not be committed to source control.
+!!! warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:tsd` tasks and should not be committed to source control.
 
 ## tests/bundle.tests.js _(generated)_
 
@@ -82,7 +86,8 @@ This file contains the result of the TypeScript compilation of the unit tests.
 
 This is created via the `gulp test` or `gulp ts:tests` tasks.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:tests` tasks and should not be committed to source control.
+!!! warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:tests` tasks and should not be committed to source control.
 
 ## tests/bundle.tests.js.map _(generated)_
 
@@ -90,7 +95,8 @@ This file contains the source mapping information of the TypeScript compilation 
 
 This is created via the `gulp test` or `gulp ts:tests` tasks.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:tests` tasks and should not be committed to source control.
+!!! warning
+	This file will be removed when executing the `gulp clean` or `gulp clean:tests` tasks and should not be committed to source control.
 
 # typings
 
