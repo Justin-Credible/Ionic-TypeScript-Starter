@@ -1220,7 +1220,7 @@ gulp.task("typedoc", function() {
         .pipe(typedoc({
             module: "commonjs",
             target: "es5",
-            out: "docs/",
+            out: "ts-docs/",
             name: "Ionic TypeScript Starter"
         }));
 });
@@ -1230,7 +1230,7 @@ gulp.task("typedoc", function() {
  */
 gulp.task("clean:typedoc", function (cb) {
     del([
-        "docs"
+        "ts-docs"
     ]).then(function () {
         cb();
     });
