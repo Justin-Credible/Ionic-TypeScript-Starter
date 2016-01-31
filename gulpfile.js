@@ -39,6 +39,7 @@ var _ = require("lodash");
 
 var paths = {
     ts: ["./src/**/*.ts"],
+    customTypeDefinitions: ["./typings/custom/**/*.d.ts", "./typings-tests/custom/**/*.d.ts"],
     templates: ["./src/**/*.html"],
     sassIndex: "./src/Styles/Index.scss",
     sass: ["./src/Styles/**/*.scss"],
@@ -539,7 +540,7 @@ gulp.task("emulate-android", ["sass", "ts"], function(cb) {
  * Performs linting of the TypeScript source code.
  */
 gulp.task("lint", function (cb) {
-    var filesToLint = paths.ts.concat(paths.tests);
+    var filesToLint = paths.ts.concat(paths.tests, paths.customTypeDefinitions);
 
     return gulp.src(filesToLint)
     .pipe(tslint())

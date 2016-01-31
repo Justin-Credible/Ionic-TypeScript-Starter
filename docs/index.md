@@ -10,6 +10,19 @@ Around the same time I discovered Ionic, I also learning [TypeScript](typescript
 
 I had been wanted to get into mobile app development for a while, and Ionic and TypeScript, coupled with the free [Visual Studio Code](https://code.visualstudio.com/) IDE made this an attrictive solution for cross platform development.
 
+## Features
+
+<div id="screenshots">
+
+  <img src="/img/screenshot_1.jpeg" class="img-responsive">
+  <img src="/img/screenshot_2.jpeg" class="img-responsive">
+  <img src="/img/screenshot_3.jpg" class="img-responsive">
+  <img src="/img/screenshot_4.jpg" class="img-responsive">
+  <img src="/img/screenshot_5.jpg" class="img-responsive">
+  <img src="/img/screenshot_6.jpg" class="img-responsive">
+
+</div>
+
 ## Getting Started
 
 The starter project template targets iOS, Android, and Chrome (as an extension). Development can be done on Mac OS, Linux, or Windows with any IDE or your favorite text editor. I recommend using the free and lightweight [Visual Studio Code](https://code.visualstudio.com) editor as it has superb support for TypeScript. This project also includes vscode task mappings to the various gulp tasks.

@@ -8,7 +8,6 @@ markdown_extensions:
 
 pages:
 - Home: index.md
-- Features: features.md
 - Getting Started: getting-started.md
 - Project Layout:
   - Root Files: project-layout-root-files.md
@@ -20,3 +19,14 @@ pages:
   - Base Framework: base-framework.md
   - Unit Testing: unit-testing.md
   - Development Tips: development-tips.md
+
+extra_css:
+- css/slick.css
+- css/slick-theme.css
+- css/keys.css
+- css/admonition.css
+- css/custom.css
+
+extra_javascript:
+- js/slick.min.js
+- js/screenshots.js
