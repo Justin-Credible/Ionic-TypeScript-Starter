@@ -187,20 +187,159 @@ and access them using the `controller` property:
 
 # Directives
 
+`//TODO`
+
 # Filters
+
+Angular filters are located in the `src/Filters` directory. To be registered as a filter, its class should exist the `JustinCredible.SampleApp.Filters` namespace. It should contain a unique static ID property and a single static filter named `filter` in order to be registered automatically.
+
+```
+namespace JustinCredible.SampleApp.Filters {
+
+    export class ThousandsFilter {
+
+        public static ID = "Thousands";
+
+        public static filter(input: number): string {
+           ...
+        }
+    }
+}    
+```
 
 # Services
 
-# Logging
+Angular services are located in the `src/Services` directory. To be registered as a service, its class should exist in the `JustinCredible.SampleApps.Service` namespace. It should contain a unique static ID property in order to be registered automatically.
 
-# Mock HTTP APIs
+```
+namespace JustinCredible.SampleApp.Services {
 
-# HTTP Interceptor
+    /**
+     * Provides a common set of helper/utility methods.
+     */
+    export class Utilities {
 
-`//TODO; API keys, spinner, full block spinner, logger; ~ leading URL`
+        //#region Injection
 
-# Mock Platform APIs
+        public static ID = "Utilities";
+
+        public static get $inject(): string[] {
+            return [
+                MyService.ID,
+                Preferences.ID
+            ];
+        }
+
+        constructor(
+            private MyService: MyService,
+            private Preferences: Preferences) {
+        }
+
+        //#endregion
+
+        public someMethod(): void {
+		     this.MyService.doSomething();
+        }
+    }
+}    
+```
+
+!!! note
+	If the class contains a static `getFactory` method it will be registered as a factory instead of a service.
+
+## Provided Services
+
+The following services are provided with this sample project.
+
+### Configuration
+
+Contains configuration values, including a reference to the build variables from the `www/js/build-vars.js` file.
+
+### FileUtilities
+
+A set of helper methods for working with Cordova's file plugin.
+
+### HttpInterceptor
+
+A special factory for intercepting all HTTP requests. It is responsible for showing a progress indicator (via the [NProgress](http://ricostacruz.com/nprogress/) library) for asynchronous requests or a full screen spinner for blocking requests.
+
+It also takes care of expanding URLs starting with a tilde to have the URL defined by `config.xml`'s `ApiUrl` property prepended to it (eg `~/Products/123` would be expanded to `http://your-server.com/path/Products/123` for example).
+
+It is also responsible for adding headers (such as API keys) or otherwise modifying the requests before they go out.
+
+### Logger
+
+Used to handle logging requests of various levels (eg `info`, `warn`, `error`, etc).
+
+The provided implementation delegates to the applicable `console` methods and stores log in memory (which can be viewed via the [Developer Tools view](#Developer-Tools), but a production implementation could send logs to your servers.
+
+### MockHttpApis
+
+Used to provide mock implementations for HTTP request data. This is useful for demos, development, or testing.
+
+Mock API mode is enabled via the developer tools view.
+
+### MockPlatformApis
+
+Used to provide mock implementations of APIs that are native to certain platforms. This allows the developer to mock up APIs which may not be available in the browser for example.
+
+This is mainly used by the plugins service.
+
+### Plugins
+
+Used as a facad to access native Cordova plugins. If a plugin is not available on the given platform it will delegate to `MockPlatFormApis` to obtain a mock implementation.
+
+### Preferences
+
+Used to store user preferences which should be persisted when the application has closed. The default backing store is the web view's local storage (which is sandboxed and specific to your application instance).
+
+### UiHelper
+
+Contains several helper methods for user interface related tasks. This includes alert, confirm, and prompt dialogs as well as a PIN dialog.
+
+It also includes a generic API to show your own custom dialogs. See [Dialogs](#dialogs) for more information.
+
+### Utilities
+
+Contains several helper methods for working with strings, determining device information, type introspection, and any other utility method.
+
+# PIN Entry
+
+The sample project includes a PIN entry dialog that the user can enable via the Settings view.
+
+After the application is in the background for more than 10 minutes, the user specified PIN must be entered to use the application.
+
+# Developer Tools
+
+In a debug build, the Developer Tools view will be accessible from the Settings view. The Developer Tools can also be enabled by tapping the application icon in the About view 10 times.
+
+This view is a good location for items that are used during development. By default it allows the user to toggle mock HTTP mode, test various plugins, view logs logged by the Logger service, and view device information.
 
 # Dialogs
 
+`//TODO`
+
 # Popover
+
+While this starter project does not contain a specific structure for Ionic's popover view, you can see an example of one being used on Develper Tools > Logs view.
+
+A popover is generally initialized via the `view_beforeEnter` event by specifying the path to the HTML template an the scope (which can be the same scope as the current controller). The popover can later be shown by invoking its `show()` method:
+
+```
+    protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        super.view_beforeEnter(event, eventArgs);
+
+        this.$ionicPopover.fromTemplateUrl("Views/Settings/Logs-List/Log-Filter-Menu.html", {
+            scope: this.scope
+        }).then((popover: any) => {
+            this._popover = popover;
+        });
+    }
+
+    protected filter_click(event: ng.IAngularEvent) {
+        this._popover.show(event);
+    }
+}  
+```
+
+If the popover is sharing the same scope, the view model and controller can be accessed in the same way as a [standard controller](#controllers) by using the `viewModel` and `controller` keywords.
