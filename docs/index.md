@@ -43,11 +43,11 @@ My goal is a clean and easy to read source structure that should be easy for any
 
 ## Framework vs Starter Project
 
-My intention here is not to create a framework, but instead provide an example of how you can structure your Ionic application using TypeScript.
+My intention here is not to create a complete application framework, but instead provide an example of how you can structure your Ionic application using TypeScript.
 
-The distinction here is that you won't download a ZIP file or drop in a library to your application to use this project. Instead it is a reference or starting point for your own application.
+The distinction here is that you won't download a ZIP file or drop in a library to your application to use this project. Instead, this project is a reference or starting point for your own application.
 
-While there is some framework-like functionality (base controller classes, dialog helpers, utility classes, etc) it is all optional and can be used at your own discretion. See [features](features.md) for more details on what is included.
+While there is some framework-like functionality included (base controller classes, dialog helpers, utility classes, etc) it is all optional and can be used at your own discretion. See [Base Framework](base-framework.md) for more details on what is included.
 
 Also, I encourage you to restructure the application to fit your needs. Don't like gulp? Switch to your favorite task runner. Don't like the directory layout? Move files around to suit your preference.
 
