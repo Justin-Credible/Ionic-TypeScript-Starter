@@ -187,7 +187,25 @@ and access them using the `controller` property:
 
 # Directives
 
-`//TODO`
+Angular directives are located in the `src/Directives` directory. There are two types of directives in this starter project; standard and element instance directives.
+
+## Standard Directive
+
+A standard directive is simply a class that has a link function.
+
+An example of a standard directive can be found in `src/Directives/OnLoadDirective.ts`. This directive can be used by placing an `on-load` attribute on an image element and will cause a function to be fired when the image has loaded. For example:
+
+```
+<img src="..." on-load="controller.image1_load()">
+```
+
+## Element Instance Directive
+
+The optional `BaseElementDirective` class provides a recommendation on how to build element directives. This base class provides an `initialize` and `render` methods which should be overridden in your implementation.
+
+Build element directives with this base class is useful for elements that need to maintain state, fire events, or otherwise act as accessible instances from your controller.
+
+An example directive that can be used to show an icon with text is located at `/src/Directives/Icon-Panel/IconPanelDirective.ts` and is used from the category controller.
 
 # Filters
 
@@ -317,7 +335,51 @@ This view is a good location for items that are used during development. By defa
 
 # Dialogs
 
-`//TODO`
+Ionic provides the `$ionicModal` service which can be used to show modal dialogs. This sample project includes the `BaseDialogController` base class and a `UiHelper` method `showDialog()` which are used to simplify usage and normalize dialog behavior.
+
+Two example dialogs are included with this sample project and are located at `src/Views/Dialogs`.
+
+The `showDialog` method wraps Ionic's modal implementation. It should be invoked with the ID of the controller for the dialog and optional dialog options. It returns a promise that is resolved once the dialog has been closed.
+
+```
+this.UiHelper.showDialog(PinEntryController.ID, options)
+	.then((result: Models.PinEntryDialogResultModel) => {
+
+	// Dialog closed with result object.
+});
+```
+
+To create a dialog you first need to create a template with the modal class and beans and the `ng-controller` attribute to specify the ID of your dialog's controller:
+
+```
+<div class="modal" ng-controller="PinEntryController">
+```
+
+Then you'll need to create a controller that extends `BaseDialogController`. If you examine the base class you'll see that it requires three templated types:
+
+```
+export class BaseDialogController<V, D, R> extends BaseController<V> { ... }
+```
+
+* `V` - view model that will be used in the dialog's template and controller.
+* `D` - object that is passed into the dialog via the options parameters when opening the dialog.
+* `R` - object that is used to resolve the promise when the dialog is closed.
+
+For example, the PIN entry dialog itself works with `PinEntryViewModel` (`V`). It receives `PinEntryDialogModel` as its input (`D`) and when it closes it returns `PinEntryDialogResultModel` (`R`):
+
+```
+export class PinEntryController
+	extends BaseDialogController<ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel> {
+	...
+}	
+```
+
+!!! note
+	Each of these types are optional, and not all dialogs will require all three types. For any types you do not wish to specify you can pass `any` or `ViewModels.EmptyViewModel`.
+
+If you examine the sample dialogs you'll see that the base class provides two events that are fired when the dialog opens and closes (`dialog_shown` and `dialog_hidden` respectively).
+
+Also there are two helper methods provided. The first `getData()` is used to grab the model object that was used to open the dialog (templated type `D`). The second `close()` used to close the dialog. You can optionally pass an object of type `R` to the close method which will be returned to the opener via the promise result.
 
 # Popover
 
