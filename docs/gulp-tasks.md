@@ -33,6 +33,8 @@ These files will be generated from their master files and variable substitution 
 
 Example Usage: `gulp config --scheme production`
 
+See [Development Tips: Build Schemes](development-tips.md#build-schemes) for more information.
+
 ## gulp templates
 
 The templates task compiles Angular HTML templates from `src/Views/**/*.html` into a single JavaScript file at `www/js/templates.js`.
@@ -124,7 +126,7 @@ This task is a shortcut for `cordova emulate android` which is a useful shortcut
 
 This task allows Windows developers to run the iOS simulator on a remote Mac OS X computer.
 
-See [Development Tips](development-tips.md#remote-emulate-ios) for more details.
+See [Development Tips: Running iOS Simulator from Windows](development-tips.md#running-ios-simulator-from-windows) for more details.
 
 ## gulp test
 

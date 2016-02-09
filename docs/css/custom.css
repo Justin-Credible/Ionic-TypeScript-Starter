@@ -16,3 +16,7 @@ button.slick-arrow:before {
 #screenshots img {
     padding: 0 5px;
 }
+
+p img {
+    max-width: 50%;
+}
