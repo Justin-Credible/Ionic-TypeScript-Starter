@@ -1,10 +1,10 @@
 {
   "name": "SampleApp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "SampleApp: A starter application using Ionic and TypeScript.",
   "author": "Justin Unterreiner",
   "license": "MIT",
-  "homepage": "http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter",
+  "homepage": "http://Justin-Credible.github.io/Ionic-TypeScript-Starter",
   "repository": {
     "type": "git",
     "url": "https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git"
