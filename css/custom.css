@@ -1,0 +1,26 @@
+
+kbd {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#screenshots {
+    position: relative;
+    margin-top: 30px;
+}
+
+button.slick-arrow:before {
+    color: #2c3e50;
+}
+
+#screenshots img {
+    padding: 0 5px;
+}
+
+p img {
+    max-width: 50%;
+}
+
+p img {
+    max-height: 400px;
+}

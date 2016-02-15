@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+	<title>Gulp Tasks - Ionic/TypeScript Starter</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <link href="../css/base.css" rel="stylesheet">
+        <link href="../css/slick.css" rel="stylesheet">
+        <link href="../css/slick-theme.css" rel="stylesheet">
+        <link href="../css/keys.css" rel="stylesheet">
+        <link href="../css/admonition.css" rel="stylesheet">
+        <link href="../css/custom.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">Ionic/TypeScript Starter</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+                <li >
+                    <a href="..">Home</a>
+                </li>
+            
+            
+            
+                <li >
+                    <a href="../getting-started/">Getting Started</a>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project Layout <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li >
+                            <a href="../project-layout-root-files/">Root Files</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-src-directory/">src Directory</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-www-directory/">www Directory</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-other-directories/">Other Directories</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li class="active">
+                            <a href="./">Gulp Tasks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../base-framework/">Base Framework</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../unit-testing/">Unit Testing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../development-tips/">Development Tips</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                    <a rel="next" href="../project-layout-other-directories/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../base-framework/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/Justin-Credible/Ionic-TypeScript-Starter">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#overview">Overview</a></li>
+        
+    
+        <li class="main "><a href="#compilation-tasks">Compilation Tasks</a></li>
+        
+            <li><a href="#gulp-init">gulp init</a></li>
+        
+            <li><a href="#gulp-config">gulp config</a></li>
+        
+            <li><a href="#gulp-templates">gulp templates</a></li>
+        
+            <li><a href="#gulp-sass">gulp sass</a></li>
+        
+            <li><a href="#gulp-libs">gulp libs</a></li>
+        
+            <li><a href="#gulp-plugins">gulp plugins</a></li>
+        
+            <li><a href="#gulp-tsd">gulp tsd</a></li>
+        
+            <li><a href="#gulp-ts">gulp ts</a></li>
+        
+            <li><a href="#gulp-minify">gulp minify</a></li>
+        
+            <li><a href="#gulp-lint">gulp lint</a></li>
+        
+            <li><a href="#gulp-chrome">gulp chrome</a></li>
+        
+    
+        <li class="main "><a href="#utility-tasks">Utility Tasks</a></li>
+        
+            <li><a href="#gulp-watch">gulp watch</a></li>
+        
+            <li><a href="#gulp-emulate-ios">gulp emulate-ios</a></li>
+        
+            <li><a href="#gulp-emulate-android">gulp emulate-android</a></li>
+        
+            <li><a href="#gulp-remote-emulate-ios">gulp remote-emulate-ios</a></li>
+        
+            <li><a href="#gulp-test">gulp test</a></li>
+        
+            <li><a href="#gulp-typedoc">gulp typedoc</a></li>
+        
+            <li><a href="#gulp-clean">gulp clean</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="overview">Overview</h1>
+<p>This starter project ships with several tasks for the <a href="http://gulpjs.com/">Gulp</a> task runner. The tasks are located in <code>gulpfile.js</code> and are executed from the project directory using the <code>gulp task_name</code> command.</p>
+<h1 id="compilation-tasks">Compilation Tasks</h1>
+<p>The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using VSCode, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>R</kbd> and being typing the name of the task your want to run. See <code>.vscode/tasks.config</code> for more task shortcuts.</p>
+</div>
+<h2 id="gulp-init">gulp init</h2>
+<p>The init task is used to initialize the Cordova project by adding platforms, plugins, obtaining third party libraries, and performing TypeScript compilation.</p>
+<p>First, it cleans the environment by running several gulp clean tasks. This will result in several generated directories and files being removed.</p>
+<p>Next, it adds Cordova platforms by running the <code>cordova platform add platform_name</code> command for each of the platforms as defined in <code>package.json</code>.</p>
+<p>Then it delegates to the config and default gulp tasks which handle configuration, adding Cordova plugins, obtaining Bower libraries and compiling templates, SASS, and TypeScript.</p>
+<p>Finally, this task can perform custom initialization based on a <code>prep</code> flag. For example, when using <code>gulp init --prep android</code> all of the above is performed as well as adding the <a href="https://crosswalk-project.org/">CrossWalk</a> plugin for Android. You can customize this task to perform special behavior per platform if needed.</p>
+<p>In addition to initializing your environment for first use, this task is also useful for cleaning up your environment if you run into issues during development.</p>
+<h2 id="gulp-config">gulp config</h2>
+<p>The config task is used to perform customization of configuration files based on the given build scheme name. Build schemes are defined in <code>config.master.xml</code> under the <code>schemes</code> node. If a scheme name is not specified, the default will be used.</p>
+<p>This task takes care of creating the following files:</p>
+<ul>
+<li>Cordova's <code>config.xml</code> (from <code>config.master.xml</code>)</li>
+<li>Starting page <code>www/index.html</code> (from <code>www/index.master.html</code>)</li>
+<li>Runtime variables at <code>src/js/build-vars.js</code></li>
+</ul>
+<p>These files will be generated from their master files and variable substitution will be performed based on the scheme definitions. This allows for easy configuration of builds for different environments (ie development, staging, production).</p>
+<p>Example Usage: <code>gulp config --scheme production</code></p>
+<p>See <a href="../development-tips/#build-schemes">Development Tips: Build Schemes</a> for more details.</p>
+<h2 id="gulp-templates">gulp templates</h2>
+<p>The templates task compiles Angular HTML templates from <code>src/Views/**/*.html</code> into a single JavaScript file at <code>www/js/templates.js</code>.</p>
+<p>You'll need to re-run this task to see any HTML template changes during development.</p>
+<h2 id="gulp-sass">gulp sass</h2>
+<p>The sass task compiles the SASS source files starting with <code>src/Styles/Index.scss</code>. The resulting CSS bundle will be output to <code>www/css/bundle.css</code>.</p>
+<p>You'll need to re-run this task to see any SASS styling changes during development.</p>
+<p>The SASS output will be minified if the debug flag is set to true via the current build scheme.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you run this task from VS Code, SASS problems will be shown in VS Code's error console.</p>
+</div>
+<h2 id="gulp-libs">gulp libs</h2>
+<p>The libs task uses the <a href="http://bower.io/">Bower</a> package manager and <a href="https://www.npmjs.com/package/bower-installer">bower-installer</a> plugin to download JavaScript libraries for use within your application.</p>
+<p>Initially, Bower will download the files to the <code>bower_components</code> directory and the <code>bower-installer</code> plugin will take care of copying the appropriate files to the <code>www/lib</code> directory.</p>
+<p>See <code>bower.json</code> for more details (as well as for if you need to change which files get copied to the libs directory).</p>
+<h2 id="gulp-plugins">gulp plugins</h2>
+<p>The plugins task is used to install all of the Cordova plugins as defined in <code>package.json</code>'s <code>cordovaPlugins</code> property.</p>
+<p>This task is simply a shortcut for running <code>cordova plugin add plugin_name</code> for each of the plugins.</p>
+<h2 id="gulp-tsd">gulp tsd</h2>
+<p>The tsd task is used to download and setup TypeScript definition files for JavaScript libraries so they can be referenced from TypeScript source files. The <code>tsd</code> tool uses the <a href="http://definitelytyped.org/">DefinitelyTyped</a> repository.</p>
+<p>The <code>tsd.json</code> and <code>tsd.tests.json</code> files are used to specify the typing files to download for the application and unit tests respectively.</p>
+<p>After downloading the definitions, the <code>tsd</code> tool will generate a reference file at <code>src/tsd.d.ts</code> (or <code>tests/tsd.d.ts</code> for unit tests) that the TypeScript compiler will read during compilation.</p>
+<h2 id="gulp-ts">gulp ts</h2>
+<p>The ts task is used to perform compilation of the TypeScript using configuration from <code>src/tsconfig.json</code>.</p>
+<p>The resulting JavaScript bundle will be written to <code>www/js/bundle.js</code>.</p>
+<p>The JavaScript output will be minifed if the debug flag is set to true via the current build scheme. Minification is done by delegating to the minify task.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to run the <code>ts</code> task with the default scheme. Any compilation problems will be shown in VS Code's error console.</p>
+</div>
+<h2 id="gulp-minify">gulp minify</h2>
+<p>The minify task will minify the JavaScript bundle at <code>src/js/bundle.js</code>.</p>
+<p>This task can be run directly, but can be delegated to via the ts task as well.</p>
+<h2 id="gulp-lint">gulp lint</h2>
+<p>The lint task performs <a href="https://en.wikipedia.org/wiki/Lint_(software)">linting</a> of the TypeScript source files.</p>
+<p>Lint parameters are defined in <code>tslint.json</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you run this task from VS Code lint problems will be shown in VS Code's warning console.</p>
+</div>
+<h2 id="gulp-chrome">gulp chrome</h2>
+<p>The chrome task is used to generate a <code>chrome</code> directory with your application that can be loaded as a Chrome extension.</p>
+<h1 id="utility-tasks">Utility Tasks</h1>
+<p>The following tasks can be used to perform various tasks that aren't necessarily related to compilation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd> <kbd>R</kbd> and being typing the name of the task your want to run. See <code>.vscode/tasks.config</code> for more task shortcuts.</p>
+</div>
+<h2 id="gulp-watch">gulp watch</h2>
+<p>This task is used internally via Ionic's serve command (<code>ionic serve</code>). This allows Ionic to reload the web browser when the specified files change during development.</p>
+<h2 id="gulp-emulate-ios">gulp emulate-ios</h2>
+<p>This task is a shortcut for <code>cordova emulate ios</code> which is a useful shortcut to use from VS Code's task runner.</p>
+<h2 id="gulp-emulate-android">gulp emulate-android</h2>
+<p>This task is a shortcut for <code>cordova emulate android</code> which is a useful shortcut to use from VS Code's task runner.</p>
+<h2 id="gulp-remote-emulate-ios">gulp remote-emulate-ios</h2>
+<p>This task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.</p>
+<p>See <a href="../development-tips/#running-ios-simulator-from-windows">Development Tips: Running iOS Simulator from Windows</a> for more details.</p>
+<h2 id="gulp-test">gulp test</h2>
+<p>The test task is used to compile the TypeScript unit tests and run them via the Karma test runner. See <code>karma.conf.js</code> for Karma configuration.</p>
+<p>See <a href="../unit-testing/">Unit Testing</a> for more details on unit tests.</p>
+<h2 id="gulp-typedoc">gulp typedoc</h2>
+<p>The typedoc task uses <a href="http://typedoc.io/">TypeDoc</a> to generate documentation for the TypeScript source code.</p>
+<p>The documentation files are output to <code>typedoc-output</code>.</p>
+<h2 id="gulp-clean">gulp clean</h2>
+<p>The clean task is used to remove all of the generated files, included the <code>node_modules</code> directory.</p>
+<p>If you don't want to remove everything, there are subtasks for each of the gulp tasks to clean specific artifacts. For example: <code>gulp clean:ts</code> or <code>gulp clean:plugins</code>.</p>
+<p>After cleaning, you may need to re-run <code>gulp init</code> to ensure your environment is re-initialized.</p></div>
+        </div>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+        <script src="../js/base.js"></script>
+        <script src="../js/slick.min.js"></script>
+        <script src="../js/screenshots.js"></script>
+    </body>
+</html>

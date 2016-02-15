@@ -1,0 +1,824 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Ionic/TypeScript Starter Project\n\n\nWelcome to the documentation for the \nIonic/TypeScript Starter Project\n.\n\n\nOverview\n\n\nWhen the \nIonic Framework\n was released I knew it would make developing cross platform hybrid applications much easier than trying to cobble together my own framework. Its focus on looking and performing like a native app was icing on the cake.\n\n\nAround the same time I discovered Ionic, I also learning \nTypeScript\n for refactoring large enterprise applications. After seeing the power of TypeScript's code insight for rich IDE tooling and compile time checking, I never wanted to go back to vanilla JavaScript.\n\n\nI had been wanted to get into mobile app development for a while, and Ionic and TypeScript, coupled with the free \nVisual Studio Code\n IDE made this an attrictive solution for cross platform development.\n\n\nFeatures\n\n\n\n\n  \n\n  \n\n  \n\n  \n\n  \n\n  \n\n\n\n\n\n\nWhere to Start?\n\n\nThe starter project template targets iOS, Android, and Chrome (as an extension). Development can be done on Mac OS, Linux, or Windows with your favorite IDE or text editor. I recommend using the free and lightweight \nVisual Studio Code\n editor as it has superb support for TypeScript. This project also includes VS Code task mappings to the various gulp tasks.\n\n\nTo begin, take look at \nGetting Started\n for information on pre-requisites and instructions on how to setup your development environment.\n\n\nNext, I recommend examining the project layout and \nGulp Tasks\n.\n\n\nFinally, you can learn about the functionality that is included with the \nBase Framework\n and get some \nDevelopment Tips\n.\n\n\n\n\nNote\n\n\nIf you are developing on Windows or Linux and intend to create iOS builds, you'll want to check out \nRunning iOS Simulator Remotely\n for more details on how to use a remote OS X machine to create your iOS builds.\n\n\n\n\nWhy?\n\n\nI put this starter project together as a result of looking for examples on how to use TypeScript with an Ionic/Angular application. There were several simple code snippets and examples out there, but nothing that showed how to structure an entire mobile application.\n\n\nIn addition, most examples I found didn't really take full advantage of TypeScript in my opinion. I wanted to explore what a well structured mobile application could look like and avoid the deeply nested annonymous JavaScript functions pattern I commonly ran across.\n\n\nMy goal is a clean and easy to read codebase that should be intuitive for anyone to get started with, even those without much Ionic or Angular experience.\n\n\n\"Framework\" vs \"Starter Project\"\n\n\nMy intention here is not to create a complete application framework, but instead provide an example of how you can structure your Ionic application using TypeScript.\n\n\nThe distinction here is that you won't download a ZIP file or drop in a pre-built library to your application to use this project. Instead, this project is a reference or starting point for your own application.\n\n\nWhile there is some framework-like functionality included (base controller classes, dialog helpers, utility classes, etc) it is all optional and can be used (or omitted!) at your own discretion. See \nBase Framework\n for more details on what is included.\n\n\nAlso, I suggest restructuring the application to fit your needs. Don't like gulp? Switch to your favorite task runner. Don't like the directory layout? Move files around to suit your preference.", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#ionictypescript-starter-project", 
+            "text": "Welcome to the documentation for the  Ionic/TypeScript Starter Project .", 
+            "title": "Ionic/TypeScript Starter Project"
+        }, 
+        {
+            "location": "/#overview", 
+            "text": "When the  Ionic Framework  was released I knew it would make developing cross platform hybrid applications much easier than trying to cobble together my own framework. Its focus on looking and performing like a native app was icing on the cake.  Around the same time I discovered Ionic, I also learning  TypeScript  for refactoring large enterprise applications. After seeing the power of TypeScript's code insight for rich IDE tooling and compile time checking, I never wanted to go back to vanilla JavaScript.  I had been wanted to get into mobile app development for a while, and Ionic and TypeScript, coupled with the free  Visual Studio Code  IDE made this an attrictive solution for cross platform development.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/#features", 
+            "text": "", 
+            "title": "Features"
+        }, 
+        {
+            "location": "/#where-to-start", 
+            "text": "The starter project template targets iOS, Android, and Chrome (as an extension). Development can be done on Mac OS, Linux, or Windows with your favorite IDE or text editor. I recommend using the free and lightweight  Visual Studio Code  editor as it has superb support for TypeScript. This project also includes VS Code task mappings to the various gulp tasks.  To begin, take look at  Getting Started  for information on pre-requisites and instructions on how to setup your development environment.  Next, I recommend examining the project layout and  Gulp Tasks .  Finally, you can learn about the functionality that is included with the  Base Framework  and get some  Development Tips .   Note  If you are developing on Windows or Linux and intend to create iOS builds, you'll want to check out  Running iOS Simulator Remotely  for more details on how to use a remote OS X machine to create your iOS builds.", 
+            "title": "Where to Start?"
+        }, 
+        {
+            "location": "/#why", 
+            "text": "I put this starter project together as a result of looking for examples on how to use TypeScript with an Ionic/Angular application. There were several simple code snippets and examples out there, but nothing that showed how to structure an entire mobile application.  In addition, most examples I found didn't really take full advantage of TypeScript in my opinion. I wanted to explore what a well structured mobile application could look like and avoid the deeply nested annonymous JavaScript functions pattern I commonly ran across.  My goal is a clean and easy to read codebase that should be intuitive for anyone to get started with, even those without much Ionic or Angular experience.", 
+            "title": "Why?"
+        }, 
+        {
+            "location": "/#framework-vs-starter-project", 
+            "text": "My intention here is not to create a complete application framework, but instead provide an example of how you can structure your Ionic application using TypeScript.  The distinction here is that you won't download a ZIP file or drop in a pre-built library to your application to use this project. Instead, this project is a reference or starting point for your own application.  While there is some framework-like functionality included (base controller classes, dialog helpers, utility classes, etc) it is all optional and can be used (or omitted!) at your own discretion. See  Base Framework  for more details on what is included.  Also, I suggest restructuring the application to fit your needs. Don't like gulp? Switch to your favorite task runner. Don't like the directory layout? Move files around to suit your preference.", 
+            "title": "\"Framework\" vs \"Starter Project\""
+        }, 
+        {
+            "location": "/getting-started/", 
+            "text": "Overview\n\n\nThis section will cover the prerequisites you'll need to start developing using the starter project.\n\n\nThis guide assumes a Unix-like environment; deviations for Windows users will be called out with inline note blocks.\n\n\nPrerequisites\n\n\nAside from mobile platform specific SDKs, \nNode.js\n 4.4.x is the only external prerequisite.\n\n\nWhile any version of 4.4.x or higher should work, I've specifically tested and verified with version \n4.4.2\n.\n\n\nWindows users can download the installer from the link above.\n\n\nFor Mac OS, I recommend installing Node using \nNode Version Manager\n which can be installed using \nHomebrew\n. I recommend following the instructions in \nthis post\n which will get you setup so that \nnpm install\n does not require \nsudo\n.\n\n\niOS Specific\n\n\nIf you are developing for iOS you'll need XCode 7. I've specifically tested with version 7.1.\n\n\n\n\nCurrent Version\n\n\nPrevious Versions\n\n\n\n\nAdditionally, you'll probably want two additional Node packages globally which will allow you to run the your application on the iOS simulator as well as a physical device directly from the command line:\n\n\n$ npm install -g ios-sim\n$ npm install -g ios-deploy\n\n\n\nAndroid Specific\n\n\nIf you are developing for Android you'll need the the Android SDK and the Java Development SDK. I've listed the versions of the Android SDK I've tested with.\n\n\n\n\nAndroid SDK (\ninstaller\n)\n\n\nAndroid SDK Tools - 24.4.0\n\n\nAndroid SDK Platform-tools - 23.0.1\n\n\nAndroid SDK Build-tools - 23.0.1\n\n\nAndroid 5.1.1 - API 22\n\n\n\n\n\n\nJDK\n 1.7\n\n\nAndroid Studio\n - 1.4 (optional)\n\n\n\n\n\n\nNote for Windows users\n\n\nYou can be sure you've installed these prerequisites property by typing each the following commands into a command prompt to ensure they can execute: \nandroid\n, \njava --version\n, \njavac --version\n, \nant --version\n.\n\n\n\n\nOther Dependencies\n\n\nAll other dependencies are installed in the project directory via \nnpm\n. To use them \nyou'll need to add \n./node_modules/.bin\n to your path\n. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.\n\n\n\n\nAttention\n\n\nDo not skip this step; you need to add \n./node_modules/.bin\n to your path. If you try to install all the required depdencies globally you are much more likely to run into issues.\n\n\n\n\n\n\nNote for Windows users\n\n\nWindows users should note that the path \n.\\node_modules\\.bin\n should be appended via the System \n Environment Variables GUI and should restart their command prompt instance for the changes to take effect.\n\n\n\n\nIDEs and Text Editors\n\n\nThis project is platform and IDE agnostic. You can use any IDE or text editor.\n\n\nI recommend using the free and lightweight \nVisual Studio Code\n editor as it has superb support for TypeScript.\n\n\nDevelopment and debugging can be done in Chrome using its built in Developer Tools window.\n\n\n\n\nNote for Windows users\n\n\nThis version of the starter project is made to work with any IDE. While I have put together an \nalternate version\n that supports Visual Studio 2015, I still highly recommend using this version. The VS2015 Cordova wrapper (\"Tools for Apache Cordova\" project template) can sometimes, in my opinion, be a bit of a black box which makes it harder to work with.\n\n\n\n\nEnvironment Setup\n\n\nTo begin, edit your path, clone the repository, install the node packages, and initialize the development environment.\n\n\n$ PATH=$PATH:./node_modules/.bin\n$ git clone https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git\n$ cd Ionic-TypeScript-Starter\n$ npm install\n$ gulp init\n\n\n\n\n\nAttention\n\n\nIf you receive any errors while running \ngulp init\n please double check to ensure you've added \n./node_modules/bin\n to your path and that this path takes presedence over the globally installed node modules path.\n\n\n\n\nThe \ngulp init\n handles setting up the Cordova platform and plugins as well as obtaining libraries and code compilation. See \nGulp Tasks\n for details.\n\n\nAt this point your envrionment should be ready for development!", 
+            "title": "Getting Started"
+        }, 
+        {
+            "location": "/getting-started/#overview", 
+            "text": "This section will cover the prerequisites you'll need to start developing using the starter project.  This guide assumes a Unix-like environment; deviations for Windows users will be called out with inline note blocks.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/getting-started/#prerequisites", 
+            "text": "Aside from mobile platform specific SDKs,  Node.js  4.4.x is the only external prerequisite.  While any version of 4.4.x or higher should work, I've specifically tested and verified with version  4.4.2 .  Windows users can download the installer from the link above.  For Mac OS, I recommend installing Node using  Node Version Manager  which can be installed using  Homebrew . I recommend following the instructions in  this post  which will get you setup so that  npm install  does not require  sudo .", 
+            "title": "Prerequisites"
+        }, 
+        {
+            "location": "/getting-started/#ios-specific", 
+            "text": "If you are developing for iOS you'll need XCode 7. I've specifically tested with version 7.1.   Current Version  Previous Versions   Additionally, you'll probably want two additional Node packages globally which will allow you to run the your application on the iOS simulator as well as a physical device directly from the command line:  $ npm install -g ios-sim\n$ npm install -g ios-deploy", 
+            "title": "iOS Specific"
+        }, 
+        {
+            "location": "/getting-started/#android-specific", 
+            "text": "If you are developing for Android you'll need the the Android SDK and the Java Development SDK. I've listed the versions of the Android SDK I've tested with.   Android SDK ( installer )  Android SDK Tools - 24.4.0  Android SDK Platform-tools - 23.0.1  Android SDK Build-tools - 23.0.1  Android 5.1.1 - API 22    JDK  1.7  Android Studio  - 1.4 (optional)    Note for Windows users  You can be sure you've installed these prerequisites property by typing each the following commands into a command prompt to ensure they can execute:  android ,  java --version ,  javac --version ,  ant --version .", 
+            "title": "Android Specific"
+        }, 
+        {
+            "location": "/getting-started/#other-dependencies", 
+            "text": "All other dependencies are installed in the project directory via  npm . To use them  you'll need to add  ./node_modules/.bin  to your path . Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.   Attention  Do not skip this step; you need to add  ./node_modules/.bin  to your path. If you try to install all the required depdencies globally you are much more likely to run into issues.    Note for Windows users  Windows users should note that the path  .\\node_modules\\.bin  should be appended via the System   Environment Variables GUI and should restart their command prompt instance for the changes to take effect.", 
+            "title": "Other Dependencies"
+        }, 
+        {
+            "location": "/getting-started/#ides-and-text-editors", 
+            "text": "This project is platform and IDE agnostic. You can use any IDE or text editor.  I recommend using the free and lightweight  Visual Studio Code  editor as it has superb support for TypeScript.  Development and debugging can be done in Chrome using its built in Developer Tools window.   Note for Windows users  This version of the starter project is made to work with any IDE. While I have put together an  alternate version  that supports Visual Studio 2015, I still highly recommend using this version. The VS2015 Cordova wrapper (\"Tools for Apache Cordova\" project template) can sometimes, in my opinion, be a bit of a black box which makes it harder to work with.", 
+            "title": "IDEs and Text Editors"
+        }, 
+        {
+            "location": "/getting-started/#environment-setup", 
+            "text": "To begin, edit your path, clone the repository, install the node packages, and initialize the development environment.  $ PATH=$PATH:./node_modules/.bin\n$ git clone https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git\n$ cd Ionic-TypeScript-Starter\n$ npm install\n$ gulp init   Attention  If you receive any errors while running  gulp init  please double check to ensure you've added  ./node_modules/bin  to your path and that this path takes presedence over the globally installed node modules path.   The  gulp init  handles setting up the Cordova platform and plugins as well as obtaining libraries and code compilation. See  Gulp Tasks  for details.  At this point your envrionment should be ready for development!", 
+            "title": "Environment Setup"
+        }, 
+        {
+            "location": "/project-layout-root-files/", 
+            "text": "Overview\n\n\nThis section will cover the functionality of each of the files in the root directory.\n\n\n.gitignore\n\n\nUsed to specify which source files should be excluded from source control.\n\n\n.travis.yml\n\n\n\n\nTravis CI is a FOSS, hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. - \nWikipedia\n\n\n\n\nIf you do not use Travis CI you can remove this file.\n\n\nbower.json\n\n\nThis file is used by the \nBower\n package manager to declare the third party JavaScript libraries used by your application. Its install section can be used to customize the files that will be copied into \nwww/lib\n when running the \ngulp libs\n task.\n\n\nSee \ngulp libs\n in \nGulp Tasks\n for more details.\n\n\nconfig.master.xml\n\n\nThis is the master config file that is used to generate \nconfig.xml\n when running the \ngulp config\n task.\n\n\nThe config task will perform variable substitution based on the current build scheme.\n\n\nSee \ngulp config\n in \nGulp Tasks\n for more details.\n\n\nconfig.xml \n(generated)\n\n\nThis file is generated from \nconfig.master.xml\n when running the \ngulp config\n task. This is the main configuration file that Cordova uses to build and run your application.\n\n\n\n\nWarn\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:config\n tasks and should not be comitted to source control.\n\n\n\n\nionic.project\n\n\nThis file is used by the \nionic\n command line tool. It is used to configure \nIonic.io\n services, among other things.\n\n\nkarma.conf.js\n\n\nThis is the configuration file for the \nKarma Unit Test Runner\n which is used to run the unit tests via the \ngulp test\n task.\n\n\nSee \ngulp test\n in \nGulp Tasks\n for more details.\n\n\nLICENSE\n\n\nThis is the license file for the starter project.\n\n\nmkdocs.yml\n\n\nThe configuration file for the \nMkDocs document generator\n which is used to generate these docs from the Markdown files in the \ndocs\n directory.\n\n\nIf you are not using MkDocs you can remove this file and the \ndocs\n directory.\n\n\npackage.json\n\n\nThis is file is used by Node to describe the starter project as well as declare the dependencies that need to be downloaded when executing the \nnpm install\n command.\n\n\nThese include the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).\n\n\nREADME.md\n\n\nThe default readme file for the starter project.\n\n\nThis can be removed or replaced with information specific to your application.\n\n\nremote-build.json\n\n\nThis file contains configuration used by the \ngulp remote-emulate-ios\n task which allows developers on Windows or Linux to package, build, or run their app on a remote Mac OS X machine.\n\n\nSee \nRunning iOS Simulator Remotely\n for more details.\n\n\nSee \ngulp remote-emulate-ios\n in \nGulp Tasks\n for more details.\n\n\ntsd.json\n\n\nThis file declares the \nTypeScript definition files\n that should be downloaded when executing the \ngulp tsd\n task. The definition files are hosted by the \nDefinitelyTyped\n project.\n\n\nThese definition files describe third party JavaScript libraries that your application uses so they can be referenced from TypeScript in a stronly-typed manner.\n\n\nThis file can be updated by used the \ntsd\n command line tool to add or remove definitions.\n\n\nSee \ngulp tsd\n in \nGulp Tasks\n for more details.\n\n\ntsd.tests.json\n\n\nThis file declares the \nTypeScript definition files\n that should be downloaded when executing the \ngulp tsd\n task. The definition files are hosted by the \nDefinitelyTyped\n project.\n\n\nThese definition files describe third party JavaScript libraries that your unit tests use so they can be referenced from TypeScript in a stronly-typed manner.\n\n\nThis file can be updated by used the \ntsd\n command line tool to add or remove definitions.\n\n\nSee \ngulp tsd\n in \nGulp Tasks\n for more details.\n\n\ntslint.json\n\n\nThis file contains configuration for the TypeScript \nlinter\n.\n\n\nSee \ngulp lint\n in \nGulp Tasks\n for more details.", 
+            "title": "Root Files"
+        }, 
+        {
+            "location": "/project-layout-root-files/#overview", 
+            "text": "This section will cover the functionality of each of the files in the root directory.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/project-layout-root-files/#gitignore", 
+            "text": "Used to specify which source files should be excluded from source control.", 
+            "title": ".gitignore"
+        }, 
+        {
+            "location": "/project-layout-root-files/#travisyml", 
+            "text": "Travis CI is a FOSS, hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. -  Wikipedia   If you do not use Travis CI you can remove this file.", 
+            "title": ".travis.yml"
+        }, 
+        {
+            "location": "/project-layout-root-files/#bowerjson", 
+            "text": "This file is used by the  Bower  package manager to declare the third party JavaScript libraries used by your application. Its install section can be used to customize the files that will be copied into  www/lib  when running the  gulp libs  task.  See  gulp libs  in  Gulp Tasks  for more details.", 
+            "title": "bower.json"
+        }, 
+        {
+            "location": "/project-layout-root-files/#configmasterxml", 
+            "text": "This is the master config file that is used to generate  config.xml  when running the  gulp config  task.  The config task will perform variable substitution based on the current build scheme.  See  gulp config  in  Gulp Tasks  for more details.", 
+            "title": "config.master.xml"
+        }, 
+        {
+            "location": "/project-layout-root-files/#configxml-generated", 
+            "text": "This file is generated from  config.master.xml  when running the  gulp config  task. This is the main configuration file that Cordova uses to build and run your application.   Warn  This file will be removed when executing the  gulp clean  or  gulp clean:config  tasks and should not be comitted to source control.", 
+            "title": "config.xml (generated)"
+        }, 
+        {
+            "location": "/project-layout-root-files/#ionicproject", 
+            "text": "This file is used by the  ionic  command line tool. It is used to configure  Ionic.io  services, among other things.", 
+            "title": "ionic.project"
+        }, 
+        {
+            "location": "/project-layout-root-files/#karmaconfjs", 
+            "text": "This is the configuration file for the  Karma Unit Test Runner  which is used to run the unit tests via the  gulp test  task.  See  gulp test  in  Gulp Tasks  for more details.", 
+            "title": "karma.conf.js"
+        }, 
+        {
+            "location": "/project-layout-root-files/#license", 
+            "text": "This is the license file for the starter project.", 
+            "title": "LICENSE"
+        }, 
+        {
+            "location": "/project-layout-root-files/#mkdocsyml", 
+            "text": "The configuration file for the  MkDocs document generator  which is used to generate these docs from the Markdown files in the  docs  directory.  If you are not using MkDocs you can remove this file and the  docs  directory.", 
+            "title": "mkdocs.yml"
+        }, 
+        {
+            "location": "/project-layout-root-files/#packagejson", 
+            "text": "This is file is used by Node to describe the starter project as well as declare the dependencies that need to be downloaded when executing the  npm install  command.  These include the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).", 
+            "title": "package.json"
+        }, 
+        {
+            "location": "/project-layout-root-files/#readmemd", 
+            "text": "The default readme file for the starter project.  This can be removed or replaced with information specific to your application.", 
+            "title": "README.md"
+        }, 
+        {
+            "location": "/project-layout-root-files/#remote-buildjson", 
+            "text": "This file contains configuration used by the  gulp remote-emulate-ios  task which allows developers on Windows or Linux to package, build, or run their app on a remote Mac OS X machine.  See  Running iOS Simulator Remotely  for more details.  See  gulp remote-emulate-ios  in  Gulp Tasks  for more details.", 
+            "title": "remote-build.json"
+        }, 
+        {
+            "location": "/project-layout-root-files/#tsdjson", 
+            "text": "This file declares the  TypeScript definition files  that should be downloaded when executing the  gulp tsd  task. The definition files are hosted by the  DefinitelyTyped  project.  These definition files describe third party JavaScript libraries that your application uses so they can be referenced from TypeScript in a stronly-typed manner.  This file can be updated by used the  tsd  command line tool to add or remove definitions.  See  gulp tsd  in  Gulp Tasks  for more details.", 
+            "title": "tsd.json"
+        }, 
+        {
+            "location": "/project-layout-root-files/#tsdtestsjson", 
+            "text": "This file declares the  TypeScript definition files  that should be downloaded when executing the  gulp tsd  task. The definition files are hosted by the  DefinitelyTyped  project.  These definition files describe third party JavaScript libraries that your unit tests use so they can be referenced from TypeScript in a stronly-typed manner.  This file can be updated by used the  tsd  command line tool to add or remove definitions.  See  gulp tsd  in  Gulp Tasks  for more details.", 
+            "title": "tsd.tests.json"
+        }, 
+        {
+            "location": "/project-layout-root-files/#tslintjson", 
+            "text": "This file contains configuration for the TypeScript  linter .  See  gulp lint  in  Gulp Tasks  for more details.", 
+            "title": "tslint.json"
+        }, 
+        {
+            "location": "/project-layout-src-directory/", 
+            "text": "Overview\n\n\nThis section will cover the \nsrc\n directories and its children.\n\n\nThe \nsrc\n directory contains the bulk of the source code for your application. This includes TypeScript source, SASS styling, and Angular HTML templates.\n\n\nTypeScript files are compiled using the internal module system using the \nnamespace\n keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This allows us to avoid having to use a module loader at runtime.\n\n\nIn most example Angular applications you'll commonly see separate directories for each component (eg controllers, views, models, services etc). While this is nice for tutorials and small applications, it is not ideal for applications that contain a large number of files.\n\n\nInstead, this project groups files by feature rather than type. So instead of having to look in multiple directories for all of the files applicable for a given view, you'll be able to find all applicable files in the same location.\n\n\n\n\nNote about namepsaces\n\n\nAs you explore the directory structure you'll notice that the namespaces and directory paths do not match as they would in other languages (Java for example).\n\n\nInstead we use directories for grouping files by feature and namespaces for determining the behavior of a given file.\n\n\nFor example, a class in the \nControllers\n namespace will be treated as an Angular controller. Instead of placing it in a controllers directory it can be placed in the same directory as the view model and template to which it belongs.\n\n\n\n\ntsconfig.json\n\n\nThis file controls parameters passed to the TypeScript compiler and is used when running the \ngulp ts\n task or building from within VS Code.\n\n\ntsd.d.ts \n(generated)\n\n\nThis file contains references to all of the \nTypeScript definition\n files from the \nDefinitelyTyped\n repository.\n\n\nThese are installed by the \ntsd\n tool via the \ngulp tsd\n task. The definition files that are downloaded are specified in \ntsd.json\n.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:tsd\n tasks and should not be committed to source control.\n\n\n\n\n_references.ts\n\n\nThis file is used to reference TypeScript files so the compiler knows where to look during compilation. However, if you open the file you'll notice that it does not reference all of the files.\n\n\nThe \ngulp ts\n task uses the TypeScript compiler's \n-p\n option to point at the \nsrc\n directory for compilation. When using this flag we don't need to maintain a \n_references.ts\n file with paths to all of the files.\n\n\nHowever the file is still useful when we are using internal modules as it allows us to control the order that the JavaScript output is emitted into the bundle file.\n\n\nWe need to do this for specific classes that are base classes (so that at runtime these are loaded before any descendant classes).\n\n\nIt is unlikely that you'll need to edit this file unless you add more base classes.\n\n\nFramework\n\n\nThe framework directory contains components that make up the \"framework\" for your application. This includes base classes as well as the second level boot loader.\n\n\nsrc/Framework/Boot2.ts\n\n\nThis is the second level boot loader whose purpose is to initialize Angular and Ionic. This involves declaring the root Angular module as well as registering Angular components (such as controllers, services, directives, and filters). This is where the Angular run and config functions live.\n\n\nThe second level boot loader's \nboot()\n method is invoked from the first level boot loader (\nwww/js/boot1.js\n). After it finishes, it then delegates to the \nstart()\n method in the \nsrc/Application/Application.ts\n file.\n\n\nFramework/BootHelper.ts\n\n\nThis contains helper methods for use by the second level boot loader such as controller or service registration etc.\n\n\nFramework/BaseController.ts\n\n\nThis is a base class that should be used by all of the Angular controllers.\n\n\nSee \nBase Framework: Controllers\n for more information.\n\n\nFramework/BaseDialogController.ts\n\n\nThis is a base class that should be used by all of the Angular controllers used for Ionic modal dialogs.\n\n\nSee \nBase Framework: Dialogs\n for more information.\n\n\nFramework/BaseElementDirective.ts\n\n\nThis is a base class that should be used by all of the Angular directives that are for elements.\n\n\nSee \nBase Framework: Directives\n for more information.\n\n\nFramework/DialogOptions.ts\n\n\nThis is an model object used to pass data and set options for Ionic modal dialogs.\n\n\nSee \nBase Framework: Dialogs\n for more information.\n\n\nFramework/EmptyViewModel.ts\n\n\nThis is an empty view model class used for controllers that do not need a view model.\n\n\nApplication\n\n\nThe application directory contains code specific to your application that is not tied to specific views.\n\n\nApplication/Application.ts\n\n\nThis contains the main class for your application. Its \nstart()\n method is invoked by the second level boot loader.\n\n\nHere you can subscribe to device events (eg pause, resume) or configure Cordova plugins when your application starts.\n\n\nThis is a good place to put logic that doesn't correspond to any of your view specifically. For example, exception handlers or push notification handlers.\n\n\nThis project uses the \ndevice_resume\n method to determine the initial view the user should be placed on.\n\n\nApplication/Constants.ts\n\n\nThis file contains a static namespace housing constants for use throughout your application.\n\n\nApplication/RouteConfig.ts\n\n\nThis file contains a single, static method named \nsetupRoutes(...)\n which is delegated to from the second level boot loader.\n\n\nIt is responsible for defining up all of the Angular routes by specifying the controller and view to use for each route.\n\n\nFilters\n\n\nThis is where all of your \nAngular filters\n should live.\n\n\nAn example filter is provided with the sample project. A filter should be a class with a static \nfilter\n method.\n\n\nSee \nBase Framework: Filters\n for more details.\n\n\nDirectives\n\n\nThis is where all of your \nAngular directives\n should live.\n\n\nTwo example directives are provided with the sample project; one is a simple directive (extending \nng.IDirective\n) and one is an element directive (extending \nBaseElementDirective\n).\n\n\nSee \nBase Framework: Directives\n for more details.\n\n\nModels\n\n\nThis is where you can store model objects that are shared across multiple areas or services in your application (not view models, for example).\n\n\nServices\n\n\nThis is where all of your \nAngular services\n sholud live.\n\n\nThere are several services provided with the sample project; see \nBase Framework: Services\n for more details.\n\n\nStyles\n\n\nThis is where you should store your common or shared SASS styles. The \nIndex.scss\n file is used to reference all of the SASS files to be compiled.\n\n\nStyles that are specific to a view should be co-located in the appropriate view directory.\n\n\nSee \ngulp sass\n in \nGulp Tasks\n for more details.\n\n\nViews\n\n\nThis directory should contain all of your controllers, view models, templates, and styles for each view.\n\n\nThe default layout uses a directory for each view which contains its controller, view model, template and styling.\n\n\nEach controller should extend \nBaseController\n or \nBaseDialogController\n.\n\n\nSee \ngulp templates\n and \ngulp sass\n in \nGulp Tasks\n and \nBase Framework: Views\n for more details.", 
+            "title": "src Directory"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#overview", 
+            "text": "This section will cover the  src  directories and its children.  The  src  directory contains the bulk of the source code for your application. This includes TypeScript source, SASS styling, and Angular HTML templates.  TypeScript files are compiled using the internal module system using the  namespace  keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This allows us to avoid having to use a module loader at runtime.  In most example Angular applications you'll commonly see separate directories for each component (eg controllers, views, models, services etc). While this is nice for tutorials and small applications, it is not ideal for applications that contain a large number of files.  Instead, this project groups files by feature rather than type. So instead of having to look in multiple directories for all of the files applicable for a given view, you'll be able to find all applicable files in the same location.   Note about namepsaces  As you explore the directory structure you'll notice that the namespaces and directory paths do not match as they would in other languages (Java for example).  Instead we use directories for grouping files by feature and namespaces for determining the behavior of a given file.  For example, a class in the  Controllers  namespace will be treated as an Angular controller. Instead of placing it in a controllers directory it can be placed in the same directory as the view model and template to which it belongs.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#tsconfigjson", 
+            "text": "This file controls parameters passed to the TypeScript compiler and is used when running the  gulp ts  task or building from within VS Code.", 
+            "title": "tsconfig.json"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#tsddts-generated", 
+            "text": "This file contains references to all of the  TypeScript definition  files from the  DefinitelyTyped  repository.  These are installed by the  tsd  tool via the  gulp tsd  task. The definition files that are downloaded are specified in  tsd.json .   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:tsd  tasks and should not be committed to source control.", 
+            "title": "tsd.d.ts (generated)"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#_referencests", 
+            "text": "This file is used to reference TypeScript files so the compiler knows where to look during compilation. However, if you open the file you'll notice that it does not reference all of the files.  The  gulp ts  task uses the TypeScript compiler's  -p  option to point at the  src  directory for compilation. When using this flag we don't need to maintain a  _references.ts  file with paths to all of the files.  However the file is still useful when we are using internal modules as it allows us to control the order that the JavaScript output is emitted into the bundle file.  We need to do this for specific classes that are base classes (so that at runtime these are loaded before any descendant classes).  It is unlikely that you'll need to edit this file unless you add more base classes.", 
+            "title": "_references.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#framework", 
+            "text": "The framework directory contains components that make up the \"framework\" for your application. This includes base classes as well as the second level boot loader.", 
+            "title": "Framework"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#srcframeworkboot2ts", 
+            "text": "This is the second level boot loader whose purpose is to initialize Angular and Ionic. This involves declaring the root Angular module as well as registering Angular components (such as controllers, services, directives, and filters). This is where the Angular run and config functions live.  The second level boot loader's  boot()  method is invoked from the first level boot loader ( www/js/boot1.js ). After it finishes, it then delegates to the  start()  method in the  src/Application/Application.ts  file.", 
+            "title": "src/Framework/Boot2.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#frameworkboothelperts", 
+            "text": "This contains helper methods for use by the second level boot loader such as controller or service registration etc.", 
+            "title": "Framework/BootHelper.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#frameworkbasecontrollerts", 
+            "text": "This is a base class that should be used by all of the Angular controllers.  See  Base Framework: Controllers  for more information.", 
+            "title": "Framework/BaseController.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#frameworkbasedialogcontrollerts", 
+            "text": "This is a base class that should be used by all of the Angular controllers used for Ionic modal dialogs.  See  Base Framework: Dialogs  for more information.", 
+            "title": "Framework/BaseDialogController.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#frameworkbaseelementdirectivets", 
+            "text": "This is a base class that should be used by all of the Angular directives that are for elements.  See  Base Framework: Directives  for more information.", 
+            "title": "Framework/BaseElementDirective.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#frameworkdialogoptionsts", 
+            "text": "This is an model object used to pass data and set options for Ionic modal dialogs.  See  Base Framework: Dialogs  for more information.", 
+            "title": "Framework/DialogOptions.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#frameworkemptyviewmodelts", 
+            "text": "This is an empty view model class used for controllers that do not need a view model.", 
+            "title": "Framework/EmptyViewModel.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#application", 
+            "text": "The application directory contains code specific to your application that is not tied to specific views.", 
+            "title": "Application"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#applicationapplicationts", 
+            "text": "This contains the main class for your application. Its  start()  method is invoked by the second level boot loader.  Here you can subscribe to device events (eg pause, resume) or configure Cordova plugins when your application starts.  This is a good place to put logic that doesn't correspond to any of your view specifically. For example, exception handlers or push notification handlers.  This project uses the  device_resume  method to determine the initial view the user should be placed on.", 
+            "title": "Application/Application.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#applicationconstantsts", 
+            "text": "This file contains a static namespace housing constants for use throughout your application.", 
+            "title": "Application/Constants.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#applicationrouteconfigts", 
+            "text": "This file contains a single, static method named  setupRoutes(...)  which is delegated to from the second level boot loader.  It is responsible for defining up all of the Angular routes by specifying the controller and view to use for each route.", 
+            "title": "Application/RouteConfig.ts"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#filters", 
+            "text": "This is where all of your  Angular filters  should live.  An example filter is provided with the sample project. A filter should be a class with a static  filter  method.  See  Base Framework: Filters  for more details.", 
+            "title": "Filters"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#directives", 
+            "text": "This is where all of your  Angular directives  should live.  Two example directives are provided with the sample project; one is a simple directive (extending  ng.IDirective ) and one is an element directive (extending  BaseElementDirective ).  See  Base Framework: Directives  for more details.", 
+            "title": "Directives"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#models", 
+            "text": "This is where you can store model objects that are shared across multiple areas or services in your application (not view models, for example).", 
+            "title": "Models"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#services", 
+            "text": "This is where all of your  Angular services  sholud live.  There are several services provided with the sample project; see  Base Framework: Services  for more details.", 
+            "title": "Services"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#styles", 
+            "text": "This is where you should store your common or shared SASS styles. The  Index.scss  file is used to reference all of the SASS files to be compiled.  Styles that are specific to a view should be co-located in the appropriate view directory.  See  gulp sass  in  Gulp Tasks  for more details.", 
+            "title": "Styles"
+        }, 
+        {
+            "location": "/project-layout-src-directory/#views", 
+            "text": "This directory should contain all of your controllers, view models, templates, and styles for each view.  The default layout uses a directory for each view which contains its controller, view model, template and styling.  Each controller should extend  BaseController  or  BaseDialogController .  See  gulp templates  and  gulp sass  in  Gulp Tasks  and  Base Framework: Views  for more details.", 
+            "title": "Views"
+        }, 
+        {
+            "location": "/project-layout-www-directory/", 
+            "text": "Overview\n\n\nThe \nwww\n directory should contain all of the assets that will be used at runtime.\n\n\nindex.master.html\n\n\nThis is the master index file that is used to generate \nwww/index.html\n when running the \ngulp config\n task.\n\n\nThe config task will perform variable substitution based on the current scheme.\n\n\nSee \ngulp config\n in \nGulp Tasks\n and \nBase Framework: Build Schemes\n for more details.\n\n\nindex.html \n(generated)\n\n\nThis file is generated from \nwww/index.master.html\n when running the \ngulp config\n task. This is the initial page that will be loaded by Cordova when the application starts.\n\n\nSee \ngulp config\n in \nGulp Tasks\n and \nBase Framework: Build Schemes\n for more details.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:config\n tasks and should not be commited to source control.\n\n\n\n\njs\n\n\nThis contains plain JavaScript source files loaded by \nwww/index.html\n.\n\n\njs/src \n(generated)\n\n\nThis directory is generated when running the \ngulp ts\n task in a scheme where the debug flag is set to true. It will contain all of the TypeScript source so that the application can be debugged in Chrome.\n\n\nThis directory will not be present in non-debug builds.\n\n\nSee \nBase Framework: Build Schemes\n for more details.\n\n\n\n\nWarning\n\n\nThis directory will be removed well as when executing the \ngulp clean\n or \ngulp clean:ts\n tasks and should not be committed to source control.\n\n\n\n\njs/boot1.js\n\n\nThis is the first level boot loader loaded by \nwww/index.html\n. It handles any low level boot tasks before delegating to the second level boot loader (\nsrc/Framework/Boot2.ts\n).\n\n\njs/build-vars.js \n(generated)\n\n\nThis file is generated when running the \ngulp config\n task. It contains build information such as version number, build timestamp, debug flag etc. It also contains all of the preference element values from \nconfig.xml\n.\n\n\nIt's contents are accessible via the Configuration service (or as an Angular constant).\n\n\nSee \ngulp config\n in \nGulp Tasks\n and \nBase Framework: Build Schemes\n for more details.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:ts\n tasks and should not be committed to source control.\n\n\n\n\njs/bundle.js \n(generated)\n\n\nThis file is generated when running the \ngulp ts\n task. It will contain all of the output from the compilation of the TypeScript files from the \nsrc\n directory.\n\n\nIts contents will be minified in non-debug builds.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:ts\n tasks and should not be committed to source control.\n\n\n\n\njs/bundle.d.ts \n(generated)\n\n\nThis file is generated when running the \ngulp ts\n task. It will contain the TypeScript type descriptions for the \nwww/js/bundle.js\n file.\n\n\nIt is primarily used by unit tests and will only be present during a debug build.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:ts\n tasks and should not be committed to source control.\n\n\n\n\njs/bundle.js.map \n(generated)\n\n\nThis file is generated when running the \ngulp ts\n task. It will contain mapping information to map the generated source from \nwww/js/bundle.js\n to the TypeScript source that is copied to \nwww/js/src\n in debug builds.\n\n\nIt is used when debugging the source in a browser and will only be present during a debug build.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:ts\n tasks and should not be committed to source control.\n\n\n\n\njs/templates.js\n\n\nThis file is generated when running the \ngulp templates\n task. It contains all of the Angular HTML templates from the \nsrc/Views\n directory.\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:templates\n tasks and should not be committed to source control.\n\n\nSee \ngulp templates\n in \nGulp Tasks\n and \nBase Framework: Views\n for more details.\n\n\nlib \n(generated)\n\n\nThis directory is generated when running the \ngulp libs\n task. It will contain all of the third party libraries for use at runtime. It is populated via the Bower package manager using the \nbower.json\n file.\n\n\nSee \ngulp libs\n in \nGulp Tasks\n for more details.\n\n\n\n\nWarning\n\n\nThis directory will be removed in when executing the \ngulp clean\n or \ngulp clean:libs\n tasks and should not be committed to source control.\n\n\n\n\nimages\n\n\nThis directory can be used to store images that will be used at runtime.\n\n\ncss\n\n\nThis directory can be used to store plain CSS files.\n\n\ncss/bundle.css \n(generated)\n\n\nThis file is generated when running the \ngulp sass\n task. It will contain the output from the compilation of the SASS files using the \nsrc/Styles/Index.scss\n file.\n\n\nIts contents will be minified in non-debug builds.\n\n\nSee \ngulp sass\n in \nGulp Tasks\n for more details.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:sass\n tasks and should not be committed to source control.\n\n\n\n\ncss/bundle.css.map \n(generated)\n\n\nThis file is generated when running the \ngulp sass\n task. It will contain mapping information to map the generated CSS to the original SASS source.\n\n\nSee \ngulp sass\n in \nGulp Tasks\n for more details.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:sass\n tasks and should not be committed to source control.", 
+            "title": "www Directory"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#overview", 
+            "text": "The  www  directory should contain all of the assets that will be used at runtime.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#indexmasterhtml", 
+            "text": "This is the master index file that is used to generate  www/index.html  when running the  gulp config  task.  The config task will perform variable substitution based on the current scheme.  See  gulp config  in  Gulp Tasks  and  Base Framework: Build Schemes  for more details.", 
+            "title": "index.master.html"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#indexhtml-generated", 
+            "text": "This file is generated from  www/index.master.html  when running the  gulp config  task. This is the initial page that will be loaded by Cordova when the application starts.  See  gulp config  in  Gulp Tasks  and  Base Framework: Build Schemes  for more details.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:config  tasks and should not be commited to source control.", 
+            "title": "index.html (generated)"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#js", 
+            "text": "This contains plain JavaScript source files loaded by  www/index.html .", 
+            "title": "js"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#jssrc-generated", 
+            "text": "This directory is generated when running the  gulp ts  task in a scheme where the debug flag is set to true. It will contain all of the TypeScript source so that the application can be debugged in Chrome.  This directory will not be present in non-debug builds.  See  Base Framework: Build Schemes  for more details.   Warning  This directory will be removed well as when executing the  gulp clean  or  gulp clean:ts  tasks and should not be committed to source control.", 
+            "title": "js/src (generated)"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#jsboot1js", 
+            "text": "This is the first level boot loader loaded by  www/index.html . It handles any low level boot tasks before delegating to the second level boot loader ( src/Framework/Boot2.ts ).", 
+            "title": "js/boot1.js"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#jsbuild-varsjs-generated", 
+            "text": "This file is generated when running the  gulp config  task. It contains build information such as version number, build timestamp, debug flag etc. It also contains all of the preference element values from  config.xml .  It's contents are accessible via the Configuration service (or as an Angular constant).  See  gulp config  in  Gulp Tasks  and  Base Framework: Build Schemes  for more details.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:ts  tasks and should not be committed to source control.", 
+            "title": "js/build-vars.js (generated)"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#jsbundlejs-generated", 
+            "text": "This file is generated when running the  gulp ts  task. It will contain all of the output from the compilation of the TypeScript files from the  src  directory.  Its contents will be minified in non-debug builds.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:ts  tasks and should not be committed to source control.", 
+            "title": "js/bundle.js (generated)"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#jsbundledts-generated", 
+            "text": "This file is generated when running the  gulp ts  task. It will contain the TypeScript type descriptions for the  www/js/bundle.js  file.  It is primarily used by unit tests and will only be present during a debug build.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:ts  tasks and should not be committed to source control.", 
+            "title": "js/bundle.d.ts (generated)"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#jsbundlejsmap-generated", 
+            "text": "This file is generated when running the  gulp ts  task. It will contain mapping information to map the generated source from  www/js/bundle.js  to the TypeScript source that is copied to  www/js/src  in debug builds.  It is used when debugging the source in a browser and will only be present during a debug build.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:ts  tasks and should not be committed to source control.", 
+            "title": "js/bundle.js.map (generated)"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#jstemplatesjs", 
+            "text": "This file is generated when running the  gulp templates  task. It contains all of the Angular HTML templates from the  src/Views  directory.  This file will be removed when executing the  gulp clean  or  gulp clean:templates  tasks and should not be committed to source control.  See  gulp templates  in  Gulp Tasks  and  Base Framework: Views  for more details.", 
+            "title": "js/templates.js"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#lib-generated", 
+            "text": "This directory is generated when running the  gulp libs  task. It will contain all of the third party libraries for use at runtime. It is populated via the Bower package manager using the  bower.json  file.  See  gulp libs  in  Gulp Tasks  for more details.   Warning  This directory will be removed in when executing the  gulp clean  or  gulp clean:libs  tasks and should not be committed to source control.", 
+            "title": "lib (generated)"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#images", 
+            "text": "This directory can be used to store images that will be used at runtime.", 
+            "title": "images"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#css", 
+            "text": "This directory can be used to store plain CSS files.", 
+            "title": "css"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#cssbundlecss-generated", 
+            "text": "This file is generated when running the  gulp sass  task. It will contain the output from the compilation of the SASS files using the  src/Styles/Index.scss  file.  Its contents will be minified in non-debug builds.  See  gulp sass  in  Gulp Tasks  for more details.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:sass  tasks and should not be committed to source control.", 
+            "title": "css/bundle.css (generated)"
+        }, 
+        {
+            "location": "/project-layout-www-directory/#cssbundlecssmap-generated", 
+            "text": "This file is generated when running the  gulp sass  task. It will contain mapping information to map the generated CSS to the original SASS source.  See  gulp sass  in  Gulp Tasks  for more details.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:sass  tasks and should not be committed to source control.", 
+            "title": "css/bundle.css.map (generated)"
+        }, 
+        {
+            "location": "/project-layout-other-directories/", 
+            "text": "Overview\n\n\nPrevious sections covered the \nwww\n and \nsrc\n directories; this section will go over the remaining directories.\n\n\n.vscode\n\n\nThis is where the project specific settings and tasks for the \nVisual Studio Code\n IDE are located.\n\n\nThis directory is optional and can be removed if you are not using VS Code.\n\n\nbower_components \n(generated)\n\n\nThis is a generated directory that is created by running the \ngulp libs\n task. These files are downloaded by the Bower package manager and can be configured via \nbower.json\n.\n\n\nThe libs task also takes care of copying the needed files to \nwww/js/libs\n so they can be used at runtime.\n\n\nSee \ngulp libs\n in \nGulp Tasks\n for more details.\n\n\n\n\nWarning\n\n\nThis directory will be removed when executing the \ngulp clean\n or \ngulp clean:libs\n tasks and should not be commited to source control.\n\n\n\n\ndocs\n\n\nThis directory contains the documentation in markdown format which are used to generate this documentation site using \nMkDocs\n.\n\n\nThis directory is optional and can be removed.\n\n\nhooks\n\n\nThis directory contains build hook scripts for Cordova's build system.\n\n\n\n\nCordova Hooks represent special scripts which could be added by application and plugin developers or even by your own build system to customize cordova commands. - \nApache Cordova Hooks Guide\n\n\n\n\nThis starter project does not currently ship with any custom build hooks, aside from the \"Add Platform Class\" script that is included with Cordova.\n\n\nSee \nhooks/README.md\n for more details.\n\n\nnode_modules \n(generated)\n\n\nThis is a generated directory that is created when you run \nnpm install\n from the project directory. It contains all of the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).\n\n\n\n\nWarning\n\n\nThis directory will be removed when executing the \ngulp clean\n task and should not be committed to source control.\n\n\n\n\nplugins \n(generated)\n\n\nThis is a generated directory that is created when you run the \ngulp plugins\n or \ncordova plugin add\n commands.\n\n\nIt contains any \nCordova plugins\n used to extend the functionality of the application through native code.\n\n\nPlugins are installed via the \ncordovaPlugins\n property in \npackage.json\n.\n\n\nSee \ngulp plugins\n in \nGulp Tasks\n for more details.\n\n\n\n\nWarning\n\n\nThis directory will be removed when executing the \ngulp clean\n or \ngulp clean:plugins\n tasks and should not be committed to source control.\n\n\n\n\nresources\n\n\nThis is a general purpose directory which can contain any type of resource for your application.\n\n\nCurrently, the \nionic resources\n command will utilize the \nicon.png\n and \nsplash.png\n from this directory to generate the various icon and splash screens for the various platforms' screen sizes.\n\n\ntests\n\n\nThis directory contains the unit tests for the application.\n\n\nUnit tests can be run using the Karma test runner by executing the \ngulp test\n task.\n\n\nEach sub-directory here should mirror the layout of \nsrc\n with the addition of a \n.Tests.ts\n suffix. That is, a test for \nsrc/Services/Utilities.ts\n should be placed at \ntests/Services/Utilities.Tests.ts\n.\n\n\nSee \ngulp test\n in \nGulp Tasks\n and \nUnit Testing\n for more details.\n\n\ntests/_references.ts\n\n\nThis file is used to point the TypeScript compiler at the generated type definitions for the compiled application bundle being tested.\n\n\ntests/tsconfig.json\n\n\nThis file controls parameters passed to the TypeScript compiler and is used when running the \ngulp ts:tests\n task or running the unit tests via \ngulp test\n.\n\n\ntests/tsd.d.ts \n(generated)\n\n\nThis file contains references to all of the \nTypeScript definition\n files from the \nDefinitelyTyped\n repository.\n\n\nThese are installed by the \ntsd\n tool via the \ngulp tsd\n task. The definition files that are downloaded are specified in \ntsd.tests.json\n.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:tsd\n tasks and should not be committed to source control.\n\n\n\n\ntests/bundle.tests.js \n(generated)\n\n\nThis file contains the result of the TypeScript compilation of the unit tests.\n\n\nThis is created via the \ngulp test\n or \ngulp ts:tests\n tasks.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:tests\n tasks and should not be committed to source control.\n\n\n\n\ntests/bundle.tests.js.map \n(generated)\n\n\nThis file contains the source mapping information of the TypeScript compilation of the unit tests. These can be used when debugging to step through TypeScript source instead of JavaScript.\n\n\nThis is created via the \ngulp test\n or \ngulp ts:tests\n tasks.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:tests\n tasks and should not be committed to source control.\n\n\n\n\ntypings\n\n\nThis directory contains all of the \nTypeScript definition\n files from the \nDefinitelyTyped\n repository used by your application.\n\n\nThese are installed by the \ntsd\n tool via the \ngulp tsd\n task. The definition files that are downloaded are specified in \ntsd.json\n.\n\n\n\n\nWarning\n\n\nAll subdirectories will be removed when executing the \ngulp clean\n or \ngulp clean:tsd\n tasks (\nexcept for the custom directory\n) and should not be committed to source control.\n\n\n\n\nThe custom directory contains any custom \nTypeScript definition\n files for your application that are not available on the \nDefinitelyTyped\n repository.\n\n\nThis is the only subdirectory of the \ntypings\n directory that should be committed to source control.\n\n\ntypings-tests\n\n\nThis directory contains all of the \nTypeScript definition\n files from the \nDefinitelyTyped\n repository used by the unit tests.\n\n\nThese are installed by the \ntsd\n tool via the \ngulp tsd:tests\n task. The definition files that are downloaded are specified in \ntsd.tests.json\n.\n\n\n\n\nWarning\n\n\nAll subdirectories will be removed when executing the \ngulp clean\n or \ngulp clean:tsd\n tasks (\nexcept for the custom directory\n) and should not be committed to source control.\n\n\n\n\nThis custom directory contains any custom \nTypeScript definition\n files for your application that are not available on the \nDefinitelyTyped\n repository.\n\n\nThis is the only subdirectory of the \ntypings-tests\n directory that should be committed to source control.", 
+            "title": "Other Directories"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#overview", 
+            "text": "Previous sections covered the  www  and  src  directories; this section will go over the remaining directories.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#vscode", 
+            "text": "This is where the project specific settings and tasks for the  Visual Studio Code  IDE are located.  This directory is optional and can be removed if you are not using VS Code.", 
+            "title": ".vscode"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#bower_components-generated", 
+            "text": "This is a generated directory that is created by running the  gulp libs  task. These files are downloaded by the Bower package manager and can be configured via  bower.json .  The libs task also takes care of copying the needed files to  www/js/libs  so they can be used at runtime.  See  gulp libs  in  Gulp Tasks  for more details.   Warning  This directory will be removed when executing the  gulp clean  or  gulp clean:libs  tasks and should not be commited to source control.", 
+            "title": "bower_components (generated)"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#docs", 
+            "text": "This directory contains the documentation in markdown format which are used to generate this documentation site using  MkDocs .  This directory is optional and can be removed.", 
+            "title": "docs"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#hooks", 
+            "text": "This directory contains build hook scripts for Cordova's build system.   Cordova Hooks represent special scripts which could be added by application and plugin developers or even by your own build system to customize cordova commands. -  Apache Cordova Hooks Guide   This starter project does not currently ship with any custom build hooks, aside from the \"Add Platform Class\" script that is included with Cordova.  See  hooks/README.md  for more details.", 
+            "title": "hooks"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#node_modules-generated", 
+            "text": "This is a generated directory that is created when you run  npm install  from the project directory. It contains all of the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).   Warning  This directory will be removed when executing the  gulp clean  task and should not be committed to source control.", 
+            "title": "node_modules (generated)"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#plugins-generated", 
+            "text": "This is a generated directory that is created when you run the  gulp plugins  or  cordova plugin add  commands.  It contains any  Cordova plugins  used to extend the functionality of the application through native code.  Plugins are installed via the  cordovaPlugins  property in  package.json .  See  gulp plugins  in  Gulp Tasks  for more details.   Warning  This directory will be removed when executing the  gulp clean  or  gulp clean:plugins  tasks and should not be committed to source control.", 
+            "title": "plugins (generated)"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#resources", 
+            "text": "This is a general purpose directory which can contain any type of resource for your application.  Currently, the  ionic resources  command will utilize the  icon.png  and  splash.png  from this directory to generate the various icon and splash screens for the various platforms' screen sizes.", 
+            "title": "resources"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#tests", 
+            "text": "This directory contains the unit tests for the application.  Unit tests can be run using the Karma test runner by executing the  gulp test  task.  Each sub-directory here should mirror the layout of  src  with the addition of a  .Tests.ts  suffix. That is, a test for  src/Services/Utilities.ts  should be placed at  tests/Services/Utilities.Tests.ts .  See  gulp test  in  Gulp Tasks  and  Unit Testing  for more details.", 
+            "title": "tests"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#tests_referencests", 
+            "text": "This file is used to point the TypeScript compiler at the generated type definitions for the compiled application bundle being tested.", 
+            "title": "tests/_references.ts"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#teststsconfigjson", 
+            "text": "This file controls parameters passed to the TypeScript compiler and is used when running the  gulp ts:tests  task or running the unit tests via  gulp test .", 
+            "title": "tests/tsconfig.json"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#teststsddts-generated", 
+            "text": "This file contains references to all of the  TypeScript definition  files from the  DefinitelyTyped  repository.  These are installed by the  tsd  tool via the  gulp tsd  task. The definition files that are downloaded are specified in  tsd.tests.json .   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:tsd  tasks and should not be committed to source control.", 
+            "title": "tests/tsd.d.ts (generated)"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#testsbundletestsjs-generated", 
+            "text": "This file contains the result of the TypeScript compilation of the unit tests.  This is created via the  gulp test  or  gulp ts:tests  tasks.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:tests  tasks and should not be committed to source control.", 
+            "title": "tests/bundle.tests.js (generated)"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#testsbundletestsjsmap-generated", 
+            "text": "This file contains the source mapping information of the TypeScript compilation of the unit tests. These can be used when debugging to step through TypeScript source instead of JavaScript.  This is created via the  gulp test  or  gulp ts:tests  tasks.   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:tests  tasks and should not be committed to source control.", 
+            "title": "tests/bundle.tests.js.map (generated)"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#typings", 
+            "text": "This directory contains all of the  TypeScript definition  files from the  DefinitelyTyped  repository used by your application.  These are installed by the  tsd  tool via the  gulp tsd  task. The definition files that are downloaded are specified in  tsd.json .   Warning  All subdirectories will be removed when executing the  gulp clean  or  gulp clean:tsd  tasks ( except for the custom directory ) and should not be committed to source control.   The custom directory contains any custom  TypeScript definition  files for your application that are not available on the  DefinitelyTyped  repository.  This is the only subdirectory of the  typings  directory that should be committed to source control.", 
+            "title": "typings"
+        }, 
+        {
+            "location": "/project-layout-other-directories/#typings-tests", 
+            "text": "This directory contains all of the  TypeScript definition  files from the  DefinitelyTyped  repository used by the unit tests.  These are installed by the  tsd  tool via the  gulp tsd:tests  task. The definition files that are downloaded are specified in  tsd.tests.json .   Warning  All subdirectories will be removed when executing the  gulp clean  or  gulp clean:tsd  tasks ( except for the custom directory ) and should not be committed to source control.   This custom directory contains any custom  TypeScript definition  files for your application that are not available on the  DefinitelyTyped  repository.  This is the only subdirectory of the  typings-tests  directory that should be committed to source control.", 
+            "title": "typings-tests"
+        }, 
+        {
+            "location": "/gulp-tasks/", 
+            "text": "Overview\n\n\nThis starter project ships with several tasks for the \nGulp\n task runner. The tasks are located in \ngulpfile.js\n and are executed from the project directory using the \ngulp task_name\n command.\n\n\nCompilation Tasks\n\n\nThe following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.\n\n\n\n\nNote\n\n\nIf you are using VSCode, you can use \n\u2318 Command\n\u21e7 Shift\nR\n and being typing the name of the task your want to run. See \n.vscode/tasks.config\n for more task shortcuts.\n\n\n\n\ngulp init\n\n\nThe init task is used to initialize the Cordova project by adding platforms, plugins, obtaining third party libraries, and performing TypeScript compilation.\n\n\nFirst, it cleans the environment by running several gulp clean tasks. This will result in several generated directories and files being removed.\n\n\nNext, it adds Cordova platforms by running the \ncordova platform add platform_name\n command for each of the platforms as defined in \npackage.json\n.\n\n\nThen it delegates to the config and default gulp tasks which handle configuration, adding Cordova plugins, obtaining Bower libraries and compiling templates, SASS, and TypeScript.\n\n\nFinally, this task can perform custom initialization based on a \nprep\n flag. For example, when using \ngulp init --prep android\n all of the above is performed as well as adding the \nCrossWalk\n plugin for Android. You can customize this task to perform special behavior per platform if needed.\n\n\nIn addition to initializing your environment for first use, this task is also useful for cleaning up your environment if you run into issues during development.\n\n\ngulp config\n\n\nThe config task is used to perform customization of configuration files based on the given build scheme name. Build schemes are defined in \nconfig.master.xml\n under the \nschemes\n node. If a scheme name is not specified, the default will be used.\n\n\nThis task takes care of creating the following files:\n\n\n\n\nCordova's \nconfig.xml\n (from \nconfig.master.xml\n)\n\n\nStarting page \nwww/index.html\n (from \nwww/index.master.html\n)\n\n\nRuntime variables at \nsrc/js/build-vars.js\n\n\n\n\nThese files will be generated from their master files and variable substitution will be performed based on the scheme definitions. This allows for easy configuration of builds for different environments (ie development, staging, production).\n\n\nExample Usage: \ngulp config --scheme production\n\n\nSee \nDevelopment Tips: Build Schemes\n for more details.\n\n\ngulp templates\n\n\nThe templates task compiles Angular HTML templates from \nsrc/Views/**/*.html\n into a single JavaScript file at \nwww/js/templates.js\n.\n\n\nYou'll need to re-run this task to see any HTML template changes during development.\n\n\ngulp sass\n\n\nThe sass task compiles the SASS source files starting with \nsrc/Styles/Index.scss\n. The resulting CSS bundle will be output to \nwww/css/bundle.css\n.\n\n\nYou'll need to re-run this task to see any SASS styling changes during development.\n\n\nThe SASS output will be minified if the debug flag is set to true via the current build scheme.\n\n\n\n\nNote\n\n\nIf you run this task from VS Code, SASS problems will be shown in VS Code's error console.\n\n\n\n\ngulp libs\n\n\nThe libs task uses the \nBower\n package manager and \nbower-installer\n plugin to download JavaScript libraries for use within your application.\n\n\nInitially, Bower will download the files to the \nbower_components\n directory and the \nbower-installer\n plugin will take care of copying the appropriate files to the \nwww/lib\n directory.\n\n\nSee \nbower.json\n for more details (as well as for if you need to change which files get copied to the libs directory).\n\n\ngulp plugins\n\n\nThe plugins task is used to install all of the Cordova plugins as defined in \npackage.json\n's \ncordovaPlugins\n property.\n\n\nThis task is simply a shortcut for running \ncordova plugin add plugin_name\n for each of the plugins.\n\n\ngulp tsd\n\n\nThe tsd task is used to download and setup TypeScript definition files for JavaScript libraries so they can be referenced from TypeScript source files. The \ntsd\n tool uses the \nDefinitelyTyped\n repository.\n\n\nThe \ntsd.json\n and \ntsd.tests.json\n files are used to specify the typing files to download for the application and unit tests respectively.\n\n\nAfter downloading the definitions, the \ntsd\n tool will generate a reference file at \nsrc/tsd.d.ts\n (or \ntests/tsd.d.ts\n for unit tests) that the TypeScript compiler will read during compilation.\n\n\ngulp ts\n\n\nThe ts task is used to perform compilation of the TypeScript using configuration from \nsrc/tsconfig.json\n.\n\n\nThe resulting JavaScript bundle will be written to \nwww/js/bundle.js\n.\n\n\nThe JavaScript output will be minifed if the debug flag is set to true via the current build scheme. Minification is done by delegating to the minify task.\n\n\n\n\nNote\n\n\nIf you are using VS Code, you can use \n\u2318 Command\n\u21e7 Shift\nB\n to run the \nts\n task with the default scheme. Any compilation problems will be shown in VS Code's error console.\n\n\n\n\ngulp minify\n\n\nThe minify task will minify the JavaScript bundle at \nsrc/js/bundle.js\n.\n\n\nThis task can be run directly, but can be delegated to via the ts task as well.\n\n\ngulp lint\n\n\nThe lint task performs \nlinting\n of the TypeScript source files.\n\n\nLint parameters are defined in \ntslint.json\n.\n\n\n\n\nNote\n\n\nIf you run this task from VS Code lint problems will be shown in VS Code's warning console.\n\n\n\n\ngulp chrome\n\n\nThe chrome task is used to generate a \nchrome\n directory with your application that can be loaded as a Chrome extension.\n\n\nUtility Tasks\n\n\nThe following tasks can be used to perform various tasks that aren't necessarily related to compilation.\n\n\n\n\nNote\n\n\nIf you are using VS Code, you can use \n\u2318 Command\n\u21e7 Shift\n \nR\n and being typing the name of the task your want to run. See \n.vscode/tasks.config\n for more task shortcuts.\n\n\n\n\ngulp watch\n\n\nThis task is used internally via Ionic's serve command (\nionic serve\n). This allows Ionic to reload the web browser when the specified files change during development.\n\n\ngulp emulate-ios\n\n\nThis task is a shortcut for \ncordova emulate ios\n which is a useful shortcut to use from VS Code's task runner.\n\n\ngulp emulate-android\n\n\nThis task is a shortcut for \ncordova emulate android\n which is a useful shortcut to use from VS Code's task runner.\n\n\ngulp remote-emulate-ios\n\n\nThis task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.\n\n\nSee \nDevelopment Tips: Running iOS Simulator from Windows\n for more details.\n\n\ngulp test\n\n\nThe test task is used to compile the TypeScript unit tests and run them via the Karma test runner. See \nkarma.conf.js\n for Karma configuration.\n\n\nSee \nUnit Testing\n for more details on unit tests.\n\n\ngulp typedoc\n\n\nThe typedoc task uses \nTypeDoc\n to generate documentation for the TypeScript source code.\n\n\nThe documentation files are output to \ntypedoc-output\n.\n\n\ngulp clean\n\n\nThe clean task is used to remove all of the generated files, included the \nnode_modules\n directory.\n\n\nIf you don't want to remove everything, there are subtasks for each of the gulp tasks to clean specific artifacts. For example: \ngulp clean:ts\n or \ngulp clean:plugins\n.\n\n\nAfter cleaning, you may need to re-run \ngulp init\n to ensure your environment is re-initialized.", 
+            "title": "Gulp Tasks"
+        }, 
+        {
+            "location": "/gulp-tasks/#overview", 
+            "text": "This starter project ships with several tasks for the  Gulp  task runner. The tasks are located in  gulpfile.js  and are executed from the project directory using the  gulp task_name  command.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/gulp-tasks/#compilation-tasks", 
+            "text": "The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.   Note  If you are using VSCode, you can use  \u2318 Command \u21e7 Shift R  and being typing the name of the task your want to run. See  .vscode/tasks.config  for more task shortcuts.", 
+            "title": "Compilation Tasks"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-init", 
+            "text": "The init task is used to initialize the Cordova project by adding platforms, plugins, obtaining third party libraries, and performing TypeScript compilation.  First, it cleans the environment by running several gulp clean tasks. This will result in several generated directories and files being removed.  Next, it adds Cordova platforms by running the  cordova platform add platform_name  command for each of the platforms as defined in  package.json .  Then it delegates to the config and default gulp tasks which handle configuration, adding Cordova plugins, obtaining Bower libraries and compiling templates, SASS, and TypeScript.  Finally, this task can perform custom initialization based on a  prep  flag. For example, when using  gulp init --prep android  all of the above is performed as well as adding the  CrossWalk  plugin for Android. You can customize this task to perform special behavior per platform if needed.  In addition to initializing your environment for first use, this task is also useful for cleaning up your environment if you run into issues during development.", 
+            "title": "gulp init"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-config", 
+            "text": "The config task is used to perform customization of configuration files based on the given build scheme name. Build schemes are defined in  config.master.xml  under the  schemes  node. If a scheme name is not specified, the default will be used.  This task takes care of creating the following files:   Cordova's  config.xml  (from  config.master.xml )  Starting page  www/index.html  (from  www/index.master.html )  Runtime variables at  src/js/build-vars.js   These files will be generated from their master files and variable substitution will be performed based on the scheme definitions. This allows for easy configuration of builds for different environments (ie development, staging, production).  Example Usage:  gulp config --scheme production  See  Development Tips: Build Schemes  for more details.", 
+            "title": "gulp config"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-templates", 
+            "text": "The templates task compiles Angular HTML templates from  src/Views/**/*.html  into a single JavaScript file at  www/js/templates.js .  You'll need to re-run this task to see any HTML template changes during development.", 
+            "title": "gulp templates"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-sass", 
+            "text": "The sass task compiles the SASS source files starting with  src/Styles/Index.scss . The resulting CSS bundle will be output to  www/css/bundle.css .  You'll need to re-run this task to see any SASS styling changes during development.  The SASS output will be minified if the debug flag is set to true via the current build scheme.   Note  If you run this task from VS Code, SASS problems will be shown in VS Code's error console.", 
+            "title": "gulp sass"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-libs", 
+            "text": "The libs task uses the  Bower  package manager and  bower-installer  plugin to download JavaScript libraries for use within your application.  Initially, Bower will download the files to the  bower_components  directory and the  bower-installer  plugin will take care of copying the appropriate files to the  www/lib  directory.  See  bower.json  for more details (as well as for if you need to change which files get copied to the libs directory).", 
+            "title": "gulp libs"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-plugins", 
+            "text": "The plugins task is used to install all of the Cordova plugins as defined in  package.json 's  cordovaPlugins  property.  This task is simply a shortcut for running  cordova plugin add plugin_name  for each of the plugins.", 
+            "title": "gulp plugins"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-tsd", 
+            "text": "The tsd task is used to download and setup TypeScript definition files for JavaScript libraries so they can be referenced from TypeScript source files. The  tsd  tool uses the  DefinitelyTyped  repository.  The  tsd.json  and  tsd.tests.json  files are used to specify the typing files to download for the application and unit tests respectively.  After downloading the definitions, the  tsd  tool will generate a reference file at  src/tsd.d.ts  (or  tests/tsd.d.ts  for unit tests) that the TypeScript compiler will read during compilation.", 
+            "title": "gulp tsd"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-ts", 
+            "text": "The ts task is used to perform compilation of the TypeScript using configuration from  src/tsconfig.json .  The resulting JavaScript bundle will be written to  www/js/bundle.js .  The JavaScript output will be minifed if the debug flag is set to true via the current build scheme. Minification is done by delegating to the minify task.   Note  If you are using VS Code, you can use  \u2318 Command \u21e7 Shift B  to run the  ts  task with the default scheme. Any compilation problems will be shown in VS Code's error console.", 
+            "title": "gulp ts"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-minify", 
+            "text": "The minify task will minify the JavaScript bundle at  src/js/bundle.js .  This task can be run directly, but can be delegated to via the ts task as well.", 
+            "title": "gulp minify"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-lint", 
+            "text": "The lint task performs  linting  of the TypeScript source files.  Lint parameters are defined in  tslint.json .   Note  If you run this task from VS Code lint problems will be shown in VS Code's warning console.", 
+            "title": "gulp lint"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-chrome", 
+            "text": "The chrome task is used to generate a  chrome  directory with your application that can be loaded as a Chrome extension.", 
+            "title": "gulp chrome"
+        }, 
+        {
+            "location": "/gulp-tasks/#utility-tasks", 
+            "text": "The following tasks can be used to perform various tasks that aren't necessarily related to compilation.   Note  If you are using VS Code, you can use  \u2318 Command \u21e7 Shift   R  and being typing the name of the task your want to run. See  .vscode/tasks.config  for more task shortcuts.", 
+            "title": "Utility Tasks"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-watch", 
+            "text": "This task is used internally via Ionic's serve command ( ionic serve ). This allows Ionic to reload the web browser when the specified files change during development.", 
+            "title": "gulp watch"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-emulate-ios", 
+            "text": "This task is a shortcut for  cordova emulate ios  which is a useful shortcut to use from VS Code's task runner.", 
+            "title": "gulp emulate-ios"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-emulate-android", 
+            "text": "This task is a shortcut for  cordova emulate android  which is a useful shortcut to use from VS Code's task runner.", 
+            "title": "gulp emulate-android"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-remote-emulate-ios", 
+            "text": "This task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.  See  Development Tips: Running iOS Simulator from Windows  for more details.", 
+            "title": "gulp remote-emulate-ios"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-test", 
+            "text": "The test task is used to compile the TypeScript unit tests and run them via the Karma test runner. See  karma.conf.js  for Karma configuration.  See  Unit Testing  for more details on unit tests.", 
+            "title": "gulp test"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-typedoc", 
+            "text": "The typedoc task uses  TypeDoc  to generate documentation for the TypeScript source code.  The documentation files are output to  typedoc-output .", 
+            "title": "gulp typedoc"
+        }, 
+        {
+            "location": "/gulp-tasks/#gulp-clean", 
+            "text": "The clean task is used to remove all of the generated files, included the  node_modules  directory.  If you don't want to remove everything, there are subtasks for each of the gulp tasks to clean specific artifacts. For example:  gulp clean:ts  or  gulp clean:plugins .  After cleaning, you may need to re-run  gulp init  to ensure your environment is re-initialized.", 
+            "title": "gulp clean"
+        }, 
+        {
+            "location": "/base-framework/", 
+            "text": "Overview\n\n\nThe starter project comes with a suggested starting point for a framework. This section will cover its features.\n\n\nIt is important to note that this starter project is not actually a framework. See \nFramework vs Starter Project\n for the distinction.\n\n\nThe base namespace used is \nJustinCredible.SampleApp\n. To switch this to your own namespace you can perform a project find and replace.\n\n\nBuild Schemes\n\n\nThe project is setup so that builds can be made for different environments. This is useful for easily switching between development, staging, or production environments for example.\n\n\nYou can switch between build schemes using the \ngulp config --scheme scheme_name\n command.\n\n\nSee \nDevelopment Tips: Build Schemes\n for more details.\n\n\nBoot Sequence\n\n\nCordova uses the the \nsrc\n attribute of the content element from \nconfig.xml\n to determine the initial page to load, which is set to \nindex.html\n by default.\n\n\nThe \nindex.html\n file has static references to all of the CSS and JavaScript files to load. In addition to the main application bundle (\nwww/js/bundle.js\n) the page also references the first level boot loader: \nwww/js/boot1.js\n. This file is responsible for executing any code before Cordova's JS API, Ionic, or Angular have been initialized. It then kicks off the second level boot loader by invoking \nJustinCredible.SampleApp.Boot2.main()\n.\n\n\nThe second level boot loader is located at \nsrc/Framework/Boot2.ts\n (which is compiled into \nwww/js/bundle.js\n). The second level boot loader is responsible for initializing Ionic after the Cordova JavaScript ready event occurs. This is where you would configure Angular services and modules.\n\n\nThe second level boot loader takes care of registering filters, directives, controllers, and services automatically using a helper (\nsrc/Framework/BootHelper.ts\n). It does so by examining the applicable namespaces (eg \nJustinCredible.SampleApp.Filters\n, \nJustinCredible.SampleApp.Services\n, etc). More details are provided in the applicable sections. The second level boot loader also takes care of setting up the Angular routes using the \nsrc/Application/RouteConfig.ts\n file.\n\n\nAfter initializing and configuring Angular, the second level boot loader then delegates to the \nstart()\n method of the application service located in \nsrc/Application/Application.ts\n.\n\n\nThe application service is where the bulk of your low-level application specific code should be located (ie device events, global event handlers, push notification handlers etc). It takes care of pushing the user to the initial view.\n\n\nViews\n\n\nA view or screen in your application will consist of an HTML Angular template, an Angular controller, a view model, and optionally, CSS styling.\n\n\nA view is registered in the \nsrc/Application/RouteConfig.ts\n file by specifying the path to its template, the ID of its controller, and its URL and state name:\n\n\n// A shared view used between categories, assigned a number via the route URL (categoryNumber).\n$stateProvider.state(\napp.category\n, {\n    url: \n/category/:categoryNumber\n,\n    views: {\n        \nroot-view\n: {\n            templateUrl: \nViews/Category/Category.html\n,\n            controller: Controllers.CategoryController.ID\n        }\n    }\n});\n\n\n\n\nIn most simple Angular examples you'll find that templates, controllers, and view models are often located in seperate directories. While this is nice for a simple application, in larger applications it is burden to track down each of the files. This starter project instead groups the files by feature rather than function.\n\n\nFor example, you'll find all of the files applicable to the category view located at \nsrc/Views/Category\n:\n\n\n\n\nControllers\n\n\nEvery controller in your application should extend the provided \nBaseController\n class and specify the type of view model for the view:\n\n\nnamespace JustinCredible.SampleApp.Controllers {\n\n    export class CategoryController extends BaseController\nViewModels.CategoryViewModel\n {\n\n        //#region Injection\n\n        public static ID = \nCategoryController\n;\n\n        public static get $inject(): string[] {\n            return [\n                \n$scope\n,\n                \n$stateParams\n\n                Services.Utilities.ID\n            ];\n        }\n\n        constructor(\n            $scope: ng.IScope,\n            private $stateParams: ICategoryStateParams,\n            private Utilities: Services.Utilities) {\n            super($scope, ViewModels.CategoryViewModel);\n        }\n\n        //#endregion\n\n        //#region BaseController Events\n\n        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {\n            super.view_beforeEnter(event, eventArgs);\n\n            // Set the category number into the view model using the value as provided\n            // in the view route (via the $stateParameters).\n            let label = this.Utilities.format(\nCategory: {0}\n, this.$stateParams.categoryNumber);\n            this.viewModel.categoryLabel = label;\n        }\n\n        //#endregion\n    }\n}\n\n\n\n\n\n\n\nNote\n\n\nIf your view does not have a view model you can use the provided \nEmptyViewModel\n class.\n\n\n\n\nThe services to be injected into the controller are controlled via the static \n$inject\n property. These IDs are used to located the services to be injected into the contructor.\n\n\nThe constructor receives these parameters and can save off the services to the local instance. TypeScript allows the \nprivate\n keyword in the constructor to indicate that the parameters should be accessible as private instance variables.\n\n\nAnd finally, the base events avaiable from the \nBaseController\n can be overridden. These include several events exposed by Ionic:\n\n\n\n\nview_loaded\n\n\nview_enter\n\n\nview_leave\n\n\nview_beforeEnter\n\n\nview_beforeLeave\n\n\nview_afterEnter\n\n\nview_afterLeave\n\n\nview_unloaded\n\n\ndestroy\n\n\n\n\nView Model\n\n\nThe view model specified is accessible in the template via the \nviewModel\n property:\n\n\nion-view view-title=\nCategory {{viewModel.categoryNumber}}\n\n\n\n\n\nView Events\n\n\nTo access an event on your controller, you should make your event \nprotected\n:\n\n\nprotected button1_click(event: ng.IAngularEvent): void {\n   ...\n}\n\n\n\n\nand access them using the \ncontroller\n property:\n\n\nbutton ng-click=\ncontroller.button1_click($event)\nClick Me!\n/button\n\n\n\n\n\nDirectives\n\n\nAngular directives are located in the \nsrc/Directives\n directory. There are two types of directives in this starter project; standard and element instance directives.\n\n\nStandard Directive\n\n\nA standard directive is simply a class that has a link function.\n\n\nAn example of a standard directive can be found in \nsrc/Directives/OnLoadDirective.ts\n. This directive can be used by placing an \non-load\n attribute on an image element and will cause a function to be fired when the image has loaded. For example:\n\n\nimg src=\n...\n on-load=\ncontroller.image1_load()\n\n\n\n\n\nElement Instance Directive\n\n\nThe optional \nBaseElementDirective\n class provides a recommendation on how to build element directives. This base class provides an \ninitialize\n and \nrender\n methods which should be overridden in your implementation.\n\n\nBuild element directives with this base class is useful for elements that need to maintain state, fire events, or otherwise act as accessible instances from your controller.\n\n\nAn example directive that can be used to show an icon with text is located at \n/src/Directives/Icon-Panel/IconPanelDirective.ts\n and is used from the category controller.\n\n\nFilters\n\n\nAngular filters are located in the \nsrc/Filters\n directory. To be registered as a filter, its class should exist the \nJustinCredible.SampleApp.Filters\n namespace. It should contain a unique static ID property and a single static filter named \nfilter\n in order to be registered automatically.\n\n\nnamespace JustinCredible.SampleApp.Filters {\n\n    export class ThousandsFilter {\n\n        public static ID = \nThousands\n;\n\n        public static filter(input: number): string {\n           ...\n        }\n    }\n}    \n\n\n\n\nServices\n\n\nAngular services are located in the \nsrc/Services\n directory. To be registered as a service, its class should exist in the \nJustinCredible.SampleApps.Service\n namespace. It should contain a unique static ID property in order to be registered automatically.\n\n\nnamespace JustinCredible.SampleApp.Services {\n\n    /**\n     * Provides a common set of helper/utility methods.\n     */\n    export class Utilities {\n\n        //#region Injection\n\n        public static ID = \nUtilities\n;\n\n        public static get $inject(): string[] {\n            return [\n                MyService.ID,\n                Preferences.ID\n            ];\n        }\n\n        constructor(\n            private MyService: MyService,\n            private Preferences: Preferences) {\n        }\n\n        //#endregion\n\n        public someMethod(): void {\n             this.MyService.doSomething();\n        }\n    }\n}    \n\n\n\n\n\n\nNote\n\n\nIf the class contains a static \ngetFactory\n method it will be registered as a factory instead of a service.\n\n\n\n\nProvided Services\n\n\nThe following services are provided with this sample project.\n\n\nConfiguration\n\n\nContains configuration values, including a reference to the build variables from the \nwww/js/build-vars.js\n file.\n\n\nFileUtilities\n\n\nA set of helper methods for working with Cordova's file plugin.\n\n\nHttpInterceptor\n\n\nA special factory for intercepting all HTTP requests. It is responsible for showing a progress indicator (via the \nNProgress\n library) for asynchronous requests or a full screen spinner for blocking requests.\n\n\nIt also takes care of expanding URLs starting with a tilde to have the URL defined by \nconfig.xml\n's \nApiUrl\n property prepended to it (eg \n~/Products/123\n would be expanded to \nhttp://your-server.com/path/Products/123\n for example).\n\n\nIt is also responsible for adding headers (such as API keys) or otherwise modifying the requests before they go out.\n\n\nLogger\n\n\nUsed to handle logging requests of various levels (eg \ninfo\n, \nwarn\n, \nerror\n, etc).\n\n\nThe provided implementation delegates to the applicable \nconsole\n methods and stores log in memory (which can be viewed via the \nin-app developer tools\n, but a production implementation could send logs to your servers.\n\n\nMockHttpApis\n\n\nUsed to provide mock implementations for HTTP request data. This is useful for demos, development, or testing.\n\n\nMock API mode is enabled via the developer tools view.\n\n\nSee \nDevelopment Tips: Mock HTTP APIs\n for more details.\n\n\nMockPlatformApis\n\n\nUsed to provide mock implementations of APIs that are native to certain platforms. This allows the developer to mock up Cordova plugin APIs which may not be available in the browser during development.\n\n\nThis is mainly used by the plugins service.\n\n\nSee \nDevelopment Tips: Mock Platform APIs\n for more details.\n\n\nPlugins\n\n\nUsed as a facad to access native Cordova plugins. If a plugin is not available on the given platform it will delegate to \nMockPlatFormApis\n to obtain a mock implementation.\n\n\nPreferences\n\n\nUsed to store user preferences which should be persisted when the application has closed. The default backing store is the web view's local storage (which is sandboxed and specific to your application instance).\n\n\nUiHelper\n\n\nContains several helper methods for user interface related tasks. This includes alert, confirm, and prompt dialogs as well as a PIN dialog.\n\n\nIt also includes a generic API to show your own custom dialogs.\n\n\nSee \nDialogs\n for more information.\n\n\nUtilities\n\n\nContains several helper methods for working with strings, determining device information, type introspection, and more.\n\n\nPIN Entry\n\n\nThe sample project includes a PIN entry dialog that the user can enable via the Settings view.\n\n\nAfter the application is in the background for more than 10 minutes, the user specified PIN must be entered to use the application.\n\n\nDeveloper Tools\n\n\nIn a debug build, the in-app developer tools view will be accessible from the Settings view. In a non-debug build, they can also be enabled by tapping the application icon in the About view ten times.\n\n\nThis view is a good location for items that are used during development. By default it allows the user to toggle mock HTTP mode, test various plugins, view logs logged by the Logger service, and view device information.\n\n\nDialogs\n\n\nIonic provides the \n$ionicModal\n service which can be used to show modal dialogs. This sample project includes the \nBaseDialogController\n base class and a \nUiHelper\n method \nshowDialog()\n which are used to simplify usage and normalize dialog behavior.\n\n\nTwo example dialogs are included with this sample project and are located at \nsrc/Views/Dialogs\n.\n\n\nThe \nshowDialog\n method wraps Ionic's modal implementation. It should be invoked with the ID of the controller for the dialog and optional dialog options. It returns a promise that is resolved once the dialog has been closed.\n\n\nthis.UiHelper.showDialog(PinEntryController.ID, options)\n    .then((result: Models.PinEntryDialogResultModel) =\n {\n\n    // Dialog closed with result object.\n});\n\n\n\n\nTo create a dialog you first need to create a template with the modal class and the \nng-controller\n attribute to specify the ID of your dialog's controller:\n\n\ndiv class=\nmodal\n ng-controller=\nPinEntryController\n\n\n\n\n\nThen you'll need to create a controller that extends \nBaseDialogController\n. If you examine the base class you'll see that it requires three templated types:\n\n\nexport class BaseDialogController\nV, D, R\n extends BaseController\nV\n { ... }\n\n\n\n\n\n\nV\n - view model that will be used in the dialog's template and controller.\n\n\nD\n - dialog model that is passed into the dialog via the options parameters when opening the dialog.\n\n\nR\n - dialog result model that is used to return information from the dialog to the caller promise when the dialog is closed.\n\n\n\n\nFor example, the PIN entry dialog itself works with \nPinEntryViewModel\n (\nV\n). It receives \nPinEntryDialogModel\n as its input (\nD\n) and when it closes it returns \nPinEntryDialogResultModel\n (\nR\n):\n\n\nexport class PinEntryController\n    extends BaseDialogController\nViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel\n {\n    ...\n}   \n\n\n\n\n\n\nNote\n\n\nEach of these types are optional, and not all dialogs will require all three types. For any types you do not wish to specify you can pass \nany\n or \nViewModels.EmptyViewModel\n.\n\n\n\n\nIf you examine the sample dialogs you'll see that the base class provides two events that are fired when the dialog opens and closes (\ndialog_shown\n and \ndialog_hidden\n respectively).\n\n\nAlso there are two base helper methods provided. The first, \ngetData()\n, is used to obtain the model object that was used to open the dialog (templated type \nD\n). The second \nclose()\n used to close the dialog. You can optionally pass an object of type \nR\n to the close method which will be returned to the opener via the promise result.\n\n\nPopovers\n\n\nWhile this starter project does not contain a specific base class for Ionic's popover view, you can see an example of one being used on Develper Tools \n Logs view.\n\n\nA popover is generally initialized via the \nview_beforeEnter\n event by specifying the path to an HTML template and scope to use (which can be the same scope as the current controller). The popover can later be shown by invoking its \nshow()\n method:\n\n\nprotected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {\n    super.view_beforeEnter(event, eventArgs);\n\n    this.$ionicPopover.fromTemplateUrl(\nViews/Settings/Logs-List/Log-Filter-Menu.html\n, {\n        scope: this.scope\n    }).then((popover: any) =\n {\n        this._popover = popover;\n    });\n}\n\nprotected filter_click(event: ng.IAngularEvent) {\n    this._popover.show(event);\n}\n\n\n\n\nIf the popover is sharing the same scope, the view model and controller can be accessed in the same way as a \nstandard controller\n by using the \nviewModel\n and \ncontroller\n keywords.", 
+            "title": "Base Framework"
+        }, 
+        {
+            "location": "/base-framework/#overview", 
+            "text": "The starter project comes with a suggested starting point for a framework. This section will cover its features.  It is important to note that this starter project is not actually a framework. See  Framework vs Starter Project  for the distinction.  The base namespace used is  JustinCredible.SampleApp . To switch this to your own namespace you can perform a project find and replace.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/base-framework/#build-schemes", 
+            "text": "The project is setup so that builds can be made for different environments. This is useful for easily switching between development, staging, or production environments for example.  You can switch between build schemes using the  gulp config --scheme scheme_name  command.  See  Development Tips: Build Schemes  for more details.", 
+            "title": "Build Schemes"
+        }, 
+        {
+            "location": "/base-framework/#boot-sequence", 
+            "text": "Cordova uses the the  src  attribute of the content element from  config.xml  to determine the initial page to load, which is set to  index.html  by default.  The  index.html  file has static references to all of the CSS and JavaScript files to load. In addition to the main application bundle ( www/js/bundle.js ) the page also references the first level boot loader:  www/js/boot1.js . This file is responsible for executing any code before Cordova's JS API, Ionic, or Angular have been initialized. It then kicks off the second level boot loader by invoking  JustinCredible.SampleApp.Boot2.main() .  The second level boot loader is located at  src/Framework/Boot2.ts  (which is compiled into  www/js/bundle.js ). The second level boot loader is responsible for initializing Ionic after the Cordova JavaScript ready event occurs. This is where you would configure Angular services and modules.  The second level boot loader takes care of registering filters, directives, controllers, and services automatically using a helper ( src/Framework/BootHelper.ts ). It does so by examining the applicable namespaces (eg  JustinCredible.SampleApp.Filters ,  JustinCredible.SampleApp.Services , etc). More details are provided in the applicable sections. The second level boot loader also takes care of setting up the Angular routes using the  src/Application/RouteConfig.ts  file.  After initializing and configuring Angular, the second level boot loader then delegates to the  start()  method of the application service located in  src/Application/Application.ts .  The application service is where the bulk of your low-level application specific code should be located (ie device events, global event handlers, push notification handlers etc). It takes care of pushing the user to the initial view.", 
+            "title": "Boot Sequence"
+        }, 
+        {
+            "location": "/base-framework/#views", 
+            "text": "A view or screen in your application will consist of an HTML Angular template, an Angular controller, a view model, and optionally, CSS styling.  A view is registered in the  src/Application/RouteConfig.ts  file by specifying the path to its template, the ID of its controller, and its URL and state name:  // A shared view used between categories, assigned a number via the route URL (categoryNumber).\n$stateProvider.state( app.category , {\n    url:  /category/:categoryNumber ,\n    views: {\n         root-view : {\n            templateUrl:  Views/Category/Category.html ,\n            controller: Controllers.CategoryController.ID\n        }\n    }\n});  In most simple Angular examples you'll find that templates, controllers, and view models are often located in seperate directories. While this is nice for a simple application, in larger applications it is burden to track down each of the files. This starter project instead groups the files by feature rather than function.  For example, you'll find all of the files applicable to the category view located at  src/Views/Category :", 
+            "title": "Views"
+        }, 
+        {
+            "location": "/base-framework/#controllers", 
+            "text": "Every controller in your application should extend the provided  BaseController  class and specify the type of view model for the view:  namespace JustinCredible.SampleApp.Controllers {\n\n    export class CategoryController extends BaseController ViewModels.CategoryViewModel  {\n\n        //#region Injection\n\n        public static ID =  CategoryController ;\n\n        public static get $inject(): string[] {\n            return [\n                 $scope ,\n                 $stateParams \n                Services.Utilities.ID\n            ];\n        }\n\n        constructor(\n            $scope: ng.IScope,\n            private $stateParams: ICategoryStateParams,\n            private Utilities: Services.Utilities) {\n            super($scope, ViewModels.CategoryViewModel);\n        }\n\n        //#endregion\n\n        //#region BaseController Events\n\n        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {\n            super.view_beforeEnter(event, eventArgs);\n\n            // Set the category number into the view model using the value as provided\n            // in the view route (via the $stateParameters).\n            let label = this.Utilities.format( Category: {0} , this.$stateParams.categoryNumber);\n            this.viewModel.categoryLabel = label;\n        }\n\n        //#endregion\n    }\n}   Note  If your view does not have a view model you can use the provided  EmptyViewModel  class.   The services to be injected into the controller are controlled via the static  $inject  property. These IDs are used to located the services to be injected into the contructor.  The constructor receives these parameters and can save off the services to the local instance. TypeScript allows the  private  keyword in the constructor to indicate that the parameters should be accessible as private instance variables.  And finally, the base events avaiable from the  BaseController  can be overridden. These include several events exposed by Ionic:   view_loaded  view_enter  view_leave  view_beforeEnter  view_beforeLeave  view_afterEnter  view_afterLeave  view_unloaded  destroy", 
+            "title": "Controllers"
+        }, 
+        {
+            "location": "/base-framework/#view-model", 
+            "text": "The view model specified is accessible in the template via the  viewModel  property:  ion-view view-title= Category {{viewModel.categoryNumber}}", 
+            "title": "View Model"
+        }, 
+        {
+            "location": "/base-framework/#view-events", 
+            "text": "To access an event on your controller, you should make your event  protected :  protected button1_click(event: ng.IAngularEvent): void {\n   ...\n}  and access them using the  controller  property:  button ng-click= controller.button1_click($event) Click Me! /button", 
+            "title": "View Events"
+        }, 
+        {
+            "location": "/base-framework/#directives", 
+            "text": "Angular directives are located in the  src/Directives  directory. There are two types of directives in this starter project; standard and element instance directives.", 
+            "title": "Directives"
+        }, 
+        {
+            "location": "/base-framework/#standard-directive", 
+            "text": "A standard directive is simply a class that has a link function.  An example of a standard directive can be found in  src/Directives/OnLoadDirective.ts . This directive can be used by placing an  on-load  attribute on an image element and will cause a function to be fired when the image has loaded. For example:  img src= ...  on-load= controller.image1_load()", 
+            "title": "Standard Directive"
+        }, 
+        {
+            "location": "/base-framework/#element-instance-directive", 
+            "text": "The optional  BaseElementDirective  class provides a recommendation on how to build element directives. This base class provides an  initialize  and  render  methods which should be overridden in your implementation.  Build element directives with this base class is useful for elements that need to maintain state, fire events, or otherwise act as accessible instances from your controller.  An example directive that can be used to show an icon with text is located at  /src/Directives/Icon-Panel/IconPanelDirective.ts  and is used from the category controller.", 
+            "title": "Element Instance Directive"
+        }, 
+        {
+            "location": "/base-framework/#filters", 
+            "text": "Angular filters are located in the  src/Filters  directory. To be registered as a filter, its class should exist the  JustinCredible.SampleApp.Filters  namespace. It should contain a unique static ID property and a single static filter named  filter  in order to be registered automatically.  namespace JustinCredible.SampleApp.Filters {\n\n    export class ThousandsFilter {\n\n        public static ID =  Thousands ;\n\n        public static filter(input: number): string {\n           ...\n        }\n    }\n}", 
+            "title": "Filters"
+        }, 
+        {
+            "location": "/base-framework/#services", 
+            "text": "Angular services are located in the  src/Services  directory. To be registered as a service, its class should exist in the  JustinCredible.SampleApps.Service  namespace. It should contain a unique static ID property in order to be registered automatically.  namespace JustinCredible.SampleApp.Services {\n\n    /**\n     * Provides a common set of helper/utility methods.\n     */\n    export class Utilities {\n\n        //#region Injection\n\n        public static ID =  Utilities ;\n\n        public static get $inject(): string[] {\n            return [\n                MyService.ID,\n                Preferences.ID\n            ];\n        }\n\n        constructor(\n            private MyService: MyService,\n            private Preferences: Preferences) {\n        }\n\n        //#endregion\n\n        public someMethod(): void {\n             this.MyService.doSomething();\n        }\n    }\n}       Note  If the class contains a static  getFactory  method it will be registered as a factory instead of a service.", 
+            "title": "Services"
+        }, 
+        {
+            "location": "/base-framework/#provided-services", 
+            "text": "The following services are provided with this sample project.", 
+            "title": "Provided Services"
+        }, 
+        {
+            "location": "/base-framework/#configuration", 
+            "text": "Contains configuration values, including a reference to the build variables from the  www/js/build-vars.js  file.", 
+            "title": "Configuration"
+        }, 
+        {
+            "location": "/base-framework/#fileutilities", 
+            "text": "A set of helper methods for working with Cordova's file plugin.", 
+            "title": "FileUtilities"
+        }, 
+        {
+            "location": "/base-framework/#httpinterceptor", 
+            "text": "A special factory for intercepting all HTTP requests. It is responsible for showing a progress indicator (via the  NProgress  library) for asynchronous requests or a full screen spinner for blocking requests.  It also takes care of expanding URLs starting with a tilde to have the URL defined by  config.xml 's  ApiUrl  property prepended to it (eg  ~/Products/123  would be expanded to  http://your-server.com/path/Products/123  for example).  It is also responsible for adding headers (such as API keys) or otherwise modifying the requests before they go out.", 
+            "title": "HttpInterceptor"
+        }, 
+        {
+            "location": "/base-framework/#logger", 
+            "text": "Used to handle logging requests of various levels (eg  info ,  warn ,  error , etc).  The provided implementation delegates to the applicable  console  methods and stores log in memory (which can be viewed via the  in-app developer tools , but a production implementation could send logs to your servers.", 
+            "title": "Logger"
+        }, 
+        {
+            "location": "/base-framework/#mockhttpapis", 
+            "text": "Used to provide mock implementations for HTTP request data. This is useful for demos, development, or testing.  Mock API mode is enabled via the developer tools view.  See  Development Tips: Mock HTTP APIs  for more details.", 
+            "title": "MockHttpApis"
+        }, 
+        {
+            "location": "/base-framework/#mockplatformapis", 
+            "text": "Used to provide mock implementations of APIs that are native to certain platforms. This allows the developer to mock up Cordova plugin APIs which may not be available in the browser during development.  This is mainly used by the plugins service.  See  Development Tips: Mock Platform APIs  for more details.", 
+            "title": "MockPlatformApis"
+        }, 
+        {
+            "location": "/base-framework/#plugins", 
+            "text": "Used as a facad to access native Cordova plugins. If a plugin is not available on the given platform it will delegate to  MockPlatFormApis  to obtain a mock implementation.", 
+            "title": "Plugins"
+        }, 
+        {
+            "location": "/base-framework/#preferences", 
+            "text": "Used to store user preferences which should be persisted when the application has closed. The default backing store is the web view's local storage (which is sandboxed and specific to your application instance).", 
+            "title": "Preferences"
+        }, 
+        {
+            "location": "/base-framework/#uihelper", 
+            "text": "Contains several helper methods for user interface related tasks. This includes alert, confirm, and prompt dialogs as well as a PIN dialog.  It also includes a generic API to show your own custom dialogs.  See  Dialogs  for more information.", 
+            "title": "UiHelper"
+        }, 
+        {
+            "location": "/base-framework/#utilities", 
+            "text": "Contains several helper methods for working with strings, determining device information, type introspection, and more.", 
+            "title": "Utilities"
+        }, 
+        {
+            "location": "/base-framework/#pin-entry", 
+            "text": "The sample project includes a PIN entry dialog that the user can enable via the Settings view.  After the application is in the background for more than 10 minutes, the user specified PIN must be entered to use the application.", 
+            "title": "PIN Entry"
+        }, 
+        {
+            "location": "/base-framework/#developer-tools", 
+            "text": "In a debug build, the in-app developer tools view will be accessible from the Settings view. In a non-debug build, they can also be enabled by tapping the application icon in the About view ten times.  This view is a good location for items that are used during development. By default it allows the user to toggle mock HTTP mode, test various plugins, view logs logged by the Logger service, and view device information.", 
+            "title": "Developer Tools"
+        }, 
+        {
+            "location": "/base-framework/#dialogs", 
+            "text": "Ionic provides the  $ionicModal  service which can be used to show modal dialogs. This sample project includes the  BaseDialogController  base class and a  UiHelper  method  showDialog()  which are used to simplify usage and normalize dialog behavior.  Two example dialogs are included with this sample project and are located at  src/Views/Dialogs .  The  showDialog  method wraps Ionic's modal implementation. It should be invoked with the ID of the controller for the dialog and optional dialog options. It returns a promise that is resolved once the dialog has been closed.  this.UiHelper.showDialog(PinEntryController.ID, options)\n    .then((result: Models.PinEntryDialogResultModel) =  {\n\n    // Dialog closed with result object.\n});  To create a dialog you first need to create a template with the modal class and the  ng-controller  attribute to specify the ID of your dialog's controller:  div class= modal  ng-controller= PinEntryController   Then you'll need to create a controller that extends  BaseDialogController . If you examine the base class you'll see that it requires three templated types:  export class BaseDialogController V, D, R  extends BaseController V  { ... }   V  - view model that will be used in the dialog's template and controller.  D  - dialog model that is passed into the dialog via the options parameters when opening the dialog.  R  - dialog result model that is used to return information from the dialog to the caller promise when the dialog is closed.   For example, the PIN entry dialog itself works with  PinEntryViewModel  ( V ). It receives  PinEntryDialogModel  as its input ( D ) and when it closes it returns  PinEntryDialogResultModel  ( R ):  export class PinEntryController\n    extends BaseDialogController ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel  {\n    ...\n}      Note  Each of these types are optional, and not all dialogs will require all three types. For any types you do not wish to specify you can pass  any  or  ViewModels.EmptyViewModel .   If you examine the sample dialogs you'll see that the base class provides two events that are fired when the dialog opens and closes ( dialog_shown  and  dialog_hidden  respectively).  Also there are two base helper methods provided. The first,  getData() , is used to obtain the model object that was used to open the dialog (templated type  D ). The second  close()  used to close the dialog. You can optionally pass an object of type  R  to the close method which will be returned to the opener via the promise result.", 
+            "title": "Dialogs"
+        }, 
+        {
+            "location": "/base-framework/#popovers", 
+            "text": "While this starter project does not contain a specific base class for Ionic's popover view, you can see an example of one being used on Develper Tools   Logs view.  A popover is generally initialized via the  view_beforeEnter  event by specifying the path to an HTML template and scope to use (which can be the same scope as the current controller). The popover can later be shown by invoking its  show()  method:  protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {\n    super.view_beforeEnter(event, eventArgs);\n\n    this.$ionicPopover.fromTemplateUrl( Views/Settings/Logs-List/Log-Filter-Menu.html , {\n        scope: this.scope\n    }).then((popover: any) =  {\n        this._popover = popover;\n    });\n}\n\nprotected filter_click(event: ng.IAngularEvent) {\n    this._popover.show(event);\n}  If the popover is sharing the same scope, the view model and controller can be accessed in the same way as a  standard controller  by using the  viewModel  and  controller  keywords.", 
+            "title": "Popovers"
+        }, 
+        {
+            "location": "/unit-testing/", 
+            "text": "Overview\n\n\nThe sample project is setup to use the \nKarma\n test runner and \nJasmine\n test framework.\n\n\nTwo example unit tests are provided and are written in TypeScript.\n\n\nTest Directory Layout\n\n\nThe \ntests\n directory contains the unit test configuration as well as the tests.\n\n\ntests/_references.ts\n\n\nThis file is used to reference TypeScript files so the compiler knows where to look during compilation. However, if you open the file you'll notice that it does not reference all of the files.\n\n\nThe \ngulp ts:tests\n task uses the TypeScript compiler's \n-p\n option to point at the \ntests\n directory for compilation. When using this flag we don't need to maintain a \n_references.ts\n file with paths to all of the files.\n\n\nThe only file externally that we need to reference is the bundle that contains the output from the result of compiling the \nsrc\n directory (the code that we want to test).\n\n\ntests/tsconfig.json\n\n\nThis file controls parameters passed to the TypeScript compiler and is used when running the \ngulp ts:tests\n task.\n\n\nBy default the tests are written to \ntests/bundle.tests.js\n and source maps are written to \ntests/bundle.tests.js.map\n.\n\n\ntests/tsd.d.ts \n(generated)\n\n\nThis file contains references to all of the \nTypeScript definition\n files from the \nDefinitelyTyped\n repository that are specific to the unit test files.\n\n\nThese are installed by the \ntsd\n tool via the \ngulp tsd:tests\n task. The definition files that are downloaded are specified in \ntsd.tests.json\n.\n\n\n\n\nWarning\n\n\nThis file will be removed when executing the \ngulp clean\n or \ngulp clean:tsd\n tasks and should not be committed to source control.\n\n\n\n\nTest Files\n\n\nTest files can be located anywhere in the \ntests\n directory.\n\n\nI recommend using subdirectories that mirror the directory stucture of the files they are testing from the \nsrc\n directory as well as the addition of a \n.Tests.ts\n suffix.\n\n\nFor example, the tests for the following files:\n\n\n\n\nsrc/Services/Utilities.ts\n\n\nsrc/Directives/OnLoadDirective.ts\n\n\nsrc/Views/Category/CategoryController.ts\n\n\n\n\nwould be located at the following locations:\n\n\n\n\ntests/Services/Utilities.Tests.ts\n\n\ntests/Directives/OnLoadDirective.Tests.ts\n\n\ntests/Views/Category/CategoryController.Tests.ts\n\n\n\n\nKarma Configuration\n\n\nConfiguration for the Karma test runner is located in \nkarma.conf.js\n.\n\n\nThis is the file that points at the compiled TypeScript test bundle (\ntests/bundle.tests.js\n by default) as well as specifies the JavaScript dependecies to load during the tests (the main application bundle, third party libraries etc).\n\n\n\n\nNote\n\n\nIt is important to pay attention to the \nfiles\n configuration property and ensure that the JavaScript files here match the ones listed in \nindex.master.html\n so that the same files that load when running the application are also available when running unit tests.\n\n\n\n\nRunning\n\n\nSimply execute \ngulp test\n to perform a single run of the unit tests.\n\n\n\n\nNote\n\n\nFor automated builds you may also find it useful to execute \nnpm test\n which delegates to \ngulp lint\n as well as \ngulp test\n.", 
+            "title": "Unit Testing"
+        }, 
+        {
+            "location": "/unit-testing/#overview", 
+            "text": "The sample project is setup to use the  Karma  test runner and  Jasmine  test framework.  Two example unit tests are provided and are written in TypeScript.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/unit-testing/#test-directory-layout", 
+            "text": "The  tests  directory contains the unit test configuration as well as the tests.", 
+            "title": "Test Directory Layout"
+        }, 
+        {
+            "location": "/unit-testing/#tests_referencests", 
+            "text": "This file is used to reference TypeScript files so the compiler knows where to look during compilation. However, if you open the file you'll notice that it does not reference all of the files.  The  gulp ts:tests  task uses the TypeScript compiler's  -p  option to point at the  tests  directory for compilation. When using this flag we don't need to maintain a  _references.ts  file with paths to all of the files.  The only file externally that we need to reference is the bundle that contains the output from the result of compiling the  src  directory (the code that we want to test).", 
+            "title": "tests/_references.ts"
+        }, 
+        {
+            "location": "/unit-testing/#teststsconfigjson", 
+            "text": "This file controls parameters passed to the TypeScript compiler and is used when running the  gulp ts:tests  task.  By default the tests are written to  tests/bundle.tests.js  and source maps are written to  tests/bundle.tests.js.map .", 
+            "title": "tests/tsconfig.json"
+        }, 
+        {
+            "location": "/unit-testing/#teststsddts-generated", 
+            "text": "This file contains references to all of the  TypeScript definition  files from the  DefinitelyTyped  repository that are specific to the unit test files.  These are installed by the  tsd  tool via the  gulp tsd:tests  task. The definition files that are downloaded are specified in  tsd.tests.json .   Warning  This file will be removed when executing the  gulp clean  or  gulp clean:tsd  tasks and should not be committed to source control.", 
+            "title": "tests/tsd.d.ts (generated)"
+        }, 
+        {
+            "location": "/unit-testing/#test-files", 
+            "text": "Test files can be located anywhere in the  tests  directory.  I recommend using subdirectories that mirror the directory stucture of the files they are testing from the  src  directory as well as the addition of a  .Tests.ts  suffix.  For example, the tests for the following files:   src/Services/Utilities.ts  src/Directives/OnLoadDirective.ts  src/Views/Category/CategoryController.ts   would be located at the following locations:   tests/Services/Utilities.Tests.ts  tests/Directives/OnLoadDirective.Tests.ts  tests/Views/Category/CategoryController.Tests.ts", 
+            "title": "Test Files"
+        }, 
+        {
+            "location": "/unit-testing/#karma-configuration", 
+            "text": "Configuration for the Karma test runner is located in  karma.conf.js .  This is the file that points at the compiled TypeScript test bundle ( tests/bundle.tests.js  by default) as well as specifies the JavaScript dependecies to load during the tests (the main application bundle, third party libraries etc).   Note  It is important to pay attention to the  files  configuration property and ensure that the JavaScript files here match the ones listed in  index.master.html  so that the same files that load when running the application are also available when running unit tests.", 
+            "title": "Karma Configuration"
+        }, 
+        {
+            "location": "/unit-testing/#running", 
+            "text": "Simply execute  gulp test  to perform a single run of the unit tests.   Note  For automated builds you may also find it useful to execute  npm test  which delegates to  gulp lint  as well as  gulp test .", 
+            "title": "Running"
+        }, 
+        {
+            "location": "/development-tips/", 
+            "text": "Overview\n\n\nThis section contains a list of tips and suggestions I've found useful when building mobile apps with this sample project.\n\n\nDeveloping with Chrome\n\n\nChrome offers excellent support for debugging TypeScript as well as working with mobile applications. The developer tools provide user agent string spoofing, view port emulation, network speed throttling and more.\n\n\nIonic offers the \nionic serve\n command which starts a lightweight HTTP server and serves your application.\n\n\nWith these two features combined your can rapidly build out your application without lengthy native compilation or emulator startup times.\n\n\n\n\nSecurity Flags\n\n\nWhen making HTTP requests to your backend API during development, you may find it useful to disable several security features such as the same origin policy and SSL certificate checking. To do so, you can start Chrome using the following flags:\n\n\n# OS X\n$ open -a \nGoogle Chrome.app\n --ignore-certificate-errors --disable-web-security\n\n# Windows\n\n chrome.exe --ignore-certificate-errors --disable-web-security\n\n\n\n\nSince these flags disable important security features, it is important that you do not use this Chrome instance for normal web browsing. If you use Chrome as your primary browser, I recommend launching a second instance pointed at a development only profile:\n\n\n# OS X\n$ open -a \nGoogle Chrome.app\n --ignore-certificate-errors --disable-web-security --user-data-dir=/tmp/ChromeDev\n\n# Windows\n\n chrome.exe --ignore-certificate-errors --disable-web-security --user-data-dir=C:\\tmp\\ChromeDev\n\n\n\n\nI went a step further and created an AppleScript which allows me to interactively start a new Chrome instance based on a series of dialog prompts to enable optional features like proxies. You can read more \nhere\n or look at the script directly \nhere\n.\n\n\nMock Platform APIs\n\n\nWhen you are running your application in Chrome you will be unable to call Cordova plugins that do not provide a brower platform implementation.\n\n\nIn this case you'll need to mock up the plugin's API interface via \nsrc/Framework/MockPlatformApis.ts\n.\n\n\nThe pattern I follow is to have all plugin access go through the \nPlugins\n service. This service exposes a property for each plugin. The property accessor should check to see if the plugin is available, and if it isn't, delegate to a mock implementation.\n\n\nYour mock implementation can simply be a no-op, or you can write a simple polyfill to provide basic funtionalilty for testing.\n\n\nYou'll see that the sample project uses the Cordova notification plugin to display native alert and confirm dialogs while running on devices. But when running in a browser, a mock implementation is provided that delegates to Ionic's   \n$ionicPopup\n service.\n\n\nMock HTTP APIs\n\n\nDuring development you may find it useful to mock up the responses for HTTP requests. This can be useful to test edge cases in your application or even build an application against APIs that aren't yet live.\n\n\nYou can mock up HTTP responses in \nsrc/Framework/MockHttpApis.ts\n. First, you specify the regular expression to match against a request URL, and then you provide a method which returns the data for that request.\n\n\nWhen mock HTTP API mode is enabled (via the \nin-app developer tools\n) these requests will not go over the wire and will instead return your mocked up data. There is a randomized delay of between one to three seconds so that you can simulate the latency of a request on a cellular network.\n\n\nRunning Natively\n\n\nTo run your application on the iOS Simulator or Android emulator you can use the \nionic emulate ios\n or \nionic emulate android\n commands respectively.\n\n\nLikewise, to run on an attached device, you can use the \nionic run ios --device\n or \nionic run android --device\n commands.\n\n\nIt is important to remember that part of what Cordova does for you is generating the native projects in the platforms directory. These native projects can be opened in XCode and Android Studio. This is useful for debugging native code plugins. To update the generated projects you can run \nionic prepare ios\n or \nionic prepare android\n.\n\n\nRunning iOS Simulator Remotely\n\n\nIf you are developing your application on a Windows or Linux machine, but want to test and run your application on iOS, you can do so using the \ngulp remote-emulate-ios\n task to target a remote OS X machine.\n\n\nFirst, you'll need to install the \nremotebuild\n package via npm on the OS X machine on which you want to build the project and run the simulator. Note that since the Cordova project will be built on the OS X machine, you'll need to make sure you have all the build prerequisites installed (Xcode etc).\n\n\n$ npm install -g remotebuild\n$ remotebuild start\n\n\n\n\nNext, you'll want to edit \nremote-build.json\n located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS X machine, as well as configure other settings.\n\n\nFinally, you can execute \ngulp remote-emulate-ios\n from the root of the starter project which will take care of TypeScript compilation, building a payload, and uploading it to the OS X machine so it can be built.\n\n\nVisual Studio Code\n\n\nShortcuts\n\n\nIf you are usig VSCode, you can use \n\u2318 Command\n\u21e7 Shift\nB\n to build the application. This will execute the \ngulp ts\n task.\n\n\nAdditionally, you can use \n\u2318 Command\n\u21e7 Shift\nR\n and then begin typing the name of a gulp task to run.\n\n\n\n\nTasks\n\n\nThe \n.vscode/tasks.json\n file contains configuration for the tasks you can launch, as well as definition for the problem matchers. A problem matcher allows you to define a regular expression which matches console output from a task and then use that information to display warnings or errors in Visual Studio Code's warning or error views.\n\n\n\n\nBuild Schemes\n\n\nDuring development it is a common requirement to be able to be able to create different builds of your application. For example, you may have a development build used by developers while writing code, a staging environment for QA staff to test changes, and a production environment for live users.\n\n\nIn each of these schemes you may need to point at different API URLs or use different Google Analytics accounts for example.\n\n\nThe starter project offers a gulp task and XML configuration to make it easy to switch between environments.\n\n\nConfiguration Task\n\n\nThe \ngulp config\n task is responsible for configuring the application for the default scheme. If a scheme name is provided via the scheme argument that scheme's configuration will be used instead.\n\n\nFor example, to use a scheme named staging:\n\n\ngulp config --scheme staging\n\n\n\n\nNote\n\n\nThe \ngulp ts\n task first runs \ngulp config\n so that if you are using VS Code, pressing \n\u2318 Command\n\u21e7 Shift\nB\n will result in the app being configured for the default scheme in addition to compiling TypeScript code.\n\n\n\n\nScheme Definitions\n\n\nBuild schemes are defined in the \nconfig.master.xml\n as child nodes under the \nschemes\n node:\n\n\nschemes default=\ndevelopment\n\n\n  \nscheme name=\ndevelopment\n debug=\ntrue\n\n    \nreplacement target=\nAPI_URL\n value=\nhttp://development.your-company.com/api\n/\n\n    \nreplacement target=\nAPI_VERSION\n value=\nv1\n/\n\n  \n/scheme\n\n\n  \nscheme name=\nstaging\n debug=\ntrue\n\n    \nreplacement target=\nAPI_URL\n value=\nhttp://development.your-company.com/api\n/\n\n    \nreplacement target=\nAPI_VERSION\n value=\nv1\n/\n\n  \n/scheme\n\n\n  \nscheme name=\nproduction\n debug=\nfalse\n\n    \nreplacement target=\nAPI_URL\n value=\nhttp://www.your-company.com/api\n/\n\n    \nreplacement target=\nAPI_VERSION\n value=\nv1\n/\n\n  \n/scheme\n\n\n\n/schemes\n\n\n\n\n\nThe \ndefault\n attribute indicates the name of the scheme to use if one isn't provided when executing \ngulp config\n (or using the VS Code shortcut).\n\n\nEach scheme has a \nname\n attribute as well as a \ndebug\n attribute. The debug attribute sets the value of an arbitrary debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (eg \nUtilities.isDebugMode\n).\n\n\nUnder each scheme node are replacement nodes. The \nvalue\n attribute is the content that should be used to replace any occurances of the value of the \ntarget\n attribute. Replacements will occur in the files listed in the generated files section.\n\n\nFor example, using the staging scheme by running \ngulp config --scheme staging\n would result in following configuration chunk from \nconfig.master.xml\n:\n\n\npreference name=\napiUrl\n value=\n${API_URL}\n/\n\n\npreference name=\napiVersion\n value=\n${API_VERSION}\n/\n\n\n\n\n\nbeing replaced with the following output to \nconfig.xml\n:\n\n\npreference name=\napiUrl\n value=\nhttp://development.your-company.com/api\n/\n\n\npreference name=\napiVersion\n value=\nv1\n/\n\n\n\n\n\nBase Schemes\n\n\nSome of your build schemes may have near identical configuration save for a single value or two. For these cases you can create a base scheme that contains the common values, and a specific scheme that uses the base scheme.\n\n\nFor example, perhaps you have two schemes that both point at production, but one is for pre-release testing in which you don't want analytics tracking enabled:\n\n\nscheme name=\nbase\n\n  \nreplacement target=\nAPI_URL\n value=\nhttp://app.company.com/api\n/\n\n  \nreplacement target=\nAPI_VERSION\n value=\nv1\n/\n\n\n/scheme\n\n\n\nscheme name=\nprerelease\n debug=\ntrue\n base-scheme=\nbase\n\n  \nreplacement target=\nGoogleAnalyticsId\n value=\n/\n\n\n/scheme\n\n\n\nscheme name=\nrelease\n debug=\nfalse\n base-scheme=\nbase\n\n  \nreplacement target=\nGoogleAnalyticsId\n value=\n1234567890\n/\n\n\n/scheme\n\n\n\n\n\nGenerated Files\n\n\nThe \ngulp config\n task takes care of generating the following files:\n\n\n\n\nCordova's \nconfig.xml\n (from \nconfig.master.xml\n)\n\n\nStarting page \nwww/index.html\n (from \nwww/index.master.html\n)\n\n\nRuntime variables at \nsrc/js/build-vars.js\n\n\n\n\nThe \nconfig.xml\n and \nwww/index.html\n files will have had variable substitution performed based on the build scheme.\n\n\nThe \nbuild-vars.js\n file will contain information about the build such as application name, version number, debug flag, and build timestamp. In addition, all of the \npreference\n elements' values from \nconfig.xml\n will be present in a properties collection. All of these values are available via the \nConfiguration\n service.", 
+            "title": "Development Tips"
+        }, 
+        {
+            "location": "/development-tips/#overview", 
+            "text": "This section contains a list of tips and suggestions I've found useful when building mobile apps with this sample project.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/development-tips/#developing-with-chrome", 
+            "text": "Chrome offers excellent support for debugging TypeScript as well as working with mobile applications. The developer tools provide user agent string spoofing, view port emulation, network speed throttling and more.  Ionic offers the  ionic serve  command which starts a lightweight HTTP server and serves your application.  With these two features combined your can rapidly build out your application without lengthy native compilation or emulator startup times.", 
+            "title": "Developing with Chrome"
+        }, 
+        {
+            "location": "/development-tips/#security-flags", 
+            "text": "When making HTTP requests to your backend API during development, you may find it useful to disable several security features such as the same origin policy and SSL certificate checking. To do so, you can start Chrome using the following flags:  # OS X\n$ open -a  Google Chrome.app  --ignore-certificate-errors --disable-web-security\n\n# Windows  chrome.exe --ignore-certificate-errors --disable-web-security  Since these flags disable important security features, it is important that you do not use this Chrome instance for normal web browsing. If you use Chrome as your primary browser, I recommend launching a second instance pointed at a development only profile:  # OS X\n$ open -a  Google Chrome.app  --ignore-certificate-errors --disable-web-security --user-data-dir=/tmp/ChromeDev\n\n# Windows  chrome.exe --ignore-certificate-errors --disable-web-security --user-data-dir=C:\\tmp\\ChromeDev  I went a step further and created an AppleScript which allows me to interactively start a new Chrome instance based on a series of dialog prompts to enable optional features like proxies. You can read more  here  or look at the script directly  here .", 
+            "title": "Security Flags"
+        }, 
+        {
+            "location": "/development-tips/#mock-platform-apis", 
+            "text": "When you are running your application in Chrome you will be unable to call Cordova plugins that do not provide a brower platform implementation.  In this case you'll need to mock up the plugin's API interface via  src/Framework/MockPlatformApis.ts .  The pattern I follow is to have all plugin access go through the  Plugins  service. This service exposes a property for each plugin. The property accessor should check to see if the plugin is available, and if it isn't, delegate to a mock implementation.  Your mock implementation can simply be a no-op, or you can write a simple polyfill to provide basic funtionalilty for testing.  You'll see that the sample project uses the Cordova notification plugin to display native alert and confirm dialogs while running on devices. But when running in a browser, a mock implementation is provided that delegates to Ionic's    $ionicPopup  service.", 
+            "title": "Mock Platform APIs"
+        }, 
+        {
+            "location": "/development-tips/#mock-http-apis", 
+            "text": "During development you may find it useful to mock up the responses for HTTP requests. This can be useful to test edge cases in your application or even build an application against APIs that aren't yet live.  You can mock up HTTP responses in  src/Framework/MockHttpApis.ts . First, you specify the regular expression to match against a request URL, and then you provide a method which returns the data for that request.  When mock HTTP API mode is enabled (via the  in-app developer tools ) these requests will not go over the wire and will instead return your mocked up data. There is a randomized delay of between one to three seconds so that you can simulate the latency of a request on a cellular network.", 
+            "title": "Mock HTTP APIs"
+        }, 
+        {
+            "location": "/development-tips/#running-natively", 
+            "text": "To run your application on the iOS Simulator or Android emulator you can use the  ionic emulate ios  or  ionic emulate android  commands respectively.  Likewise, to run on an attached device, you can use the  ionic run ios --device  or  ionic run android --device  commands.  It is important to remember that part of what Cordova does for you is generating the native projects in the platforms directory. These native projects can be opened in XCode and Android Studio. This is useful for debugging native code plugins. To update the generated projects you can run  ionic prepare ios  or  ionic prepare android .", 
+            "title": "Running Natively"
+        }, 
+        {
+            "location": "/development-tips/#running-ios-simulator-remotely", 
+            "text": "If you are developing your application on a Windows or Linux machine, but want to test and run your application on iOS, you can do so using the  gulp remote-emulate-ios  task to target a remote OS X machine.  First, you'll need to install the  remotebuild  package via npm on the OS X machine on which you want to build the project and run the simulator. Note that since the Cordova project will be built on the OS X machine, you'll need to make sure you have all the build prerequisites installed (Xcode etc).  $ npm install -g remotebuild\n$ remotebuild start  Next, you'll want to edit  remote-build.json  located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS X machine, as well as configure other settings.  Finally, you can execute  gulp remote-emulate-ios  from the root of the starter project which will take care of TypeScript compilation, building a payload, and uploading it to the OS X machine so it can be built.", 
+            "title": "Running iOS Simulator Remotely"
+        }, 
+        {
+            "location": "/development-tips/#visual-studio-code", 
+            "text": "", 
+            "title": "Visual Studio Code"
+        }, 
+        {
+            "location": "/development-tips/#shortcuts", 
+            "text": "If you are usig VSCode, you can use  \u2318 Command \u21e7 Shift B  to build the application. This will execute the  gulp ts  task.  Additionally, you can use  \u2318 Command \u21e7 Shift R  and then begin typing the name of a gulp task to run.", 
+            "title": "Shortcuts"
+        }, 
+        {
+            "location": "/development-tips/#tasks", 
+            "text": "The  .vscode/tasks.json  file contains configuration for the tasks you can launch, as well as definition for the problem matchers. A problem matcher allows you to define a regular expression which matches console output from a task and then use that information to display warnings or errors in Visual Studio Code's warning or error views.", 
+            "title": "Tasks"
+        }, 
+        {
+            "location": "/development-tips/#build-schemes", 
+            "text": "During development it is a common requirement to be able to be able to create different builds of your application. For example, you may have a development build used by developers while writing code, a staging environment for QA staff to test changes, and a production environment for live users.  In each of these schemes you may need to point at different API URLs or use different Google Analytics accounts for example.  The starter project offers a gulp task and XML configuration to make it easy to switch between environments.", 
+            "title": "Build Schemes"
+        }, 
+        {
+            "location": "/development-tips/#configuration-task", 
+            "text": "The  gulp config  task is responsible for configuring the application for the default scheme. If a scheme name is provided via the scheme argument that scheme's configuration will be used instead.  For example, to use a scheme named staging:  gulp config --scheme staging   Note  The  gulp ts  task first runs  gulp config  so that if you are using VS Code, pressing  \u2318 Command \u21e7 Shift B  will result in the app being configured for the default scheme in addition to compiling TypeScript code.", 
+            "title": "Configuration Task"
+        }, 
+        {
+            "location": "/development-tips/#scheme-definitions", 
+            "text": "Build schemes are defined in the  config.master.xml  as child nodes under the  schemes  node:  schemes default= development \n\n   scheme name= development  debug= true \n     replacement target= API_URL  value= http://development.your-company.com/api / \n     replacement target= API_VERSION  value= v1 / \n   /scheme \n\n   scheme name= staging  debug= true \n     replacement target= API_URL  value= http://development.your-company.com/api / \n     replacement target= API_VERSION  value= v1 / \n   /scheme \n\n   scheme name= production  debug= false \n     replacement target= API_URL  value= http://www.your-company.com/api / \n     replacement target= API_VERSION  value= v1 / \n   /scheme  /schemes   The  default  attribute indicates the name of the scheme to use if one isn't provided when executing  gulp config  (or using the VS Code shortcut).  Each scheme has a  name  attribute as well as a  debug  attribute. The debug attribute sets the value of an arbitrary debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (eg  Utilities.isDebugMode ).  Under each scheme node are replacement nodes. The  value  attribute is the content that should be used to replace any occurances of the value of the  target  attribute. Replacements will occur in the files listed in the generated files section.  For example, using the staging scheme by running  gulp config --scheme staging  would result in following configuration chunk from  config.master.xml :  preference name= apiUrl  value= ${API_URL} /  preference name= apiVersion  value= ${API_VERSION} /   being replaced with the following output to  config.xml :  preference name= apiUrl  value= http://development.your-company.com/api /  preference name= apiVersion  value= v1 /", 
+            "title": "Scheme Definitions"
+        }, 
+        {
+            "location": "/development-tips/#base-schemes", 
+            "text": "Some of your build schemes may have near identical configuration save for a single value or two. For these cases you can create a base scheme that contains the common values, and a specific scheme that uses the base scheme.  For example, perhaps you have two schemes that both point at production, but one is for pre-release testing in which you don't want analytics tracking enabled:  scheme name= base \n   replacement target= API_URL  value= http://app.company.com/api / \n   replacement target= API_VERSION  value= v1 /  /scheme  scheme name= prerelease  debug= true  base-scheme= base \n   replacement target= GoogleAnalyticsId  value= /  /scheme  scheme name= release  debug= false  base-scheme= base \n   replacement target= GoogleAnalyticsId  value= 1234567890 /  /scheme", 
+            "title": "Base Schemes"
+        }, 
+        {
+            "location": "/development-tips/#generated-files", 
+            "text": "The  gulp config  task takes care of generating the following files:   Cordova's  config.xml  (from  config.master.xml )  Starting page  www/index.html  (from  www/index.master.html )  Runtime variables at  src/js/build-vars.js   The  config.xml  and  www/index.html  files will have had variable substitution performed based on the build scheme.  The  build-vars.js  file will contain information about the build such as application name, version number, debug flag, and build timestamp. In addition, all of the  preference  elements' values from  config.xml  will be present in a properties collection. All of these values are available via the  Configuration  service.", 
+            "title": "Generated Files"
+        }
+    ]
+}

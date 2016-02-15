@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+	<title>Getting Started - Ionic/TypeScript Starter</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <link href="../css/base.css" rel="stylesheet">
+        <link href="../css/slick.css" rel="stylesheet">
+        <link href="../css/slick-theme.css" rel="stylesheet">
+        <link href="../css/keys.css" rel="stylesheet">
+        <link href="../css/admonition.css" rel="stylesheet">
+        <link href="../css/custom.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">Ionic/TypeScript Starter</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+                <li >
+                    <a href="..">Home</a>
+                </li>
+            
+            
+            
+                <li class="active">
+                    <a href="./">Getting Started</a>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project Layout <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li >
+                            <a href="../project-layout-root-files/">Root Files</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-src-directory/">src Directory</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-www-directory/">www Directory</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-other-directories/">Other Directories</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li >
+                            <a href="../gulp-tasks/">Gulp Tasks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../base-framework/">Base Framework</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../unit-testing/">Unit Testing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../development-tips/">Development Tips</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                    <a rel="next" href="..">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../project-layout-root-files/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/Justin-Credible/Ionic-TypeScript-Starter">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#overview">Overview</a></li>
+        
+    
+        <li class="main "><a href="#prerequisites">Prerequisites</a></li>
+        
+            <li><a href="#ios-specific">iOS Specific</a></li>
+        
+            <li><a href="#android-specific">Android Specific</a></li>
+        
+            <li><a href="#other-dependencies">Other Dependencies</a></li>
+        
+            <li><a href="#ides-and-text-editors">IDEs and Text Editors</a></li>
+        
+    
+        <li class="main "><a href="#environment-setup">Environment Setup</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="overview">Overview</h1>
+<p>This section will cover the prerequisites you'll need to start developing using the starter project.</p>
+<p>This guide assumes a Unix-like environment; deviations for Windows users will be called out with inline note blocks.</p>
+<h1 id="prerequisites">Prerequisites</h1>
+<p>Aside from mobile platform specific SDKs, <a href="https://nodejs.org/dist">Node.js</a> 4.4.x is the only external prerequisite.</p>
+<p>While any version of 4.4.x or higher should work, I've specifically tested and verified with version <a href="https://nodejs.org/dist/v4.2.2/">4.4.2</a>.</p>
+<p>Windows users can download the installer from the link above.</p>
+<p>For Mac OS, I recommend installing Node using <a href="https://www.npmjs.com/package/nvm">Node Version Manager</a> which can be installed using <a href="http://brew.sh/">Homebrew</a>. I recommend following the instructions in <a href="http://stackoverflow.com/a/28025834">this post</a> which will get you setup so that <code>npm install</code> does not require <code>sudo</code>.</p>
+<h2 id="ios-specific">iOS Specific</h2>
+<p>If you are developing for iOS you'll need XCode 7. I've specifically tested with version 7.1.</p>
+<ul>
+<li><a href="https://developer.apple.com/xcode/download/">Current Version</a></li>
+<li><a href="https://developer.apple.com/downloads/">Previous Versions</a></li>
+</ul>
+<p>Additionally, you'll probably want two additional Node packages globally which will allow you to run the your application on the iOS simulator as well as a physical device directly from the command line:</p>
+<pre><code>$ npm install -g ios-sim
+$ npm install -g ios-deploy
+</code></pre>
+<h2 id="android-specific">Android Specific</h2>
+<p>If you are developing for Android you'll need the the Android SDK and the Java Development SDK. I've listed the versions of the Android SDK I've tested with.</p>
+<ul>
+<li>Android SDK (<a href="http://developer.android.com/sdk/index.html#Other">installer</a>)<ul>
+<li>Android SDK Tools - 24.4.0</li>
+<li>Android SDK Platform-tools - 23.0.1</li>
+<li>Android SDK Build-tools - 23.0.1</li>
+<li>Android 5.1.1 - API 22</li>
+</ul>
+</li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK</a> 1.7</li>
+<li><a href="http://developer.android.com/sdk/index.html">Android Studio</a> - 1.4 (optional)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note for Windows users</p>
+<p>You can be sure you've installed these prerequisites property by typing each the following commands into a command prompt to ensure they can execute: <code>android</code>, <code>java --version</code>, <code>javac --version</code>, <code>ant --version</code>.</p>
+</div>
+<h2 id="other-dependencies">Other Dependencies</h2>
+<p>All other dependencies are installed in the project directory via <code>npm</code>. To use them <strong>you'll need to add <code>./node_modules/.bin</code> to your path</strong>. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.</p>
+<div class="admonition warning">
+<p class="admonition-title">Attention</p>
+<p>Do not skip this step; you need to add <code>./node_modules/.bin</code> to your path. If you try to install all the required depdencies globally you are much more likely to run into issues.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note for Windows users</p>
+<p>Windows users should note that the path <code>.\node_modules\.bin</code> should be appended via the System &gt; Environment Variables GUI and should restart their command prompt instance for the changes to take effect.</p>
+</div>
+<h2 id="ides-and-text-editors">IDEs and Text Editors</h2>
+<p>This project is platform and IDE agnostic. You can use any IDE or text editor.</p>
+<p>I recommend using the free and lightweight <a href="https://code.visualstudio.com">Visual Studio Code</a> editor as it has superb support for TypeScript.</p>
+<p>Development and debugging can be done in Chrome using its built in Developer Tools window.</p>
+<div class="admonition note">
+<p class="admonition-title">Note for Windows users</p>
+<p>This version of the starter project is made to work with any IDE. While I have put together an <a href="https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter">alternate version</a> that supports Visual Studio 2015, I still highly recommend using this version. The VS2015 Cordova wrapper ("Tools for Apache Cordova" project template) can sometimes, in my opinion, be a bit of a black box which makes it harder to work with.</p>
+</div>
+<h1 id="environment-setup">Environment Setup</h1>
+<p>To begin, edit your path, clone the repository, install the node packages, and initialize the development environment.</p>
+<pre><code>$ PATH=$PATH:./node_modules/.bin
+$ git clone https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git
+$ cd Ionic-TypeScript-Starter
+$ npm install
+$ gulp init
+</code></pre>
+<div class="admonition warning">
+<p class="admonition-title">Attention</p>
+<p>If you receive any errors while running <code>gulp init</code> please double check to ensure you've added <code>./node_modules/bin</code> to your path and that this path takes presedence over the globally installed node modules path.</p>
+</div>
+<p>The <code>gulp init</code> handles setting up the Cordova platform and plugins as well as obtaining libraries and code compilation. See <a href="../gulp-tasks/">Gulp Tasks</a> for details.</p>
+<p>At this point your envrionment should be ready for development!</p></div>
+        </div>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+        <script src="../js/base.js"></script>
+        <script src="../js/slick.min.js"></script>
+        <script src="../js/screenshots.js"></script>
+    </body>
+</html>

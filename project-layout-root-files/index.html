@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+	<title>Root Files - Ionic/TypeScript Starter</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <link href="../css/base.css" rel="stylesheet">
+        <link href="../css/slick.css" rel="stylesheet">
+        <link href="../css/slick-theme.css" rel="stylesheet">
+        <link href="../css/keys.css" rel="stylesheet">
+        <link href="../css/admonition.css" rel="stylesheet">
+        <link href="../css/custom.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">Ionic/TypeScript Starter</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+                <li >
+                    <a href="..">Home</a>
+                </li>
+            
+            
+            
+                <li >
+                    <a href="../getting-started/">Getting Started</a>
+                </li>
+            
+            
+            
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project Layout <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li class="active">
+                            <a href="./">Root Files</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-src-directory/">src Directory</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-www-directory/">www Directory</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-other-directories/">Other Directories</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li >
+                            <a href="../gulp-tasks/">Gulp Tasks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../base-framework/">Base Framework</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../unit-testing/">Unit Testing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../development-tips/">Development Tips</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                    <a rel="next" href="../getting-started/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../project-layout-src-directory/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/Justin-Credible/Ionic-TypeScript-Starter">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#overview">Overview</a></li>
+        
+    
+        <li class="main "><a href="#gitignore">.gitignore</a></li>
+        
+    
+        <li class="main "><a href="#travisyml">.travis.yml</a></li>
+        
+    
+        <li class="main "><a href="#bowerjson">bower.json</a></li>
+        
+    
+        <li class="main "><a href="#configmasterxml">config.master.xml</a></li>
+        
+    
+        <li class="main "><a href="#configxml-generated">config.xml (generated)</a></li>
+        
+    
+        <li class="main "><a href="#ionicproject">ionic.project</a></li>
+        
+    
+        <li class="main "><a href="#karmaconfjs">karma.conf.js</a></li>
+        
+    
+        <li class="main "><a href="#license">LICENSE</a></li>
+        
+    
+        <li class="main "><a href="#mkdocsyml">mkdocs.yml</a></li>
+        
+    
+        <li class="main "><a href="#packagejson">package.json</a></li>
+        
+    
+        <li class="main "><a href="#readmemd">README.md</a></li>
+        
+    
+        <li class="main "><a href="#remote-buildjson">remote-build.json</a></li>
+        
+    
+        <li class="main "><a href="#tsdjson">tsd.json</a></li>
+        
+    
+        <li class="main "><a href="#tsdtestsjson">tsd.tests.json</a></li>
+        
+    
+        <li class="main "><a href="#tslintjson">tslint.json</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="overview">Overview</h1>
+<p>This section will cover the functionality of each of the files in the root directory.</p>
+<h1 id="gitignore">.gitignore</h1>
+<p>Used to specify which source files should be excluded from source control.</p>
+<h1 id="travisyml">.travis.yml</h1>
+<blockquote>
+<p>Travis CI is a FOSS, hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. - <a href="https://en.wikipedia.org/wiki/Travis_CI">Wikipedia</a></p>
+</blockquote>
+<p>If you do not use Travis CI you can remove this file.</p>
+<h1 id="bowerjson">bower.json</h1>
+<p>This file is used by the <a href="http://bower.io/">Bower</a> package manager to declare the third party JavaScript libraries used by your application. Its install section can be used to customize the files that will be copied into <code>www/lib</code> when running the <code>gulp libs</code> task.</p>
+<p>See <code>gulp libs</code> in <a href="../gulp-tasks/#gulp-libs">Gulp Tasks</a> for more details.</p>
+<h1 id="configmasterxml">config.master.xml</h1>
+<p>This is the master config file that is used to generate <code>config.xml</code> when running the <code>gulp config</code> task.</p>
+<p>The config task will perform variable substitution based on the current build scheme.</p>
+<p>See <code>gulp config</code> in <a href="../gulp-tasks/#gulp-config">Gulp Tasks</a> for more details.</p>
+<h1 id="configxml-generated">config.xml <em>(generated)</em></h1>
+<p>This file is generated from <code>config.master.xml</code> when running the <code>gulp config</code> task. This is the main configuration file that Cordova uses to build and run your application.</p>
+<div class="admonition warn">
+<p class="admonition-title">Warn</p>
+<p>This file will be removed when executing the <code>gulp clean</code> or <code>gulp clean:config</code> tasks and should not be comitted to source control.</p>
+</div>
+<h1 id="ionicproject">ionic.project</h1>
+<p>This file is used by the <code>ionic</code> command line tool. It is used to configure <a href="http://ionic.io/">Ionic.io</a> services, among other things.</p>
+<h1 id="karmaconfjs">karma.conf.js</h1>
+<p>This is the configuration file for the <a href="https://karma-runner.github.io">Karma Unit Test Runner</a> which is used to run the unit tests via the <code>gulp test</code> task.</p>
+<p>See <code>gulp test</code> in <a href="../gulp-tasks/#gulp-test">Gulp Tasks</a> for more details.</p>
+<h1 id="license">LICENSE</h1>
+<p>This is the license file for the starter project.</p>
+<h1 id="mkdocsyml">mkdocs.yml</h1>
+<p>The configuration file for the <a href="http://www.mkdocs.org/">MkDocs document generator</a> which is used to generate these docs from the Markdown files in the <code>docs</code> directory.</p>
+<p>If you are not using MkDocs you can remove this file and the <code>docs</code> directory.</p>
+<h1 id="packagejson">package.json</h1>
+<p>This is file is used by Node to describe the starter project as well as declare the dependencies that need to be downloaded when executing the <code>npm install</code> command.</p>
+<p>These include the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).</p>
+<h1 id="readmemd">README.md</h1>
+<p>The default readme file for the starter project.</p>
+<p>This can be removed or replaced with information specific to your application.</p>
+<h1 id="remote-buildjson">remote-build.json</h1>
+<p>This file contains configuration used by the <code>gulp remote-emulate-ios</code> task which allows developers on Windows or Linux to package, build, or run their app on a remote Mac OS X machine.</p>
+<p>See <a href="../development-tips/#running-ios-simulator-remotely">Running iOS Simulator Remotely</a> for more details.</p>
+<p>See <code>gulp remote-emulate-ios</code> in <a href="../gulp-tasks/#gulp-remote-emulate-ios">Gulp Tasks</a> for more details.</p>
+<h1 id="tsdjson">tsd.json</h1>
+<p>This file declares the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition files</a> that should be downloaded when executing the <code>gulp tsd</code> task. The definition files are hosted by the <a href="http://definitelytyped.org/">DefinitelyTyped</a> project.</p>
+<p>These definition files describe third party JavaScript libraries that your application uses so they can be referenced from TypeScript in a stronly-typed manner.</p>
+<p>This file can be updated by used the <code>tsd</code> command line tool to add or remove definitions.</p>
+<p>See <code>gulp tsd</code> in <a href="../gulp-tasks/#gulp-tsd">Gulp Tasks</a> for more details.</p>
+<h1 id="tsdtestsjson">tsd.tests.json</h1>
+<p>This file declares the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition files</a> that should be downloaded when executing the <code>gulp tsd</code> task. The definition files are hosted by the <a href="http://definitelytyped.org/">DefinitelyTyped</a> project.</p>
+<p>These definition files describe third party JavaScript libraries that your unit tests use so they can be referenced from TypeScript in a stronly-typed manner.</p>
+<p>This file can be updated by used the <code>tsd</code> command line tool to add or remove definitions.</p>
+<p>See <code>gulp tsd</code> in <a href="../gulp-tasks/#gulp-tsd">Gulp Tasks</a> for more details.</p>
+<h1 id="tslintjson">tslint.json</h1>
+<p>This file contains configuration for the TypeScript <a href="https://en.wikipedia.org/wiki/Lint_(software)">linter</a>.</p>
+<p>See <code>gulp lint</code> in <a href="../gulp-tasks/#gulp-lint">Gulp Tasks</a> for more details.</p></div>
+        </div>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+        <script src="../js/base.js"></script>
+        <script src="../js/slick.min.js"></script>
+        <script src="../js/screenshots.js"></script>
+    </body>
+</html>

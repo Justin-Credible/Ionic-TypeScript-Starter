@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+	<title>src Directory - Ionic/TypeScript Starter</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <link href="../css/base.css" rel="stylesheet">
+        <link href="../css/slick.css" rel="stylesheet">
+        <link href="../css/slick-theme.css" rel="stylesheet">
+        <link href="../css/keys.css" rel="stylesheet">
+        <link href="../css/admonition.css" rel="stylesheet">
+        <link href="../css/custom.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">Ionic/TypeScript Starter</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+                <li >
+                    <a href="..">Home</a>
+                </li>
+            
+            
+            
+                <li >
+                    <a href="../getting-started/">Getting Started</a>
+                </li>
+            
+            
+            
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project Layout <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li >
+                            <a href="../project-layout-root-files/">Root Files</a>
+                        </li>
+                    
+                        <li class="active">
+                            <a href="./">src Directory</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-www-directory/">www Directory</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../project-layout-other-directories/">Other Directories</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li >
+                            <a href="../gulp-tasks/">Gulp Tasks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../base-framework/">Base Framework</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../unit-testing/">Unit Testing</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../development-tips/">Development Tips</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                    <a rel="next" href="../project-layout-root-files/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../project-layout-www-directory/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/Justin-Credible/Ionic-TypeScript-Starter">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#overview">Overview</a></li>
+        
+            <li><a href="#tsconfigjson">tsconfig.json</a></li>
+        
+            <li><a href="#tsddts-generated">tsd.d.ts (generated)</a></li>
+        
+            <li><a href="#_referencests">_references.ts</a></li>
+        
+    
+        <li class="main "><a href="#framework">Framework</a></li>
+        
+            <li><a href="#srcframeworkboot2ts">src/Framework/Boot2.ts</a></li>
+        
+            <li><a href="#frameworkboothelperts">Framework/BootHelper.ts</a></li>
+        
+            <li><a href="#frameworkbasecontrollerts">Framework/BaseController.ts</a></li>
+        
+            <li><a href="#frameworkbasedialogcontrollerts">Framework/BaseDialogController.ts</a></li>
+        
+            <li><a href="#frameworkbaseelementdirectivets">Framework/BaseElementDirective.ts</a></li>
+        
+            <li><a href="#frameworkdialogoptionsts">Framework/DialogOptions.ts</a></li>
+        
+            <li><a href="#frameworkemptyviewmodelts">Framework/EmptyViewModel.ts</a></li>
+        
+    
+        <li class="main "><a href="#application">Application</a></li>
+        
+            <li><a href="#applicationapplicationts">Application/Application.ts</a></li>
+        
+            <li><a href="#applicationconstantsts">Application/Constants.ts</a></li>
+        
+            <li><a href="#applicationrouteconfigts">Application/RouteConfig.ts</a></li>
+        
+    
+        <li class="main "><a href="#filters">Filters</a></li>
+        
+    
+        <li class="main "><a href="#directives">Directives</a></li>
+        
+    
+        <li class="main "><a href="#models">Models</a></li>
+        
+    
+        <li class="main "><a href="#services">Services</a></li>
+        
+    
+        <li class="main "><a href="#styles">Styles</a></li>
+        
+    
+        <li class="main "><a href="#views">Views</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="overview">Overview</h1>
+<p>This section will cover the <code>src</code> directories and its children.</p>
+<p>The <code>src</code> directory contains the bulk of the source code for your application. This includes TypeScript source, SASS styling, and Angular HTML templates.</p>
+<p>TypeScript files are compiled using the internal module system using the <code>namespace</code> keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This allows us to avoid having to use a module loader at runtime.</p>
+<p>In most example Angular applications you'll commonly see separate directories for each component (eg controllers, views, models, services etc). While this is nice for tutorials and small applications, it is not ideal for applications that contain a large number of files.</p>
+<p>Instead, this project groups files by feature rather than type. So instead of having to look in multiple directories for all of the files applicable for a given view, you'll be able to find all applicable files in the same location.</p>
+<div class="admonition note">
+<p class="admonition-title">Note about namepsaces</p>
+<p>As you explore the directory structure you'll notice that the namespaces and directory paths do not match as they would in other languages (Java for example).</p>
+<p>Instead we use directories for grouping files by feature and namespaces for determining the behavior of a given file.</p>
+<p>For example, a class in the <code>Controllers</code> namespace will be treated as an Angular controller. Instead of placing it in a controllers directory it can be placed in the same directory as the view model and template to which it belongs.</p>
+</div>
+<h2 id="tsconfigjson">tsconfig.json</h2>
+<p>This file controls parameters passed to the TypeScript compiler and is used when running the <code>gulp ts</code> task or building from within VS Code.</p>
+<h2 id="tsddts-generated">tsd.d.ts <em>(generated)</em></h2>
+<p>This file contains references to all of the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition</a> files from the <a href="http://definitelytyped.org/">DefinitelyTyped</a> repository.</p>
+<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd</code> task. The definition files that are downloaded are specified in <code>tsd.json</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This file will be removed when executing the <code>gulp clean</code> or <code>gulp clean:tsd</code> tasks and should not be committed to source control.</p>
+</div>
+<h2 id="_referencests">_references.ts</h2>
+<p>This file is used to reference TypeScript files so the compiler knows where to look during compilation. However, if you open the file you'll notice that it does not reference all of the files.</p>
+<p>The <code>gulp ts</code> task uses the TypeScript compiler's <code>-p</code> option to point at the <code>src</code> directory for compilation. When using this flag we don't need to maintain a <code>_references.ts</code> file with paths to all of the files.</p>
+<p>However the file is still useful when we are using internal modules as it allows us to control the order that the JavaScript output is emitted into the bundle file.</p>
+<p>We need to do this for specific classes that are base classes (so that at runtime these are loaded before any descendant classes).</p>
+<p>It is unlikely that you'll need to edit this file unless you add more base classes.</p>
+<h1 id="framework">Framework</h1>
+<p>The framework directory contains components that make up the "framework" for your application. This includes base classes as well as the second level boot loader.</p>
+<h2 id="srcframeworkboot2ts">src/Framework/Boot2.ts</h2>
+<p>This is the second level boot loader whose purpose is to initialize Angular and Ionic. This involves declaring the root Angular module as well as registering Angular components (such as controllers, services, directives, and filters). This is where the Angular run and config functions live.</p>
+<p>The second level boot loader's <code>boot()</code> method is invoked from the first level boot loader (<code>www/js/boot1.js</code>). After it finishes, it then delegates to the <code>start()</code> method in the <code>src/Application/Application.ts</code> file.</p>
+<h2 id="frameworkboothelperts">Framework/BootHelper.ts</h2>
+<p>This contains helper methods for use by the second level boot loader such as controller or service registration etc.</p>
+<h2 id="frameworkbasecontrollerts">Framework/BaseController.ts</h2>
+<p>This is a base class that should be used by all of the Angular controllers.</p>
+<p>See <a href="../base-framework/#controllers">Base Framework: Controllers</a> for more information.</p>
+<h2 id="frameworkbasedialogcontrollerts">Framework/BaseDialogController.ts</h2>
+<p>This is a base class that should be used by all of the Angular controllers used for Ionic modal dialogs.</p>
+<p>See <a href="../base-framework/#dialogs">Base Framework: Dialogs</a> for more information.</p>
+<h2 id="frameworkbaseelementdirectivets">Framework/BaseElementDirective.ts</h2>
+<p>This is a base class that should be used by all of the Angular directives that are for elements.</p>
+<p>See <a href="../base-framework/#directives">Base Framework: Directives</a> for more information.</p>
+<h2 id="frameworkdialogoptionsts">Framework/DialogOptions.ts</h2>
+<p>This is an model object used to pass data and set options for Ionic modal dialogs.</p>
+<p>See <a href="../base-framework/#dialogs">Base Framework: Dialogs</a> for more information.</p>
+<h2 id="frameworkemptyviewmodelts">Framework/EmptyViewModel.ts</h2>
+<p>This is an empty view model class used for controllers that do not need a view model.</p>
+<h1 id="application">Application</h1>
+<p>The application directory contains code specific to your application that is not tied to specific views.</p>
+<h2 id="applicationapplicationts">Application/Application.ts</h2>
+<p>This contains the main class for your application. Its <code>start()</code> method is invoked by the second level boot loader.</p>
+<p>Here you can subscribe to device events (eg pause, resume) or configure Cordova plugins when your application starts.</p>
+<p>This is a good place to put logic that doesn't correspond to any of your view specifically. For example, exception handlers or push notification handlers.</p>
+<p>This project uses the <code>device_resume</code> method to determine the initial view the user should be placed on.</p>
+<h2 id="applicationconstantsts">Application/Constants.ts</h2>
+<p>This file contains a static namespace housing constants for use throughout your application.</p>
+<h2 id="applicationrouteconfigts">Application/RouteConfig.ts</h2>
+<p>This file contains a single, static method named <code>setupRoutes(...)</code> which is delegated to from the second level boot loader.</p>
+<p>It is responsible for defining up all of the Angular routes by specifying the controller and view to use for each route.</p>
+<h1 id="filters">Filters</h1>
+<p>This is where all of your <a href="https://docs.angularjs.org/guide/filter">Angular filters</a> should live.</p>
+<p>An example filter is provided with the sample project. A filter should be a class with a static <code>filter</code> method.</p>
+<p>See <a href="../base-framework/#filters">Base Framework: Filters</a> for more details.</p>
+<h1 id="directives">Directives</h1>
+<p>This is where all of your <a href="https://docs.angularjs.org/guide/directive">Angular directives</a> should live.</p>
+<p>Two example directives are provided with the sample project; one is a simple directive (extending <code>ng.IDirective</code>) and one is an element directive (extending <code>BaseElementDirective</code>).</p>
+<p>See <a href="../base-framework/#directives">Base Framework: Directives</a> for more details.</p>
+<h1 id="models">Models</h1>
+<p>This is where you can store model objects that are shared across multiple areas or services in your application (not view models, for example).</p>
+<h1 id="services">Services</h1>
+<p>This is where all of your <a href="https://docs.angularjs.org/guide/services">Angular services</a> sholud live.</p>
+<p>There are several services provided with the sample project; see <a href="../base-framework/#services">Base Framework: Services</a> for more details.</p>
+<h1 id="styles">Styles</h1>
+<p>This is where you should store your common or shared SASS styles. The <code>Index.scss</code> file is used to reference all of the SASS files to be compiled.</p>
+<p>Styles that are specific to a view should be co-located in the appropriate view directory.</p>
+<p>See <code>gulp sass</code> in <a href="../gulp-tasks/#gulp-sass">Gulp Tasks</a> for more details.</p>
+<h1 id="views">Views</h1>
+<p>This directory should contain all of your controllers, view models, templates, and styles for each view.</p>
+<p>The default layout uses a directory for each view which contains its controller, view model, template and styling.</p>
+<p>Each controller should extend <code>BaseController</code> or <code>BaseDialogController</code>.</p>
+<p>See <code>gulp templates</code> and <code>gulp sass</code> in <a href="../gulp-tasks/#gulp-templates">Gulp Tasks</a> and <a href="../base-framework/#views">Base Framework: Views</a> for more details.</p></div>
+        </div>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+        <script src="../js/base.js"></script>
+        <script src="../js/slick.min.js"></script>
+        <script src="../js/screenshots.js"></script>
+    </body>
+</html>
