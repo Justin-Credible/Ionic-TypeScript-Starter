@@ -10,51 +10,9 @@ The base namespace used is `JustinCredible.SampleApp`. To switch this to your ow
 
 The project is setup so that builds can be made for different environments. This is useful for easily switching between development, staging, or production environments for example.
 
-A build scheme consists of a boolean debug flag as well as a collection of variables that are used to replace values in configuration files. These builds schemes are located in the `schemes` node at the top of the `config.master.xml` file:
+You can switch between build schemes using the `gulp config --scheme scheme_name` command.
 
-```
-<schemes default="localdev">
-
-	<!-- Used during development. -->
-	<scheme name="development" debug="true">
-	  <replacement target="API_URL" value="http://development.your-company.com/api"/>
-	  <replacement target="API_VERSION" value="v1"/>
-	</scheme>
-	
-	<!-- Used during QA. -->
-	<scheme name="staging" debug="true">
-	  <replacement target="API_URL" value="http://development.your-company.com/api"/>
-	  <replacement target="API_VERSION" value="v1"/>
-	</scheme>
-	
-	<!-- Used for release builds. -->
-	<scheme name="production" debug="false">
-	  <replacement target="API_URL" value="http://www.your-company.com/api"/>
-	  <replacement target="API_VERSION" value="v1"/>
-	</scheme>
-
-</schemes>
-```
-
-The `gulp config` task (see [here](gulp-tasks.md#gulp-config)) takes this scheme information and generates configuration files based on their master files by performing variable replacement. The scheme to use is specified using the `--scheme` flag (for example, `gulp config --scheme staging`).
-
-The config task will use `config.master.xml` and `www/index.master.html` to create `config.xml` and `www/index.html` respectively.
-
-So for example, if running `gulp config --scheme staging` the following configuration chunk from `config.master.xml`:
-
-```
-<preference name="apiUrl" value="${API_URL}"/>
-<preference name="apiVersion" value="${API_VERSION}"/>
-```
-
-would result in the following variable replacement to `config.xml`:
-
-```
-<preference name="apiUrl" value="http://development.your-company.com/api"/>
-<preference name="apiVersion" value="v1"/>
-```
-
-In addition to generating configuraiton files from master files, this task will also take care of creating the `www/js/build-vars.js` file. This file will contain the debug flag as well as all of the preference nodes from `config.xml`.
+See [Development Tips: Build Schemes](development-tips.md#build-schemes) for more details.
 
 # Boot Sequence
 
@@ -289,7 +247,7 @@ It is also responsible for adding headers (such as API keys) or otherwise modify
 
 Used to handle logging requests of various levels (eg `info`, `warn`, `error`, etc).
 
-The provided implementation delegates to the applicable `console` methods and stores log in memory (which can be viewed via the [Developer Tools view](#Developer-Tools), but a production implementation could send logs to your servers.
+The provided implementation delegates to the applicable `console` methods and stores log in memory (which can be viewed via the [in-app developer tools](base-framework.md#developer-tools), but a production implementation could send logs to your servers.
 
 ### MockHttpApis
 
@@ -297,11 +255,15 @@ Used to provide mock implementations for HTTP request data. This is useful for d
 
 Mock API mode is enabled via the developer tools view.
 
+See [Development Tips: Mock HTTP APIs](development-tips.md#mock-http-apis) for more details.
+
 ### MockPlatformApis
 
-Used to provide mock implementations of APIs that are native to certain platforms. This allows the developer to mock up APIs which may not be available in the browser for example.
+Used to provide mock implementations of APIs that are native to certain platforms. This allows the developer to mock up Cordova plugin APIs which may not be available in the browser during development.
 
 This is mainly used by the plugins service.
+
+See [Development Tips: Mock Platform APIs](development-tips.md#mock-platform-apis) for more details.
 
 ### Plugins
 
@@ -315,11 +277,13 @@ Used to store user preferences which should be persisted when the application ha
 
 Contains several helper methods for user interface related tasks. This includes alert, confirm, and prompt dialogs as well as a PIN dialog.
 
-It also includes a generic API to show your own custom dialogs. See [Dialogs](#dialogs) for more information.
+It also includes a generic API to show your own custom dialogs.
+
+See [Dialogs](base-framework.md#dialogs) for more information.
 
 ### Utilities
 
-Contains several helper methods for working with strings, determining device information, type introspection, and any other utility method.
+Contains several helper methods for working with strings, determining device information, type introspection, and more.
 
 # PIN Entry
 
@@ -329,7 +293,7 @@ After the application is in the background for more than 10 minutes, the user sp
 
 # Developer Tools
 
-In a debug build, the Developer Tools view will be accessible from the Settings view. The Developer Tools can also be enabled by tapping the application icon in the About view 10 times.
+In a debug build, the in-app developer tools view will be accessible from the Settings view. In a non-debug build, they can also be enabled by tapping the application icon in the About view ten times.
 
 This view is a good location for items that are used during development. By default it allows the user to toggle mock HTTP mode, test various plugins, view logs logged by the Logger service, and view device information.
 
@@ -349,7 +313,7 @@ this.UiHelper.showDialog(PinEntryController.ID, options)
 });
 ```
 
-To create a dialog you first need to create a template with the modal class and beans and the `ng-controller` attribute to specify the ID of your dialog's controller:
+To create a dialog you first need to create a template with the modal class and the `ng-controller` attribute to specify the ID of your dialog's controller:
 
 ```
 <div class="modal" ng-controller="PinEntryController">
@@ -362,8 +326,8 @@ export class BaseDialogController<V, D, R> extends BaseController<V> { ... }
 ```
 
 * `V` - view model that will be used in the dialog's template and controller.
-* `D` - object that is passed into the dialog via the options parameters when opening the dialog.
-* `R` - object that is used to resolve the promise when the dialog is closed.
+* `D` - dialog model that is passed into the dialog via the options parameters when opening the dialog.
+* `R` - dialog result model that is used to return information from the dialog to the caller promise when the dialog is closed.
 
 For example, the PIN entry dialog itself works with `PinEntryViewModel` (`V`). It receives `PinEntryDialogModel` as its input (`D`) and when it closes it returns `PinEntryDialogResultModel` (`R`):
 
@@ -379,29 +343,28 @@ export class PinEntryController
 
 If you examine the sample dialogs you'll see that the base class provides two events that are fired when the dialog opens and closes (`dialog_shown` and `dialog_hidden` respectively).
 
-Also there are two helper methods provided. The first `getData()` is used to grab the model object that was used to open the dialog (templated type `D`). The second `close()` used to close the dialog. You can optionally pass an object of type `R` to the close method which will be returned to the opener via the promise result.
+Also there are two base helper methods provided. The first, `getData()`, is used to obtain the model object that was used to open the dialog (templated type `D`). The second `close()` used to close the dialog. You can optionally pass an object of type `R` to the close method which will be returned to the opener via the promise result.
 
-# Popover
+# Popovers
 
-While this starter project does not contain a specific structure for Ionic's popover view, you can see an example of one being used on Develper Tools > Logs view.
+While this starter project does not contain a specific base class for Ionic's popover view, you can see an example of one being used on Develper Tools > Logs view.
 
-A popover is generally initialized via the `view_beforeEnter` event by specifying the path to the HTML template an the scope (which can be the same scope as the current controller). The popover can later be shown by invoking its `show()` method:
+A popover is generally initialized via the `view_beforeEnter` event by specifying the path to an HTML template and scope to use (which can be the same scope as the current controller). The popover can later be shown by invoking its `show()` method:
 
 ```
-    protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
-        super.view_beforeEnter(event, eventArgs);
+protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+    super.view_beforeEnter(event, eventArgs);
 
-        this.$ionicPopover.fromTemplateUrl("Views/Settings/Logs-List/Log-Filter-Menu.html", {
-            scope: this.scope
-        }).then((popover: any) => {
-            this._popover = popover;
-        });
-    }
+    this.$ionicPopover.fromTemplateUrl("Views/Settings/Logs-List/Log-Filter-Menu.html", {
+        scope: this.scope
+    }).then((popover: any) => {
+        this._popover = popover;
+    });
+}
 
-    protected filter_click(event: ng.IAngularEvent) {
-        this._popover.show(event);
-    }
-}  
+protected filter_click(event: ng.IAngularEvent) {
+    this._popover.show(event);
+}
 ```
 
-If the popover is sharing the same scope, the view model and controller can be accessed in the same way as a [standard controller](#controllers) by using the `viewModel` and `controller` keywords.
+If the popover is sharing the same scope, the view model and controller can be accessed in the same way as a [standard controller](base-framework.md#controllers) by using the `viewModel` and `controller` keywords.

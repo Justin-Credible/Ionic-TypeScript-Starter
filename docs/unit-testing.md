@@ -18,7 +18,7 @@ The only file externally that we need to reference is the bundle that contains t
 
 ## tests/tsconfig.json
 
-This file controls parameters passed to the TypeScript compiler and is used when running the `gulp ts:tests` task.s
+This file controls parameters passed to the TypeScript compiler and is used when running the `gulp ts:tests` task.
 
 By default the tests are written to `tests/bundle.tests.js` and source maps are written to `tests/bundle.tests.js.map`.
 

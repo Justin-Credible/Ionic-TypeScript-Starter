@@ -14,27 +14,34 @@ If you do not use Travis CI you can remove this file.
 
 # bower.json
 
-This file is used by [Bower](http://bower.io/) to specify the third party JavaScript libraries used by your application. It's install section can be used which files to copy into `www/lib` when running the `gulp libs` task.
+This file is used by the [Bower](http://bower.io/) package manager to declare the third party JavaScript libraries used by your application. Its install section can be used to customize the files that will be copied into `www/lib` when running the `gulp libs` task.
+
+See `gulp libs` in [Gulp Tasks](gulp-tasks.md#gulp-libs) for more details.
 
 # config.master.xml
 
 This is the master config file that is used to generate `config.xml` when running the `gulp config` task.
 
-The config task will perform variable substitution based on the current scheme.
+The config task will perform variable substitution based on the current build scheme.
+
+See `gulp config` in [Gulp Tasks](gulp-tasks.md#gulp-config) for more details.
 
 # config.xml _(generated)_
 
-This file is generated from `config.master.xml` when running the `gulp config` task. This is the main configuration file that Cordova uses to build and run the application.
+This file is generated from `config.master.xml` when running the `gulp config` task. This is the main configuration file that Cordova uses to build and run your application.
 
-This file will be removed when executing the `gulp clean` or `gulp clean:config` tasks and should not be comitted to source control.
+!!! warn
+	This file will be removed when executing the `gulp clean` or `gulp clean:config` tasks and should not be comitted to source control.
 
 # ionic.project
 
-This file is used by the Ionic CLI. It is used to configure Ionic.io services for example.
+This file is used by the `ionic` command line tool. It is used to configure [Ionic.io](http://ionic.io/) services, among other things.
 
 # karma.conf.js
 
 This is the configuration file for the [Karma Unit Test Runner](https://karma-runner.github.io) which is used to run the unit tests via the `gulp test` task.
+
+See `gulp test` in [Gulp Tasks](gulp-tasks.md#gulp-test) for more details.
 
 # LICENSE
 
@@ -42,15 +49,15 @@ This is the license file for the starter project.
 
 # mkdocs.yml
 
-The configuration file for the [MkDocs document generator](http://www.mkdocs.org/) which is used to generate these docs.
+The configuration file for the [MkDocs document generator](http://www.mkdocs.org/) which is used to generate these docs from the Markdown files in the `docs` directory.
 
-If you are not using MkDocs you can remove this file.
+If you are not using MkDocs you can remove this file and the `docs` directory.
 
 # package.json
 
-This is file is used by Node to describe the this package to node as well as specify the dependencies that need to be downloaded when executing the `npm install` command.
+This is file is used by Node to describe the starter project as well as declare the dependencies that need to be downloaded when executing the `npm install` command.
 
-The dependencies are the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).
+These include the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).
 
 # README.md
 
@@ -60,28 +67,35 @@ This can be removed or replaced with information specific to your application.
 
 # remote-build.json
 
-This file contains configuration used by the `gulp remote-emulate-ios` task which allows Windows developers to build and emulate their app on a remote iOS simulator running on Mac OS X.
+This file contains configuration used by the `gulp remote-emulate-ios` task which allows developers on Windows or Linux to package, build, or run their app on a remote Mac OS X machine.
 
-See TODO for more information.
+See [Running iOS Simulator Remotely](development-tips.md#running-ios-simulator-remotely) for more details.
+
+
+See `gulp remote-emulate-ios` in [Gulp Tasks](gulp-tasks.md#gulp-remote-emulate-ios) for more details.
 
 # tsd.json
 
-This file contains configuration for the `tsd` tool for the [TypeScript definition](http://www.typescriptlang.org/Handbook#writing-dts-files) files from the [DefinitelyTyped](http://definitelytyped.org/) repository.
+This file declares the [TypeScript definition files](http://www.typescriptlang.org/Handbook#writing-dts-files) that should be downloaded when executing the `gulp tsd` task. The definition files are hosted by the [DefinitelyTyped](http://definitelytyped.org/) project.
 
-This file is used via the `gulp tsd` task. It contains type definition references specific to the application.
+These definition files describe third party JavaScript libraries that your application uses so they can be referenced from TypeScript in a stronly-typed manner.
 
-Normally you'll add and remove definition references to this file by using the `tsd` command line tool.
+This file can be updated by used the `tsd` command line tool to add or remove definitions.
+
+See `gulp tsd` in [Gulp Tasks](gulp-tasks.md#gulp-tsd) for more details.
 
 # tsd.tests.json
 
-This file contains configuration for the `tsd` tool for the [TypeScript definition](http://www.typescriptlang.org/Handbook#writing-dts-files) files from the [DefinitelyTyped](http://definitelytyped.org/) repository.
+This file declares the [TypeScript definition files](http://www.typescriptlang.org/Handbook#writing-dts-files) that should be downloaded when executing the `gulp tsd` task. The definition files are hosted by the [DefinitelyTyped](http://definitelytyped.org/) project.
 
-This file is used via the `gulp tsd` task. It contains type definition references specific to the unit tests.
+These definition files describe third party JavaScript libraries that your unit tests use so they can be referenced from TypeScript in a stronly-typed manner.
 
-Normally you'll add and remove definition references to this file by using the `tsd` command line tool.
+This file can be updated by used the `tsd` command line tool to add or remove definitions.
+
+See `gulp tsd` in [Gulp Tasks](gulp-tasks.md#gulp-tsd) for more details.
 
 # tslint.json
 
 This file contains configuration for the TypeScript [linter](https://en.wikipedia.org/wiki/Lint_(software)).
 
-It is used via the `gulp lint` task.
+See `gulp lint` in [Gulp Tasks](gulp-tasks.md#gulp-lint) for more details.

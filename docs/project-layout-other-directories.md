@@ -6,13 +6,15 @@ Previous sections covered the `www` and `src` directories; this section will go 
 
 This is where the project specific settings and tasks for the [Visual Studio Code](https://code.visualstudio.com/) IDE are located.
 
-This directory is optional and can be removed if you are not using VSCode.
+This directory is optional and can be removed if you are not using VS Code.
 
 # bower_components _(generated)_
 
-This is a generated directory that is created by running the `gulp libs` task. These files are downloaded by Bower and can be configured via `bower.json`.
+This is a generated directory that is created by running the `gulp libs` task. These files are downloaded by the Bower package manager and can be configured via `bower.json`.
 
 The libs task also takes care of copying the needed files to `www/js/libs` so they can be used at runtime.
+
+See `gulp libs` in [Gulp Tasks](gulp-tasks.md#gulp-libs) for more details.
 
 !!! warning
 	This directory will be removed when executing the `gulp clean` or `gulp clean:libs` tasks and should not be commited to source control.
@@ -29,7 +31,9 @@ This directory contains build hook scripts for Cordova's build system.
 
 > Cordova Hooks represent special scripts which could be added by application and plugin developers or even by your own build system to customize cordova commands. - [Apache Cordova Hooks Guide](https://cordova.apache.org/docs/en/dev/guide/appdev/hooks/)
 
-This starter project does not currently ship with any custom build hooks.
+This starter project does not currently ship with any custom build hooks, aside from the "Add Platform Class" script that is included with Cordova.
+
+See `hooks/README.md` for more details.
 
 # node_modules _(generated)_
 
@@ -44,7 +48,9 @@ This is a generated directory that is created when you run the `gulp plugins` or
 
 It contains any [Cordova plugins](https://cordova.apache.org/docs/en/latest/cordova/plugins/pluginapis.html) used to extend the functionality of the application through native code.
 
-Plugins are installed via the `cordovaPlugins` property in `package.json.
+Plugins are installed via the `cordovaPlugins` property in `package.json`.
+
+See `gulp plugins` in [Gulp Tasks](gulp-tasks.md#gulp-plugins) for more details.
 
 !!! warning
 	This directory will be removed when executing the `gulp clean` or `gulp clean:plugins` tasks and should not be committed to source control.
@@ -62,6 +68,8 @@ This directory contains the unit tests for the application.
 Unit tests can be run using the Karma test runner by executing the `gulp test` task.
 
 Each sub-directory here should mirror the layout of `src` with the addition of a `.Tests.ts` suffix. That is, a test for `src/Services/Utilities.ts` should be placed at `tests/Services/Utilities.Tests.ts`.
+
+See `gulp test` in [Gulp Tasks](gulp-tasks.md#gulp-test) and [Unit Testing](unit-testing.md) for more details.
 
 ## tests/_references.ts
 
@@ -104,11 +112,10 @@ This directory contains all of the [TypeScript definition](http://www.typescript
 
 These are installed by the `tsd` tool via the `gulp tsd` task. The definition files that are downloaded are specified in `tsd.json`.
 
-All subdirectories will be removed when executing the `gulp clean` or `gulp clean:tsd` tasks (except for the custom directory) and should not be committed to source control.
+!!! warning
+	All subdirectories will be removed when executing the `gulp clean` or `gulp clean:tsd` tasks (**except for the custom directory**) and should not be committed to source control.
 
-* typings/custom
-
-This directory contains any custom [TypeScript definition](http://www.typescriptlang.org/Handbook#writing-dts-files) files for your application that are not available on the [DefinitelyTyped](http://definitelytyped.org/) repository.
+The custom directory contains any custom [TypeScript definition](http://www.typescriptlang.org/Handbook#writing-dts-files) files for your application that are not available on the [DefinitelyTyped](http://definitelytyped.org/) repository.
 
 This is the only subdirectory of the `typings` directory that should be committed to source control.
 
@@ -118,11 +125,10 @@ This directory contains all of the [TypeScript definition](http://www.typescript
 
 These are installed by the `tsd` tool via the `gulp tsd:tests` task. The definition files that are downloaded are specified in `tsd.tests.json`.
 
-All subdirectories will be removed when executing the `gulp clean` or `gulp clean:tsd` tasks (except for the custom directory) and should not be committed to source control.
+!!! warning
+	All subdirectories will be removed when executing the `gulp clean` or `gulp clean:tsd` tasks (**except for the custom directory**) and should not be committed to source control.
 
-* typings-tests/custom
-
-This directory contains any custom [TypeScript definition](http://www.typescriptlang.org/Handbook#writing-dts-files) files for your application that are not available on the [DefinitelyTyped](http://definitelytyped.org/) repository.
+This custom directory contains any custom [TypeScript definition](http://www.typescriptlang.org/Handbook#writing-dts-files) files for your application that are not available on the [DefinitelyTyped](http://definitelytyped.org/) repository.
 
 This is the only subdirectory of the `typings-tests` directory that should be committed to source control.
 

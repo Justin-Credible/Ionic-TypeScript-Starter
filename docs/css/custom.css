@@ -20,3 +20,7 @@ button.slick-arrow:before {
 p img {
     max-width: 50%;
 }
+
+p img {
+    max-height: 400px;
+}

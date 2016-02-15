@@ -8,9 +8,13 @@ This is the master index file that is used to generate `www/index.html` when run
 
 The config task will perform variable substitution based on the current scheme.
 
+See `gulp config` in [Gulp Tasks](gulp-tasks.md#gulp-config) and [Base Framework: Build Schemes](base-framework.md#build-scemes) for more details.
+
 ## index.html _(generated)_
 
 This file is generated from `www/index.master.html` when running the `gulp config` task. This is the initial page that will be loaded by Cordova when the application starts.
+
+See `gulp config` in [Gulp Tasks](gulp-tasks.md#gulp-config) and [Base Framework: Build Schemes](base-framework.md#build-scemes) for more details.
 
 !!!warning
 	This file will be removed when executing the `gulp clean` or `gulp clean:config` tasks and should not be commited to source control.
@@ -25,6 +29,8 @@ This directory is generated when running the `gulp ts` task in a scheme where th
 
 This directory will not be present in non-debug builds.
 
+See [Base Framework: Build Schemes](base-framework.md#build-scemes) for more details.
+
 !!! warning
 	This directory will be removed well as when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
 
@@ -38,7 +44,7 @@ This file is generated when running the `gulp config` task. It contains build in
 
 It's contents are accessible via the Configuration service (or as an Angular constant).
 
-See [Base Framework](base-framework.md) for more details.
+See `gulp config` in [Gulp Tasks](gulp-tasks.md#gulp-config) and [Base Framework: Build Schemes](base-framework.md#build-scemes) for more details.
 
 !!! warning
 	This file will be removed when executing the `gulp clean` or `gulp clean:ts` tasks and should not be committed to source control.
@@ -76,11 +82,13 @@ This file is generated when running the `gulp templates` task. It contains all o
 
 This file will be removed when executing the `gulp clean` or `gulp clean:templates` tasks and should not be committed to source control.
 
+See `gulp templates` in [Gulp Tasks](gulp-tasks.md#gulp-templates) and [Base Framework: Views](base-framework.md#views) for more details.
+
 # lib _(generated)_
 
-This directory is generated when running the `gulp libs` task. It will contain all of the third party libraries for use at runtime. It is populated based on `bower.json`.
+This directory is generated when running the `gulp libs` task. It will contain all of the third party libraries for use at runtime. It is populated via the Bower package manager using the `bower.json` file.
 
-See `gulp libs` in [Gulp Tasks](gulp-tasks.md) for more details.
+See `gulp libs` in [Gulp Tasks](gulp-tasks.md#gulp-libs) for more details.
 
 !!!warning
 	This directory will be removed in when executing the `gulp clean` or `gulp clean:libs` tasks and should not be committed to source control.
@@ -97,9 +105,9 @@ This directory can be used to store plain CSS files.
 
 This file is generated when running the `gulp sass` task. It will contain the output from the compilation of the SASS files using the `src/Styles/Index.scss` file.
 
-See `gulp sass` in [Gulp Tasks](gulp-tasks.md) for more details.
-
 Its contents will be minified in non-debug builds.
+
+See `gulp sass` in [Gulp Tasks](gulp-tasks.md#gulp-sass) for more details.
 
 !!!warning
 	This file will be removed when executing the `gulp clean` or `gulp clean:sass` tasks and should not be committed to source control.
@@ -108,7 +116,7 @@ Its contents will be minified in non-debug builds.
 
 This file is generated when running the `gulp sass` task. It will contain mapping information to map the generated CSS to the original SASS source.
 
-See `gulp sass` in [Gulp Tasks](gulp-tasks.md) for more details.
+See `gulp sass` in [Gulp Tasks](gulp-tasks.md#gulp-sass) for more details.
 
 !!!warning
 	This file will be removed when executing the `gulp clean` or `gulp clean:sass` tasks and should not be committed to source control.

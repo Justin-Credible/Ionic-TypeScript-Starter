@@ -1,16 +1,18 @@
 # Overview
 
-The starter project is platform agnostic; you should be able to do development on Mac OS, Linux, or Windows using any IDE or text editor.
+This section will cover the prerequisites you'll need to start developing using the starter project.
+
+This guide assumes a Unix-like environment; deviations for Windows users will be called out with inline note blocks.
 
 # Prerequisites
 
-Aside from mobile platform specific SDKs, [Node.js](https://nodejs.org/dist) 4.4.x is the only prerequisite.
+Aside from mobile platform specific SDKs, [Node.js](https://nodejs.org/dist) 4.4.x is the only external prerequisite.
 
 While any version of 4.4.x or higher should work, I've specifically tested and verified with version [4.4.2](https://nodejs.org/dist/v4.2.2/).
 
 Windows users can download the installer from the link above.
 
-For Mac OS, I recommend can install Node using [Node Version Manager](https://www.npmjs.com/package/nvm) which can be installed using [Homebrew](http://brew.sh/). I recommend following the instructions in [this post](http://stackoverflow.com/a/28025834) which will get you setup so that `npm install` does not require `sudo`.
+For Mac OS, I recommend installing Node using [Node Version Manager](https://www.npmjs.com/package/nvm) which can be installed using [Homebrew](http://brew.sh/). I recommend following the instructions in [this post](http://stackoverflow.com/a/28025834) which will get you setup so that `npm install` does not require `sudo`.
 
 ## iOS Specific
 
@@ -37,14 +39,17 @@ If you are developing for Android you'll need the the Android SDK and the Java D
 * [Android Studio](http://developer.android.com/sdk/index.html) - 1.4 (optional)
 
 !!! note "Note for Windows users"
-	You can be sure you've installed these pre-requisites by typing the following commands into a command prompt: `android`, `java --version`, `javac --version`, `ant --version`.
+	You can be sure you've installed these prerequisites property by typing each the following commands into a command prompt to ensure they can execute: `android`, `java --version`, `javac --version`, `ant --version`.
 
 ## Other Dependencies
 
 All other dependencies are installed in the project directory via `npm`. To use them **you'll need to add `./node_modules/.bin` to your path**. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.
 
+!!! warning "Attention"
+	Do not skip this step; you need to add `./node_modules/.bin` to your path. If you try to install all the required depdencies globally you are much more likely to run into issues.
+
 !!! note "Note for Windows users"
-	Windows users should note that the path should be appended via the System > Environment Variables GUI and should restart their command prompt instance for the changes to take effect.
+	Windows users should note that the path `.\node_modules\.bin` should be appended via the System > Environment Variables GUI and should restart their command prompt instance for the changes to take effect.
 
 ## IDEs and Text Editors
 
@@ -55,7 +60,7 @@ I recommend using the free and lightweight [Visual Studio Code](https://code.vis
 Development and debugging can be done in Chrome using its built in Developer Tools window.
 
 !!! note "Note for Windows users"
-	If you want to use the full version of Visual Studio on Windows, you should check out an alternate repository that is setup specifically for VS2015 which is available [here](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter). However, I still recommend using the platform agnostic version of the starter project with the free Visual Studio Code IDE.
+	This version of the starter project is made to work with any IDE. While I have put together an [alternate version](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter) that supports Visual Studio 2015, I still highly recommend using this version. The VS2015 Cordova wrapper ("Tools for Apache Cordova" project template) can sometimes, in my opinion, be a bit of a black box which makes it harder to work with.
 
 # Environment Setup
 
@@ -67,8 +72,8 @@ To begin, edit your path, clone the repository, install the node packages, and i
     $ npm install
     $ gulp init
 
-!!! note
-	If you receive any errors while running gulp init please double check to ensure you've added `./node_modules/bin` to your path and that this path takes presedence over the globally installed node modules path.
+!!! warning "Attention"
+	If you receive any errors while running `gulp init` please double check to ensure you've added `./node_modules/bin` to your path and that this path takes presedence over the globally installed node modules path.
 
 The `gulp init` handles setting up the Cordova platform and plugins as well as obtaining libraries and code compilation. See [Gulp Tasks](gulp-tasks.md) for details.
 
