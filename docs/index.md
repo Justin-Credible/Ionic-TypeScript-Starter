@@ -14,12 +14,12 @@ I had been wanted to get into mobile app development for a while, and Ionic and 
 
 <div id="screenshots">
 
-  <img src="/img/screenshot_1.jpg" class="img-responsive">
-  <img src="/img/screenshot_2.jpg" class="img-responsive">
-  <img src="/img/screenshot_3.jpg" class="img-responsive">
-  <img src="/img/screenshot_4.jpg" class="img-responsive">
-  <img src="/img/screenshot_5.jpg" class="img-responsive">
-  <img src="/img/screenshot_6.jpg" class="img-responsive">
+  <img src="img/screenshot_1.jpg" class="img-responsive">
+  <img src="img/screenshot_2.jpg" class="img-responsive">
+  <img src="img/screenshot_3.jpg" class="img-responsive">
+  <img src="img/screenshot_4.jpg" class="img-responsive">
+  <img src="img/screenshot_5.jpg" class="img-responsive">
+  <img src="img/screenshot_6.jpg" class="img-responsive">
 
 </div>
 
