@@ -6,7 +6,7 @@ Welcome to the documentation for the [Ionic/TypeScript Starter Project](https://
 
 When the [Ionic Framework](http://ionicframework.com/) was released I knew it would make developing cross platform hybrid applications much easier than trying to cobble together my own framework. Its focus on looking and performing like a native app was icing on the cake.
 
-Around the same time I discovered Ionic, I also learning [TypeScript](typescriptlang.org) for refactoring large enterprise applications. After seeing the power of TypeScript's code insight for rich IDE tooling and compile time checking, I never wanted to go back to vanilla JavaScript.
+Around the same time I discovered Ionic, I also learning [TypeScript](http://typescriptlang.org) for refactoring large enterprise applications. After seeing the power of TypeScript's code insight for rich IDE tooling and compile time checking, I never wanted to go back to vanilla JavaScript.
 
 I had been wanted to get into mobile app development for a while, and Ionic and TypeScript, coupled with the free [Visual Studio Code](https://code.visualstudio.com/) IDE made this an attrictive solution for cross platform development.
 
