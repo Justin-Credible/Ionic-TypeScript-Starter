@@ -1,0 +1,32 @@
+site_name: Ionic/TypeScript Starter
+theme: flatly
+repo_url: https://github.com/Justin-Credible/Ionic-TypeScript-Starter
+site_dir: docs-output
+
+markdown_extensions:
+  - admonition:
+
+pages:
+- Home: index.md
+- Getting Started: getting-started.md
+- Project Layout:
+  - Root Files: project-layout-root-files.md
+  - src Directory: project-layout-src-directory.md
+  - www Directory: project-layout-www-directory.md
+  - Other Directories: project-layout-other-directories.md
+- Documentation:
+  - Gulp Tasks: gulp-tasks.md
+  - Base Framework: base-framework.md
+  - Unit Testing: unit-testing.md
+  - Development Tips: development-tips.md
+
+extra_css:
+- css/slick.css
+- css/slick-theme.css
+- css/keys.css
+- css/admonition.css
+- css/custom.css
+
+extra_javascript:
+- js/slick.min.js
+- js/screenshots.js

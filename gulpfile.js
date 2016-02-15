@@ -39,6 +39,7 @@ var _ = require("lodash");
 
 var paths = {
     ts: ["./src/**/*.ts"],
+    customTypeDefinitions: ["./typings/custom/**/*.d.ts", "./typings-tests/custom/**/*.d.ts"],
     templates: ["./src/**/*.html"],
     sassIndex: "./src/Styles/Index.scss",
     sass: ["./src/Styles/**/*.scss"],
@@ -240,7 +241,7 @@ gulp.task("default", function (cb) {
  * This involves delegating to all of the clean tasks EXCEPT clean:node. It then adds
  * the platforms using cordova and finally executes the default gulp task.
  */
-gulp.task("init", ["clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"], function (cb) {
+gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"], function (cb) {
 
     // First, build out config.xml so that Cordova can read it. We do this here instead
     // of as a child task above because it must start after all of the clean tasks have
@@ -539,7 +540,7 @@ gulp.task("emulate-android", ["sass", "ts"], function(cb) {
  * Performs linting of the TypeScript source code.
  */
 gulp.task("lint", function (cb) {
-    var filesToLint = paths.ts.concat(paths.tests);
+    var filesToLint = paths.ts.concat(paths.tests, paths.customTypeDefinitions);
 
     return gulp.src(filesToLint)
     .pipe(tslint())
@@ -1046,7 +1047,7 @@ gulp.task("package-remote-build", function () {
  * that don't need to be committed to source control by delegating to several of the clean
  * sub-tasks.
  */
-gulp.task("clean", ["clean:tmp", "clean:node", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"]);
+gulp.task("clean", ["clean:tmp", "clean:node", "clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:chrome", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"]);
 
 /**
  * Removes the tmp directory.
@@ -1065,6 +1066,19 @@ gulp.task("clean:tmp", function (cb) {
 gulp.task("clean:node", function (cb) {
     del([
         "node_modules"
+    ]).then(function () {
+        cb();
+    });
+});
+
+/**
+ * Removes the node_modules directory.
+ */
+gulp.task("clean:config", function (cb) {
+    del([
+        "config.xml",
+        "www/index.master.xml",
+        "www/js/build-vars.js"
     ]).then(function () {
         cb();
     });
@@ -1122,7 +1136,6 @@ gulp.task("clean:ts", function (cb) {
         "www/js/bundle.js",
         "www/js/bundle.d.ts",
         "www/js/bundle.js.map",
-        "www/js/build-vars.js",
         "www/js/src"
     ]).then(function () {
         cb();
@@ -1220,7 +1233,7 @@ gulp.task("typedoc", function() {
         .pipe(typedoc({
             module: "commonjs",
             target: "es5",
-            out: "docs/",
+            out: "ts-docs/",
             name: "Ionic TypeScript Starter"
         }));
 });
@@ -1230,7 +1243,7 @@ gulp.task("typedoc", function() {
  */
 gulp.task("clean:typedoc", function (cb) {
     del([
-        "docs"
+        "ts-docs"
     ]).then(function () {
         cb();
     });

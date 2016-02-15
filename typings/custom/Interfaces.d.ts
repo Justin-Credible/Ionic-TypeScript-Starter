@@ -1,4 +1,6 @@
 ﻿
+/// <reference path="../angularjs/angular.d.ts" />
+
 /**
  * This module is used to house custom interfaces that aren't data types.
  */
@@ -90,6 +92,6 @@ declare namespace JustinCredible.SampleApp.Interfaces {
             copyrightUrl: string;
 
             githubUrl: string;
-        }
+        };
     }
 }

@@ -25,5 +25,6 @@
 /chrome
 /tests/**/*.js
 /tests/**/*.map
-/docs/*
+/ts-docs/*
+/docs-output
 /tmp/*
