@@ -199,20 +199,20 @@
             <div class="col-md-9" role="main">
 
 <h1 id="overview">Overview</h1>
-<p>The starter project comes with a suggested starting point for a framework. This section will cover its features.</p>
-<p>It is important to note that this starter project is not actually a framework. See <a href="..#framework-vs-starter-project">Framework vs Starter Project</a> for the distinction.</p>
-<p>The base namespace used is <code>JustinCredible.SampleApp</code>. To switch this to your own namespace you can perform a project find and replace.</p>
+<p>The starter project comes with a suggested starting point for a framework. Its features will be covered in this section.</p>
+<p>It is important to note that this starter project is not actually a framework. See <a href="..#framework-vs-starter-project">Framework vs. Starter Project</a> for the distinction between the two.</p>
+<p>The base namespace used is <code>JustinCredible.SampleApp</code>. To switch this to your own namespace, you can perform a project find and replace.</p>
 <h1 id="build-schemes">Build Schemes</h1>
-<p>The project is setup so that builds can be made for different environments. This is useful for easily switching between development, staging, or production environments for example.</p>
+<p>The project is set up so that builds can be made for different environments. This is useful for easily switching between development, staging, or production environments, for example.</p>
 <p>You can switch between build schemes using the <code>gulp config --scheme scheme_name</code> command.</p>
 <p>See <a href="../development-tips/#build-schemes">Development Tips: Build Schemes</a> for more details.</p>
 <h1 id="boot-sequence">Boot Sequence</h1>
-<p>Cordova uses the the <code>src</code> attribute of the content element from <code>config.xml</code> to determine the initial page to load, which is set to <code>index.html</code> by default.</p>
-<p>The <code>index.html</code> file has static references to all of the CSS and JavaScript files to load. In addition to the main application bundle (<code>www/js/bundle.js</code>) the page also references the first level boot loader: <code>www/js/boot1.js</code>. This file is responsible for executing any code before Cordova's JS API, Ionic, or Angular have been initialized. It then kicks off the second level boot loader by invoking <code>JustinCredible.SampleApp.Boot2.main()</code>.</p>
-<p>The second level boot loader is located at <code>src/Framework/Boot2.ts</code> (which is compiled into <code>www/js/bundle.js</code>). The second level boot loader is responsible for initializing Ionic after the Cordova JavaScript ready event occurs. This is where you would configure Angular services and modules.</p>
-<p>The second level boot loader takes care of registering filters, directives, controllers, and services automatically using a helper (<code>src/Framework/BootHelper.ts</code>). It does so by examining the applicable namespaces (eg <code>JustinCredible.SampleApp.Filters</code>, <code>JustinCredible.SampleApp.Services</code>, etc). More details are provided in the applicable sections. The second level boot loader also takes care of setting up the Angular routes using the <code>src/Application/RouteConfig.ts</code> file.</p>
+<p>Cordova uses the the <code>src</code> attribute of the content element from <code>config.xml</code> to determine the initial page to load. This is set to <code>index.html</code> by default.</p>
+<p>The <code>index.html</code> file has static references to all of the CSS and JavaScript files to load. In addition to the main application bundle (<code>www/js/bundle.js</code>), the page also references the first-level boot loader: <code>www/js/boot1.js</code>. This file is responsible for executing any code before Cordova's JS API, Ionic, or Angular have been initialized. It then kicks off the second-level boot loader by invoking <code>JustinCredible.SampleApp.Boot2.main()</code>.</p>
+<p>The second-level boot loader is located at <code>src/Framework/Boot2.ts</code> (which is compiled into <code>www/js/bundle.js</code>). The second-level boot loader is responsible for initializing Ionic after the Cordova JavaScript ready event occurs. This is where you would configure Angular services and modules.</p>
+<p>The second-level boot loader automatically registers filters, directives, controllers, and services using a helper (<code>src/Framework/BootHelper.ts</code>). It does this by examining the applicable namespaces (e.g., <code>JustinCredible.SampleApp.Filters</code>, <code>JustinCredible.SampleApp.Services</code>, etc.). More details are provided in the applicable sections. The second-level boot loader also takes care of setting up the Angular routes using the <code>src/Application/RouteConfig.ts</code> file.</p>
 <p>After initializing and configuring Angular, the second level boot loader then delegates to the <code>start()</code> method of the application service located in <code>src/Application/Application.ts</code>.</p>
-<p>The application service is where the bulk of your low-level application specific code should be located (ie device events, global event handlers, push notification handlers etc). It takes care of pushing the user to the initial view.</p>
+<p>The application service is where the bulk of your low-level application-specific code should be located (i.e., device events, global event handlers, push notification handlers, etc.). It takes care of pushing the user to the initial view.</p>
 <h1 id="views">Views</h1>
 <p>A view or screen in your application will consist of an HTML Angular template, an Angular controller, a view model, and optionally, CSS styling.</p>
 <p>A view is registered in the <code>src/Application/RouteConfig.ts</code> file by specifying the path to its template, the ID of its controller, and its URL and state name:</p>
@@ -228,7 +228,7 @@ $stateProvider.state(&quot;app.category&quot;, {
 });
 </code></pre>
 
-<p>In most simple Angular examples you'll find that templates, controllers, and view models are often located in seperate directories. While this is nice for a simple application, in larger applications it is burden to track down each of the files. This starter project instead groups the files by feature rather than function.</p>
+<p>In most simple Angular examples, you'll find that templates, controllers, and view models are often located in separate directories. While this is nice for a simple application, in larger applications it is a burden to track down each of the files. To avoid this, this starter project groups the files by feature rather than function.</p>
 <p>For example, you'll find all of the files applicable to the category view located at <code>src/Views/Category</code>:</p>
 <p><img alt="" src="../img/base-framework-view-layout.png" /></p>
 <h2 id="controllers">Controllers</h2>
@@ -277,11 +277,11 @@ $stateProvider.state(&quot;app.category&quot;, {
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If your view does not have a view model you can use the provided <code>EmptyViewModel</code> class.</p>
+<p>If your view does not have a view model, you can use the provided <code>EmptyViewModel</code> class.</p>
 </div>
-<p>The services to be injected into the controller are controlled via the static <code>$inject</code> property. These IDs are used to located the services to be injected into the contructor.</p>
+<p>The services to be injected into the controller are controlled via the static <code>$inject</code> property. These IDs are used to locate the services to be injected into the constructor.</p>
 <p>The constructor receives these parameters and can save off the services to the local instance. TypeScript allows the <code>private</code> keyword in the constructor to indicate that the parameters should be accessible as private instance variables.</p>
-<p>And finally, the base events avaiable from the <code>BaseController</code> can be overridden. These include several events exposed by Ionic:</p>
+<p>Finally, the base events avaiable from the <code>BaseController</code> can be overridden. These include several events exposed by Ionic:</p>
 <ul>
 <li><code>view_loaded</code></li>
 <li><code>view_enter</code></li>
@@ -294,7 +294,7 @@ $stateProvider.state(&quot;app.category&quot;, {
 <li><code>destroy</code></li>
 </ul>
 <h2 id="view-model">View Model</h2>
-<p>The view model specified is accessible in the template via the <code>viewModel</code> property:</p>
+<p>The specified view model is accessible in the template via the <code>viewModel</code> property:</p>
 <pre><code>&lt;ion-view view-title=&quot;Category {{viewModel.categoryNumber}}&quot;&gt;
 </code></pre>
 
@@ -305,24 +305,24 @@ $stateProvider.state(&quot;app.category&quot;, {
 }
 </code></pre>
 
-<p>and access them using the <code>controller</code> property:</p>
+<p>and access it using the <code>controller</code> property:</p>
 <pre><code>&lt;button ng-click=&quot;controller.button1_click($event)&quot;&gt;Click Me!&lt;/button&gt;
 </code></pre>
 
 <h1 id="directives">Directives</h1>
-<p>Angular directives are located in the <code>src/Directives</code> directory. There are two types of directives in this starter project; standard and element instance directives.</p>
+<p>Angular directives are located in the <code>src/Directives</code> directory. There are two types of directives in this starter project: standard and element instance.</p>
 <h2 id="standard-directive">Standard Directive</h2>
 <p>A standard directive is simply a class that has a link function.</p>
-<p>An example of a standard directive can be found in <code>src/Directives/OnLoadDirective.ts</code>. This directive can be used by placing an <code>on-load</code> attribute on an image element and will cause a function to be fired when the image has loaded. For example:</p>
+<p>An example of a standard directive can be found in <code>src/Directives/OnLoadDirective.ts</code>. This directive can be used by placing an <code>on-load</code> attribute on an image element, and will cause a function to be fired when the image has loaded. For example:</p>
 <pre><code>&lt;img src=&quot;...&quot; on-load=&quot;controller.image1_load()&quot;&gt;
 </code></pre>
 
 <h2 id="element-instance-directive">Element Instance Directive</h2>
-<p>The optional <code>BaseElementDirective</code> class provides a recommendation on how to build element directives. This base class provides an <code>initialize</code> and <code>render</code> methods which should be overridden in your implementation.</p>
-<p>Build element directives with this base class is useful for elements that need to maintain state, fire events, or otherwise act as accessible instances from your controller.</p>
-<p>An example directive that can be used to show an icon with text is located at <code>/src/Directives/Icon-Panel/IconPanelDirective.ts</code> and is used from the category controller.</p>
+<p>The optional <code>BaseElementDirective</code> class provides a recommendation on how to build element directives. This base class provides <code>initialize</code> and <code>render</code> methods that should be overridden in your implementation.</p>
+<p>This base class is useful for building element directives that need to maintain state, fire events, or otherwise act as accessible instances from your controller.</p>
+<p>An example directive that can be used to show an icon with text is located at <code>/src/Directives/Icon-Panel/IconPanelDirective.ts</code>, and is used from the category controller.</p>
 <h1 id="filters">Filters</h1>
-<p>Angular filters are located in the <code>src/Filters</code> directory. To be registered as a filter, its class should exist the <code>JustinCredible.SampleApp.Filters</code> namespace. It should contain a unique static ID property and a single static filter named <code>filter</code> in order to be registered automatically.</p>
+<p>Angular filters are located in the <code>src/Filters</code> directory. To be registered as a filter automatically, a class should exist in the <code>JustinCredible.SampleApp.Filters</code> namespace, and it should contain a unique static ID property and a single static function named <code>filter</code>.</p>
 <pre><code>namespace JustinCredible.SampleApp.Filters {
 
     export class ThousandsFilter {
@@ -337,7 +337,7 @@ $stateProvider.state(&quot;app.category&quot;, {
 </code></pre>
 
 <h1 id="services">Services</h1>
-<p>Angular services are located in the <code>src/Services</code> directory. To be registered as a service, its class should exist in the <code>JustinCredible.SampleApps.Service</code> namespace. It should contain a unique static ID property in order to be registered automatically.</p>
+<p>Angular services are located in the <code>src/Services</code> directory. To be registered as a service automatically, a class should exist in the <code>JustinCredible.SampleApps.Service</code> namespace and contain a unique static ID property.</p>
 <pre><code>namespace JustinCredible.SampleApp.Services {
 
     /**
@@ -372,7 +372,7 @@ $stateProvider.state(&quot;app.category&quot;, {
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the class contains a static <code>getFactory</code> method it will be registered as a factory instead of a service.</p>
+<p>If the class contains a static <code>getFactory</code> method, it will be registered as a factory instead of a service.</p>
 </div>
 <h2 id="provided-services">Provided Services</h2>
 <p>The following services are provided with this sample project.</p>
@@ -381,39 +381,39 @@ $stateProvider.state(&quot;app.category&quot;, {
 <h3 id="fileutilities">FileUtilities</h3>
 <p>A set of helper methods for working with Cordova's file plugin.</p>
 <h3 id="httpinterceptor">HttpInterceptor</h3>
-<p>A special factory for intercepting all HTTP requests. It is responsible for showing a progress indicator (via the <a href="http://ricostacruz.com/nprogress/">NProgress</a> library) for asynchronous requests or a full screen spinner for blocking requests.</p>
-<p>It also takes care of expanding URLs starting with a tilde to have the URL defined by <code>config.xml</code>'s <code>ApiUrl</code> property prepended to it (eg <code>~/Products/123</code> would be expanded to <code>http://your-server.com/path/Products/123</code> for example).</p>
-<p>It is also responsible for adding headers (such as API keys) or otherwise modifying the requests before they go out.</p>
+<p>A special factory for intercepting all HTTP requests. It is responsible for showing a progress indicator (via the <a href="http://ricostacruz.com/nprogress/">NProgress</a> library) for asynchronous requests or a full-screen spinner for blocking requests.</p>
+<p>It also takes care of expanding URLs starting with a tilde, defining the URL by prepending <code>config.xml</code>'s <code>ApiUrl</code> property to it (e.g., <code>~/Products/123</code> would be expanded to <code>http://your-server.com/path/Products/123</code>).</p>
+<p>It is also responsible for adding headers (such as API keys) or otherwise modifying requests before they go out.</p>
 <h3 id="logger">Logger</h3>
-<p>Used to handle logging requests of various levels (eg <code>info</code>, <code>warn</code>, <code>error</code>, etc).</p>
-<p>The provided implementation delegates to the applicable <code>console</code> methods and stores log in memory (which can be viewed via the <a href="./#developer-tools">in-app developer tools</a>, but a production implementation could send logs to your servers.</p>
+<p>Used to handle logging requests of various levels (e.g., <code>info</code>, <code>warn</code>, <code>error</code>, etc.).</p>
+<p>The provided implementation delegates to the applicable <code>console</code> methods and stores logs in memory (which can be viewed via the <a href="./#developer-tools">in-app developer tools</a>), but a production implementation could send logs to your servers.</p>
 <h3 id="mockhttpapis">MockHttpApis</h3>
 <p>Used to provide mock implementations for HTTP request data. This is useful for demos, development, or testing.</p>
 <p>Mock API mode is enabled via the developer tools view.</p>
 <p>See <a href="../development-tips/#mock-http-apis">Development Tips: Mock HTTP APIs</a> for more details.</p>
 <h3 id="mockplatformapis">MockPlatformApis</h3>
-<p>Used to provide mock implementations of APIs that are native to certain platforms. This allows the developer to mock up Cordova plugin APIs which may not be available in the browser during development.</p>
+<p>Used to provide mock implementations of APIs that are native to certain platforms. This allows you to mock up Cordova plugin APIs that may not be available in the browser during development.</p>
 <p>This is mainly used by the plugins service.</p>
 <p>See <a href="../development-tips/#mock-platform-apis">Development Tips: Mock Platform APIs</a> for more details.</p>
 <h3 id="plugins">Plugins</h3>
-<p>Used as a facad to access native Cordova plugins. If a plugin is not available on the given platform it will delegate to <code>MockPlatFormApis</code> to obtain a mock implementation.</p>
+<p>Used as a facade to access native Cordova plugins. If a plugin is not available on the given platform, it will delegate to <code>MockPlatFormApis</code> to obtain a mock implementation.</p>
 <h3 id="preferences">Preferences</h3>
-<p>Used to store user preferences which should be persisted when the application has closed. The default backing store is the web view's local storage (which is sandboxed and specific to your application instance).</p>
+<p>Used to store user preferences that should persist when the application has closed. The default backing store is the web view's local storage (which is sandboxed and specific to your application instance).</p>
 <h3 id="uihelper">UiHelper</h3>
-<p>Contains several helper methods for user interface related tasks. This includes alert, confirm, and prompt dialogs as well as a PIN dialog.</p>
+<p>Contains several helper methods for user interface-related tasks. These include alert, confirm, and prompt dialogs as well as a PIN dialog.</p>
 <p>It also includes a generic API to show your own custom dialogs.</p>
 <p>See <a href="./#dialogs">Dialogs</a> for more information.</p>
 <h3 id="utilities">Utilities</h3>
-<p>Contains several helper methods for working with strings, determining device information, type introspection, and more.</p>
+<p>Contains several helper methods for string manipulation, determining device information, type introspection, and more.</p>
 <h1 id="pin-entry">PIN Entry</h1>
 <p>The sample project includes a PIN entry dialog that the user can enable via the Settings view.</p>
-<p>After the application is in the background for more than 10 minutes, the user specified PIN must be entered to use the application.</p>
+<p>If the application is in the background for more than ten minutes, the user-specified PIN must be entered to use it.</p>
 <h1 id="developer-tools">Developer Tools</h1>
-<p>In a debug build, the in-app developer tools view will be accessible from the Settings view. In a non-debug build, they can also be enabled by tapping the application icon in the About view ten times.</p>
-<p>This view is a good location for items that are used during development. By default it allows the user to toggle mock HTTP mode, test various plugins, view logs logged by the Logger service, and view device information.</p>
+<p>In a debug build, the in-app developer tools view will be accessible from the Settings view. In a non-debug build, the tools can be enabled by tapping the application icon in the About view ten times.</p>
+<p>This view is a good location for items that are used during development. By default, it allows the user to toggle mock HTTP mode, test various plugins, view logs logged by the Logger service, and view device information.</p>
 <h1 id="dialogs">Dialogs</h1>
-<p>Ionic provides the <code>$ionicModal</code> service which can be used to show modal dialogs. This sample project includes the <code>BaseDialogController</code> base class and a <code>UiHelper</code> method <code>showDialog()</code> which are used to simplify usage and normalize dialog behavior.</p>
-<p>Two example dialogs are included with this sample project and are located at <code>src/Views/Dialogs</code>.</p>
+<p>Ionic provides the <code>$ionicModal</code> service, which can be used to show modal dialogs. This sample project includes the <code>BaseDialogController</code> base class and a <code>UiHelper</code> method <code>showDialog()</code>, which are used to simplify usage and normalize dialog behavior.</p>
+<p>Two example dialogs are included with this sample project, located at <code>src/Views/Dialogs</code>.</p>
 <p>The <code>showDialog</code> method wraps Ionic's modal implementation. It should be invoked with the ID of the controller for the dialog and optional dialog options. It returns a promise that is resolved once the dialog has been closed.</p>
 <pre><code>this.UiHelper.showDialog(PinEntryController.ID, options)
     .then((result: Models.PinEntryDialogResultModel) =&gt; {
@@ -422,11 +422,11 @@ $stateProvider.state(&quot;app.category&quot;, {
 });
 </code></pre>
 
-<p>To create a dialog you first need to create a template with the modal class and the <code>ng-controller</code> attribute to specify the ID of your dialog's controller:</p>
+<p>To create a dialog, you first need to create a template with the modal class and the <code>ng-controller</code> attribute to specify the ID of your dialog's controller:</p>
 <pre><code>&lt;div class=&quot;modal&quot; ng-controller=&quot;PinEntryController&quot;&gt;
 </code></pre>
 
-<p>Then you'll need to create a controller that extends <code>BaseDialogController</code>. If you examine the base class you'll see that it requires three templated types:</p>
+<p>Then you'll need to create a controller that extends <code>BaseDialogController</code>. If you examine the base class, you'll see that it requires three templated types:</p>
 <pre><code>export class BaseDialogController&lt;V, D, R&gt; extends BaseController&lt;V&gt; { ... }
 </code></pre>
 
@@ -435,7 +435,7 @@ $stateProvider.state(&quot;app.category&quot;, {
 <li><code>D</code> - dialog model that is passed into the dialog via the options parameters when opening the dialog.</li>
 <li><code>R</code> - dialog result model that is used to return information from the dialog to the caller promise when the dialog is closed.</li>
 </ul>
-<p>For example, the PIN entry dialog itself works with <code>PinEntryViewModel</code> (<code>V</code>). It receives <code>PinEntryDialogModel</code> as its input (<code>D</code>) and when it closes it returns <code>PinEntryDialogResultModel</code> (<code>R</code>):</p>
+<p>For example, the PIN entry dialog works with <code>PinEntryViewModel</code> (<code>V</code>). It receives <code>PinEntryDialogModel</code> as its input (<code>D</code>), and when it closes it returns <code>PinEntryDialogResultModel</code> (<code>R</code>):</p>
 <pre><code>export class PinEntryController
     extends BaseDialogController&lt;ViewModels.PinEntryViewModel, Models.PinEntryDialogModel, Models.PinEntryDialogResultModel&gt; {
     ...
@@ -444,13 +444,13 @@ $stateProvider.state(&quot;app.category&quot;, {
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Each of these types are optional, and not all dialogs will require all three types. For any types you do not wish to specify you can pass <code>any</code> or <code>ViewModels.EmptyViewModel</code>.</p>
+<p>Each of these types is optional, and not all dialogs require all three types. For any types you do not wish to specify, you can pass <code>any</code> or <code>ViewModels.EmptyViewModel</code>.</p>
 </div>
-<p>If you examine the sample dialogs you'll see that the base class provides two events that are fired when the dialog opens and closes (<code>dialog_shown</code> and <code>dialog_hidden</code> respectively).</p>
-<p>Also there are two base helper methods provided. The first, <code>getData()</code>, is used to obtain the model object that was used to open the dialog (templated type <code>D</code>). The second <code>close()</code> used to close the dialog. You can optionally pass an object of type <code>R</code> to the close method which will be returned to the opener via the promise result.</p>
+<p>If you examine the sample dialogs, you'll see that the base class provides two events that are fired when the dialog opens and closes (<code>dialog_shown</code> and <code>dialog_hidden</code>, respectively).</p>
+<p>There are are two base helper methods provided. The first, <code>getData()</code>, is used to obtain the model object used to open the dialog (templated type <code>D</code>). The second, <code>close()</code>, is used to close the dialog. You can optionally pass an object of type <code>R</code> to the close method, which will be returned to the opener via the promise result.</p>
 <h1 id="popovers">Popovers</h1>
-<p>While this starter project does not contain a specific base class for Ionic's popover view, you can see an example of one being used on Develper Tools &gt; Logs view.</p>
-<p>A popover is generally initialized via the <code>view_beforeEnter</code> event by specifying the path to an HTML template and scope to use (which can be the same scope as the current controller). The popover can later be shown by invoking its <code>show()</code> method:</p>
+<p>Although this starter project does not contain a specific base class for Ionic's popover view, you can see an example of one's use on Develper Tools &gt; Logs view.</p>
+<p>A popover is generally initialized via the <code>view_beforeEnter</code> event by specifying the path to an HTML template and the scope to use (which can be the same scope as the current controller). The popover can later be shown by invoking its <code>show()</code> method:</p>
 <pre><code>protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
     super.view_beforeEnter(event, eventArgs);
 
@@ -466,7 +466,7 @@ protected filter_click(event: ng.IAngularEvent) {
 }
 </code></pre>
 
-<p>If the popover is sharing the same scope, the view model and controller can be accessed in the same way as a <a href="./#controllers">standard controller</a> by using the <code>viewModel</code> and <code>controller</code> keywords.</p></div>
+<p>If the popover shares the same scope, the view model and controller can be accessed in the same way as a <a href="./#controllers">standard controller</a> using the <code>viewModel</code> and <code>controller</code> keywords.</p></div>
         </div>
 
         <script src="../js/jquery-1.10.2.min.js"></script>

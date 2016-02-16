@@ -199,34 +199,34 @@
 <h1 id="overview">Overview</h1>
 <p>Previous sections covered the <code>www</code> and <code>src</code> directories; this section will go over the remaining directories.</p>
 <h1 id="vscode">.vscode</h1>
-<p>This is where the project specific settings and tasks for the <a href="https://code.visualstudio.com/">Visual Studio Code</a> IDE are located.</p>
+<p>This is where the project-specific settings and tasks for the <a href="https://code.visualstudio.com/">Visual Studio Code</a> IDE are located.</p>
 <p>This directory is optional and can be removed if you are not using VS Code.</p>
 <h1 id="bower_components-generated">bower_components <em>(generated)</em></h1>
-<p>This is a generated directory that is created by running the <code>gulp libs</code> task. These files are downloaded by the Bower package manager and can be configured via <code>bower.json</code>.</p>
-<p>The libs task also takes care of copying the needed files to <code>www/js/libs</code> so they can be used at runtime.</p>
+<p>This is a generated directory created by running the <code>gulp libs</code> task. These files are downloaded by the Bower package manager and can be configured via <code>bower.json</code>.</p>
+<p>The libs task also copies the needed files to <code>www/js/libs</code> so they can be used at runtime.</p>
 <p>See <code>gulp libs</code> in <a href="../gulp-tasks/#gulp-libs">Gulp Tasks</a> for more details.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This directory will be removed when executing the <code>gulp clean</code> or <code>gulp clean:libs</code> tasks and should not be commited to source control.</p>
+<p>This directory will be removed when executing the <code>gulp clean</code> or <code>gulp clean:libs</code> tasks and should not be committed to source control.</p>
 </div>
 <h1 id="docs">docs</h1>
-<p>This directory contains the documentation in markdown format which are used to generate this documentation site using <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+<p>This directory contains the documentation in markdown format, which are used to generate this documentation site using <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
 <p>This directory is optional and can be removed.</p>
 <h1 id="hooks">hooks</h1>
 <p>This directory contains build hook scripts for Cordova's build system.</p>
 <blockquote>
 <p>Cordova Hooks represent special scripts which could be added by application and plugin developers or even by your own build system to customize cordova commands. - <a href="https://cordova.apache.org/docs/en/dev/guide/appdev/hooks/">Apache Cordova Hooks Guide</a></p>
 </blockquote>
-<p>This starter project does not currently ship with any custom build hooks, aside from the "Add Platform Class" script that is included with Cordova.</p>
+<p>This starter project does not currently ship with any custom build hooks, aside from the "Add Platform Class" script included with Cordova.</p>
 <p>See <code>hooks/README.md</code> for more details.</p>
 <h1 id="node_modules-generated">node_modules <em>(generated)</em></h1>
-<p>This is a generated directory that is created when you run <code>npm install</code> from the project directory. It contains all of the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).</p>
+<p>This is a generated directory created when you run <code>npm install</code> from the project directory. It contains all of the third-party software needed to build and run your application (e.g., Cordova, Ionic, gulp, etc.).</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This directory will be removed when executing the <code>gulp clean</code> task and should not be committed to source control.</p>
 </div>
 <h1 id="plugins-generated">plugins <em>(generated)</em></h1>
-<p>This is a generated directory that is created when you run the <code>gulp plugins</code> or <code>cordova plugin add</code> commands.</p>
+<p>This is a generated directory created when you run the <code>gulp plugins</code> or <code>cordova plugin add</code> commands.</p>
 <p>It contains any <a href="https://cordova.apache.org/docs/en/latest/cordova/plugins/pluginapis.html">Cordova plugins</a> used to extend the functionality of the application through native code.</p>
 <p>Plugins are installed via the <code>cordovaPlugins</code> property in <code>package.json</code>.</p>
 <p>See <code>gulp plugins</code> in <a href="../gulp-tasks/#gulp-plugins">Gulp Tasks</a> for more details.</p>
@@ -235,33 +235,33 @@
 <p>This directory will be removed when executing the <code>gulp clean</code> or <code>gulp clean:plugins</code> tasks and should not be committed to source control.</p>
 </div>
 <h1 id="resources">resources</h1>
-<p>This is a general purpose directory which can contain any type of resource for your application.</p>
-<p>Currently, the <code>ionic resources</code> command will utilize the <code>icon.png</code> and <code>splash.png</code> from this directory to generate the various icon and splash screens for the various platforms' screen sizes.</p>
+<p>This is a general purpose directory that can contain any type of resource for your application.</p>
+<p>Currently, the <code>ionic resources</code> command utilizes <code>icon.png</code> and <code>splash.png</code> from this directory to generate the icon and splash screens for the various platforms' screen sizes.</p>
 <h1 id="tests">tests</h1>
 <p>This directory contains the unit tests for the application.</p>
 <p>Unit tests can be run using the Karma test runner by executing the <code>gulp test</code> task.</p>
-<p>Each sub-directory here should mirror the layout of <code>src</code> with the addition of a <code>.Tests.ts</code> suffix. That is, a test for <code>src/Services/Utilities.ts</code> should be placed at <code>tests/Services/Utilities.Tests.ts</code>.</p>
+<p>Each sub-directory here should mirror the layout of <code>src</code>, with the addition of a <code>.Tests.ts</code> suffix (i.e., a test for <code>src/Services/Utilities.ts</code> should be placed at <code>tests/Services/Utilities.Tests.ts</code>).</p>
 <p>See <code>gulp test</code> in <a href="../gulp-tasks/#gulp-test">Gulp Tasks</a> and <a href="../unit-testing/">Unit Testing</a> for more details.</p>
 <h2 id="tests_referencests">tests/_references.ts</h2>
 <p>This file is used to point the TypeScript compiler at the generated type definitions for the compiled application bundle being tested.</p>
 <h2 id="teststsconfigjson">tests/tsconfig.json</h2>
-<p>This file controls parameters passed to the TypeScript compiler and is used when running the <code>gulp ts:tests</code> task or running the unit tests via <code>gulp test</code>.</p>
+<p>This file controls parameters passed to the TypeScript compiler and is used when running the <code>gulp ts:tests</code> task or the unit tests via <code>gulp test</code>.</p>
 <h2 id="teststsddts-generated">tests/tsd.d.ts <em>(generated)</em></h2>
 <p>This file contains references to all of the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition</a> files from the <a href="http://definitelytyped.org/">DefinitelyTyped</a> repository.</p>
-<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd</code> task. The definition files that are downloaded are specified in <code>tsd.tests.json</code>.</p>
+<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd</code> task. The definition files to be downloaded are specified in <code>tsd.tests.json</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This file will be removed when executing the <code>gulp clean</code> or <code>gulp clean:tsd</code> tasks and should not be committed to source control.</p>
 </div>
 <h2 id="testsbundletestsjs-generated">tests/bundle.tests.js <em>(generated)</em></h2>
-<p>This file contains the result of the TypeScript compilation of the unit tests.</p>
+<p>This file contains the result of the unit tests' TypeScript compilation.</p>
 <p>This is created via the <code>gulp test</code> or <code>gulp ts:tests</code> tasks.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This file will be removed when executing the <code>gulp clean</code> or <code>gulp clean:tests</code> tasks and should not be committed to source control.</p>
 </div>
 <h2 id="testsbundletestsjsmap-generated">tests/bundle.tests.js.map <em>(generated)</em></h2>
-<p>This file contains the source mapping information of the TypeScript compilation of the unit tests. These can be used when debugging to step through TypeScript source instead of JavaScript.</p>
+<p>This file contains the source mapping information of the unit tests' TypeScript compilation. This can be used when debugging to step through TypeScript source code instead of JavaScript.</p>
 <p>This is created via the <code>gulp test</code> or <code>gulp ts:tests</code> tasks.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -269,7 +269,7 @@
 </div>
 <h1 id="typings">typings</h1>
 <p>This directory contains all of the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition</a> files from the <a href="http://definitelytyped.org/">DefinitelyTyped</a> repository used by your application.</p>
-<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd</code> task. The definition files that are downloaded are specified in <code>tsd.json</code>.</p>
+<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd</code> task. The definition files to be downloaded are specified in <code>tsd.json</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>All subdirectories will be removed when executing the <code>gulp clean</code> or <code>gulp clean:tsd</code> tasks (<strong>except for the custom directory</strong>) and should not be committed to source control.</p>
@@ -278,7 +278,7 @@
 <p>This is the only subdirectory of the <code>typings</code> directory that should be committed to source control.</p>
 <h1 id="typings-tests">typings-tests</h1>
 <p>This directory contains all of the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition</a> files from the <a href="http://definitelytyped.org/">DefinitelyTyped</a> repository used by the unit tests.</p>
-<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd:tests</code> task. The definition files that are downloaded are specified in <code>tsd.tests.json</code>.</p>
+<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd:tests</code> task. The definition files to be downloaded are specified in <code>tsd.tests.json</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>All subdirectories will be removed when executing the <code>gulp clean</code> or <code>gulp clean:tsd</code> tasks (<strong>except for the custom directory</strong>) and should not be committed to source control.</p>

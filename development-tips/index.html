@@ -192,12 +192,12 @@
 <h1 id="overview">Overview</h1>
 <p>This section contains a list of tips and suggestions I've found useful when building mobile apps with this sample project.</p>
 <h1 id="developing-with-chrome">Developing with Chrome</h1>
-<p>Chrome offers excellent support for debugging TypeScript as well as working with mobile applications. The developer tools provide user agent string spoofing, view port emulation, network speed throttling and more.</p>
-<p>Ionic offers the <code>ionic serve</code> command which starts a lightweight HTTP server and serves your application.</p>
-<p>With these two features combined your can rapidly build out your application without lengthy native compilation or emulator startup times.</p>
+<p>Chrome offers excellent support for debugging TypeScript and working with mobile applications. The developer tools provide user agent string spoofing, view port emulation, network speed throttling, and more.</p>
+<p>Ionic offers the <code>ionic serve</code> command, which starts a lightweight HTTP server and serves your application.</p>
+<p>With these two features combined, you can rapidly build out your application without lengthy native compilation or emulator startup times.</p>
 <p><img alt="" src="../img/chrome-development.png" /></p>
 <h2 id="security-flags">Security Flags</h2>
-<p>When making HTTP requests to your backend API during development, you may find it useful to disable several security features such as the same origin policy and SSL certificate checking. To do so, you can start Chrome using the following flags:</p>
+<p>When making HTTP requests to your backend API during development, you may find it useful to disable several security features, such as the same origin policy and SSL certificate checking. To do so, you can start Chrome using the following flags:</p>
 <pre><code># OS X
 $ open -a &quot;Google Chrome.app&quot; --ignore-certificate-errors --disable-web-security
 
@@ -205,7 +205,7 @@ $ open -a &quot;Google Chrome.app&quot; --ignore-certificate-errors --disable-we
 &gt; chrome.exe --ignore-certificate-errors --disable-web-security
 </code></pre>
 
-<p>Since these flags disable important security features, it is important that you do not use this Chrome instance for normal web browsing. If you use Chrome as your primary browser, I recommend launching a second instance pointed at a development only profile:</p>
+<p>Since these flags disable important security features, it is important that you do not use this Chrome instance for normal web browsing. If you use Chrome as your primary browser, I recommend launching a second instance pointed at a development-only profile:</p>
 <pre><code># OS X
 $ open -a &quot;Google Chrome.app&quot; --ignore-certificate-errors --disable-web-security --user-data-dir=/tmp/ChromeDev
 
@@ -213,49 +213,49 @@ $ open -a &quot;Google Chrome.app&quot; --ignore-certificate-errors --disable-we
 &gt; chrome.exe --ignore-certificate-errors --disable-web-security --user-data-dir=C:\tmp\ChromeDev
 </code></pre>
 
-<p>I went a step further and created an AppleScript which allows me to interactively start a new Chrome instance based on a series of dialog prompts to enable optional features like proxies. You can read more <a href="http://www.justin-credible.net/2016/01/06/running-a-second-instance-of-chrome-for-development/">here</a> or look at the script directly <a href="https://gist.github.com/Justin-Credible/0aa884c3a92a436db7d8">here</a>.</p>
+<p>I went a step further and created an AppleScript that allows me to interactively start a new Chrome instance based on a series of dialog prompts to enable optional features like proxies. You can read more <a href="http://www.justin-credible.net/2016/01/06/running-a-second-instance-of-chrome-for-development/">here</a>, or look at the script directly <a href="https://gist.github.com/Justin-Credible/0aa884c3a92a436db7d8">here</a>.</p>
 <h2 id="mock-platform-apis">Mock Platform APIs</h2>
-<p>When you are running your application in Chrome you will be unable to call Cordova plugins that do not provide a brower platform implementation.</p>
-<p>In this case you'll need to mock up the plugin's API interface via <code>src/Framework/MockPlatformApis.ts</code>.</p>
+<p>When running your application in Chrome, you will be unable to call Cordova plugins that do not provide a browser platform implementation.</p>
+<p>In this case, you'll need to mock up the plugin's API interface via <code>src/Framework/MockPlatformApis.ts</code>.</p>
 <p>The pattern I follow is to have all plugin access go through the <code>Plugins</code> service. This service exposes a property for each plugin. The property accessor should check to see if the plugin is available, and if it isn't, delegate to a mock implementation.</p>
-<p>Your mock implementation can simply be a no-op, or you can write a simple polyfill to provide basic funtionalilty for testing.</p>
-<p>You'll see that the sample project uses the Cordova notification plugin to display native alert and confirm dialogs while running on devices. But when running in a browser, a mock implementation is provided that delegates to Ionic's   <code>$ionicPopup</code> service.</p>
+<p>Your mock implementation can simply be a no-op, or you can write a simple polyfill to provide basic funtionality for testing.</p>
+<p>You'll see that the sample project uses the Cordova notification plugin to display native alert and confirm dialogs while running on devices. While running in a browser, however, a mock implementation is provided that delegates to Ionic's <code>$ionicPopup</code> service.</p>
 <h2 id="mock-http-apis">Mock HTTP APIs</h2>
-<p>During development you may find it useful to mock up the responses for HTTP requests. This can be useful to test edge cases in your application or even build an application against APIs that aren't yet live.</p>
-<p>You can mock up HTTP responses in <code>src/Framework/MockHttpApis.ts</code>. First, you specify the regular expression to match against a request URL, and then you provide a method which returns the data for that request.</p>
-<p>When mock HTTP API mode is enabled (via the <a href="../base-framework/#developer-tools">in-app developer tools</a>) these requests will not go over the wire and will instead return your mocked up data. There is a randomized delay of between one to three seconds so that you can simulate the latency of a request on a cellular network.</p>
+<p>During development, you may find it useful to mock up the responses for HTTP requests. This can be useful to test edge cases in your application, or even to build an application against APIs that aren't yet live.</p>
+<p>You can mock up HTTP responses in <code>src/Framework/MockHttpApis.ts</code>. First, you specify the regular expression to match against a request URL, and then you provide a method that returns the data for that request.</p>
+<p>When mock HTTP API mode is enabled (via the <a href="../base-framework/#developer-tools">in-app developer tools</a>), these requests will not go over the wire, and will instead return your mocked-up data. There is a randomized delay of between one to three seconds so you can simulate the latency of a request on a cellular network.</p>
 <h1 id="running-natively">Running Natively</h1>
-<p>To run your application on the iOS Simulator or Android emulator you can use the <code>ionic emulate ios</code> or <code>ionic emulate android</code> commands respectively.</p>
+<p>To run your application on the iOS Simulator or Android emulator, you can use the <code>ionic emulate ios</code> or <code>ionic emulate android</code> commands, respectively.</p>
 <p>Likewise, to run on an attached device, you can use the <code>ionic run ios --device</code> or <code>ionic run android --device</code> commands.</p>
-<p>It is important to remember that part of what Cordova does for you is generating the native projects in the platforms directory. These native projects can be opened in XCode and Android Studio. This is useful for debugging native code plugins. To update the generated projects you can run <code>ionic prepare ios</code> or <code>ionic prepare android</code>.</p>
+<p>It is important to remember that part of what Cordova does for you is generate the native projects in the platforms directory. These native projects can be opened in XCode and Android Studio. This is useful for debugging native code plugins. To update the generated projects, you can run <code>ionic prepare ios</code> or <code>ionic prepare android</code>.</p>
 <h1 id="running-ios-simulator-remotely">Running iOS Simulator Remotely</h1>
 <p>If you are developing your application on a Windows or Linux machine, but want to test and run your application on iOS, you can do so using the <code>gulp remote-emulate-ios</code> task to target a remote OS X machine.</p>
-<p>First, you'll need to install the <code>remotebuild</code> package via npm on the OS X machine on which you want to build the project and run the simulator. Note that since the Cordova project will be built on the OS X machine, you'll need to make sure you have all the build prerequisites installed (Xcode etc).</p>
+<p>First, you'll need to install the <code>remotebuild</code> package via npm on the OS X machine you want to use to build the project and run the simulator. Note that since the Cordova project will be built on the OS X machine, you must make sure you have all the build prerequisites installed as well (Xcode, etc.).</p>
 <pre><code>$ npm install -g remotebuild
 $ remotebuild start
 </code></pre>
 
-<p>Next, you'll want to edit <code>remote-build.json</code> located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS X machine, as well as configure other settings.</p>
-<p>Finally, you can execute <code>gulp remote-emulate-ios</code> from the root of the starter project which will take care of TypeScript compilation, building a payload, and uploading it to the OS X machine so it can be built.</p>
+<p>Next, you'll edit <code>remote-build.json</code>, located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS X machine, as well as configure other settings.</p>
+<p>Finally, execute <code>gulp remote-emulate-ios</code> from the root of the starter project. This will take care of compiling TypeScript, building a payload, and uploading it to the OS X machine so it can be built.</p>
 <h1 id="visual-studio-code">Visual Studio Code</h1>
 <h2 id="shortcuts">Shortcuts</h2>
-<p>If you are usig VSCode, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to build the application. This will execute the <code>gulp ts</code> task.</p>
-<p>Additionally, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>R</kbd> and then begin typing the name of a gulp task to run.</p>
+<p>If you are usig VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to build the application. This will execute the <code>gulp ts</code> task.</p>
+<p>Additionally, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>R</kbd>, then begin typing the name of a gulp task to run.</p>
 <p><img alt="" src="../img/vscode-launcher.png" /></p>
 <h2 id="tasks">Tasks</h2>
-<p>The <code>.vscode/tasks.json</code> file contains configuration for the tasks you can launch, as well as definition for the problem matchers. A problem matcher allows you to define a regular expression which matches console output from a task and then use that information to display warnings or errors in Visual Studio Code's warning or error views.</p>
+<p>The <code>.vscode/tasks.json</code> file contains configuration for the tasks you can launch, as well as definition for the problem matchers. A problem matcher allows you to define a regular expression that matches console output from a task, then use that information to display warnings or errors in VS Code's warning or error views.</p>
 <p><img alt="" src="../img/vscode-matchers.png" /></p>
 <h1 id="build-schemes">Build Schemes</h1>
-<p>During development it is a common requirement to be able to be able to create different builds of your application. For example, you may have a development build used by developers while writing code, a staging environment for QA staff to test changes, and a production environment for live users.</p>
-<p>In each of these schemes you may need to point at different API URLs or use different Google Analytics accounts for example.</p>
-<p>The starter project offers a gulp task and XML configuration to make it easy to switch between environments.</p>
+<p>A common requirement during development is the ability to create different builds of your application. For example, you may have a development build to be used by developers while writing code, a staging environment for QA staff to use to test changes, and a production environment for live users.</p>
+<p>In each of these schemes, you may need to point at different API URLs, or use different Google Analytics accounts, for example.</p>
+<p>This starter project offers a gulp task and XML configuration to make it easy to switch between environments.</p>
 <h2 id="configuration-task">Configuration Task</h2>
-<p>The <code>gulp config</code> task is responsible for configuring the application for the default scheme. If a scheme name is provided via the scheme argument that scheme's configuration will be used instead.</p>
-<p>For example, to use a scheme named staging:</p>
+<p>The <code>gulp config</code> task is responsible for configuring the application for the default scheme. If a scheme name is provided via the scheme argument, that scheme's configuration will be used instead.</p>
+<p>For example, to use a scheme named "staging":</p>
 <p><code>gulp config --scheme staging</code></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code>gulp ts</code> task first runs <code>gulp config</code> so that if you are using VS Code, pressing <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> will result in the app being configured for the default scheme in addition to compiling TypeScript code.</p>
+<p>The <code>gulp ts</code> task first runs <code>gulp config</code>, so if you're using VS Code, pressing <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> will result in the app being configured for the default scheme in addition to compiling TypeScript code.</p>
 </div>
 <h2 id="scheme-definitions">Scheme Definitions</h2>
 <p>Build schemes are defined in the <code>config.master.xml</code> as child nodes under the <code>schemes</code> node:</p>
@@ -280,21 +280,21 @@ $ remotebuild start
 </code></pre>
 
 <p>The <code>default</code> attribute indicates the name of the scheme to use if one isn't provided when executing <code>gulp config</code> (or using the VS Code shortcut).</p>
-<p>Each scheme has a <code>name</code> attribute as well as a <code>debug</code> attribute. The debug attribute sets the value of an arbitrary debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (eg <code>Utilities.isDebugMode</code>).</p>
+<p>Each scheme has a <code>name</code> attribute and a <code>debug</code> attribute. The debug attribute sets the value of an arbitrary debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (e.g., <code>Utilities.isDebugMode</code>).</p>
 <p>Under each scheme node are replacement nodes. The <code>value</code> attribute is the content that should be used to replace any occurances of the value of the <code>target</code> attribute. Replacements will occur in the files listed in the generated files section.</p>
-<p>For example, using the staging scheme by running <code>gulp config --scheme staging</code> would result in following configuration chunk from <code>config.master.xml</code>:</p>
+<p>For example, using the "staging" scheme by running <code>gulp config --scheme staging</code> would replace the following configuration chunk from <code>config.master.xml</code>:</p>
 <pre><code>&lt;preference name=&quot;apiUrl&quot; value=&quot;${API_URL}&quot;/&gt;
 &lt;preference name=&quot;apiVersion&quot; value=&quot;${API_VERSION}&quot;/&gt;
 </code></pre>
 
-<p>being replaced with the following output to <code>config.xml</code>:</p>
+<p>with the following output to <code>config.xml</code>:</p>
 <pre><code>&lt;preference name=&quot;apiUrl&quot; value=&quot;http://development.your-company.com/api&quot;/&gt;
 &lt;preference name=&quot;apiVersion&quot; value=&quot;v1&quot;/&gt;
 </code></pre>
 
 <h2 id="base-schemes">Base Schemes</h2>
-<p>Some of your build schemes may have near identical configuration save for a single value or two. For these cases you can create a base scheme that contains the common values, and a specific scheme that uses the base scheme.</p>
-<p>For example, perhaps you have two schemes that both point at production, but one is for pre-release testing in which you don't want analytics tracking enabled:</p>
+<p>Some of your build schemes may have nearly identical configurations, save for a single value or two. For these cases you can create a base scheme that contains the common values, and a specific scheme that uses the base scheme.</p>
+<p>For example, perhaps you have two schemes that both point at production, but one is for pre-release testing, in which you don't want analytics tracking enabled:</p>
 <pre><code>&lt;scheme name=&quot;base&quot;&gt;
   &lt;replacement target=&quot;API_URL&quot; value=&quot;http://app.company.com/api&quot;/&gt;
   &lt;replacement target=&quot;API_VERSION&quot; value=&quot;v1&quot;/&gt;
@@ -310,14 +310,14 @@ $ remotebuild start
 </code></pre>
 
 <h2 id="generated-files">Generated Files</h2>
-<p>The <code>gulp config</code> task takes care of generating the following files:</p>
+<p>The <code>gulp config</code> task generates the following files:</p>
 <ul>
 <li>Cordova's <code>config.xml</code> (from <code>config.master.xml</code>)</li>
 <li>Starting page <code>www/index.html</code> (from <code>www/index.master.html</code>)</li>
 <li>Runtime variables at <code>src/js/build-vars.js</code></li>
 </ul>
-<p>The <code>config.xml</code> and <code>www/index.html</code> files will have had variable substitution performed based on the build scheme.</p>
-<p>The <code>build-vars.js</code> file will contain information about the build such as application name, version number, debug flag, and build timestamp. In addition, all of the <code>preference</code> elements' values from <code>config.xml</code> will be present in a properties collection. All of these values are available via the <code>Configuration</code> service.</p></div>
+<p>Variable substitution will be automatically performed for the <code>config.xml</code> and <code>www/index.html</code> files based on the build scheme.</p>
+<p>The <code>build-vars.js</code> file will contain information about the build, such as application name, version number, debug flag, and build timestamp. In addition, all of the <code>preference</code> elements' values from <code>config.xml</code> will be present in a properties collection. All of these values are available via the <code>Configuration</code> service.</p></div>
         </div>
 
         <script src="../js/jquery-1.10.2.min.js"></script>

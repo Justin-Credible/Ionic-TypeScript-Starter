@@ -202,56 +202,56 @@
             <div class="col-md-9" role="main">
 
 <h1 id="overview">Overview</h1>
-<p>This section will cover the functionality of each of the files in the root directory.</p>
+<p>This section will cover the functionality of each file in the root directory.</p>
 <h1 id="gitignore">.gitignore</h1>
-<p>Used to specify which source files should be excluded from source control.</p>
+<p>This file is used to specify which source files should be excluded from source control.</p>
 <h1 id="travisyml">.travis.yml</h1>
 <blockquote>
 <p>Travis CI is a FOSS, hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. - <a href="https://en.wikipedia.org/wiki/Travis_CI">Wikipedia</a></p>
 </blockquote>
-<p>If you do not use Travis CI you can remove this file.</p>
+<p>If you do not use Travis CI, you can remove this file.</p>
 <h1 id="bowerjson">bower.json</h1>
-<p>This file is used by the <a href="http://bower.io/">Bower</a> package manager to declare the third party JavaScript libraries used by your application. Its install section can be used to customize the files that will be copied into <code>www/lib</code> when running the <code>gulp libs</code> task.</p>
+<p>This file is used by the <a href="http://bower.io/">Bower</a> package manager to declare the third-party JavaScript libraries used by your application. Its install section can be used to customize the files that will be copied into <code>www/lib</code> when running the <code>gulp libs</code> task.</p>
 <p>See <code>gulp libs</code> in <a href="../gulp-tasks/#gulp-libs">Gulp Tasks</a> for more details.</p>
 <h1 id="configmasterxml">config.master.xml</h1>
-<p>This is the master config file that is used to generate <code>config.xml</code> when running the <code>gulp config</code> task.</p>
+<p>This is the master config file used to generate <code>config.xml</code> when running the <code>gulp config</code> task.</p>
 <p>The config task will perform variable substitution based on the current build scheme.</p>
 <p>See <code>gulp config</code> in <a href="../gulp-tasks/#gulp-config">Gulp Tasks</a> for more details.</p>
 <h1 id="configxml-generated">config.xml <em>(generated)</em></h1>
 <p>This file is generated from <code>config.master.xml</code> when running the <code>gulp config</code> task. This is the main configuration file that Cordova uses to build and run your application.</p>
 <div class="admonition warn">
 <p class="admonition-title">Warn</p>
-<p>This file will be removed when executing the <code>gulp clean</code> or <code>gulp clean:config</code> tasks and should not be comitted to source control.</p>
+<p>This file will be removed when executing the <code>gulp clean</code> or <code>gulp clean:config</code> tasks and should not be committed to source control.</p>
 </div>
 <h1 id="ionicproject">ionic.project</h1>
 <p>This file is used by the <code>ionic</code> command line tool. It is used to configure <a href="http://ionic.io/">Ionic.io</a> services, among other things.</p>
 <h1 id="karmaconfjs">karma.conf.js</h1>
-<p>This is the configuration file for the <a href="https://karma-runner.github.io">Karma Unit Test Runner</a> which is used to run the unit tests via the <code>gulp test</code> task.</p>
+<p>This is the configuration file for the <a href="https://karma-runner.github.io">Karma Unit Test Runner</a>, which is used to run the unit tests via the <code>gulp test</code> task.</p>
 <p>See <code>gulp test</code> in <a href="../gulp-tasks/#gulp-test">Gulp Tasks</a> for more details.</p>
 <h1 id="license">LICENSE</h1>
 <p>This is the license file for the starter project.</p>
 <h1 id="mkdocsyml">mkdocs.yml</h1>
-<p>The configuration file for the <a href="http://www.mkdocs.org/">MkDocs document generator</a> which is used to generate these docs from the Markdown files in the <code>docs</code> directory.</p>
-<p>If you are not using MkDocs you can remove this file and the <code>docs</code> directory.</p>
+<p>This is the configuration file for the <a href="http://www.mkdocs.org/">MkDocs document generator</a>, used to generate these docs from the Markdown files in the <code>docs</code> directory.</p>
+<p>If you are not using MkDocs, you can remove this file and the <code>docs</code> directory.</p>
 <h1 id="packagejson">package.json</h1>
-<p>This is file is used by Node to describe the starter project as well as declare the dependencies that need to be downloaded when executing the <code>npm install</code> command.</p>
-<p>These include the third party software needed to build and run your application (eg Cordova, Ionic, gulp, etc).</p>
+<p>This file is used by Node to describe the starter project and to declare the dependencies that must be downloaded when executing the <code>npm install</code> command.</p>
+<p>These dependencies include the third-party software needed to build and run your application (e.g., Cordova, Ionic, gulp, etc.).</p>
 <h1 id="readmemd">README.md</h1>
 <p>The default readme file for the starter project.</p>
 <p>This can be removed or replaced with information specific to your application.</p>
 <h1 id="remote-buildjson">remote-build.json</h1>
-<p>This file contains configuration used by the <code>gulp remote-emulate-ios</code> task which allows developers on Windows or Linux to package, build, or run their app on a remote Mac OS X machine.</p>
+<p>This file contains configuration used by the <code>gulp remote-emulate-ios</code> task, which allows developers on Windows or Linux to package, build, or run their app on a remote Mac OS X machine.</p>
 <p>See <a href="../development-tips/#running-ios-simulator-remotely">Running iOS Simulator Remotely</a> for more details.</p>
 <p>See <code>gulp remote-emulate-ios</code> in <a href="../gulp-tasks/#gulp-remote-emulate-ios">Gulp Tasks</a> for more details.</p>
 <h1 id="tsdjson">tsd.json</h1>
 <p>This file declares the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition files</a> that should be downloaded when executing the <code>gulp tsd</code> task. The definition files are hosted by the <a href="http://definitelytyped.org/">DefinitelyTyped</a> project.</p>
-<p>These definition files describe third party JavaScript libraries that your application uses so they can be referenced from TypeScript in a stronly-typed manner.</p>
-<p>This file can be updated by used the <code>tsd</code> command line tool to add or remove definitions.</p>
+<p>These definition files describe the third-party JavaScript libraries your application uses so they can be referenced from TypeScript in a strongly-typed manner.</p>
+<p>This file can be updated using the <code>tsd</code> command line tool to add or remove definitions.</p>
 <p>See <code>gulp tsd</code> in <a href="../gulp-tasks/#gulp-tsd">Gulp Tasks</a> for more details.</p>
 <h1 id="tsdtestsjson">tsd.tests.json</h1>
 <p>This file declares the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition files</a> that should be downloaded when executing the <code>gulp tsd</code> task. The definition files are hosted by the <a href="http://definitelytyped.org/">DefinitelyTyped</a> project.</p>
-<p>These definition files describe third party JavaScript libraries that your unit tests use so they can be referenced from TypeScript in a stronly-typed manner.</p>
-<p>This file can be updated by used the <code>tsd</code> command line tool to add or remove definitions.</p>
+<p>These definition files describe third-party JavaScript libraries that your unit tests use so they can be referenced from TypeScript in a strongly-typed manner.</p>
+<p>This file can be updated using the <code>tsd</code> command line tool to add or remove definitions.</p>
 <p>See <code>gulp tsd</code> in <a href="../gulp-tasks/#gulp-tsd">Gulp Tasks</a> for more details.</p>
 <h1 id="tslintjson">tslint.json</h1>
 <p>This file contains configuration for the TypeScript <a href="https://en.wikipedia.org/wiki/Lint_(software)">linter</a>.</p>

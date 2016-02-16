@@ -208,84 +208,84 @@
 
 <h1 id="overview">Overview</h1>
 <p>This section will cover the <code>src</code> directories and its children.</p>
-<p>The <code>src</code> directory contains the bulk of the source code for your application. This includes TypeScript source, SASS styling, and Angular HTML templates.</p>
-<p>TypeScript files are compiled using the internal module system using the <code>namespace</code> keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This allows us to avoid having to use a module loader at runtime.</p>
-<p>In most example Angular applications you'll commonly see separate directories for each component (eg controllers, views, models, services etc). While this is nice for tutorials and small applications, it is not ideal for applications that contain a large number of files.</p>
-<p>Instead, this project groups files by feature rather than type. So instead of having to look in multiple directories for all of the files applicable for a given view, you'll be able to find all applicable files in the same location.</p>
+<p>The <code>src</code> directory contains the bulk of the source code for your application. This includes TypeScript source code, SASS styling, and Angular HTML templates.</p>
+<p>TypeScript files are compiled using the internal module system, using the <code>namespace</code> keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This avoid the need to use a module loader at runtime.</p>
+<p>In most example Angular applications, you'll commonly see separate directories for each component (e.g., controllers, views, models, services etc.). While this is nice for tutorials and small applications, it is not ideal for applications containing a large number of files.</p>
+<p>In contrast, this project groups files by feature rather than type. Instead of having to look in multiple directories for all the files applicable for a given view, you'll be able to find them all in the same location.</p>
 <div class="admonition note">
 <p class="admonition-title">Note about namepsaces</p>
-<p>As you explore the directory structure you'll notice that the namespaces and directory paths do not match as they would in other languages (Java for example).</p>
-<p>Instead we use directories for grouping files by feature and namespaces for determining the behavior of a given file.</p>
-<p>For example, a class in the <code>Controllers</code> namespace will be treated as an Angular controller. Instead of placing it in a controllers directory it can be placed in the same directory as the view model and template to which it belongs.</p>
+<p>As you explore the directory structure, you'll notice that the namespaces and directory paths do not match as they would in other languages (e.g., Java).</p>
+<p>Instead, we use directories to group files by feature and namespaces to determine the behavior of a given file.</p>
+<p>For example, a class in the <code>Controllers</code> namespace will be treated as an Angular controller. Instead of placing it in a controllers directory, it can be placed in the same directory as the view model and template to which it belongs.</p>
 </div>
 <h2 id="tsconfigjson">tsconfig.json</h2>
 <p>This file controls parameters passed to the TypeScript compiler and is used when running the <code>gulp ts</code> task or building from within VS Code.</p>
 <h2 id="tsddts-generated">tsd.d.ts <em>(generated)</em></h2>
 <p>This file contains references to all of the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition</a> files from the <a href="http://definitelytyped.org/">DefinitelyTyped</a> repository.</p>
-<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd</code> task. The definition files that are downloaded are specified in <code>tsd.json</code>.</p>
+<p>These are installed by the <code>tsd</code> tool via the <code>gulp tsd</code> task. The definition files to be downloaded are specified in <code>tsd.json</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This file will be removed when executing the <code>gulp clean</code> or <code>gulp clean:tsd</code> tasks and should not be committed to source control.</p>
 </div>
 <h2 id="_referencests">_references.ts</h2>
-<p>This file is used to reference TypeScript files so the compiler knows where to look during compilation. However, if you open the file you'll notice that it does not reference all of the files.</p>
-<p>The <code>gulp ts</code> task uses the TypeScript compiler's <code>-p</code> option to point at the <code>src</code> directory for compilation. When using this flag we don't need to maintain a <code>_references.ts</code> file with paths to all of the files.</p>
-<p>However the file is still useful when we are using internal modules as it allows us to control the order that the JavaScript output is emitted into the bundle file.</p>
-<p>We need to do this for specific classes that are base classes (so that at runtime these are loaded before any descendant classes).</p>
-<p>It is unlikely that you'll need to edit this file unless you add more base classes.</p>
+<p>This file is used to reference TypeScript files so the compiler knows where to look during compilation. However, if you open the file, you'll notice that it does not reference all of the files.</p>
+<p>The <code>gulp ts</code> task uses the TypeScript compiler's <code>-p</code> option to point at the <code>src</code> directory for compilation. When using this flag, it is not necessary to maintain a <code>_references.ts</code> file with paths to all files.</p>
+<p>The file is still useful when using internal modules, as it allows for control of the order in which the JavaScript output is emitted into the bundle file.</p>
+<p>This is necessary for specific (base) classes, so that at runtime they are loaded before any descendant classes.</p>
+<p>It is unlikely you'll need to edit this file unless you add more base classes.</p>
 <h1 id="framework">Framework</h1>
-<p>The framework directory contains components that make up the "framework" for your application. This includes base classes as well as the second level boot loader.</p>
+<p>The framework directory contains components that make up the "framework" of your application. These includes base classes as well as the second-level boot loader.</p>
 <h2 id="srcframeworkboot2ts">src/Framework/Boot2.ts</h2>
-<p>This is the second level boot loader whose purpose is to initialize Angular and Ionic. This involves declaring the root Angular module as well as registering Angular components (such as controllers, services, directives, and filters). This is where the Angular run and config functions live.</p>
-<p>The second level boot loader's <code>boot()</code> method is invoked from the first level boot loader (<code>www/js/boot1.js</code>). After it finishes, it then delegates to the <code>start()</code> method in the <code>src/Application/Application.ts</code> file.</p>
+<p>This is the second-level boot loader, the purpose of which is to initialize Angular and Ionic. It does this by declaring the root Angular module and registering Angular components (such as controllers, services, directives, and filters). This is where the Angular run and config functions live.</p>
+<p>The second-level boot loader's <code>boot()</code> method is invoked from the first-level boot loader (<code>www/js/boot1.js</code>). After it finishes, it then delegates to the <code>start()</code> method in the <code>src/Application/Application.ts</code> file.</p>
 <h2 id="frameworkboothelperts">Framework/BootHelper.ts</h2>
-<p>This contains helper methods for use by the second level boot loader such as controller or service registration etc.</p>
+<p>This contains helper methods for use by the second-level boot loader, for tasks such as controller or service registration.</p>
 <h2 id="frameworkbasecontrollerts">Framework/BaseController.ts</h2>
-<p>This is a base class that should be used by all of the Angular controllers.</p>
+<p>This base class should be used by all the the Angular controllers.</p>
 <p>See <a href="../base-framework/#controllers">Base Framework: Controllers</a> for more information.</p>
 <h2 id="frameworkbasedialogcontrollerts">Framework/BaseDialogController.ts</h2>
-<p>This is a base class that should be used by all of the Angular controllers used for Ionic modal dialogs.</p>
+<p>This base class should be used by all Angular controllers used for Ionic modal dialogs.</p>
 <p>See <a href="../base-framework/#dialogs">Base Framework: Dialogs</a> for more information.</p>
 <h2 id="frameworkbaseelementdirectivets">Framework/BaseElementDirective.ts</h2>
-<p>This is a base class that should be used by all of the Angular directives that are for elements.</p>
+<p>This base class should be used by all the Angular directives for elements.</p>
 <p>See <a href="../base-framework/#directives">Base Framework: Directives</a> for more information.</p>
 <h2 id="frameworkdialogoptionsts">Framework/DialogOptions.ts</h2>
-<p>This is an model object used to pass data and set options for Ionic modal dialogs.</p>
+<p>This is a modal object used to pass data and set options for Ionic modal dialogs.</p>
 <p>See <a href="../base-framework/#dialogs">Base Framework: Dialogs</a> for more information.</p>
 <h2 id="frameworkemptyviewmodelts">Framework/EmptyViewModel.ts</h2>
 <p>This is an empty view model class used for controllers that do not need a view model.</p>
 <h1 id="application">Application</h1>
-<p>The application directory contains code specific to your application that is not tied to specific views.</p>
+<p>The application directory contains code specific to your application and not tied to specific views.</p>
 <h2 id="applicationapplicationts">Application/Application.ts</h2>
-<p>This contains the main class for your application. Its <code>start()</code> method is invoked by the second level boot loader.</p>
-<p>Here you can subscribe to device events (eg pause, resume) or configure Cordova plugins when your application starts.</p>
-<p>This is a good place to put logic that doesn't correspond to any of your view specifically. For example, exception handlers or push notification handlers.</p>
-<p>This project uses the <code>device_resume</code> method to determine the initial view the user should be placed on.</p>
+<p>This contains the main class for your application. Its <code>start()</code> method is invoked by the second-level boot loader.</p>
+<p>Here you can subscribe to device events (e.g., pause, resume) or configure Cordova plugins when your application starts.</p>
+<p>This is a good place to put logic that doesn't specifically correspond to any of your views, for example exception handlers or push notification handlers.</p>
+<p>This project uses the <code>device_resume</code> method to determine which initial view the user should be placed on.</p>
 <h2 id="applicationconstantsts">Application/Constants.ts</h2>
-<p>This file contains a static namespace housing constants for use throughout your application.</p>
+<p>This file contains a static namespace that houses constants for use throughout your application.</p>
 <h2 id="applicationrouteconfigts">Application/RouteConfig.ts</h2>
-<p>This file contains a single, static method named <code>setupRoutes(...)</code> which is delegated to from the second level boot loader.</p>
-<p>It is responsible for defining up all of the Angular routes by specifying the controller and view to use for each route.</p>
+<p>This file contains a single static method named <code>setupRoutes(...)</code>, which is invoked from the second-level boot loader.</p>
+<p>It is responsible for defining all of the Angular routes by specifying the controller and view to use for each route.</p>
 <h1 id="filters">Filters</h1>
 <p>This is where all of your <a href="https://docs.angularjs.org/guide/filter">Angular filters</a> should live.</p>
 <p>An example filter is provided with the sample project. A filter should be a class with a static <code>filter</code> method.</p>
 <p>See <a href="../base-framework/#filters">Base Framework: Filters</a> for more details.</p>
 <h1 id="directives">Directives</h1>
 <p>This is where all of your <a href="https://docs.angularjs.org/guide/directive">Angular directives</a> should live.</p>
-<p>Two example directives are provided with the sample project; one is a simple directive (extending <code>ng.IDirective</code>) and one is an element directive (extending <code>BaseElementDirective</code>).</p>
+<p>Two example directives are provided with the sample project: a simple directive (extending <code>ng.IDirective</code>) and an element directive (extending <code>BaseElementDirective</code>).</p>
 <p>See <a href="../base-framework/#directives">Base Framework: Directives</a> for more details.</p>
 <h1 id="models">Models</h1>
-<p>This is where you can store model objects that are shared across multiple areas or services in your application (not view models, for example).</p>
+<p>This is where you can store model objects shared across multiple areas or services in your application (i.e., not view models).</p>
 <h1 id="services">Services</h1>
 <p>This is where all of your <a href="https://docs.angularjs.org/guide/services">Angular services</a> sholud live.</p>
 <p>There are several services provided with the sample project; see <a href="../base-framework/#services">Base Framework: Services</a> for more details.</p>
 <h1 id="styles">Styles</h1>
-<p>This is where you should store your common or shared SASS styles. The <code>Index.scss</code> file is used to reference all of the SASS files to be compiled.</p>
-<p>Styles that are specific to a view should be co-located in the appropriate view directory.</p>
+<p>This is where you should store your common or shared SASS styles. The <code>Index.scss</code> file is used to reference all the SASS files to be compiled.</p>
+<p>Styles that are specific to certain view should be co-located in the appropriate view directory.</p>
 <p>See <code>gulp sass</code> in <a href="../gulp-tasks/#gulp-sass">Gulp Tasks</a> for more details.</p>
 <h1 id="views">Views</h1>
-<p>This directory should contain all of your controllers, view models, templates, and styles for each view.</p>
-<p>The default layout uses a directory for each view which contains its controller, view model, template and styling.</p>
+<p>This directory should contain all your controllers, view models, templates, and view-specific styles.</p>
+<p>The default layout uses a directory for each view, which contains its controller, view model, template, and styling.</p>
 <p>Each controller should extend <code>BaseController</code> or <code>BaseDialogController</code>.</p>
 <p>See <code>gulp templates</code> and <code>gulp sass</code> in <a href="../gulp-tasks/#gulp-templates">Gulp Tasks</a> and <a href="../base-framework/#views">Base Framework: Views</a> for more details.</p></div>
         </div>

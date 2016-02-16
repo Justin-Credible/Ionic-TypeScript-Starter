@@ -171,25 +171,25 @@
             <div class="col-md-9" role="main">
 
 <h1 id="overview">Overview</h1>
-<p>This section will cover the prerequisites you'll need to start developing using the starter project.</p>
-<p>This guide assumes a Unix-like environment; deviations for Windows users will be called out with inline note blocks.</p>
+<p>This section will cover the prerequisites you need to start developing with the starter project.</p>
+<p>The guide assumes a Unix-like environment; deviations for Windows users will be called out with inline note blocks.</p>
 <h1 id="prerequisites">Prerequisites</h1>
-<p>Aside from mobile platform specific SDKs, <a href="https://nodejs.org/dist">Node.js</a> 4.4.x is the only external prerequisite.</p>
+<p>Aside from mobile platform-specific SDKs, <a href="https://nodejs.org/dist">Node.js</a> 4.4.x is the only external prerequisite.</p>
 <p>While any version of 4.4.x or higher should work, I've specifically tested and verified with version <a href="https://nodejs.org/dist/v4.2.2/">4.4.2</a>.</p>
 <p>Windows users can download the installer from the link above.</p>
-<p>For Mac OS, I recommend installing Node using <a href="https://www.npmjs.com/package/nvm">Node Version Manager</a> which can be installed using <a href="http://brew.sh/">Homebrew</a>. I recommend following the instructions in <a href="http://stackoverflow.com/a/28025834">this post</a> which will get you setup so that <code>npm install</code> does not require <code>sudo</code>.</p>
+<p>For Mac OS, I recommend installing Node using <a href="https://www.npmjs.com/package/nvm">Node Version Manager</a>, which can be installed using <a href="http://brew.sh/">Homebrew</a>. I recommend following the instructions in <a href="http://stackoverflow.com/a/28025834">this post</a>, which will get you set up so that <code>npm install</code> does not require <code>sudo</code>.</p>
 <h2 id="ios-specific">iOS Specific</h2>
-<p>If you are developing for iOS you'll need XCode 7. I've specifically tested with version 7.1.</p>
+<p>If you are developing for iOS, you need XCode 7. I've specifically tested with version 7.1.</p>
 <ul>
 <li><a href="https://developer.apple.com/xcode/download/">Current Version</a></li>
 <li><a href="https://developer.apple.com/downloads/">Previous Versions</a></li>
 </ul>
-<p>Additionally, you'll probably want two additional Node packages globally which will allow you to run the your application on the iOS simulator as well as a physical device directly from the command line:</p>
+<p>You'll probably also want two additional Node packages globally, which will allow you to run your application on the iOS simulator as well as on a physical device directly from the command line:</p>
 <pre><code>$ npm install -g ios-sim
 $ npm install -g ios-deploy
 </code></pre>
 <h2 id="android-specific">Android Specific</h2>
-<p>If you are developing for Android you'll need the the Android SDK and the Java Development SDK. I've listed the versions of the Android SDK I've tested with.</p>
+<p>If you are developing for Android, you need the the Android SDK and the Java Development SDK. I've tested with the following versions of the Android SDK:</p>
 <ul>
 <li>Android SDK (<a href="http://developer.android.com/sdk/index.html#Other">installer</a>)<ul>
 <li>Android SDK Tools - 24.4.0</li>
@@ -203,25 +203,25 @@ $ npm install -g ios-deploy
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note for Windows users</p>
-<p>You can be sure you've installed these prerequisites property by typing each the following commands into a command prompt to ensure they can execute: <code>android</code>, <code>java --version</code>, <code>javac --version</code>, <code>ant --version</code>.</p>
+<p>You can check whether you've installed these prerequisites properly by typing each the following commands into a command prompt and ensuring they can execute: <code>android</code>, <code>java --version</code>, <code>javac --version</code>, <code>ant --version</code>.</p>
 </div>
 <h2 id="other-dependencies">Other Dependencies</h2>
-<p>All other dependencies are installed in the project directory via <code>npm</code>. To use them <strong>you'll need to add <code>./node_modules/.bin</code> to your path</strong>. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.</p>
+<p>All other dependencies are installed in the project directory via <code>npm</code>. To use them <strong>you must add <code>./node_modules/.bin</code> to your path</strong>. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.</p>
 <div class="admonition warning">
 <p class="admonition-title">Attention</p>
-<p>Do not skip this step; you need to add <code>./node_modules/.bin</code> to your path. If you try to install all the required depdencies globally you are much more likely to run into issues.</p>
+<p>Do not skip this step; you need to add <code>./node_modules/.bin</code> to your path. If you try to install all the required depdencies globally, you are much more likely to run into issues.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note for Windows users</p>
-<p>Windows users should note that the path <code>.\node_modules\.bin</code> should be appended via the System &gt; Environment Variables GUI and should restart their command prompt instance for the changes to take effect.</p>
+<p>Windows users should note that the path <code>.\node_modules\.bin</code> should be appended via the System &gt; Environment Variables GUI, and should restart the command prompt instance for the changes to take effect.</p>
 </div>
 <h2 id="ides-and-text-editors">IDEs and Text Editors</h2>
 <p>This project is platform and IDE agnostic. You can use any IDE or text editor.</p>
-<p>I recommend using the free and lightweight <a href="https://code.visualstudio.com">Visual Studio Code</a> editor as it has superb support for TypeScript.</p>
-<p>Development and debugging can be done in Chrome using its built in Developer Tools window.</p>
+<p>I recommend using the free and lightweight <a href="https://code.visualstudio.com">Visual Studio Code</a> editor, as it has superb support for TypeScript.</p>
+<p>Development and debugging can be done in Chrome using its built-in Developer Tools window.</p>
 <div class="admonition note">
 <p class="admonition-title">Note for Windows users</p>
-<p>This version of the starter project is made to work with any IDE. While I have put together an <a href="https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter">alternate version</a> that supports Visual Studio 2015, I still highly recommend using this version. The VS2015 Cordova wrapper ("Tools for Apache Cordova" project template) can sometimes, in my opinion, be a bit of a black box which makes it harder to work with.</p>
+<p>This version of the starter project is made to work with any IDE. Although I have put together an <a href="https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter">alternate version</a> that supports Visual Studio 2015, I still highly recommend using this version. The VS2015 Cordova wrapper ("Tools for Apache Cordova" project template) can sometimes be a bit of a black box, in my opinion, which makes it harder to work with.</p>
 </div>
 <h1 id="environment-setup">Environment Setup</h1>
 <p>To begin, edit your path, clone the repository, install the node packages, and initialize the development environment.</p>
@@ -233,10 +233,10 @@ $ gulp init
 </code></pre>
 <div class="admonition warning">
 <p class="admonition-title">Attention</p>
-<p>If you receive any errors while running <code>gulp init</code> please double check to ensure you've added <code>./node_modules/bin</code> to your path and that this path takes presedence over the globally installed node modules path.</p>
+<p>If you receive any errors while running <code>gulp init</code>, please double-check to ensure you've added <code>./node_modules/bin</code> to your path and that this path takes precedence over the globally installed node modules path.</p>
 </div>
-<p>The <code>gulp init</code> handles setting up the Cordova platform and plugins as well as obtaining libraries and code compilation. See <a href="../gulp-tasks/">Gulp Tasks</a> for details.</p>
-<p>At this point your envrionment should be ready for development!</p></div>
+<p><code>gulp init</code> sets up the Cordova platform and plugins, obtains libraries, and compiles code. See <a href="../gulp-tasks/">Gulp Tasks</a> for details.</p>
+<p>Your envrionment should now be ready for development!</p></div>
         </div>
 
         <script src="../js/jquery-1.10.2.min.js"></script>

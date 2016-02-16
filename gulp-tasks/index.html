@@ -204,31 +204,31 @@
 <p>The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are using VSCode, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>R</kbd> and being typing the name of the task your want to run. See <code>.vscode/tasks.config</code> for more task shortcuts.</p>
+<p>If you are using VSCode, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>R</kbd> and being typing the name of the task you want to run. See <code>.vscode/tasks.config</code> for more task shortcuts.</p>
 </div>
 <h2 id="gulp-init">gulp init</h2>
-<p>The init task is used to initialize the Cordova project by adding platforms, plugins, obtaining third party libraries, and performing TypeScript compilation.</p>
-<p>First, it cleans the environment by running several gulp clean tasks. This will result in several generated directories and files being removed.</p>
+<p>The init task is used to initialize the Cordova project by adding platforms and plugins, obtaining third-party libraries, and compiling TypeScript.</p>
+<p>First, it cleans the environment by running several gulp clean tasks. This will result in removal of several generated directories and files.</p>
 <p>Next, it adds Cordova platforms by running the <code>cordova platform add platform_name</code> command for each of the platforms as defined in <code>package.json</code>.</p>
-<p>Then it delegates to the config and default gulp tasks which handle configuration, adding Cordova plugins, obtaining Bower libraries and compiling templates, SASS, and TypeScript.</p>
-<p>Finally, this task can perform custom initialization based on a <code>prep</code> flag. For example, when using <code>gulp init --prep android</code> all of the above is performed as well as adding the <a href="https://crosswalk-project.org/">CrossWalk</a> plugin for Android. You can customize this task to perform special behavior per platform if needed.</p>
+<p>Then it delegates to the config and default gulp tasks, which handle configuration, addition of Cordova plugins, Bower library retrieval, and compilation of templates, SASS, and TypeScript.</p>
+<p>Finally, this task can perform custom initialization based on a <code>prep</code> flag. For example, when using <code>gulp init --prep android</code>, all of the above is performed, along with addition of the <a href="https://crosswalk-project.org/">CrossWalk</a> plugin for Android. You can customize this task to perform special behavior per platform if needed.</p>
 <p>In addition to initializing your environment for first use, this task is also useful for cleaning up your environment if you run into issues during development.</p>
 <h2 id="gulp-config">gulp config</h2>
-<p>The config task is used to perform customization of configuration files based on the given build scheme name. Build schemes are defined in <code>config.master.xml</code> under the <code>schemes</code> node. If a scheme name is not specified, the default will be used.</p>
-<p>This task takes care of creating the following files:</p>
+<p>The config task is used to customize configuration files based on the given build scheme name. Build schemes are defined in <code>config.master.xml</code> under the <code>schemes</code> node. If a scheme name is not specified, the default will be used.</p>
+<p>This task creates the following files:</p>
 <ul>
 <li>Cordova's <code>config.xml</code> (from <code>config.master.xml</code>)</li>
 <li>Starting page <code>www/index.html</code> (from <code>www/index.master.html</code>)</li>
 <li>Runtime variables at <code>src/js/build-vars.js</code></li>
 </ul>
-<p>These files will be generated from their master files and variable substitution will be performed based on the scheme definitions. This allows for easy configuration of builds for different environments (ie development, staging, production).</p>
-<p>Example Usage: <code>gulp config --scheme production</code></p>
+<p>These files will be generated from their master files, and variable substitution will be performed based on the scheme definitions. This allows for easy configuration of builds for different environments (e.g., development, staging, production).</p>
+<p>Example usage: <code>gulp config --scheme production</code></p>
 <p>See <a href="../development-tips/#build-schemes">Development Tips: Build Schemes</a> for more details.</p>
 <h2 id="gulp-templates">gulp templates</h2>
 <p>The templates task compiles Angular HTML templates from <code>src/Views/**/*.html</code> into a single JavaScript file at <code>www/js/templates.js</code>.</p>
 <p>You'll need to re-run this task to see any HTML template changes during development.</p>
 <h2 id="gulp-sass">gulp sass</h2>
-<p>The sass task compiles the SASS source files starting with <code>src/Styles/Index.scss</code>. The resulting CSS bundle will be output to <code>www/css/bundle.css</code>.</p>
+<p>The sass task compiles the SASS source files, starting with <code>src/Styles/Index.scss</code>. The resulting CSS bundle will be output to <code>www/css/bundle.css</code>.</p>
 <p>You'll need to re-run this task to see any SASS styling changes during development.</p>
 <p>The SASS output will be minified if the debug flag is set to true via the current build scheme.</p>
 <div class="admonition note">
@@ -237,49 +237,49 @@
 </div>
 <h2 id="gulp-libs">gulp libs</h2>
 <p>The libs task uses the <a href="http://bower.io/">Bower</a> package manager and <a href="https://www.npmjs.com/package/bower-installer">bower-installer</a> plugin to download JavaScript libraries for use within your application.</p>
-<p>Initially, Bower will download the files to the <code>bower_components</code> directory and the <code>bower-installer</code> plugin will take care of copying the appropriate files to the <code>www/lib</code> directory.</p>
-<p>See <code>bower.json</code> for more details (as well as for if you need to change which files get copied to the libs directory).</p>
+<p>Initially, Bower will download the files to the <code>bower_components</code> directory, and the <code>bower-installer</code> plugin will copy the appropriate files to the <code>www/lib</code> directory.</p>
+<p>See <code>bower.json</code> for more details (or if you need to change which files get copied to the libs directory).</p>
 <h2 id="gulp-plugins">gulp plugins</h2>
 <p>The plugins task is used to install all of the Cordova plugins as defined in <code>package.json</code>'s <code>cordovaPlugins</code> property.</p>
-<p>This task is simply a shortcut for running <code>cordova plugin add plugin_name</code> for each of the plugins.</p>
+<p>This task is simply a shortcut for individually running <code>cordova plugin add plugin_name</code> for each plugin.</p>
 <h2 id="gulp-tsd">gulp tsd</h2>
-<p>The tsd task is used to download and setup TypeScript definition files for JavaScript libraries so they can be referenced from TypeScript source files. The <code>tsd</code> tool uses the <a href="http://definitelytyped.org/">DefinitelyTyped</a> repository.</p>
-<p>The <code>tsd.json</code> and <code>tsd.tests.json</code> files are used to specify the typing files to download for the application and unit tests respectively.</p>
-<p>After downloading the definitions, the <code>tsd</code> tool will generate a reference file at <code>src/tsd.d.ts</code> (or <code>tests/tsd.d.ts</code> for unit tests) that the TypeScript compiler will read during compilation.</p>
+<p>The tsd task is used to download and set up TypeScript definition files for JavaScript libraries so they can be referenced from TypeScript source files. The <code>tsd</code> tool uses the <a href="http://definitelytyped.org/">DefinitelyTyped</a> repository.</p>
+<p>The <code>tsd.json</code> and <code>tsd.tests.json</code> files are used to specify the typing files to download for the application and unit tests, respectively.</p>
+<p>After downloading the definitions, the <code>tsd</code> tool will generate a reference file at <code>src/tsd.d.ts</code> (or <code>tests/tsd.d.ts</code> for unit tests), which the TypeScript compiler will read during compilation.</p>
 <h2 id="gulp-ts">gulp ts</h2>
-<p>The ts task is used to perform compilation of the TypeScript using configuration from <code>src/tsconfig.json</code>.</p>
+<p>The ts task is used to compile TypeScript using configuration from <code>src/tsconfig.json</code>.</p>
 <p>The resulting JavaScript bundle will be written to <code>www/js/bundle.js</code>.</p>
-<p>The JavaScript output will be minifed if the debug flag is set to true via the current build scheme. Minification is done by delegating to the minify task.</p>
+<p>The JavaScript output will be minified if the debug flag is set to true via the current build scheme. Minification is done by delegating to the minify task.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you are using VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to run the <code>ts</code> task with the default scheme. Any compilation problems will be shown in VS Code's error console.</p>
 </div>
 <h2 id="gulp-minify">gulp minify</h2>
-<p>The minify task will minify the JavaScript bundle at <code>src/js/bundle.js</code>.</p>
-<p>This task can be run directly, but can be delegated to via the ts task as well.</p>
+<p>The minify task is used to minify the JavaScript bundle at <code>src/js/bundle.js</code>.</p>
+<p>This task can be run directly or delegated to via the ts task.</p>
 <h2 id="gulp-lint">gulp lint</h2>
 <p>The lint task performs <a href="https://en.wikipedia.org/wiki/Lint_(software)">linting</a> of the TypeScript source files.</p>
 <p>Lint parameters are defined in <code>tslint.json</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you run this task from VS Code lint problems will be shown in VS Code's warning console.</p>
+<p>If you run this task from VS Code, lint problems will be shown in VS Code's warning console.</p>
 </div>
 <h2 id="gulp-chrome">gulp chrome</h2>
-<p>The chrome task is used to generate a <code>chrome</code> directory with your application that can be loaded as a Chrome extension.</p>
+<p>The chrome task is used to generate a <code>chrome</code> directory with your application, which can be loaded as a Chrome extension.</p>
 <h1 id="utility-tasks">Utility Tasks</h1>
-<p>The following tasks can be used to perform various tasks that aren't necessarily related to compilation.</p>
+<p>The following can be used to perform various tasks that aren't necessarily related to compilation.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are using VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd> <kbd>R</kbd> and being typing the name of the task your want to run. See <code>.vscode/tasks.config</code> for more task shortcuts.</p>
+<p>If you are using VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd> <kbd>R</kbd> and being typing the name of the task you want to run. See <code>.vscode/tasks.config</code> for more task shortcuts.</p>
 </div>
 <h2 id="gulp-watch">gulp watch</h2>
-<p>This task is used internally via Ionic's serve command (<code>ionic serve</code>). This allows Ionic to reload the web browser when the specified files change during development.</p>
+<p>The watch task is used internally via Ionic's serve command (<code>ionic serve</code>). This allows Ionic to reload the web browser when the specified files change during development.</p>
 <h2 id="gulp-emulate-ios">gulp emulate-ios</h2>
-<p>This task is a shortcut for <code>cordova emulate ios</code> which is a useful shortcut to use from VS Code's task runner.</p>
+<p>The emulate-ios task is a shortcut for <code>cordova emulate ios</code>, a useful shortcut to use from VS Code's task runner.</p>
 <h2 id="gulp-emulate-android">gulp emulate-android</h2>
-<p>This task is a shortcut for <code>cordova emulate android</code> which is a useful shortcut to use from VS Code's task runner.</p>
+<p>The emulate-android task is a shortcut for <code>cordova emulate android</code>,  a useful shortcut to use from VS Code's task runner.</p>
 <h2 id="gulp-remote-emulate-ios">gulp remote-emulate-ios</h2>
-<p>This task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.</p>
+<p>The remote-emulate-ios task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.</p>
 <p>See <a href="../development-tips/#running-ios-simulator-from-windows">Development Tips: Running iOS Simulator from Windows</a> for more details.</p>
 <h2 id="gulp-test">gulp test</h2>
 <p>The test task is used to compile the TypeScript unit tests and run them via the Karma test runner. See <code>karma.conf.js</code> for Karma configuration.</p>
@@ -288,9 +288,9 @@
 <p>The typedoc task uses <a href="http://typedoc.io/">TypeDoc</a> to generate documentation for the TypeScript source code.</p>
 <p>The documentation files are output to <code>typedoc-output</code>.</p>
 <h2 id="gulp-clean">gulp clean</h2>
-<p>The clean task is used to remove all of the generated files, included the <code>node_modules</code> directory.</p>
-<p>If you don't want to remove everything, there are subtasks for each of the gulp tasks to clean specific artifacts. For example: <code>gulp clean:ts</code> or <code>gulp clean:plugins</code>.</p>
-<p>After cleaning, you may need to re-run <code>gulp init</code> to ensure your environment is re-initialized.</p></div>
+<p>The clean task is used to remove all generated files, including the <code>node_modules</code> directory.</p>
+<p>If you don't want to remove everything, there are subtasks for each of the gulp tasks to clean specific artifacts (e.g., <code>gulp clean:ts</code> or <code>gulp clean:plugins</code>).</p>
+<p>After cleaning, you may need to re-run <code>gulp init</code> to ensure your environment is reinitialized.</p></div>
         </div>
 
         <script src="../js/jquery-1.10.2.min.js"></script>
