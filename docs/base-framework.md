@@ -16,7 +16,7 @@ See [Development Tips: Build Schemes](development-tips.md#build-schemes) for mor
 
 # Boot Sequence
 
-Cordova uses the the `src` attribute of the content element from `config.xml` to determine the initial page to load. This is set to `index.html` by default.
+Cordova uses the `src` attribute of the content element from `config.xml` to determine the initial page to load. This is set to `index.html` by default.
 
 The `index.html` file has static references to all of the CSS and JavaScript files to load. In addition to the main application bundle (`www/js/bundle.js`), the page also references the first-level boot loader: `www/js/boot1.js`. This file is responsible for executing any code before Cordova's JS API, Ionic, or Angular have been initialized. It then kicks off the second-level boot loader by invoking `JustinCredible.SampleApp.Boot2.main()`.
 

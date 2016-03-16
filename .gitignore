@@ -22,7 +22,7 @@
 /www/css/bundle.*
 /src/tsd.d.ts
 /tests/tsd.d.ts
-/chrome
+/build
 /tests/**/*.js
 /tests/**/*.map
 /ts-docs/*

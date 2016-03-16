@@ -1,0 +1,19 @@
+--- # Share Runtime Configuration
+
+# This file contains runtime configuration shared between all platforms.
+# This file is used to generate www/build-vars.js and is accessible at runtime.
+# Variables will be subsituted based on the active build scheme in schemes.yml.
+
+appName: "${APP_NAME}"
+appDescription: "${APP_DESCRIPTION}"
+appVersion: "${APP_VERSION}"
+
+authorName: "${AUTHOR_NAME}"
+authorEmail: "${AUTHOR_EMAIL}"
+authorWebsite: "${AUTHOR_WEBSITE}"
+
+# The base URL for the REST APIs for the application.
+apiUrl: "${API_URL}"
+
+# The version of the API to use; this will be appended to the API URL.
+apiVersion: "${API_VERSION}"
