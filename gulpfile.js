@@ -195,6 +195,15 @@ function getReplacementNodesForScheme(schemeNode) {
 }
 
 /**
+ * Used to determine if a prepare flag was set to "web".
+ * 
+ * gulp init --prep web
+ */
+function isPrepWeb() {
+    return gutil.env.prep === "web" ? true : false;
+}
+
+/**
  * Used to determine if a prep flag was set to Android.
  * 
  * gulp init --prep android
@@ -305,6 +314,13 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
     // of as a child task above because it must start after all of the clean tasks have
     // completed, otherwise it will just get blown away.
     runSequence("config", function () {
+
+        // If we are preparing for the "web" platform we can bail out earlier.
+        if (isPrepWeb()) {
+            console.info("Skipping Cordova platforms because the '--prep web' flag was specified.");
+            runSequence("default", cb);
+            return;
+        }
 
         var platforms = JSON.parse(fs.readFileSync("package.json", "utf8")).cordovaPlatforms;
 
@@ -1013,6 +1029,14 @@ gulp.task("libs", function(cb) {
  * of the plugins.
  */
 gulp.task("plugins", ["git-check"], function(cb) {
+
+    // We don't need Cordova plugins for the web bundle.
+    if (isPrepWeb()) {
+        console.info("Skipping Cordova plugins because the '--prep web' flag was specified.");
+        cb();
+        return;
+    }
+
     var pluginList = JSON.parse(fs.readFileSync("package.json", "utf8")).cordovaPlugins;
 
     async.eachSeries(pluginList, function(plugin, eachCb) {
