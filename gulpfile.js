@@ -175,12 +175,106 @@ function performVariableReplacement(schemeName, sourceFilePath, destinationFileP
         content = content.replace(new RegExp(replacementTarget, "g"), replacementValue);
     }
 
-    // Write out the files that have replacements.//wtf
-    fs.writeFileSync(destinationFilePath, content , "utf8");
+    // Write out the files that have replacements.
+    fs.writeFileSync(destinationFilePath, content, "utf8");
 }
 
-function performReferenceReplacement(schemeName, sourceFilePath, destinationFilePath, bundled, resourceFilePath) {
-    //TODO
+/**
+ * Used to insert link/script tags for CSS and JavaScript references using a master file and
+ * write out the resulting file.
+ * 
+ * The following tags will be used for replacement:
+ * • CSS: <!-- references: css -->
+ * • JS Libs: <!-- references: lib -->
+ * • JS: <!-- references: js -->
+ * 
+ * If bundled is true, the following static references will be used:
+ * • CSS: app.bundle.css
+ * • JS Libs: app.bundle.lib.js
+ * • JS: app.bundle.js
+ * 
+ * If bundled is false, the map of files provided in the given referencesFilePath will be used
+ * to grab each file and emit a link/script tag for each resource type.
+ */
+function performReferenceReplacement(sourceFilePath, targetFilePath, bundled, referencesFilePath) {
+
+    var cssRegExp = new RegExp("<!-- references: css -->", "gm");
+    var libRegExp = new RegExp("<!-- references: lib -->", "gm");
+    var jsRegExp = new RegExp("<!-- references: js -->", "gm");
+
+    // Open the master file that we'll perform replacements on.
+    var content = fs.readFileSync(sourceFilePath, "utf8").toString();
+
+    // Lets handle the easy case first. If bundled is true, then we subsitute some static paths.
+    if (bundled) {
+
+        content.replace(cssRegExp, '<link rel="stylesheet" href="app.bundle.css">');
+        content.replace(libRegExp, '<script type="text/javascript" src="app.bundle.lib.js"></script>');
+        content.replace(jsRegExp, '<script type="text/javascript" src="app.bundle.js"></script>');
+
+        fs.writeFileSync(targetFilePath, content, "utf8");
+
+        return;
+    }
+
+    if (!referencesFilePath) {
+        throw new Error("The bundled flag was false, but no referencesFilePath was provided.");
+    }
+
+    // Read in the file that contains the list of resource references.
+    var resourceYmlRaw = fs.readFileSync(referencesFilePath, "utf8").toString();
+    var resources = yaml.safeLoad(resourceYmlRaw);
+
+    if (!resources) {
+        throw new Error("Unable to read resource references from " + referencesFilePath);
+    }
+
+    // Inject link tags for the CSS files.
+    if (resources.css && resources.css.length > 0) {
+
+        cssReferences = [];
+
+        resources.css.forEach(function (cssReference) {
+            cssReferences.push(format('<link rel="stylesheet" href="{0}">', cssReference));
+        });
+
+        content.replace(cssRegExp, cssReferences.join("\n"));
+    }
+    else {
+        content.replace(cssRegExp, "");
+    }
+
+    // Inject script tags for the JS libraries.
+    if (resources.lib && resources.lib.length > 0) {
+
+        libReferences = [];
+
+        resources.lib.forEach(function (libReference) {
+            libReference.push(format('<script type="text/javascript" src="{0}"></script>', libReference));
+        });
+
+        content.replace(libRegExp, libReferences.join("\n"));
+    }
+    else {
+        content.replace(libRegExp, "");
+    }
+
+    // Inject script tags for the JS files.
+    if (resources.js && resources.js.length > 0) {
+
+        jsReferences = [];
+
+        resources.js.forEach(function (jsReference) {
+            jsReference.push(format('<script type="text/javascript" src="{0}"></script>', jsReference));
+        });
+
+        content.replace(jsRegExp, jsReferences.join("\n"));
+    }
+    else {
+        content.replace(jsRegExp, "");
+    }
+
+    fs.writeFileSync(targetFilePath, content, { encoding: "utf8" });
 }
 
 /**
@@ -804,7 +898,8 @@ gulp.task("config", function (cb) {
         console.log(format("Generating: www/index.html from resources/web/index.master.html"));
         performVariableReplacement(schemeName, "resources/web/index.master.html", "www/index.html");
 
-        //TODO: performReferenceReplacement(...)
+        console.log(format("Adding app bundle resource references to: www/index.html"));
+        performReferenceReplacement("www/index.html", "www/index.html", true);
     }
     else if (isPrepChrome()) {
         // Chrome Extension: --prep chrome
@@ -815,7 +910,8 @@ gulp.task("config", function (cb) {
         console.log(format("Generating: www/index.html from resources/chrome/index.master.html"));
         performVariableReplacement(schemeName, "resources/chrome/index.master.html", "www/index.html");
 
-        //TODO: performReferenceReplacement(...)
+        console.log(format("Adding resource references to: www/index.html using resources/chrome/index.references.yml"));
+        performReferenceReplacement("www/index.html", "www/index.html", false, "resources/chrome/index.references.yml");
     }
     else {
         // Cordova: default or no --prep flag
@@ -826,7 +922,8 @@ gulp.task("config", function (cb) {
         console.log(format("Generating: www/index.html from resources/cordova/index.master.html"));
         performVariableReplacement(schemeName, "resources/cordova/index.master.html", "www/index.html");
 
-        //TODO: performReferenceReplacement(...)
+        console.log(format("Adding resource references to: www/index.html using resources/cordova/index.references.yml"));
+        performReferenceReplacement("www/index.html", "www/index.html", false, "resources/cordova/index.references.yml");
     }
 
     createBuildVars(schemeName, "resources/config/config.yml", "www/js/build-vars.js");
@@ -895,6 +992,12 @@ gulp.task("package-web", function (cb) {
         gulp.src(paths.www)
             .pipe(gulp.dest("build/web"))
             .on("end", function() {
+
+            // TODO: Remove un-needed files (css, js, lib)
+            // TODO: Bundle css to app.bundle.css
+            // TODO: Bundle lib to app.bundle.lib.js
+            // TODO: Bundle js to app.bundle.js
+            // bundleStaticLibs("www", "build/web", "config/web/index.references.yml")
 
             // TODO: ZIP
             cb();
