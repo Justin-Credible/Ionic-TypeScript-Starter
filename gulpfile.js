@@ -137,6 +137,64 @@ function getReplacementNodesForScheme(schemeName) {
 }
 
 /**
+ * Used to get a the replacement XML nodes from the config.xml file for the given
+ * scheme node.
+ * 
+ * eg /widgets/schemes/scheme@name/replacement
+ */
+function getReplacementNodesForScheme(schemeNode) {
+
+    // Open the master config XML file.
+    var configRaw = fs.readFileSync("config.master.xml", "utf8");
+    var configXmlDoc = new XmlDom().parseFromString(configRaw);
+
+    var schemeName = schemeNode.getAttribute("name");
+
+    // Build the XPath query.
+    var replacementNodePath = "/*[local-name() = 'widget']"  +
+                        "/*[local-name() = 'schemes']" + 
+                        "/*[local-name() = 'scheme'][@name='" + schemeName + "']" + 
+                        "/*[local-name() = 'replacement']";
+
+    // Attempt to grab all of the replacement nodes for this scheme.
+    var replacementNodes = xpath.select(replacementNodePath, configXmlDoc);
+
+    // If we didn't find a scheme replacement nodes, then fail fast.
+    if (!replacementNodes == null) {
+        throw new Error("Could not locate a scheme with name '" + schemeName + "' in config.master.xml.");
+    }
+
+    var baseSchemeName = schemeNode.getAttribute("base-scheme");
+
+    if (baseSchemeName) {
+        var baseSchemeNode = getSchemeNodeByName(baseSchemeName);
+
+        // If we didn't find a base scheme, then fail fast.
+        if (!baseSchemeNode) {
+            throw new Error("Could not locate a base scheme with name '" + baseSchemeName + "' in config.master.xml.");
+        }
+
+        var baseSchemeReplacementNodes = getReplacementNodesForScheme(baseSchemeNode);
+
+        // Merge the base replacement nodes into the target scheme.
+        baseSchemeReplacementNodes.forEach(function(baseReplacementNode) {
+
+            // Search for the base node in the target scheme.
+            var nodeExists = !!_.find(replacementNodes, function (replacementNode) {
+                return baseReplacementNode.getAttribute("target") === replacementNode.getAttribute("target");
+            });
+
+            // If the base node doesn't exist in the target, add it.
+            if (!nodeExists) {
+                replacementNodes.push(baseReplacementNode);
+            }
+        });
+    }
+
+    return replacementNodes;
+}
+
+/**
  * Used to determine if a prep flag was set to Android.
  * 
  * gulp init --prep android
@@ -655,55 +713,15 @@ gulp.task("config", function (cb) {
         throw new Error("Could not locate a scheme with name '" + schemeName + "' in config.master.xml.");
     }
 
+    // Grab the replacement nodes.
+    var replacementNodes = getReplacementNodesForScheme(schemeNode);
+
     // Grab the debug flag.
     var isDebug = schemeNode.getAttribute("debug") === "true";
 
-    var replacementNodes = getReplacementNodesForScheme(schemeName);
-
-    // If we didn't find a scheme replacement nodes, then fail fast.
-    if (!replacementNodes == null) {
-        throw new Error("Could not locate a scheme with name '" + schemeName + "' in config.master.xml.");
-    }
-
-    // Merge in any parent scheme configuration.
-
-    var baseSchemeName = schemeNode.getAttribute("base-scheme");
-
-    if (baseSchemeName) {
-        var baseSchemeNode = getSchemeNodeByName(baseSchemeName);
-
-        if (baseSchemeNode) {
-
-            // If debug wasn't explicitly set on the taret scheme, use the one from the parent.
-            if (isDebug == null && baseSchemeNode.getAttribute("debug") != null) {
-                isDebug = schemeNode.getAttribute("debug") === "true";;
-            }
-
-            var baseSchemeReplacementNodes = getReplacementNodesForScheme(baseSchemeName);
-
-            // If we didn't find a scheme replacement nodes, then fail fast.
-            if (!baseSchemeReplacementNodes == null) {
-                throw new Error("Could not locate a scheme with name '" + schemeName + "' in config.master.xml.");
-            }
-
-            // Merge the base replacement nodes into the target scheme.
-            baseSchemeReplacementNodes.forEach(function(baseReplacementNode) {
-
-                // Search for the base node in the target scheme.
-                var nodeExists = !!_.find(replacementNodes, function (replacementNode) {
-                    return baseReplacementNode.getAttribute("target") === replacementNode.getAttribute("target");
-                });
-
-                // If the base node doesn't exist in the target, add it.
-                if (!nodeExists) {
-                    replacementNodes.push(baseReplacementNode);
-                }
-            });
-        }
-    }
-
     // If the debug flag was never set, then default to true.
     if (isDebug == null) {
+        console.warn("The debug attribute was not set for scheme '" + schemeName + "'; defaulting to true.");
         isDebug = true;
     }
 
