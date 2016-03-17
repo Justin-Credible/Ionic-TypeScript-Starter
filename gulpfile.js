@@ -471,6 +471,36 @@ function isPrepAndroid() {
 }
 
 /**
+ * Used to recursively delete all empty directories under the given path.
+ */
+function deleteEmptyDirectories(basePath) {
+
+    var paths = sh.ls("-RA", basePath);
+
+    if (!paths) {
+        return;
+    }
+
+    paths.forEach(function(file) {
+
+        file = path.join(basePath, file);
+
+        if (fs.lstatSync(file).isDirectory()) {
+
+            var childPaths = sh.ls("-A", file);
+
+            if (childPaths != null && childPaths.length === 0) {
+                console.log("should delete dir: " + file);
+                sh.rm("-rf", file);
+            }
+            else {
+                console.log("skipping dir: " + file);
+            }
+        }
+    });
+}
+
+/**
  * A custom reporter for the TypeScript linter reporter function. This was copied
  * and modified from gulp-tslint.
  */
@@ -991,7 +1021,8 @@ gulp.task("config", function (cb) {
         // Chrome Extension: --prep chrome
 
         console.log(format("Generating: build/chrome/manifest.json from: resources/chrome/manifest.master.json"));
-        performVariableReplacement(schemeName, "resources/chrome/manifest.master.json", "build/chrome/manifest.master.json");
+        sh.mkdir("build/chrome");
+        performVariableReplacement(schemeName, "resources/chrome/manifest.master.json", "build/chrome/manifest.json");
 
         console.log(format("Generating: www/index.html from resources/chrome/index.master.html"));
         performVariableReplacement(schemeName, "resources/chrome/index.master.html", "www/index.html");
@@ -1034,6 +1065,9 @@ gulp.task("package-chrome", function (cb) {
     // Ensure that the prep flag is set to "chrome" (used by the config task).
     gutil.env.prep = "chrome";
 
+    // Ensure directory is cleared out first.
+    sh.rm("-rf", "build/chrome");
+
     // Delegate to the config task to generate the index, manifest, and build vars.
     runSequence("config", function (err) {
 
@@ -1042,24 +1076,20 @@ gulp.task("package-chrome", function (cb) {
             return;
         }
 
-        console.log("Copying www to build/chrome");
-
         // Copy the www payload.
-        gulp.src(paths.www)
-            .pipe(gulp.dest("build/chrome"))
-            .on("end", function() {
+        console.log("Copying www to build/chrome");
+        sh.cp("-R", "www", "build/chrome");
 
-            console.log("Copying resources/icon.png to build/chrome/icon.png");
+        // Copy the icon.
+        console.log("Copying resources/icon.png to build/chrome/icon.png");
+        sh.cp("resources/icon.png", "build/chrome");
 
-            // Copy in the icon to use for the toolbar.
-            gulp.src("./resources/icon.png")
-                .pipe(gulp.dest("build/chrome"))
-                .on("end", function() {
-
-                // TODO: ZIP
-                cb();
-            });
-        });
+        // Archive the directory.
+        gulp.src("build/chrome/**/*", { base: "build/chrome" })
+            .pipe(tar("chrome.tar"))
+            .pipe(gzip())
+            .pipe(gulp.dest("build"))
+            .on("end", cb);
     });
 });
 
@@ -1080,6 +1110,9 @@ gulp.task("package-web", function (cb) {
     // Ensure that the prep flag is set to "web" (used by the config task).
     gutil.env.prep = "web";
 
+    // Ensure directory is cleared out first.
+    sh.rm("-rf", "build/web");
+
     // Delegate to the config task to generate the index, manifest, and build vars.
     runSequence("config", function (err) {
 
@@ -1089,39 +1122,69 @@ gulp.task("package-web", function (cb) {
         }
 
         console.log("Copying www to build/web");
+        sh.cp("-R", "www", "build/web");
 
-        // Copy the www payload.
-        gulp.src(paths.www)
-            .pipe(gulp.dest("build/web"))
-            .on("end", function() {
+        console.log("Bundling css, lib, and js directories to build/web/resources-temp");
+        sh.mkdir("-p", "build/web/resources-temp");
+        bundleStaticResources("build/web", "build/web/resources-temp", "resources/web/index.references.yml")
 
-            console.log("Bundling css, lib, and js directories to build/web/resources-temp");
-            sh.mkdir("-p", "build/web/resources-temp");
-            bundleStaticResources("build/web", "build/web/resources-temp", "resources/web/index.references.yml")
+        // TODO: This isn't 100% correct.
+        console.log("Removing css and js directories from build/web");
+        sh.rm("-rf", "build/web/css");
+        sh.rm("-rf", "build/web/js");
 
-            // TODO: This isn't 100% correct.
-            console.log("Removing css, lib, and js files from build/web");
-            sh.rm("-rf", "build/web/css/*.css");
-            sh.rm("-rf", "build/web/lib/*.js");
-            sh.rm("-rf", "build/web/js/*.js");
+        var libFileExtensionsToKeep = [
+            ".woff",
+            ".eot",
+            ".svg",
+            ".ttf"
+        ];
 
-            console.log("Moving bundled css to build/web/css/app.bundle.css");
-            sh.mv(["build/web/resources-temp/app.bundle.css"], "build/web/css");
+        console.log("Removing js/css/etc from build/web/lib");
 
-            console.log("Moving bundled lib to build/web/lib/app.bundle.lib.js");
-            sh.mv(["build/web/resources-temp/app.bundle.lib.js"], "build/web/li");
+        sh.ls("-RA", "build/web/lib").forEach(function (file) {
 
-            console.log("Moving bundled js to build/web/js/app.bundle.js");
-            sh.mv(["build/web/resources-temp/app.bundle.js"], "build/web/js");
+            file = path.join("build/web/lib", file);
 
-            sh.rm("-rf", "build/web/resources-temp");
+            if (!fs.lstatSync(file).isDirectory()) {
+                var extension = path.extname(file);
 
-            console.log(format("Generating: build/web/index.html from: resources/web/index.master.html with bundled resource references."));
-            performReferenceReplacement("resources/web/index.master.html", "build/web/index.html", true);
-
-            // TODO: ZIP
-            cb();
+                if (libFileExtensionsToKeep.indexOf(extension) === -1) {
+                    sh.rm("-rf", file);
+                }
+            }
         });
+
+        console.log("Removing empty directories from build/web/lib");
+        deleteEmptyDirectories("build/web/lib");
+
+        console.log("Moving bundled css to build/web/css/app.bundle.css");
+        sh.mkdir("-p", "build/web/css");
+        sh.mv(["build/web/resources-temp/app.bundle.css"], "build/web/css/app.bundle.css");
+
+        console.log("Moving bundled lib to build/web/lib/app.bundle.lib.js");
+        sh.mv(["build/web/resources-temp/app.bundle.lib.js"], "build/web/lib/app.bundle.lib.js");
+
+        console.log("Moving bundled js to build/web/js/app.bundle.js");
+        sh.mkdir("-p", "build/web/js");
+        sh.mv(["build/web/resources-temp/app.bundle.js"], "build/web/js/app.bundle.js");
+
+        sh.rm("-rf", "build/web/resources-temp");
+
+        var schemeName = getCurrentSchemeName();
+
+        console.log(format("Generating: build/web/index.html from: resources/web/index.master.html"));
+        performVariableReplacement(schemeName, "resources/web/index.master.html", "build/web/index.html");
+
+        console.log(format("Adding app bundle resource references to: build/web/index.html"));
+        performReferenceReplacement("build/web/index.html", "build/web/index.html", true);
+
+        // Archive the directory.
+        gulp.src("build/web/**/*", { base: "build/web" })
+            .pipe(tar("web.tar"))
+            .pipe(gzip())
+            .pipe(gulp.dest("build"))
+            .on("end", cb);
     });
 });
 
