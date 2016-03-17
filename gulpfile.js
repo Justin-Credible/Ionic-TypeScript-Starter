@@ -184,9 +184,9 @@ function performVariableReplacement(schemeName, sourceFilePath, destinationFileP
  * write out the resulting file.
  * 
  * The following tags will be used for replacement:
- * • CSS: <!-- references: css -->
- * • JS Libs: <!-- references: lib -->
- * • JS: <!-- references: js -->
+ * • CSS: <!-- references:css -->
+ * • JS Libs: <!-- references:lib -->
+ * • JS: <!-- references:js -->
  * 
  * If bundled is true, the following static references will be used:
  * • CSS: app.bundle.css
@@ -198,9 +198,9 @@ function performVariableReplacement(schemeName, sourceFilePath, destinationFileP
  */
 function performReferenceReplacement(sourceFilePath, targetFilePath, bundled, referencesFilePath) {
 
-    var cssRegExp = new RegExp("<!-- references: css -->", "gm");
-    var libRegExp = new RegExp("<!-- references: lib -->", "gm");
-    var jsRegExp = new RegExp("<!-- references: js -->", "gm");
+    var cssRegExp = /^([\t ]+)<!-- references:css -->/gm;
+    var libRegExp = /^([\t ]+)<!-- references:lib -->/gm;
+    var jsRegExp = /^([\t ]+)<!-- references:js -->/gm;
 
     // Open the master file that we'll perform replacements on.
     var content = fs.readFileSync(sourceFilePath, "utf8").toString();
@@ -208,9 +208,17 @@ function performReferenceReplacement(sourceFilePath, targetFilePath, bundled, re
     // Lets handle the easy case first. If bundled is true, then we subsitute some static paths.
     if (bundled) {
 
-        content.replace(cssRegExp, '<link rel="stylesheet" href="app.bundle.css">');
-        content.replace(libRegExp, '<script type="text/javascript" src="app.bundle.lib.js"></script>');
-        content.replace(jsRegExp, '<script type="text/javascript" src="app.bundle.js"></script>');
+        content = content.replace(cssRegExp, function (match, whitespaceMatch, offset, string) {
+            return whitespaceMatch + '<link rel="stylesheet" href="css/app.bundle.css">';
+        });
+
+        content = content.replace(libRegExp, function (match, whitespaceMatch, offset, string) {
+            return whitespaceMatch + '<script type="text/javascript" src="lib/app.bundle.lib.js"></script>';
+        });
+
+        content = content.replace(jsRegExp, function (match, whitespaceMatch, offset, string) {
+            return whitespaceMatch + '<script type="text/javascript" src="js/app.bundle.js"></script>';
+        });
 
         fs.writeFileSync(targetFilePath, content, "utf8");
 
@@ -232,49 +240,55 @@ function performReferenceReplacement(sourceFilePath, targetFilePath, bundled, re
     // Inject link tags for the CSS files.
     if (resources.css && resources.css.length > 0) {
 
-        cssReferences = [];
+        var cssReferences = [];
 
         resources.css.forEach(function (cssReference) {
             cssReferences.push(format('<link rel="stylesheet" href="{0}">', cssReference));
         });
 
-        content.replace(cssRegExp, cssReferences.join("\n"));
+        content = content.replace(cssRegExp, function (match, whitespaceMatch, offset, string) {
+            return whitespaceMatch + cssReferences.join("\n" + whitespaceMatch);
+        });
     }
     else {
-        content.replace(cssRegExp, "");
+        content = content.replace(cssRegExp, "");
     }
 
     // Inject script tags for the JS libraries.
     if (resources.lib && resources.lib.length > 0) {
 
-        libReferences = [];
+        var libReferences = [];
 
         resources.lib.forEach(function (libReference) {
-            libReference.push(format('<script type="text/javascript" src="{0}"></script>', libReference));
+            libReferences.push(format('<script type="text/javascript" src="{0}"></script>', libReference));
         });
 
-        content.replace(libRegExp, libReferences.join("\n"));
+        content = content.replace(libRegExp, function (match, whitespaceMatch, offset, string) {
+            return whitespaceMatch + libReferences.join("\n" + whitespaceMatch);
+        });
     }
     else {
-        content.replace(libRegExp, "");
+        content = content.replace(libRegExp, "");
     }
 
     // Inject script tags for the JS files.
     if (resources.js && resources.js.length > 0) {
 
-        jsReferences = [];
+        var jsReferences = [];
 
         resources.js.forEach(function (jsReference) {
-            jsReference.push(format('<script type="text/javascript" src="{0}"></script>', jsReference));
+            jsReferences.push(format('<script type="text/javascript" src="{0}"></script>', jsReference));
         });
 
-        content.replace(jsRegExp, jsReferences.join("\n"));
+        content = content.replace(jsRegExp, function (match, whitespaceMatch, offset, string) {
+            return whitespaceMatch + jsReferences.join("\n" + whitespaceMatch);
+        });
     }
     else {
-        content.replace(jsRegExp, "");
+        content = content.replace(jsRegExp, "");
     }
 
-    fs.writeFileSync(targetFilePath, content, { encoding: "utf8" });
+    fs.writeFileSync(targetFilePath, content, "utf8");
 }
 
 /**
@@ -344,7 +358,68 @@ function createBuildVars(schemeName, configYmlPath, targetBuildVarsPath) {
     var buildVarsJs = "window.buildVars = " + JSON.stringify(buildVars)  + ";";
 
     // Write the file out to disk.
-    fs.writeFileSync(targetBuildVarsPath, buildVarsJs, { encoding: "utf8" });
+    fs.writeFileSync(targetBuildVarsPath, buildVarsJs, "utf8");
+}
+
+/**
+ * Used to bundle CSS and JS into single files for the files given in the manifest
+ * at the given source directory path.
+ * 
+ * This will result in the following bundles being created:
+ * • <targetDir>/app.bundle.css
+ * • <targetDir>/app.bundle.lib.js
+ * • <targetDir>/app.bundle.js
+ */
+function bundleStaticResources(sourceDir, targetDir, resourceManifestPath) {
+
+    var resourceManifestRaw = fs.readFileSync(resourceManifestPath, "utf8").toString();
+    var resourceManifest = yaml.safeLoad(resourceManifestRaw);
+
+    if (!resourceManifest) {
+        throw new Error(format("Unable to load resource manifest list from {0}", resourceManifestPath));
+    }
+
+    if (resourceManifest.css && resourceManifest.css.length > 0) {
+
+        // Append the source directory path to each resource in the manifest.
+        var cssReferences = _.map(resourceManifest.css, function (resource) {
+            return path.join(sourceDir, resource);
+        });
+
+        // Concatenate all of the resources.
+        var cssBundle = sh.cat(cssReferences);
+
+        // Write the bundle
+        fs.writeFileSync(path.join(targetDir, "app.bundle.css"), cssBundle, "utf8");
+    }
+
+    if (resourceManifest.lib && resourceManifest.lib.length > 0) {
+
+        // Append the source directory path to each resource in the manifest.
+        var libReferences = _.map(resourceManifest.lib, function (resource) {
+            return path.join(sourceDir, resource);
+        });
+
+        // Concatenate all of the resources.
+        var libBundle = sh.cat(libReferences);
+
+        // Write the bundle
+        fs.writeFileSync(path.join(targetDir, "app.bundle.lib.js"), libBundle, "utf8");
+    }
+
+    if (resourceManifest.js && resourceManifest.js.length > 0) {
+
+        // Append the source directory path to each resource in the manifest.
+        var jsReferences = _.map(resourceManifest.js, function (resource) {
+            return path.join(sourceDir, resource);
+        });
+
+        // Concatenate all of the resources.
+        var jsBundle = sh.cat(jsReferences);
+
+        // Write the bundle
+        fs.writeFileSync(path.join(targetDir, "app.bundle.js"), jsBundle, "utf8");
+    }
 }
 
 /**
@@ -354,7 +429,8 @@ function createBuildVars(schemeName, configYmlPath, targetBuildVarsPath) {
 function isDebugBuild() {
 
     // Grab the scheme by name.
-    var scheme = getSchemeByName(getCurrentSchemeName());
+    var schemeName = getCurrentSchemeName();
+    var scheme = getSchemeByName(schemeName);
 
     // If we didn't find a scheme by name, then fail fast.
     if (!scheme) {
@@ -362,7 +438,7 @@ function isDebugBuild() {
     }
 
     // Grab the debug flag.
-    var isDebug = scheme.getAttribute("debug") === "true";
+    var isDebug = !!scheme.debug;
 
     return isDebug;
 }
@@ -495,7 +571,12 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
     // First, build out config.xml so that Cordova can read it. We do this here instead
     // of as a child task above because it must start after all of the clean tasks have
     // completed, otherwise it will just get blown away.
-    runSequence("config", function () {
+    runSequence("config", function (err) {
+
+        if (err) {
+            cb(err);
+            return;
+        }
 
         // If we are preparing for the "web" platform we can bail out earlier.
         if (isPrepWeb()) {
@@ -538,7 +619,12 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
             }
 
             // Delegate to the default gulp task.
-            runSequence("default", function () {
+            runSequence("default", function (err) {
+
+                if (err) {
+                    cb(err);
+                    return;
+                }
 
                 // Finally, if the special "--prep android" flag was provided, run a few extra commands.
                 if (isPrepAndroid()) {
@@ -549,7 +635,7 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
                     });
                 }
                 else {
-                    cb();
+                    cb(err);
                 }
             });
         });
@@ -740,7 +826,7 @@ gulp.task("remote-emulate-ios", function(cb) {
 
                     // Write the logs to disk.
                     console.log(format("Writing server build logs to: {0}", config.logFile));
-                    fs.writeFile(config.logFile, logsResponse.body);
+                    fs.writeFileSync(config.logFile, logsResponse.body, "utf8");
 
                     // If the build wasn't successful, then bail out here.
                     if (taskStatus.status !== "Complete") {
@@ -895,34 +981,34 @@ gulp.task("config", function (cb) {
     if (isPrepWeb()) {
         // Web Package: --prep web
 
-        console.log(format("Generating: www/index.html from resources/web/index.master.html"));
+        console.log(format("Generating: www/index.html from: resources/web/index.master.html"));
         performVariableReplacement(schemeName, "resources/web/index.master.html", "www/index.html");
 
         console.log(format("Adding app bundle resource references to: www/index.html"));
-        performReferenceReplacement("www/index.html", "www/index.html", true);
+        performReferenceReplacement("www/index.html", "www/index.html", false, "resources/web/index.references.yml");
     }
     else if (isPrepChrome()) {
         // Chrome Extension: --prep chrome
 
-        console.log(format("Generating: build/chrome/manifest.json from resources/chrome/manifest.master.json"));
+        console.log(format("Generating: build/chrome/manifest.json from: resources/chrome/manifest.master.json"));
         performVariableReplacement(schemeName, "resources/chrome/manifest.master.json", "build/chrome/manifest.master.json");
 
         console.log(format("Generating: www/index.html from resources/chrome/index.master.html"));
         performVariableReplacement(schemeName, "resources/chrome/index.master.html", "www/index.html");
 
-        console.log(format("Adding resource references to: www/index.html using resources/chrome/index.references.yml"));
+        console.log(format("Adding resource references to: www/index.html using: resources/chrome/index.references.yml"));
         performReferenceReplacement("www/index.html", "www/index.html", false, "resources/chrome/index.references.yml");
     }
     else {
         // Cordova: default or no --prep flag
 
-        console.log(format("Generating: config.xml from resources/cordova/config.master.xml"));
+        console.log(format("Generating: config.xml from: resources/cordova/config.master.xml"));
         performVariableReplacement(schemeName, "resources/cordova/config.master.xml", "config.xml");
 
-        console.log(format("Generating: www/index.html from resources/cordova/index.master.html"));
+        console.log(format("Generating: www/index.html from: resources/cordova/index.master.html"));
         performVariableReplacement(schemeName, "resources/cordova/index.master.html", "www/index.html");
 
-        console.log(format("Adding resource references to: www/index.html using resources/cordova/index.references.yml"));
+        console.log(format("Adding resource references to: www/index.html using: resources/cordova/index.references.yml"));
         performReferenceReplacement("www/index.html", "www/index.html", false, "resources/cordova/index.references.yml");
     }
 
@@ -949,12 +1035,21 @@ gulp.task("package-chrome", function (cb) {
     gutil.env.prep = "chrome";
 
     // Delegate to the config task to generate the index, manifest, and build vars.
-    runSequence("config", function () {
+    runSequence("config", function (err) {
+
+        if (err) {
+            cb(err);
+            return;
+        }
+
+        console.log("Copying www to build/chrome");
 
         // Copy the www payload.
         gulp.src(paths.www)
             .pipe(gulp.dest("build/chrome"))
             .on("end", function() {
+
+            console.log("Copying resources/icon.png to build/chrome/icon.png");
 
             // Copy in the icon to use for the toolbar.
             gulp.src("./resources/icon.png")
@@ -986,18 +1081,43 @@ gulp.task("package-web", function (cb) {
     gutil.env.prep = "web";
 
     // Delegate to the config task to generate the index, manifest, and build vars.
-    runSequence("config", function () {
+    runSequence("config", function (err) {
+
+        if (err) {
+            cb(err);
+            return;
+        }
+
+        console.log("Copying www to build/web");
 
         // Copy the www payload.
         gulp.src(paths.www)
             .pipe(gulp.dest("build/web"))
             .on("end", function() {
 
-            // TODO: Remove un-needed files (css, js, lib)
-            // TODO: Bundle css to app.bundle.css
-            // TODO: Bundle lib to app.bundle.lib.js
-            // TODO: Bundle js to app.bundle.js
-            // bundleStaticLibs("www", "build/web", "config/web/index.references.yml")
+            console.log("Bundling css, lib, and js directories to build/web/resources-temp");
+            sh.mkdir("-p", "build/web/resources-temp");
+            bundleStaticResources("build/web", "build/web/resources-temp", "resources/web/index.references.yml")
+
+            // TODO: This isn't 100% correct.
+            console.log("Removing css, lib, and js files from build/web");
+            sh.rm("-rf", "build/web/css/*.css");
+            sh.rm("-rf", "build/web/lib/*.js");
+            sh.rm("-rf", "build/web/js/*.js");
+
+            console.log("Moving bundled css to build/web/css/app.bundle.css");
+            sh.mv(["build/web/resources-temp/app.bundle.css"], "build/web/css");
+
+            console.log("Moving bundled lib to build/web/lib/app.bundle.lib.js");
+            sh.mv(["build/web/resources-temp/app.bundle.lib.js"], "build/web/li");
+
+            console.log("Moving bundled js to build/web/js/app.bundle.js");
+            sh.mv(["build/web/resources-temp/app.bundle.js"], "build/web/js");
+
+            sh.rm("-rf", "build/web/resources-temp");
+
+            console.log(format("Generating: build/web/index.html from: resources/web/index.master.html with bundled resource references."));
+            performReferenceReplacement("resources/web/index.master.html", "build/web/index.html", true);
 
             // TODO: ZIP
             cb();
@@ -1082,7 +1202,7 @@ gulp.task("ts", ["ts:src"], function (cb) {
             cb(err);
         }
         else {
-            runSequence("minify", function () {
+            runSequence("minify", function (err) {
                 cb(err);
             });
         }
