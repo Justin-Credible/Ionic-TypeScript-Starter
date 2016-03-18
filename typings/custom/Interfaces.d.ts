@@ -53,10 +53,6 @@ declare namespace JustinCredible.SampleApp.Interfaces {
          */
         buildTimestamp: string;
 
-        majorVersion: number;
-        minorVersion: number;
-        buildVersion: number;
-
         /**
          * The short SHA for the git commit that this build was created from.
          * 
@@ -66,32 +62,59 @@ declare namespace JustinCredible.SampleApp.Interfaces {
         commitShortSha: string;
 
         /**
-         * The display name of the application.
+         * Holds all of the name/value pairs from config.yml.
          */
-        applicationName: string;
+        config: {
 
-        /**
-         * The contact email address for the app.
-         */
-        email: string;
+            /**
+             * The display name of the application.
+             */
+            appName: string;
 
-        /**
-         * The author's website for the app.
-         */
-        websiteUrl: string;
+            /**
+             * The description of the application.
+             */
+            appDescription: string;
 
-        /**
-         * Holds all of the preference node name/value pairs from config.xml.
-         */
-        properties: {
+            /**
+             * The version string for the application.
+             */
+            appVersion: string;
 
+            /**
+             * The name of the author.
+             */
+            authorName: string;
+
+            /**
+             * The author's e-mail address.
+             */
+            authorEmail: string;
+
+            /**
+             * The URL for the author's website.
+             */
+            authorWebsite: string;
+
+            /**
+             * URL to the license file for the this starter project.
+             */
+            licenseUrl: string;
+
+            /**
+             * URL to the GitHub page for this starter project.
+             */
+            githubUrl: string;
+
+            /**
+             * The base URL for the REST APIs for the application.
+             */
             apiUrl: string;
 
+            /**
+             * The version of the API to use; this will be sent in the X-API-Version header.
+             */
             apiVersion: string;
-
-            copyrightUrl: string;
-
-            githubUrl: string;
         };
     }
 }

@@ -32,24 +32,6 @@ interface Window {
      * Variables emitted at build time which contain useful application information.
      */
     buildVars: JustinCredible.SampleApp.Interfaces.BuildVars;
-
-    /**
-     * Prints a stack trace at the given location.
-     * 
-     * Uses the stacktrace.js library:
-     * https://github.com/stacktracejs/stacktrace.js
-     */
-    printStackTrace(): string[];
-
-    /**
-     * Prints a stack trace for the given error object.
-     * 
-     * Uses the stacktrace.js library:
-     * https://github.com/stacktracejs/stacktrace.js
-     * 
-     * @param data An object containing the error on a property named "e".
-     */
-    printStackTrace(data: { e: Error }): string[];
 }
 
 /**

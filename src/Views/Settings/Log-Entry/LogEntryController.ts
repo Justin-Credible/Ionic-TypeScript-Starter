@@ -65,7 +65,7 @@
         }
 
         protected email_click(): void {
-            var uri = this.Utilities.format("mailto:{0}?subject={1} Error Log&body={2}", this.Configuration.buildVars.email, this.Configuration.buildVars.applicationName, JSON.stringify(this.viewModel.logEntry));
+            var uri = this.Utilities.format("mailto:{0}?subject={1} Error Log&body={2}", this.Configuration.buildVars.config.authorEmail, this.Configuration.buildVars.config.appName, JSON.stringify(this.viewModel.logEntry));
             uri = encodeURI(uri);
             window.open(uri, "_system");
         }

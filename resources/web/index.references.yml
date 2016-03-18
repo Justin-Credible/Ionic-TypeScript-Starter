@@ -5,11 +5,11 @@
 # to the web version of the application.
 
 css:
-    # Includes the bulk of the CSS; this is generated from the SASS styles using the gulp sass task.
-    - css/bundle.css
-
     # Third Party Styles
     - lib/nprogress/nprogress.css
+
+    # Includes the bulk of the CSS; this is generated from the SASS styles using the gulp sass task.
+    - css/bundle.css
 
 lib:
     # Ionic Framework (includes AngularJS)
@@ -19,10 +19,10 @@ lib:
     - lib/angular-mocks/angular-mocks.js
 
     # Third Party Libraries
-    - lib/lodash/lodash.js
+    - lib/lodash/lodash.min.js
+    - lib/moment/moment.min.js
     - lib/uri.js/uri.min.js
     - lib/nprogress/nprogress.js
-    - lib/stacktrace/stacktrace.js
 
 js:
     # Exposes certain build flags (version, build time, debug, etc), created by the gulp config task.

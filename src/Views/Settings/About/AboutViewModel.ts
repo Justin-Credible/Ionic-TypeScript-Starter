@@ -6,5 +6,6 @@
         public versionString: string;
         public timestamp: string;
         public commitShortSha: string;
+        public authorName: string;
     }
 }

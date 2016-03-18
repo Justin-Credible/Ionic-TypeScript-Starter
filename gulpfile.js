@@ -1065,8 +1065,9 @@ gulp.task("package-chrome", function (cb) {
     // Ensure that the prep flag is set to "chrome" (used by the config task).
     gutil.env.prep = "chrome";
 
-    // Ensure directory is cleared out first.
+    // Ensure the previous files are cleared out.
     sh.rm("-rf", "build/chrome");
+    sh.rm("-rf", "build/chrome.tar.gz");
 
     // Delegate to the config task to generate the index, manifest, and build vars.
     runSequence("config", function (err) {
@@ -1110,8 +1111,9 @@ gulp.task("package-web", function (cb) {
     // Ensure that the prep flag is set to "web" (used by the config task).
     gutil.env.prep = "web";
 
-    // Ensure directory is cleared out first.
+    // Ensure the previous files are cleared out.
     sh.rm("-rf", "build/web");
+    sh.rm("-rf", "build/web.tar.gz");
 
     // Delegate to the config task to generate the index, manifest, and build vars.
     runSequence("config", function (err) {
@@ -1128,16 +1130,12 @@ gulp.task("package-web", function (cb) {
         sh.mkdir("-p", "build/web/resources-temp");
         bundleStaticResources("build/web", "build/web/resources-temp", "resources/web/index.references.yml")
 
-        // TODO: This isn't 100% correct.
         console.log("Removing css and js directories from build/web");
         sh.rm("-rf", "build/web/css");
         sh.rm("-rf", "build/web/js");
 
         var libFileExtensionsToKeep = [
             ".woff",
-            ".eot",
-            ".svg",
-            ".ttf"
         ];
 
         console.log("Removing js/css/etc from build/web/lib");

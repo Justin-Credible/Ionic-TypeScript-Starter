@@ -9,7 +9,7 @@
         "www/js/bundle.js.map": true,
         "www/js/bundle.d.ts": true,
         "www/js/src": true,
-        "chrome": true
+        "build": true
     },
 
     "editor.tabSize": 4,

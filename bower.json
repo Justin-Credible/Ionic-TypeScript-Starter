@@ -7,14 +7,20 @@
     "moment": "2.10.6",
     "nprogress": "0.2.0",
     "uri.js": "1.16.1",
-    "angular-mocks": "1.4.7",
-    "stacktrace": "1.0.0"
+    "angular-mocks": "1.4.7"
   },
   "install": {
     "path": "www/lib",
     "sources": {
+      "lodash": "bower_components/lodash/lodash.min.js",
+      "moment": "bower_components/moment/min/moment.min.js",
       "uri.js": "bower_components/uri.js/src/uri.min.js",
-      "ionic": "bower_components/ionic/release/**"
+      "ionic": {
+        "mapping": [
+          { "bower_components/ionic/release/js/ionic.bundle.min.js": "js/ionic.bundle.min.js" },
+          { "bower_components/ionic/release/fonts/ionicons.woff": "fonts/ionicons.woff" }
+        ]
+      }
     },
     "ignore": [
       "angular",

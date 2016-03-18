@@ -62,7 +62,7 @@ namespace JustinCredible.SampleApp.Services {
                 return this._apiUrl;
             }
             else {
-                return this.buildVars.properties.apiUrl;
+                return this.buildVars.config.apiUrl;
             }
         }
 

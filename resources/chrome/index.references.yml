@@ -2,14 +2,14 @@
 
 # Used to determine the script/link references that should be inserted
 # into the master index.html file by the "gulp config" task specific
-# to the Cordova version of the application.
+# to the Chrome version of the application.
 
 css:
-    # Includes the bulk of the CSS; this is generated from the SASS styles using the gulp sass task.
-    - css/bundle.css
-
     # Third Party Styles
     - lib/nprogress/nprogress.css
+
+    # Includes the bulk of the CSS; this is generated from the SASS styles using the gulp sass task.
+    - css/bundle.css
 
 lib:
     # Ionic Framework (includes AngularJS)
@@ -19,13 +19,10 @@ lib:
     - lib/angular-mocks/angular-mocks.js
 
     # Third Party Libraries
-    - lib/lodash/lodash.js
+    - lib/lodash/lodash.min.js
+    - lib/moment/moment.min.js
     - lib/uri.js/uri.min.js
     - lib/nprogress/nprogress.js
-    - lib/stacktrace/stacktrace.js
-
-    # This will be a 404 during development; it is copied into package at build time.
-    - cordova.js
 
 js:
     # Exposes certain build flags (version, build time, debug, etc), created by the gulp config task.
