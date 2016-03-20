@@ -456,15 +456,6 @@ function isPrepWeb() {
 }
 
 /**
- * Used to determine if a prep flag was set to Android.
- * 
- * gulp init --prep android
- */
-function isPrepAndroid() {
-    return gutil.env.prep === "android" ? true : false;
-}
-
-/**
  * Used to recursively delete all empty directories under the given path.
  */
 function deleteEmptyDirectories(basePath) {
@@ -625,15 +616,16 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
 
         var platforms = JSON.parse(fs.readFileSync("package.json", "utf8")).cordovaPlatforms;
 
+        var cordovaBin = path.join("node_modules", ".bin", "cordova");
         var platformCommand = "";
 
         for (var i = 0; i < platforms.length; i++) {
 
             if (typeof(platforms[i]) === "string") {
-                platformCommand += "ionic platform add " + platforms[i];
+                platformCommand += cordovaBin + " platform add " + platforms[i];
             }
             else if (platforms[i].locator) {
-                platformCommand += "ionic platform add " + platforms[i].locator;
+                platformCommand += cordovaBin + " platform add " + platforms[i].locator;
             }
             else {
                 logWarning("Unsupported platform declaration in package.json; expected string or object with locator string property.");
@@ -654,25 +646,7 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
         }
 
         // Delegate to the default gulp task.
-        runSequence("default", function (err) {
-
-            if (err) {
-                cb(err);
-                return;
-            }
-
-            // Finally, if the special "--prep android" flag was provided, run a few extra commands.
-            if (isPrepAndroid()) {
-                result = sh.exec("ionic browser add crosswalk");
-
-                if (result.code !== 0) {
-                    cb(new Error(result.output));
-                    return;
-                }
-            }
-
-            cb();
-        });
+        runSequence("default", cb);
     });
 });
 
@@ -687,13 +661,15 @@ gulp.task("watch", function() {
 });
 
 /**
- * Simply delegates to the "ionic emulate ios" command.
+ * Simply delegates to the "cordova emulate ios" command.
  * 
  * Useful to quickly execute from Visual Studio Code's task launcher:
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
 gulp.task("emulate-ios", ["sass", "ts"], function(cb) {
-    sh.exec("ionic emulate ios");
+    var cordovaBin = path.join("node_modules", ".bin", "cordova");
+    var command = cordovaBin + " emulate ios";
+    sh.exec(command);
     cb();
 });
 
@@ -908,7 +884,9 @@ gulp.task("remote-emulate-ios", function(cb) {
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
 gulp.task("emulate-android", ["sass", "ts"], function(cb) {
-    sh.exec("ionic emulate android");
+    var cordovaBin = path.join("node_modules", ".bin", "cordova");
+    var command = cordovaBin + " emulate android";
+    sh.exec(command);
     cb();
 });
 
@@ -956,8 +934,10 @@ gulp.task("tsd", function (cb) {
  */
 gulp.task("tsd:app", function (cb) {
 
+    var tsdBin = path.join("node_modules", ".bin", "tsd");
+
     // First reinstall any missing definitions to the typings directory.
-    var result = sh.exec("tsd reinstall");
+    var result = sh.exec(tsdBin + " reinstall");
 
     if (result.code !== 0) {
         cb(new Error(result.output));
@@ -965,7 +945,7 @@ gulp.task("tsd:app", function (cb) {
     }
 
     // Rebuild the src/tsd.d.ts bundle reference file.
-    result = sh.exec("tsd rebundle");
+    result = sh.exec(tsdBin + " rebundle");
 
     if (result.code !== 0) {
         cb(new Error(result.output));
@@ -981,8 +961,10 @@ gulp.task("tsd:app", function (cb) {
  */
 gulp.task("tsd:tests", function (cb) {
 
+    var tsdBin = path.join("node_modules", ".bin", "tsd");
+
     // First reinstall any missing definitions to the typings-tests directory.
-    var result = sh.exec("tsd reinstall --config tsd.tests.json");
+    var result = sh.exec(tsdBin + " reinstall --config tsd.tests.json");
 
     if (result.code !== 0) {
         cb(new Error(result.output));
@@ -990,7 +972,7 @@ gulp.task("tsd:tests", function (cb) {
     }
 
     // Rebuild the tests/tsd.d.ts bundle reference file.
-    result = sh.exec("tsd rebundle --config tsd.tests.json");
+    result = sh.exec(tsdBin + " rebundle --config tsd.tests.json");
 
     if (result.code !== 0) {
         cb(new Error(result.output));
@@ -1261,7 +1243,9 @@ gulp.task("ts:src-read-me", function (cb) {
  */
 gulp.task("ts", ["ts:src"], function (cb) {
 
-   var result = sh.exec("tsc -p src");
+    var tscBin = path.join("node_modules", ".bin", "tsc");
+
+    var result = sh.exec(tscBin + " -p src");
 
     if (result.code !== 0) {
         cb(new Error("Error running TypeScript compiler (tsc)."));
@@ -1305,7 +1289,10 @@ gulp.task("minify", function () {
  * compiled as well.
  */
 gulp.task("ts:tests", ["ts"], function (cb) {
-    var result = sh.exec("tsc -p tests");
+
+    var tscBin = path.join("node_modules", ".bin", "tsc");
+
+    var result = sh.exec(tscBin + " -p tests");
 
     if (result.code !== 0) {
         cb(new Error(result.output));
@@ -1353,7 +1340,9 @@ gulp.task("sass", function (cb) {
  * the consumable pieces in the www/lib directory.
  */
 gulp.task("libs", function(cb) {
-    var result = sh.exec("bower-installer");
+
+    var command = path.join("node_modules", ".bin", "bower-installer");
+    var result = sh.exec(command);
 
     if (result.code !== 0) {
         cb(new Error(result.output));
@@ -1403,7 +1392,8 @@ gulp.task("plugins", ["git-check"], function(cb) {
             return;
         }
 
-        var command = "cordova plugin add " + pluginName + additionalArguments;
+        var cordovaBin = path.join("node_modules", ".bin", "cordova");
+        var command = cordovaBin + " plugin add " + pluginName + additionalArguments;
 
         var result = sh.exec(command);
 
