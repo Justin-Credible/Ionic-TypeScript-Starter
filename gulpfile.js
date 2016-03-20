@@ -597,7 +597,7 @@ gulp.task("default", function (cb) {
  */
 gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"], function (cb) {
 
-    // First, build out config.xml so that Cordova can read it. We do this here instead
+    // First, generate config.xml so that Cordova can read it. We do this here instead
     // of as a child task above because it must start after all of the clean tasks have
     // completed, otherwise it will just get blown away.
     runSequence("config", function (err) {
@@ -607,9 +607,10 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
             return;
         }
 
-        // If we are preparing for the "web" platform we can bail out earlier.
-        if (isPrepWeb()) {
-            console.info("Skipping Cordova platforms because the '--prep web' flag was specified.");
+        // If we are preparing for the "web" or "chrome" platforms we can bail out here
+        // because there is no need to add Cordova platforms in these cases.
+        if (isPrepWeb() || isPrepChrome()) {
+            console.info(format("Skipping Cordova platforms because the '--prep {0}' flag was specified.", gutil.env.prep));
             runSequence("default", cb);
             return;
         }
@@ -775,7 +776,7 @@ gulp.task("remote-emulate-ios", function(cb) {
                                 isDebugBuild() ? "debug" : "release",
                                 config.logLevel);
 
-        var payloadStream = fs.createReadStream("tmp/taco-payload.tgz.gz");
+        var payloadStream = fs.createReadStream("build/remote/taco-payload.tgz.gz");
 
         gutil.log(format("Uploading build to: {0}", payloadUploadUrl));
 
@@ -920,6 +921,20 @@ gulp.task("test", ["ts:tests"], function (done) {
 });
 
 /**
+ * An gulp task to create documentation for the TypeScript code.
+ */
+gulp.task("typedoc", function() {
+    return gulp
+        .src(paths.ts)
+        .pipe(typedoc({
+            module: "commonjs",
+            target: "es5",
+            out: "build/typedocs",
+            name: "Ionic TypeScript Starter"
+        }));
+});
+
+/**
  * Uses the tsd command to restore TypeScript definitions to the typings
  * directories and rebuild the tsd.d.ts typings bundle for both the app
  * as well as the unit tests.
@@ -983,14 +998,23 @@ gulp.task("tsd:tests", function (cb) {
 });
 
 /**
- * Used to perform configuration based on different build schemes listed in config.xml
- * under the schemes element.
+ * Used to perform configuration based on different build schemes listed resources/config/schemes.yml
+ * by specifying the scheme when executing the task: gulp config --scheme scheme_name
  * 
- * It responsible for generating config.xml from config.master.xml, generating
- * www/index.html from www/index.master.html, performing variable replacements based
- * on scheme name in these two files, and building the www/js/build-vars.js file.
+ * It generates the following files from their template ("master") files by performing variable
+ * replacement based on the given scheme name.
  * 
- * gulp config --scheme scheme_name
+ * • resources/config/config.yml -> www/js/build-vars.js
+ * 
+ * In addition, if no --prep flag is specified:
+ * • resources/cordova/config.master.xml -> config.xml
+ * • resources/cordova/index.master.xml -> www/index.html
+ * 
+ * In addition, if the --prep web flag is specified:
+ * • resources/web/index.master.html -> www/index.html
+ * 
+ * In addition, if the --prep chrome flag is specified:
+ * • resources/chrome/index.master.html -> www/index.html
  */
 gulp.task("config", function (cb) {
 
@@ -1176,7 +1200,7 @@ gulp.task("package-web", function (cb) {
 
 /**
  * Used to create a payload that can be sent to an OS X machine for build.
- * The payload will be placed in tmp/taco-payload.tgz.gz
+ * The payload will be placed in build/remote/taco-payload.tgz.gz
  * 
  * This does not compile SASS, TypeScript, templates, etc.
  */
@@ -1188,7 +1212,7 @@ gulp.task("package-remote-build", function () {
             .pipe(gulpif("*.js", eol("\r")))
             .pipe(tar("taco-payload.tgz"))
             .pipe(gzip())
-            .pipe(gulp.dest("tmp"));
+            .pipe(gulp.dest("build/remote"));
 });
 
 /**
@@ -1362,8 +1386,8 @@ gulp.task("libs", function(cb) {
 gulp.task("plugins", ["git-check"], function(cb) {
 
     // We don't need Cordova plugins for the web bundle.
-    if (isPrepWeb()) {
-        console.info("Skipping Cordova plugins because the '--prep web' flag was specified.");
+    if (isPrepWeb() || isPrepChrome()) {
+        console.info(format("Skipping Cordova plugins because the '--prep {0}' flag was specified.", gutil.env.prep));
         cb();
         return;
     }
@@ -1411,18 +1435,7 @@ gulp.task("plugins", ["git-check"], function(cb) {
  * that don't need to be committed to source control by delegating to several of the clean
  * sub-tasks.
  */
-gulp.task("clean", ["clean:tmp", "clean:node", "clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"]);
-
-/**
- * Removes the tmp directory.
- */
-gulp.task("clean:tmp", function (cb) {
-    del([
-        "tmp",
-    ]).then(function () {
-        cb();
-    });
-});
+gulp.task("clean", ["clean:node", "clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"]);
 
 /**
  * Removes the node_modules directory.
@@ -1436,12 +1449,11 @@ gulp.task("clean:node", function (cb) {
 });
 
 /**
- * Removes the node_modules directory.
+ * Removes the files generated by the gulp config task.
  */
 gulp.task("clean:config", function (cb) {
     del([
         "config.xml",
-        "www/index.master.xml",
         "www/js/build-vars.js"
     ]).then(function () {
         cb();
@@ -1593,6 +1605,17 @@ gulp.task("clean:build", function (cb) {
 });
 
 /**
+ * Removes the docs directory.
+ */
+gulp.task("clean:typedoc", function (cb) {
+    del([
+        "build/typedocs"
+    ]).then(function () {
+        cb();
+    });
+});
+
+/**
  * An default task provided by Ionic used to check if Git is installed.
  */
 gulp.task("git-check", function(done) {
@@ -1608,29 +1631,4 @@ gulp.task("git-check", function(done) {
     }
 
     done();
-});
-
-/**
- * An gulp task to create documentation for typescript.
- */
-gulp.task("typedoc", function() {
-    return gulp
-        .src(paths.ts)
-        .pipe(typedoc({
-            module: "commonjs",
-            target: "es5",
-            out: "ts-docs/",
-            name: "Ionic TypeScript Starter"
-        }));
-});
-
-/**
- * Removes the docs directory.
- */
-gulp.task("clean:typedoc", function (cb) {
-    del([
-        "ts-docs"
-    ]).then(function () {
-        cb();
-    });
 });
