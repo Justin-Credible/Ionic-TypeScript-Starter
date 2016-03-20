@@ -329,7 +329,7 @@ function createBuildVars(schemeName, configYmlPath, targetBuildVarsPath) {
 
     // If the debug flag was never set, then default to true.
     if (isDebug == null) {
-        console.warn("The debug attribute was not set for scheme '" + schemeName + "'; defaulting to true.");
+        console.warn(format("The debug attribute was not set for scheme '{0}'; defaulting to true.", schemeName));
         isDebug = true;
     }
 
@@ -355,7 +355,7 @@ function createBuildVars(schemeName, configYmlPath, targetBuildVarsPath) {
     }
 
     // Write the buildVars variable with code that will define it as a global object.
-    var buildVarsJs = "window.buildVars = " + JSON.stringify(buildVars)  + ";";
+    var buildVarsJs = format("window.buildVars = {0};", JSON.stringify(buildVars));
 
     // Write the file out to disk.
     fs.writeFileSync(targetBuildVarsPath, buildVarsJs, "utf8");
@@ -490,11 +490,9 @@ function deleteEmptyDirectories(basePath) {
             var childPaths = sh.ls("-A", file);
 
             if (childPaths != null && childPaths.length === 0) {
-                console.log("should delete dir: " + file);
                 sh.rm("-rf", file);
             }
             else {
-                console.log("skipping dir: " + file);
             }
         }
     });
@@ -505,7 +503,7 @@ function deleteEmptyDirectories(basePath) {
  * and modified from gulp-tslint.
  */
 function logTsError(message, level) {
-    var prefix = "[" + gutil.colors.cyan("gulp-tslint") + "]";
+    var prefix = format("[{0}]", gutil.colors.cyan("gulp-tslint"));
 
     if (level === "error") {
         gutil.log(prefix, gutil.colors.red("error"), message);
@@ -523,11 +521,14 @@ function logTsError(message, level) {
  */
 var tsLintReporter = function(failures, file) {
     failures.forEach(function(failure) {
-        // line + 1 because TSLint's first line and character is 0
-        logTsError("(" + failure.ruleName + ") " + file.path +
-            "[" + (failure.startPosition.line + 1) + ", " +
-            (failure.startPosition.character + 1) + "]: " +
-            failure.failure, "warn");
+        var message = format("({0}) {1}[{2}, {3}]: {4}",
+                                failure.ruleName,
+                                file.path,
+                                (failure.startPosition.line + 1),
+                                (failure.startPosition.character + 1),
+                                failure.failure);
+
+        logTsError(message, "warn")
     });
 };
 
@@ -539,7 +540,12 @@ var sassReporter = function (failure) {
     var file = failure.message.split("\n")[0];
     var message = failure.message.split("\n")[1];
 
-    console.log("[sass] [" + failure.name.toLowerCase() + "] " + file + ":" + message);
+    var formattedMessage = format("[sass] [{0}] {1}:{2}",
+                                failure.name.toLowerCase(),
+                                file,
+                                message);
+
+    console.log(formattedMessage);
 }
 
 /**
@@ -1059,7 +1065,7 @@ gulp.task("package-chrome", function (cb) {
 
     // Warn the user if they try to use a different prep flag value.
     if (gutil.env.prep != null && gutil.env.prep != "chrome") {
-        console.warn("Overriding '--prep " + gutil.env.prep + "' flag to '--prep chrome'.");
+        console.warn(format("Overriding '--prep {0}' flag to '--prep chrome'.", gutil.env.prep));
     }
 
     // Ensure that the prep flag is set to "chrome" (used by the config task).
@@ -1105,7 +1111,7 @@ gulp.task("package-web", function (cb) {
 
     // Warn the user if they try to use a different prep flag value.
     if (gutil.env.prep != null && gutil.env.prep != "web") {
-        console.warn("Overriding '--prep " + gutil.env.prep + "' flag to '--prep web'.");
+        console.warn(format("Overriding '--prep {0}' flag to '--prep web'.", gutil.env.prep));
     }
 
     // Ensure that the prep flag is set to "web" (used by the config task).
@@ -1375,7 +1381,7 @@ gulp.task("plugins", ["git-check"], function(cb) {
 
             if (plugin.variables) {
                 Object.keys(plugin.variables).forEach(function (variable) {
-                    additionalArguments += " --variable " + variable + "=\"" + plugin.variables[variable] + "\"";
+                    additionalArguments += format(' --variable {0}="{1}"', variable, plugin.variables[variable]);
                 });
             }
         }
@@ -1387,7 +1393,9 @@ gulp.task("plugins", ["git-check"], function(cb) {
             return;
         }
 
-        exec("cordova plugin add " + pluginName + additionalArguments, function (err, stdout, stderr) {
+        var command = "cordova plugin add " + pluginName + additionalArguments;
+
+        exec(command, function (err, stdout, stderr) {
             console.log(stdout);
             console.log(stderr);
             eachCb(err);
@@ -1589,7 +1597,7 @@ gulp.task("git-check", function(done) {
     if (!sh.which("git")) {
         console.log(
           "  " + gutil.colors.red("Git is not installed."),
-          "\n  Git, the version control system, is required to download Ionic.",
+          "\n  Git, the version control system, is required to download plugins etc.",
           "\n  Download git here:", gutil.colors.cyan("http://git-scm.com/downloads") + ".",
           "\n  Once git is installed, run \"" + gutil.colors.cyan("gulp install") + "\" again."
         );
