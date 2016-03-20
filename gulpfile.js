@@ -329,7 +329,7 @@ function createBuildVars(schemeName, configYmlPath, targetBuildVarsPath) {
 
     // If the debug flag was never set, then default to true.
     if (isDebug == null) {
-        console.warn(format("The debug attribute was not set for scheme '{0}'; defaulting to true.", schemeName));
+        logWarning(format("The debug attribute was not set for scheme '{0}'; defaulting to true.", schemeName));
         isDebug = true;
     }
 
@@ -348,7 +348,7 @@ function createBuildVars(schemeName, configYmlPath, targetBuildVarsPath) {
     var shResult = sh.exec("git rev-parse --short HEAD", { silent: true });
 
     if (shResult.code !== 0) {
-        console.warn("Unable to get the git revision number; using 'Unknown' instead. Failure reason:\n" + shResult.output);
+        logWarning("Unable to get the git revision number; using 'Unknown' instead. Failure reason:\n" + shResult.output);
     }
     else {
         buildVars.commitShortSha = shResult.output.replace("\n", "");
@@ -499,6 +499,14 @@ function deleteEmptyDirectories(basePath) {
 }
 
 /**
+ * Used to log a warning message using gutil.log(...) with a yellow colors
+ * and "Warning: " prefix.
+ */
+function logWarning(message) {
+    gutil.log(gutil.colors.yellow("Warning: " + message));
+}
+
+/**
  * A custom reporter for the TypeScript linter reporter function. This was copied
  * and modified from gulp-tslint.
  */
@@ -634,7 +642,7 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
                 platformCommand += "ionic platform add " + platforms[i].locator;
             }
             else {
-                console.warn("Unsupported platform declaration in package.json; expected string or object with locator string property.");
+                logWarning("Unsupported platform declaration in package.json; expected string or object with locator string property.");
                 continue;
             }
 
@@ -1065,7 +1073,7 @@ gulp.task("package-chrome", function (cb) {
 
     // Warn the user if they try to use a different prep flag value.
     if (gutil.env.prep != null && gutil.env.prep != "chrome") {
-        console.warn(format("Overriding '--prep {0}' flag to '--prep chrome'.", gutil.env.prep));
+        logWarning(format("The '--prep {0}' flag is invalid for the 'package-chrome' task; overriding it to: '--prep chrome'.", gutil.env.prep));
     }
 
     // Ensure that the prep flag is set to "chrome" (used by the config task).
@@ -1111,7 +1119,7 @@ gulp.task("package-web", function (cb) {
 
     // Warn the user if they try to use a different prep flag value.
     if (gutil.env.prep != null && gutil.env.prep != "web") {
-        console.warn(format("Overriding '--prep {0}' flag to '--prep web'.", gutil.env.prep));
+        logWarning(format("The '--prep {0}' flag is invalid for the 'package-web' task; overriding it to: '--prep web'.", gutil.env.prep));
     }
 
     // Ensure that the prep flag is set to "web" (used by the config task).
