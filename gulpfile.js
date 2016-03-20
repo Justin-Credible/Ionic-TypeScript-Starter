@@ -545,7 +545,7 @@ var sassReporter = function (failure) {
                                 file,
                                 message);
 
-    console.log(formattedMessage);
+    gutil.log(formattedMessage);
 }
 
 /**
@@ -646,8 +646,8 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
         // Next, run the "ionic platform add ..." commands.
         exec(platformCommand, function (err, stdout, stderr) {
 
-            console.log(stdout);
-            console.log(stderr);
+            gutil.log(stdout);
+            gutil.log(stderr);
 
             if (err) {
                 cb(err);
@@ -665,8 +665,8 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
                 // Finally, if the special "--prep android" flag was provided, run a few extra commands.
                 if (isPrepAndroid()) {
                     exec("ionic browser add crosswalk", function (err, stdout, stderr) {
-                        console.log(stdout);
-                        console.log(stderr);
+                        gutil.log(stdout);
+                        gutil.log(stderr);
                         cb(err);
                     });
                 }
@@ -771,7 +771,7 @@ gulp.task("remote-emulate-ios", function(cb) {
                     || tasksResponseData.status === "Uploaded"
                     || tasksResponseData.status === "Uploading") {
 
-                    console.log(format("{0}: Checking status ({1}/{2}): {3} - {4}",
+                    gutil.log(format("{0}: Checking status ({1}/{2}): {3} - {4}",
                                     tasksResponseData.statusTime,
                                     statusCheckCount,
                                     config.maxStatusChecks,
@@ -784,7 +784,7 @@ gulp.task("remote-emulate-ios", function(cb) {
                 }
                 else {
 
-                    console.log(format("{0}: {1} - {2}",
+                    gutil.log(format("{0}: {1} - {2}",
                                     tasksResponseData.statusTime,
                                     tasksResponseData.status,
                                     tasksResponseData.message));
@@ -803,7 +803,7 @@ gulp.task("remote-emulate-ios", function(cb) {
 
         var payloadStream = fs.createReadStream("tmp/taco-payload.tgz.gz");
 
-        console.log(format("Uploading build to: {0}", payloadUploadUrl));
+        gutil.log(format("Uploading build to: {0}", payloadUploadUrl));
 
         // Make the HTTP POST request with the payload in the body.
         payloadStream.pipe(request.post(payloadUploadUrl, function (err, uploadResponse) {
@@ -823,7 +823,7 @@ gulp.task("remote-emulate-ios", function(cb) {
 
             // If it wasn't uploaded, then we can't continue.
             if (uploadResponseData.status !== "Uploaded") {
-                console.log(uploadResponseData);
+                gutil.log(uploadResponseData);
                 cb(new Error(format("A non-'Uploaded' status was received after uploading the payload: {0} - {1}", uploadResponseData.status, uploadResponseData.message)));
                 return;
             }
@@ -836,7 +836,7 @@ gulp.task("remote-emulate-ios", function(cb) {
                 return;
             }
 
-            console.log(format("Payload uploaded; waiting for build {0} to complete...", buildNumber));
+            gutil.log(format("Payload uploaded; waiting for build {0} to complete...", buildNumber));
 
             // Here we'll wait until the build process has completed before continuing.
             waitOnRemoteBuild(buildNumber, function (err, taskStatus) {
@@ -848,9 +848,9 @@ gulp.task("remote-emulate-ios", function(cb) {
 
                 var logsUrl = format("{0}cordova/build/tasks/{1}/log", baseUrl, buildNumber);
 
-                console.log(format("Build ended with status: {0} - {1}", taskStatus.status, taskStatus.message));
+                gutil.log(format("Build ended with status: {0} - {1}", taskStatus.status, taskStatus.message));
 
-                console.log(format("Now retreiving logs for build {0}...", buildNumber));
+                gutil.log(format("Now retreiving logs for build {0}...", buildNumber));
 
                 // The build has finished, so lets go get the logs.
                 request.get(logsUrl, function (err, logsResponse) {
@@ -861,12 +861,12 @@ gulp.task("remote-emulate-ios", function(cb) {
                     }
 
                     // Write the logs to disk.
-                    console.log(format("Writing server build logs to: {0}", config.logFile));
+                    gutil.log(format("Writing server build logs to: {0}", config.logFile));
                     fs.writeFileSync(config.logFile, logsResponse.body, "utf8");
 
                     // If the build wasn't successful, then bail out here.
                     if (taskStatus.status !== "Complete") {
-                        console.log(taskStatus);
+                        gutil.log(taskStatus);
                         cb(new Error(format("A non-'Complete' status was received after waiting for a build to complete: {0} - {1}", taskStatus.status, taskStatus.message)));
                         return;
                     }
@@ -876,7 +876,7 @@ gulp.task("remote-emulate-ios", function(cb) {
                                         buildNumber,
                                         encodeURIComponent(config.emulationTarget));
 
-                    console.log(format("Starting emulator for build {0}...", buildNumber));
+                    gutil.log(format("Starting emulator for build {0}...", buildNumber));
 
                     // Now make a call to start the emulator.
                     request.get(emulateUrl, function (err, emulateResponse) {
@@ -889,11 +889,11 @@ gulp.task("remote-emulate-ios", function(cb) {
                         var emulateResponseData = JSON.parse(emulateResponse.body);
 
                         if (emulateResponseData.status === "Emulated") {
-                            console.log(format("{0} - {1}", emulateResponseData.status, emulateResponseData.message));
+                            gutil.log(format("{0} - {1}", emulateResponseData.status, emulateResponseData.message));
                             cb();
                         }
                         else {
-                            console.log(emulateResponse);
+                            gutil.log(emulateResponse);
                             cb(new Error(format("A non-'Emulated' response was received when requesting emulation: {0} - {1}", emulateResponseData.status, emulateResponseData.message)));
                         }
                     });
@@ -959,8 +959,8 @@ gulp.task("tsd", function (cb) {
 gulp.task("tsd:app", function (cb) {
     // First reinstall any missing definitions to the typings directory.
     exec("tsd reinstall", function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
+        gutil.log(stdout);
+        gutil.log(stderr);
 
         if (err) {
             cb(err);
@@ -969,8 +969,8 @@ gulp.task("tsd:app", function (cb) {
 
         // Rebuild the src/tsd.d.ts bundle reference file.
         exec("tsd rebundle", function (err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
+            gutil.log(stdout);
+            gutil.log(stderr);
             cb(err);
         });
     });
@@ -983,8 +983,8 @@ gulp.task("tsd:app", function (cb) {
 gulp.task("tsd:tests", function (cb) {
     // First reinstall any missing definitions to the typings-tests directory.
     exec("tsd reinstall --config tsd.tests.json", function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
+        gutil.log(stdout);
+        gutil.log(stderr);
 
         if (err) {
             cb(err);
@@ -993,8 +993,8 @@ gulp.task("tsd:tests", function (cb) {
 
         // Rebuild the tests/tsd.d.ts bundle reference file.
         exec("tsd rebundle --config tsd.tests.json", function (err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
+            gutil.log(stdout);
+            gutil.log(stderr);
             cb(err);
         });
     });
@@ -1017,35 +1017,35 @@ gulp.task("config", function (cb) {
     if (isPrepWeb()) {
         // Web Package: --prep web
 
-        console.log(format("Generating: www/index.html from: resources/web/index.master.html"));
+        gutil.log(format("Generating: www/index.html from: resources/web/index.master.html"));
         performVariableReplacement(schemeName, "resources/web/index.master.html", "www/index.html");
 
-        console.log(format("Adding app bundle resource references to: www/index.html"));
+        gutil.log(format("Adding app bundle resource references to: www/index.html"));
         performReferenceReplacement("www/index.html", "www/index.html", false, "resources/web/index.references.yml");
     }
     else if (isPrepChrome()) {
         // Chrome Extension: --prep chrome
 
-        console.log(format("Generating: build/chrome/manifest.json from: resources/chrome/manifest.master.json"));
+        gutil.log(format("Generating: build/chrome/manifest.json from: resources/chrome/manifest.master.json"));
         sh.mkdir("build/chrome");
         performVariableReplacement(schemeName, "resources/chrome/manifest.master.json", "build/chrome/manifest.json");
 
-        console.log(format("Generating: www/index.html from resources/chrome/index.master.html"));
+        gutil.log(format("Generating: www/index.html from resources/chrome/index.master.html"));
         performVariableReplacement(schemeName, "resources/chrome/index.master.html", "www/index.html");
 
-        console.log(format("Adding resource references to: www/index.html using: resources/chrome/index.references.yml"));
+        gutil.log(format("Adding resource references to: www/index.html using: resources/chrome/index.references.yml"));
         performReferenceReplacement("www/index.html", "www/index.html", false, "resources/chrome/index.references.yml");
     }
     else {
         // Cordova: default or no --prep flag
 
-        console.log(format("Generating: config.xml from: resources/cordova/config.master.xml"));
+        gutil.log(format("Generating: config.xml from: resources/cordova/config.master.xml"));
         performVariableReplacement(schemeName, "resources/cordova/config.master.xml", "config.xml");
 
-        console.log(format("Generating: www/index.html from: resources/cordova/index.master.html"));
+        gutil.log(format("Generating: www/index.html from: resources/cordova/index.master.html"));
         performVariableReplacement(schemeName, "resources/cordova/index.master.html", "www/index.html");
 
-        console.log(format("Adding resource references to: www/index.html using: resources/cordova/index.references.yml"));
+        gutil.log(format("Adding resource references to: www/index.html using: resources/cordova/index.references.yml"));
         performReferenceReplacement("www/index.html", "www/index.html", false, "resources/cordova/index.references.yml");
     }
 
@@ -1084,11 +1084,11 @@ gulp.task("package-chrome", function (cb) {
         }
 
         // Copy the www payload.
-        console.log("Copying www to build/chrome");
+        gutil.log("Copying www to build/chrome");
         sh.cp("-R", "www", "build/chrome");
 
         // Copy the icon.
-        console.log("Copying resources/icon.png to build/chrome/icon.png");
+        gutil.log("Copying resources/icon.png to build/chrome/icon.png");
         sh.cp("resources/icon.png", "build/chrome");
 
         // Archive the directory.
@@ -1129,14 +1129,14 @@ gulp.task("package-web", function (cb) {
             return;
         }
 
-        console.log("Copying www to build/web");
+        gutil.log("Copying www to build/web");
         sh.cp("-R", "www", "build/web");
 
-        console.log("Bundling css, lib, and js directories to build/web/resources-temp");
+        gutil.log("Bundling css, lib, and js directories to build/web/resources-temp");
         sh.mkdir("-p", "build/web/resources-temp");
         bundleStaticResources("build/web", "build/web/resources-temp", "resources/web/index.references.yml")
 
-        console.log("Removing css and js directories from build/web");
+        gutil.log("Removing css and js directories from build/web");
         sh.rm("-rf", "build/web/css");
         sh.rm("-rf", "build/web/js");
 
@@ -1144,7 +1144,7 @@ gulp.task("package-web", function (cb) {
             ".woff",
         ];
 
-        console.log("Removing js/css/etc from build/web/lib");
+        gutil.log("Removing js/css/etc from build/web/lib");
 
         sh.ls("-RA", "build/web/lib").forEach(function (file) {
 
@@ -1159,17 +1159,17 @@ gulp.task("package-web", function (cb) {
             }
         });
 
-        console.log("Removing empty directories from build/web/lib");
+        gutil.log("Removing empty directories from build/web/lib");
         deleteEmptyDirectories("build/web/lib");
 
-        console.log("Moving bundled css to build/web/css/app.bundle.css");
+        gutil.log("Moving bundled css to build/web/css/app.bundle.css");
         sh.mkdir("-p", "build/web/css");
         sh.mv(["build/web/resources-temp/app.bundle.css"], "build/web/css/app.bundle.css");
 
-        console.log("Moving bundled lib to build/web/lib/app.bundle.lib.js");
+        gutil.log("Moving bundled lib to build/web/lib/app.bundle.lib.js");
         sh.mv(["build/web/resources-temp/app.bundle.lib.js"], "build/web/lib/app.bundle.lib.js");
 
-        console.log("Moving bundled js to build/web/js/app.bundle.js");
+        gutil.log("Moving bundled js to build/web/js/app.bundle.js");
         sh.mkdir("-p", "build/web/js");
         sh.mv(["build/web/resources-temp/app.bundle.js"], "build/web/js/app.bundle.js");
 
@@ -1177,10 +1177,10 @@ gulp.task("package-web", function (cb) {
 
         var schemeName = getCurrentSchemeName();
 
-        console.log(format("Generating: build/web/index.html from: resources/web/index.master.html"));
+        gutil.log(format("Generating: build/web/index.html from: resources/web/index.master.html"));
         performVariableReplacement(schemeName, "resources/web/index.master.html", "build/web/index.html");
 
-        console.log(format("Adding app bundle resource references to: build/web/index.html"));
+        gutil.log(format("Adding app bundle resource references to: build/web/index.html"));
         performReferenceReplacement("build/web/index.html", "build/web/index.html", true);
 
         // Archive the directory.
@@ -1261,8 +1261,8 @@ gulp.task("ts:src-read-me", function (cb) {
  */
 gulp.task("ts", ["ts:src"], function (cb) {
     exec("tsc -p src", function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
+        gutil.log(stdout);
+        gutil.log(stderr);
 
         // For debug builds, we are done, but for release builds, minify the bundle.
         if (isDebugBuild()) {
@@ -1303,8 +1303,8 @@ gulp.task("minify", function () {
  */
 gulp.task("ts:tests", ["ts"], function (cb) {
     exec("tsc -p tests", function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
+        gutil.log(stdout);
+        gutil.log(stderr);
         cb(err);
     });
 });
@@ -1348,8 +1348,8 @@ gulp.task("sass", function (cb) {
  */
 gulp.task("libs", function(cb) {
     exec("bower-installer", function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
+        gutil.log(stdout);
+        gutil.log(stderr);
         cb(err);
     });
 });
@@ -1396,8 +1396,8 @@ gulp.task("plugins", ["git-check"], function(cb) {
         var command = "cordova plugin add " + pluginName + additionalArguments;
 
         exec(command, function (err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
+            gutil.log(stdout);
+            gutil.log(stderr);
             eachCb(err);
         });
 
@@ -1595,7 +1595,7 @@ gulp.task("clean:build", function (cb) {
  */
 gulp.task("git-check", function(done) {
     if (!sh.which("git")) {
-        console.log(
+        gutil.log(
           "  " + gutil.colors.red("Git is not installed."),
           "\n  Git, the version control system, is required to download plugins etc.",
           "\n  Download git here:", gutil.colors.cyan("http://git-scm.com/downloads") + ".",
