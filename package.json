@@ -10,11 +10,10 @@
     "url": "https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git"
   },
   "dependencies": {
-    "async": "1.4.2",
     "bower": "1.6.3",
     "bower-installer": "1.2.0",
     "cordova": "5.4.1",
-    "del": "2.0.2",
+    "del": "2.2.0",
     "gulp": "3.9.0",
     "gulp-angular-templatecache": "1.8.0",
     "gulp-eol": "0.1.1",
@@ -41,9 +40,7 @@
     "shelljs": "0.6.0",
     "tsd": "0.6.5",
     "tslint": "2.5.1",
-    "typescript": "1.6.2",
-    "xmldom": "0.1.19",
-    "xpath": "0.0.9"
+    "typescript": "1.6.2"
   },
   "scripts": {
     "pretest": "gulp lint",

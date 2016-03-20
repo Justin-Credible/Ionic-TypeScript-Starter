@@ -3,38 +3,32 @@
 
 
 // Native Node Modules
-var exec = require("child_process").exec;
 var fs = require("fs");
 var path = require("path");
 
 // Gulp & Gulp Plugins
+var eol = require("gulp-eol");
 var gulp = require("gulp");
-var gutil = require("gulp-util");
 var gulpif = require("gulp-if");
+var gutil = require("gulp-util");
+var gzip = require("gulp-gzip");
 var rename = require("gulp-rename");
+var sass = require("gulp-sass");
+var sourcemaps = require("gulp-sourcemaps");
+var tar = require("gulp-tar");
+var templateCache = require("gulp-angular-templatecache");
 var ts = require("gulp-typescript");
 var tslint = require("gulp-tslint");
 var typedoc = require("gulp-typedoc");
-var tar = require("gulp-tar");
-var gzip = require("gulp-gzip");
-var eol = require("gulp-eol");
-var sass = require("gulp-sass");
-var sourcemaps = require("gulp-sourcemaps");
 var uglify = require("gulp-uglify");
-var templateCache = require("gulp-angular-templatecache");
 
 // Other Modules
-var del = require("del");
-var runSequence = require("run-sequence");
-var bower = require("bower");
-var request = require("request");
-var sh = require("shelljs");
-var async = require("async");
-var xpath = require("xpath");
-var XmlDom = require("xmldom").DOMParser;
-var xmlSerializer = new (require("xmldom")).XMLSerializer;
-var KarmaServer = require("karma").Server;
 var _ = require("lodash");
+var del = require("del");
+var KarmaServer = require("karma").Server;
+var request = require("request");
+var runSequence = require("run-sequence");
+var sh = require("shelljs");
 var yaml = require("js-yaml");
 
 
@@ -652,36 +646,32 @@ gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plug
         }
 
         // Next, run the "ionic platform add ..." commands.
-        exec(platformCommand, function (err, stdout, stderr) {
+        var result = sh.exec(platformCommand);
 
-            gutil.log(stdout);
-            gutil.log(stderr);
+        if (result.code !== 0) {
+            cb(new Error(result.output));
+            return;
+        }
+
+        // Delegate to the default gulp task.
+        runSequence("default", function (err) {
 
             if (err) {
                 cb(err);
                 return;
             }
 
-            // Delegate to the default gulp task.
-            runSequence("default", function (err) {
+            // Finally, if the special "--prep android" flag was provided, run a few extra commands.
+            if (isPrepAndroid()) {
+                result = sh.exec("ionic browser add crosswalk");
 
-                if (err) {
-                    cb(err);
+                if (result.code !== 0) {
+                    cb(new Error(result.output));
                     return;
                 }
+            }
 
-                // Finally, if the special "--prep android" flag was provided, run a few extra commands.
-                if (isPrepAndroid()) {
-                    exec("ionic browser add crosswalk", function (err, stdout, stderr) {
-                        gutil.log(stdout);
-                        gutil.log(stderr);
-                        cb(err);
-                    });
-                }
-                else {
-                    cb(err);
-                }
-            });
+            cb();
         });
     });
 });
@@ -703,7 +693,7 @@ gulp.task("watch", function() {
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
 gulp.task("emulate-ios", ["sass", "ts"], function(cb) {
-    exec("ionic emulate ios");
+    sh.exec("ionic emulate ios");
     cb();
 });
 
@@ -918,7 +908,7 @@ gulp.task("remote-emulate-ios", function(cb) {
  * Bind CMD+Shift+R to "workbench.action.tasks.runTask task launcher"
  */
 gulp.task("emulate-android", ["sass", "ts"], function(cb) {
-    exec("ionic emulate android");
+    sh.exec("ionic emulate android");
     cb();
 });
 
@@ -965,23 +955,24 @@ gulp.task("tsd", function (cb) {
  * directory and rebuild the tsd.d.ts typings bundle (for the app).
  */
 gulp.task("tsd:app", function (cb) {
+
     // First reinstall any missing definitions to the typings directory.
-    exec("tsd reinstall", function (err, stdout, stderr) {
-        gutil.log(stdout);
-        gutil.log(stderr);
+    var result = sh.exec("tsd reinstall");
 
-        if (err) {
-            cb(err);
-            return;
-        }
+    if (result.code !== 0) {
+        cb(new Error(result.output));
+        return;
+    }
 
-        // Rebuild the src/tsd.d.ts bundle reference file.
-        exec("tsd rebundle", function (err, stdout, stderr) {
-            gutil.log(stdout);
-            gutil.log(stderr);
-            cb(err);
-        });
-    });
+    // Rebuild the src/tsd.d.ts bundle reference file.
+    result = sh.exec("tsd rebundle");
+
+    if (result.code !== 0) {
+        cb(new Error(result.output));
+        return;
+    }
+
+    cb();
 });
 
 /**
@@ -989,23 +980,24 @@ gulp.task("tsd:app", function (cb) {
  * directory and rebuild the tsd.d.ts typings bundle (for the unit tests).
  */
 gulp.task("tsd:tests", function (cb) {
+
     // First reinstall any missing definitions to the typings-tests directory.
-    exec("tsd reinstall --config tsd.tests.json", function (err, stdout, stderr) {
-        gutil.log(stdout);
-        gutil.log(stderr);
+    var result = sh.exec("tsd reinstall --config tsd.tests.json");
 
-        if (err) {
-            cb(err);
-            return;
-        }
+    if (result.code !== 0) {
+        cb(new Error(result.output));
+        return;
+    }
 
-        // Rebuild the tests/tsd.d.ts bundle reference file.
-        exec("tsd rebundle --config tsd.tests.json", function (err, stdout, stderr) {
-            gutil.log(stdout);
-            gutil.log(stderr);
-            cb(err);
-        });
-    });
+    // Rebuild the tests/tsd.d.ts bundle reference file.
+    result = sh.exec("tsd rebundle --config tsd.tests.json");
+
+    if (result.code !== 0) {
+        cb(new Error(result.output));
+        return;
+    }
+
+    cb();
 });
 
 /**
@@ -1268,20 +1260,23 @@ gulp.task("ts:src-read-me", function (cb) {
  * is not set to release.
  */
 gulp.task("ts", ["ts:src"], function (cb) {
-    exec("tsc -p src", function (err, stdout, stderr) {
-        gutil.log(stdout);
-        gutil.log(stderr);
 
-        // For debug builds, we are done, but for release builds, minify the bundle.
-        if (isDebugBuild()) {
+   var result = sh.exec("tsc -p src");
+
+    if (result.code !== 0) {
+        cb(new Error("Error running TypeScript compiler (tsc)."));
+        return;
+    }
+
+    // For debug builds, we are done, but for release builds, minify the bundle.
+    if (isDebugBuild()) {
+        cb();
+    }
+    else {
+        runSequence("minify", function (err) {
             cb(err);
-        }
-        else {
-            runSequence("minify", function (err) {
-                cb(err);
-            });
-        }
-    });
+        });
+    }
 });
 
 /**
@@ -1310,11 +1305,14 @@ gulp.task("minify", function () {
  * compiled as well.
  */
 gulp.task("ts:tests", ["ts"], function (cb) {
-    exec("tsc -p tests", function (err, stdout, stderr) {
-        gutil.log(stdout);
-        gutil.log(stderr);
-        cb(err);
-    });
+    var result = sh.exec("tsc -p tests");
+
+    if (result.code !== 0) {
+        cb(new Error(result.output));
+        return;
+    }
+
+    cb();
 });
 
 /**
@@ -1355,11 +1353,14 @@ gulp.task("sass", function (cb) {
  * the consumable pieces in the www/lib directory.
  */
 gulp.task("libs", function(cb) {
-    exec("bower-installer", function (err, stdout, stderr) {
-        gutil.log(stdout);
-        gutil.log(stderr);
-        cb(err);
-    });
+    var result = sh.exec("bower-installer");
+
+    if (result.code !== 0) {
+        cb(new Error(result.output));
+        return;
+    }
+
+    cb();
 });
 
 /**
@@ -1380,8 +1381,9 @@ gulp.task("plugins", ["git-check"], function(cb) {
 
     var pluginList = JSON.parse(fs.readFileSync("package.json", "utf8")).cordovaPlugins;
 
-    async.eachSeries(pluginList, function(plugin, eachCb) {
-        var pluginName,
+    for (var key in pluginList) {
+        var plugin = pluginList[key],
+            pluginName,
             additionalArguments = "";
 
         if (typeof(plugin) === "object" && typeof(plugin.locator) === "string") {
@@ -1403,13 +1405,15 @@ gulp.task("plugins", ["git-check"], function(cb) {
 
         var command = "cordova plugin add " + pluginName + additionalArguments;
 
-        exec(command, function (err, stdout, stderr) {
-            gutil.log(stdout);
-            gutil.log(stderr);
-            eachCb(err);
-        });
+        var result = sh.exec(command);
 
-    }, cb);
+        if (result.code !== 0) {
+            cb(new Error(result.output));
+            return;
+        }
+    }
+
+    cb();
 });
 
 /**
