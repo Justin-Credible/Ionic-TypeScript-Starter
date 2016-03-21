@@ -696,7 +696,12 @@ gulp.task("remote-emulate-ios", function(cb) {
         }
 
         // Load the remote build configuration.
-        var config = JSON.parse(fs.readFileSync("remote-build.json", "utf8"));
+        var configYmlRaw = fs.readFileSync("build/remote.yml", "utf8");
+        var config = yaml.safeLoad(configYmlRaw)
+
+        if (!config) {
+            throw new Error("Unable to read remote build config from resources/build/remote.yml");
+        }
 
         // Ignore invalid/self-signed certificates based on configuration.
         if (config.allowInvalidSslCerts) {
@@ -1205,6 +1210,7 @@ gulp.task("package-web", function (cb) {
  * This does not compile SASS, TypeScript, templates, etc.
  */
 gulp.task("package-remote-build", function () {
+
     // Note that we use the eol plugin here to transform line endings for js files to
     // the OS X style of \r instead of \r\n. We need to do this mainly for the scripts
     // in the hooks directory so they can be executed as scripts on OS X.

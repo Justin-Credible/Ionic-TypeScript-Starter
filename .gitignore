@@ -25,6 +25,3 @@
 /build
 /tests/**/*.js
 /tests/**/*.map
-/ts-docs/*
-/docs-output
-/tmp/*
