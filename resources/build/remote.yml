@@ -11,7 +11,7 @@ ssl: true
 allowInvalidSslCerts: true
 
 statusCheckDelayMs: 1000
-maxStatusChecks: 40
+maxStatusChecks: 90
 
 logLevel: "warn"
 logFile: "build/remote.log"

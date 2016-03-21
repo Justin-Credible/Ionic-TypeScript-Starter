@@ -696,7 +696,7 @@ gulp.task("remote-emulate-ios", function(cb) {
         }
 
         // Load the remote build configuration.
-        var configYmlRaw = fs.readFileSync("build/remote.yml", "utf8");
+        var configYmlRaw = fs.readFileSync("resources/build/remote.yml", "utf8");
         var config = yaml.safeLoad(configYmlRaw)
 
         if (!config) {
