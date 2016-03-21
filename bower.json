@@ -1,5 +1,5 @@
 {
-  "name": "SampleApp",
+  "name": "sample-app",
   "private": true,
   "dependencies": {
     "ionic": "1.2.1",

@@ -10,7 +10,7 @@ schemes:
     # Not to be used directly; should be used as a base for all other schemes.
     _common:
         replacements:
-            APP_NAME: "SampleApp"
+            APP_NAME: "Sample App"
             APP_DESCRIPTION: "A starter application using Ionic and TypeScript."
             APP_VERSION: "1.2.0"
             AUTHOR_NAME: "Justin Unterreiner"

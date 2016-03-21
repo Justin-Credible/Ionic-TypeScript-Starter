@@ -14,7 +14,7 @@ statusCheckDelayMs: 1000
 maxStatusChecks: 90
 
 logLevel: "warn"
-logFile: "build/remote.log"
+logFile: "build/remote/remote.log"
 
 cordovaVersion: "5.1.1"
 emulationTarget: "iPhone 6"
