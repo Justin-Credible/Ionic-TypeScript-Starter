@@ -35,7 +35,7 @@ module.exports = function(gulp, plugins) {
             helper.performVariableReplacement(schemeName, "resources/web/index.master.html", "www/index.html");
 
             helper.info(helper.format("Adding app bundle resource references to: www/index.html"));
-            helper.performReferenceReplacement("www/index.html", "www/index.html", false, "resources/web/index.references.yml");
+            helper.performReferenceReplacement("www/index.html", "www/index.html", false, null, "resources/web/index.references.yml");
         }
         else if (helper.isPrepChrome()) {
             // Chrome Extension: --prep chrome
@@ -48,7 +48,7 @@ module.exports = function(gulp, plugins) {
             helper.performVariableReplacement(schemeName, "resources/chrome/index.master.html", "www/index.html");
 
             helper.info(helper.format("Adding resource references to: www/index.html using: resources/chrome/index.references.yml"));
-            helper.performReferenceReplacement("www/index.html", "www/index.html", false, "resources/chrome/index.references.yml");
+            helper.performReferenceReplacement("www/index.html", "www/index.html", false, null, "resources/chrome/index.references.yml");
         }
         else {
             // Cordova: default or no --prep flag
@@ -60,7 +60,7 @@ module.exports = function(gulp, plugins) {
             helper.performVariableReplacement(schemeName, "resources/cordova/index.master.html", "www/index.html");
 
             helper.info(helper.format("Adding resource references to: www/index.html using: resources/cordova/index.references.yml"));
-            helper.performReferenceReplacement("www/index.html", "www/index.html", false, "resources/cordova/index.references.yml");
+            helper.performReferenceReplacement("www/index.html", "www/index.html", false, null, "resources/cordova/index.references.yml");
         }
 
         helper.createBuildVars(schemeName, "resources/config/config.yml", "www/js/build-vars.js");

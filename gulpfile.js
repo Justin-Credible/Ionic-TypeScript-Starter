@@ -1,6 +1,6 @@
 
 var gulp = require("gulp");
-var plugins = require("gulp-load-plugins")({DEBUG:true});
+var plugins = require("gulp-load-plugins")();
 var del = require("del");
 var runSequence = require("run-sequence");
 

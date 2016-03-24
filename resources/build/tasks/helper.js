@@ -74,6 +74,23 @@ module.exports = helper = {
     },
 
     /**
+     * Used to get the short SHA of the current git commit.
+     * Returns unknown if the git command fails.
+     */
+    getCommitShortSha: function() {
+        // Grab the git commit hash.
+        var shResult = sh.exec("git rev-parse --short HEAD", { silent: true });
+
+        if (shResult.code !== 0) {
+            helper.warn("Unable to get the git revision number; using 'Unknown' instead. Failure reason:\n" + shResult.output);
+            return "Unknown";
+        }
+        else {
+            return shResult.output.replace("\n", "");
+        }
+    },
+
+    /**
      * A custom reporter for the TypeScript linter reporter function. This was copied
      * and modified from gulp-tslint.
      */
@@ -326,7 +343,7 @@ module.exports = helper = {
      * If bundled is false, the map of files provided in the given referencesFilePath will be used
      * to grab each file and emit a link/script tag for each resource type.
      */
-    performReferenceReplacement: function(sourceFilePath, targetFilePath, bundled, referencesFilePath) {
+    performReferenceReplacement: function(sourceFilePath, targetFilePath, bundled, cacheBusterValue, referencesFilePath) {
 
         var cssRegExp = /^([\t ]+)<!-- references:css -->/gm;
         var libRegExp = /^([\t ]+)<!-- references:lib -->/gm;
@@ -339,15 +356,21 @@ module.exports = helper = {
         if (bundled) {
 
             content = content.replace(cssRegExp, function (match, whitespaceMatch, offset, string) {
-                return whitespaceMatch + '<link rel="stylesheet" href="css/app.bundle.css">';
+                return helper.format('{0}<link rel="stylesheet" href="css/app.bundle.css{1}">',
+                            whitespaceMatch,
+                            cacheBusterValue ? "?v=" + cacheBusterValue : "");
             });
 
             content = content.replace(libRegExp, function (match, whitespaceMatch, offset, string) {
-                return whitespaceMatch + '<script type="text/javascript" src="lib/app.bundle.lib.js"></script>';
+                return helper.format('{0}<script type="text/javascript" src="lib/app.bundle.lib.js{1}"></script>',
+                            whitespaceMatch,
+                            cacheBusterValue ? "?v=" + cacheBusterValue : "");
             });
 
             content = content.replace(jsRegExp, function (match, whitespaceMatch, offset, string) {
-                return whitespaceMatch + '<script type="text/javascript" src="js/app.bundle.js"></script>';
+                return helper.format('{0}<script type="text/javascript" src="js/app.bundle.js{1}"></script>',
+                            whitespaceMatch,
+                            cacheBusterValue ? "?v=" + cacheBusterValue : "");
             });
 
             fs.writeFileSync(targetFilePath, content, "utf8");
@@ -470,19 +493,9 @@ module.exports = helper = {
         var buildVars = {
             debug: isDebug,
             buildTimestamp: (new Date()).toUTCString(),
-            commitShortSha: "Unknown",
+            commitShortSha: helper.getCommitShortSha(),
             config: config
         };
-
-        // Grab the git commit hash.
-        var shResult = sh.exec("git rev-parse --short HEAD", { silent: true });
-
-        if (shResult.code !== 0) {
-            helper.warn("Unable to get the git revision number; using 'Unknown' instead. Failure reason:\n" + shResult.output);
-        }
-        else {
-            buildVars.commitShortSha = shResult.output.replace("\n", "");
-        }
 
         // Write the buildVars variable with code that will define it as a global object.
         var buildVarsJs = helper.format("window.buildVars = {0};", JSON.stringify(buildVars));
