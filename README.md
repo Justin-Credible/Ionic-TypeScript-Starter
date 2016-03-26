@@ -14,7 +14,7 @@ This project is IDE and platform agnostic. I recommend using the free and lightw
 
 In-browser development and debugging is possible via the Chrome developer tools. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container.
 
-If you are developing on Windows or Linux but want to compile and run your application on a remote OS X machine, you can use the built-in `gulp remote-emulate-ios` task.
+If you are developing on Windows or Linux but want to compile and run your application on a remote OS X machine, you can use the built-in `gulp emulate-ios-remote` task.
 
 # Documentation
 

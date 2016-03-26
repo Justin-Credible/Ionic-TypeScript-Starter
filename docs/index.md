@@ -25,7 +25,7 @@ I had been wanting to get into mobile app development for a while, and Ionic and
 
 ## Where to Start?
 
-The starter project template targets iOS, Android, and Chrome (as an extension). Development can be done on Mac OS, Linux, or Windows with your favorite IDE or text editor. I recommend using the free and lightweight [Visual Studio Code](https://code.visualstudio.com) editor, as it has superb support for TypeScript. This project also includes VS Code task mappings to the various gulp tasks.
+The starter project template targets iOS, Android, Chrome (as an extension), and can be served as a mobile website. Development can be done on Mac OS, Linux, or Windows with your favorite IDE or text editor. I recommend using the free and lightweight [Visual Studio Code](https://code.visualstudio.com) editor, as it has superb support for TypeScript. This project also includes VS Code task mappings to the various gulp tasks.
 
 To begin, take look at [Getting Started](getting-started.md) for information on prerequisites and instructions on how to set up your development environment.
 
@@ -40,7 +40,7 @@ Finally, you can learn about the functionality included with the [Base Framework
 
 I put this starter project together after looking for examples of how to use TypeScript with an Ionic/Angular application. There were several simple code snippets and examples out there, but nothing that showed how to structure an entire mobile application.
 
-Furthermore, most examples I found didn't really take full advantage of TypeScript. I wanted to explore what a well-structured mobile application could look like and to avoid the deeply nested annonymous JavaScript functions pattern I commonly ran across.
+Furthermore, most examples I found didn't really take full advantage of TypeScript. I wanted to explore what a well-structured mobile application could look like and to avoid the deeply nested anonymous JavaScript functions pattern I commonly ran across.
 
 My goal was a clean, easy-to-read codebase intuitive for anyone to get started with, even those without much Ionic or Angular experience.
 

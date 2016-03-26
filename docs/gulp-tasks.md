@@ -1,6 +1,6 @@
 # Overview
 
-This starter project ships with several tasks for the [Gulp](http://gulpjs.com/) task runner. The tasks are located in `gulpfile.js` and are executed from the project directory using the `gulp task_name` command.
+This starter project ships with several tasks for the [Gulp](http://gulpjs.com/) task runner. The tasks are located in the `build/tasks` directory with a single task per file. These tasks are referenced from `gulpfile.js` and are executed from the project directory using the `gulp task_name` command.
 
 # Compilation Tasks
 
@@ -17,25 +17,26 @@ First, it cleans the environment by running several gulp clean tasks. This will 
 
 Next, it adds Cordova platforms by running the `cordova platform add platform_name` command for each of the platforms as defined in `package.json`.
 
-Then it delegates to the config and default gulp tasks, which handle configuration, addition of Cordova plugins, Bower library retrieval, and compilation of templates, SASS, and TypeScript.
-
-Finally, this task can perform custom initialization based on a `prep` flag. For example, when using `gulp init --prep android`, all of the above is performed, along with addition of the [CrossWalk](https://crosswalk-project.org/) plugin for Android. You can customize this task to perform special behavior per platform if needed.
+Finally, it delegates to the config and default gulp tasks, which handle configuration, addition of Cordova plugins, Bower library retrieval, and compilation of templates, SASS, and TypeScript.
 
 In addition to initializing your environment for first use, this task is also useful for cleaning up your environment if you run into issues during development.
 
 ## gulp config
 
-The config task is used to customize configuration files based on the given build scheme name. Build schemes are defined in `config.master.xml` under the `schemes` node. If a scheme name is not specified, the default will be used.
+The config task is used to generate and customize configuration files based on a given platform and build scheme (specified via the `--prep` and `--scheme` flags respectively).
 
 This task creates the following files:
 
-* Cordova's `config.xml` (from `config.master.xml`)
-* Starting page `www/index.html` (from `www/index.master.html`)
-* Runtime variables at `src/js/build-vars.js`
+* `config.xml`
+* `build/chrome/manifest.json`
+* `www/index.html`
+* `www/js/build-vars.js`
 
-These files will be generated from their master files, and variable substitution will be performed based on the scheme definitions. This allows for easy configuration of builds for different environments (e.g., development, staging, production).
+These files are generated from their master files in the resources directory for the specified platform, the shared configuration file at `resources/config/config.yml` and modified based on the active build scheme as defined in `resources/config/schemes.yml`.
 
-Example usage: `gulp config --scheme production`
+If the `--prep chrome` or `--prep web` flag is not specified, Cordova will be assumed.
+
+If the `--scheme scheme_name` flag is not specified the default scheme will be used (as defined in `resources/config/schemes.yml`).
 
 See [Development Tips: Build Schemes](development-tips.md#build-schemes) for more details.
 
@@ -104,9 +105,25 @@ Lint parameters are defined in `tslint.json`.
 !!! note
 	If you run this task from VS Code, lint problems will be shown in VS Code's warning console.
 
-## gulp chrome
+## gulp package-chrome
 
-The chrome task is used to generate a `chrome` directory with your application, which can be loaded as a Chrome extension.
+The package chrome task is used to prepare the application for deployment as a Chrome extension. This first delegates to the config task via `gulp config --prep chrome` and then handles generating a build directory at `build/chrome`.
+
+The directory can be loaded directly via Chrome's [chrome://extensions/](chrome://extensions/) URI. The directory is also bundled into a GZIP file at `build/chrome/chrome.tar.gz`.
+
+## gulp package-web
+
+The package web task is used to prepare the application for deployment as a stand-alone mobile website. This first delegates to the config task via `gulp config --prep web` and then handles generating a build directory at `build/web`.
+
+This task also takes care of bundling the following assets into single files:
+
+* `lib/*.js` → `lib/app.bundle.lib.js`
+* `css/*.css` → `css/app.bundle.css`
+* `js/*.js` → `js/app.bundle.js`
+
+These files will be referenced from the `build/web/index.html` file with query string parameters using the short SHA of the current git commit. This allows for busting the cache when a new version of the website is deployed.
+
+The directory is also bundled into a GZIP file at `build/web/web.tar.gz`.
 
 # Utility Tasks
 
@@ -127,9 +144,9 @@ The emulate-ios task is a shortcut for `cordova emulate ios`, a useful shortcut 
 
 The emulate-android task is a shortcut for `cordova emulate android`,  a useful shortcut to use from VS Code's task runner.
 
-## gulp remote-emulate-ios
+## gulp emulate-ios-remote
 
-The remote-emulate-ios task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.
+The emulate-ios-remote task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.
 
 See [Development Tips: Running iOS Simulator from Windows](development-tips.md#running-ios-simulator-from-windows) for more details.
 

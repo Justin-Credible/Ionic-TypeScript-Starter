@@ -56,7 +56,7 @@ Configuration for the Karma test runner is located in `karma.conf.js`.
 This file points at the compiled TypeScript test bundle (default is `tests/bundle.tests.js`) and specifies the JavaScript dependecies to load during the tests (the main application bundle, third-party libraries, etc.).
 
 !!! note
-	It is important to pay attention to the `files` configuration property and ensure that the JavaScript files here match the ones listed in `index.master.html`. That way, the same files that load when running the application are also available when running unit tests.
+	It is important to pay attention to the `files` configuration property and ensure that the JavaScript files here match the ones listed in `index.references.yml`. That way, the same files that load when running the application are also available when running unit tests.
 
 # Running
 

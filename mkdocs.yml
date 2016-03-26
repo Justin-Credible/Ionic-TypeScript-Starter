@@ -13,6 +13,7 @@ pages:
   - Root Files: project-layout-root-files.md
   - src Directory: project-layout-src-directory.md
   - www Directory: project-layout-www-directory.md
+  - resources Directory: project-layout-resources-directory.md
   - Other Directories: project-layout-other-directories.md
 - Documentation:
   - Gulp Tasks: gulp-tasks.md

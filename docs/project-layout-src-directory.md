@@ -4,13 +4,13 @@ This section will cover the `src` directories and its children.
 
 The `src` directory contains the bulk of the source code for your application. This includes TypeScript source code, SASS styling, and Angular HTML templates.
 
-TypeScript files are compiled using the internal module system, using the `namespace` keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This avoid the need to use a module loader at runtime.
+TypeScript files are compiled using the internal module system, using the `namespace` keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This avoids the need to use a module loader at runtime.
 
 In most example Angular applications, you'll commonly see separate directories for each component (e.g., controllers, views, models, services etc.). While this is nice for tutorials and small applications, it is not ideal for applications containing a large number of files.
 
 In contrast, this project groups files by feature rather than type. Instead of having to look in multiple directories for all the files applicable for a given view, you'll be able to find them all in the same location.
 
-!!! note "Note about namepsaces"
+!!! note "Note about namespaces"
 	As you explore the directory structure, you'll notice that the namespaces and directory paths do not match as they would in other languages (e.g., Java).
 
 	Instead, we use directories to group files by feature and namespaces to determine the behavior of a given file.
@@ -130,7 +130,7 @@ This is where you can store model objects shared across multiple areas or servic
 
 # Services
 
-This is where all of your [Angular services](https://docs.angularjs.org/guide/services) sholud live.
+This is where all of your [Angular services](https://docs.angularjs.org/guide/services) should live.
 
 There are several services provided with the sample project; see [Base Framework: Services](base-framework.md#services) for more details.
 

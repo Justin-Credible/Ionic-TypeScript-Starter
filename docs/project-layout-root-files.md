@@ -18,17 +18,9 @@ This file is used by the [Bower](http://bower.io/) package manager to declare th
 
 See `gulp libs` in [Gulp Tasks](gulp-tasks.md#gulp-libs) for more details.
 
-# config.master.xml
-
-This is the master config file used to generate `config.xml` when running the `gulp config` task.
-
-The config task will perform variable substitution based on the current build scheme.
-
-See `gulp config` in [Gulp Tasks](gulp-tasks.md#gulp-config) for more details.
-
 # config.xml _(generated)_
 
-This file is generated from `config.master.xml` when running the `gulp config` task. This is the main configuration file that Cordova uses to build and run your application.
+This file is generated from `resources/config/cordova/config.master.xml` when running the `gulp config` task. This is the main configuration file that Cordova uses to build and run your application.
 
 !!! warn
 	This file will be removed when executing the `gulp clean` or `gulp clean:config` tasks and should not be committed to source control.
@@ -64,15 +56,6 @@ These dependencies include the third-party software needed to build and run your
 The default readme file for the starter project.
 
 This can be removed or replaced with information specific to your application.
-
-# remote-build.json
-
-This file contains configuration used by the `gulp remote-emulate-ios` task, which allows developers on Windows or Linux to package, build, or run their app on a remote Mac OS X machine.
-
-See [Running iOS Simulator Remotely](development-tips.md#running-ios-simulator-remotely) for more details.
-
-
-See `gulp remote-emulate-ios` in [Gulp Tasks](gulp-tasks.md#gulp-remote-emulate-ios) for more details.
 
 # tsd.json
 

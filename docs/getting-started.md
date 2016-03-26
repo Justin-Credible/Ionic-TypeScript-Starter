@@ -16,7 +16,7 @@ For Mac OS, I recommend installing Node using [Node Version Manager](https://git
 
 ## iOS Specific
 
-If you are developing for iOS, you need XCode 7. I've specifically tested with version 7.2.
+If you are developing for iOS, you need XCode 7. I've specifically tested with version 7.3.
 
 * [Current Version](https://developer.apple.com/xcode/download/)
 * [Previous Versions](https://developer.apple.com/downloads/)
@@ -77,4 +77,4 @@ To begin, edit your path, clone the repository, install the node packages, and i
 
 `gulp init` sets up the Cordova platform and plugins, obtains libraries, and compiles code. See [Gulp Tasks](gulp-tasks.md) for details.
 
-Your envrionment should now be ready for development!
+Your environment should now be ready for development!

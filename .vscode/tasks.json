@@ -65,7 +65,7 @@
             "showOutput": "never"
         },
         {
-            "taskName": "remote-emulate-ios",
+            "taskName": "emulate-ios-remote",
             "showOutput": "never"
         },
         {

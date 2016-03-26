@@ -1,7 +1,7 @@
 --- # iOS Remote Build Configuration
 
 # Used to specify the configuration used to perform remote iOS builds
-# when using the gulp remote-emulate-ios and package-remote-build tasks.
+# when using the gulp emulate-ios-remote and package-remote-build tasks.
 
 host: "192.168.1.64"
 port: 3000
