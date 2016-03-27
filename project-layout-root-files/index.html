@@ -84,6 +84,10 @@
                         </li>
                     
                         <li >
+                            <a href="../project-layout-resources-directory/">resources Directory</a>
+                        </li>
+                    
+                        <li >
                             <a href="../project-layout-other-directories/">Other Directories</a>
                         </li>
                     
@@ -161,9 +165,6 @@
         <li class="main "><a href="#bowerjson">bower.json</a></li>
         
     
-        <li class="main "><a href="#configmasterxml">config.master.xml</a></li>
-        
-    
         <li class="main "><a href="#configxml-generated">config.xml (generated)</a></li>
         
     
@@ -183,9 +184,6 @@
         
     
         <li class="main "><a href="#readmemd">README.md</a></li>
-        
-    
-        <li class="main "><a href="#remote-buildjson">remote-build.json</a></li>
         
     
         <li class="main "><a href="#tsdjson">tsd.json</a></li>
@@ -213,12 +211,8 @@
 <h1 id="bowerjson">bower.json</h1>
 <p>This file is used by the <a href="http://bower.io/">Bower</a> package manager to declare the third-party JavaScript libraries used by your application. Its install section can be used to customize the files that will be copied into <code>www/lib</code> when running the <code>gulp libs</code> task.</p>
 <p>See <code>gulp libs</code> in <a href="../gulp-tasks/#gulp-libs">Gulp Tasks</a> for more details.</p>
-<h1 id="configmasterxml">config.master.xml</h1>
-<p>This is the master config file used to generate <code>config.xml</code> when running the <code>gulp config</code> task.</p>
-<p>The config task will perform variable substitution based on the current build scheme.</p>
-<p>See <code>gulp config</code> in <a href="../gulp-tasks/#gulp-config">Gulp Tasks</a> for more details.</p>
 <h1 id="configxml-generated">config.xml <em>(generated)</em></h1>
-<p>This file is generated from <code>config.master.xml</code> when running the <code>gulp config</code> task. This is the main configuration file that Cordova uses to build and run your application.</p>
+<p>This file is generated from <code>resources/config/cordova/config.master.xml</code> when running the <code>gulp config</code> task. This is the main configuration file that Cordova uses to build and run your application.</p>
 <div class="admonition warn">
 <p class="admonition-title">Warn</p>
 <p>This file will be removed when executing the <code>gulp clean</code> or <code>gulp clean:config</code> tasks and should not be committed to source control.</p>
@@ -239,10 +233,6 @@
 <h1 id="readmemd">README.md</h1>
 <p>The default readme file for the starter project.</p>
 <p>This can be removed or replaced with information specific to your application.</p>
-<h1 id="remote-buildjson">remote-build.json</h1>
-<p>This file contains configuration used by the <code>gulp remote-emulate-ios</code> task, which allows developers on Windows or Linux to package, build, or run their app on a remote Mac OS X machine.</p>
-<p>See <a href="../development-tips/#running-ios-simulator-remotely">Running iOS Simulator Remotely</a> for more details.</p>
-<p>See <code>gulp remote-emulate-ios</code> in <a href="../gulp-tasks/#gulp-remote-emulate-ios">Gulp Tasks</a> for more details.</p>
 <h1 id="tsdjson">tsd.json</h1>
 <p>This file declares the <a href="http://www.typescriptlang.org/Handbook#writing-dts-files">TypeScript definition files</a> that should be downloaded when executing the <code>gulp tsd</code> task. The definition files are hosted by the <a href="http://definitelytyped.org/">DefinitelyTyped</a> project.</p>
 <p>These definition files describe the third-party JavaScript libraries your application uses so they can be referenced from TypeScript in a strongly-typed manner.</p>

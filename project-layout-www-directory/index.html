@@ -84,6 +84,10 @@
                         </li>
                     
                         <li >
+                            <a href="../project-layout-resources-directory/">resources Directory</a>
+                        </li>
+                    
+                        <li >
                             <a href="../project-layout-other-directories/">Other Directories</a>
                         </li>
                     
@@ -126,7 +130,7 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../project-layout-other-directories/">
+                    <a rel="prev" href="../project-layout-resources-directory/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -150,8 +154,6 @@
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#overview">Overview</a></li>
-        
-            <li><a href="#indexmasterhtml">index.master.html</a></li>
         
             <li><a href="#indexhtml-generated">index.html (generated)</a></li>
         
@@ -192,12 +194,8 @@
 
 <h1 id="overview">Overview</h1>
 <p>This section will cover the <code>www</code> directory, which should contain all of assets that will be used at runtime.</p>
-<h2 id="indexmasterhtml">index.master.html</h2>
-<p>This is the master index file used to generate <code>www/index.html</code> when running the <code>gulp config</code> task.</p>
-<p>The config task will perform variable substitution based on the current scheme.</p>
-<p>See <code>gulp config</code> in <a href="../gulp-tasks/#gulp-config">Gulp Tasks</a> and <a href="../base-framework/#build-scemes">Base Framework: Build Schemes</a> for more details.</p>
 <h2 id="indexhtml-generated">index.html <em>(generated)</em></h2>
-<p>This file is generated from <code>www/index.master.html</code> when running the <code>gulp config</code> task. It is the initial page that will be loaded by Cordova when the application starts.</p>
+<p>This file is generated from <code>resources/&lt;platform&gt;/index.master.html</code> when running the <code>gulp config</code> task. It is the initial page that will be loaded by Cordova when the application starts.</p>
 <p>See <code>gulp config</code> in <a href="../gulp-tasks/#gulp-config">Gulp Tasks</a> and <a href="../base-framework/#build-scemes">Base Framework: Build Schemes</a> for more details.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -216,7 +214,7 @@
 <h2 id="jsboot1js">js/boot1.js</h2>
 <p>This is the first-level boot loader loaded by <code>www/index.html</code>. It handles any low-level boot tasks before delegating to the second-level boot loader (<code>src/Framework/Boot2.ts</code>).</p>
 <h2 id="jsbuild-varsjs-generated">js/build-vars.js <em>(generated)</em></h2>
-<p>This file is generated when running the <code>gulp config</code> task. It contains build information such as version number, build timestamp, and debug flag. It also contains all the preference element values from <code>config.xml</code>.</p>
+<p>This file is generated when running the <code>gulp config</code> task. It contains build information such as version number, build timestamp, and debug flag. It also contains configuration key/value pairs from <code>resources/config/config.yml</code>.</p>
 <p>The file's contents are accessible via the Configuration service (or as an Angular constant).</p>
 <p>See <code>gulp config</code> in <a href="../gulp-tasks/#gulp-config">Gulp Tasks</a> and <a href="../base-framework/#build-scemes">Base Framework: Build Schemes</a> for more details.</p>
 <div class="admonition warning">

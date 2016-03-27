@@ -84,6 +84,10 @@
                         </li>
                     
                         <li >
+                            <a href="../project-layout-resources-directory/">resources Directory</a>
+                        </li>
+                    
+                        <li >
                             <a href="../project-layout-other-directories/">Other Directories</a>
                         </li>
                     
@@ -212,7 +216,7 @@
 <p>This file points at the compiled TypeScript test bundle (default is <code>tests/bundle.tests.js</code>) and specifies the JavaScript dependecies to load during the tests (the main application bundle, third-party libraries, etc.).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>It is important to pay attention to the <code>files</code> configuration property and ensure that the JavaScript files here match the ones listed in <code>index.master.html</code>. That way, the same files that load when running the application are also available when running unit tests.</p>
+<p>It is important to pay attention to the <code>files</code> configuration property and ensure that the JavaScript files here match the ones listed in <code>index.references.yml</code>. That way, the same files that load when running the application are also available when running unit tests.</p>
 </div>
 <h1 id="running">Running</h1>
 <p>Execute <code>gulp test</code> to perform a single run of the unit tests.</p>

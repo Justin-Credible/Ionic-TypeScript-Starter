@@ -84,6 +84,10 @@
                         </li>
                     
                         <li >
+                            <a href="../project-layout-resources-directory/">resources Directory</a>
+                        </li>
+                    
+                        <li >
                             <a href="../project-layout-other-directories/">Other Directories</a>
                         </li>
                     
@@ -174,7 +178,9 @@
         
             <li><a href="#gulp-lint">gulp lint</a></li>
         
-            <li><a href="#gulp-chrome">gulp chrome</a></li>
+            <li><a href="#gulp-package-chrome">gulp package-chrome</a></li>
+        
+            <li><a href="#gulp-package-web">gulp package-web</a></li>
         
     
         <li class="main "><a href="#utility-tasks">Utility Tasks</a></li>
@@ -185,7 +191,7 @@
         
             <li><a href="#gulp-emulate-android">gulp emulate-android</a></li>
         
-            <li><a href="#gulp-remote-emulate-ios">gulp remote-emulate-ios</a></li>
+            <li><a href="#gulp-emulate-ios-remote">gulp emulate-ios-remote</a></li>
         
             <li><a href="#gulp-test">gulp test</a></li>
         
@@ -199,7 +205,7 @@
             <div class="col-md-9" role="main">
 
 <h1 id="overview">Overview</h1>
-<p>This starter project ships with several tasks for the <a href="http://gulpjs.com/">Gulp</a> task runner. The tasks are located in <code>gulpfile.js</code> and are executed from the project directory using the <code>gulp task_name</code> command.</p>
+<p>This starter project ships with several tasks for the <a href="http://gulpjs.com/">Gulp</a> task runner. The tasks are located in the <code>build/tasks</code> directory with a single task per file. These tasks are referenced from <code>gulpfile.js</code> and are executed from the project directory using the <code>gulp task_name</code> command.</p>
 <h1 id="compilation-tasks">Compilation Tasks</h1>
 <p>The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.</p>
 <div class="admonition note">
@@ -210,19 +216,20 @@
 <p>The init task is used to initialize the Cordova project by adding platforms and plugins, obtaining third-party libraries, and compiling TypeScript.</p>
 <p>First, it cleans the environment by running several gulp clean tasks. This will result in removal of several generated directories and files.</p>
 <p>Next, it adds Cordova platforms by running the <code>cordova platform add platform_name</code> command for each of the platforms as defined in <code>package.json</code>.</p>
-<p>Then it delegates to the config and default gulp tasks, which handle configuration, addition of Cordova plugins, Bower library retrieval, and compilation of templates, SASS, and TypeScript.</p>
-<p>Finally, this task can perform custom initialization based on a <code>prep</code> flag. For example, when using <code>gulp init --prep android</code>, all of the above is performed, along with addition of the <a href="https://crosswalk-project.org/">CrossWalk</a> plugin for Android. You can customize this task to perform special behavior per platform if needed.</p>
+<p>Finally, it delegates to the config and default gulp tasks, which handle configuration, addition of Cordova plugins, Bower library retrieval, and compilation of templates, SASS, and TypeScript.</p>
 <p>In addition to initializing your environment for first use, this task is also useful for cleaning up your environment if you run into issues during development.</p>
 <h2 id="gulp-config">gulp config</h2>
-<p>The config task is used to customize configuration files based on the given build scheme name. Build schemes are defined in <code>config.master.xml</code> under the <code>schemes</code> node. If a scheme name is not specified, the default will be used.</p>
+<p>The config task is used to generate and customize configuration files based on a given platform and build scheme (specified via the <code>--prep</code> and <code>--scheme</code> flags respectively).</p>
 <p>This task creates the following files:</p>
 <ul>
-<li>Cordova's <code>config.xml</code> (from <code>config.master.xml</code>)</li>
-<li>Starting page <code>www/index.html</code> (from <code>www/index.master.html</code>)</li>
-<li>Runtime variables at <code>src/js/build-vars.js</code></li>
+<li><code>config.xml</code></li>
+<li><code>build/chrome/manifest.json</code></li>
+<li><code>www/index.html</code></li>
+<li><code>www/js/build-vars.js</code></li>
 </ul>
-<p>These files will be generated from their master files, and variable substitution will be performed based on the scheme definitions. This allows for easy configuration of builds for different environments (e.g., development, staging, production).</p>
-<p>Example usage: <code>gulp config --scheme production</code></p>
+<p>These files are generated from their master files in the resources directory for the specified platform, the shared configuration file at <code>resources/config/config.yml</code> and modified based on the active build scheme as defined in <code>resources/config/schemes.yml</code>.</p>
+<p>If the <code>--prep chrome</code> or <code>--prep web</code> flag is not specified, Cordova will be assumed.</p>
+<p>If the <code>--scheme scheme_name</code> flag is not specified the default scheme will be used (as defined in <code>resources/config/schemes.yml</code>).</p>
 <p>See <a href="../development-tips/#build-schemes">Development Tips: Build Schemes</a> for more details.</p>
 <h2 id="gulp-templates">gulp templates</h2>
 <p>The templates task compiles Angular HTML templates from <code>src/Views/**/*.html</code> into a single JavaScript file at <code>www/js/templates.js</code>.</p>
@@ -264,8 +271,19 @@
 <p class="admonition-title">Note</p>
 <p>If you run this task from VS Code, lint problems will be shown in VS Code's warning console.</p>
 </div>
-<h2 id="gulp-chrome">gulp chrome</h2>
-<p>The chrome task is used to generate a <code>chrome</code> directory with your application, which can be loaded as a Chrome extension.</p>
+<h2 id="gulp-package-chrome">gulp package-chrome</h2>
+<p>The package chrome task is used to prepare the application for deployment as a Chrome extension. This first delegates to the config task via <code>gulp config --prep chrome</code> and then handles generating a build directory at <code>build/chrome</code>.</p>
+<p>The directory can be loaded directly via Chrome's <a href="chrome://extensions/">chrome://extensions/</a> URI. The directory is also bundled into a GZIP file at <code>build/chrome/chrome.tar.gz</code>.</p>
+<h2 id="gulp-package-web">gulp package-web</h2>
+<p>The package web task is used to prepare the application for deployment as a stand-alone mobile website. This first delegates to the config task via <code>gulp config --prep web</code> and then handles generating a build directory at <code>build/web</code>.</p>
+<p>This task also takes care of bundling the following assets into single files:</p>
+<ul>
+<li><code>lib/*.js</code> → <code>lib/app.bundle.lib.js</code></li>
+<li><code>css/*.css</code> → <code>css/app.bundle.css</code></li>
+<li><code>js/*.js</code> → <code>js/app.bundle.js</code></li>
+</ul>
+<p>These files will be referenced from the <code>build/web/index.html</code> file with query string parameters using the short SHA of the current git commit. This allows for busting the cache when a new version of the website is deployed.</p>
+<p>The directory is also bundled into a GZIP file at <code>build/web/web.tar.gz</code>.</p>
 <h1 id="utility-tasks">Utility Tasks</h1>
 <p>The following can be used to perform various tasks that aren't necessarily related to compilation.</p>
 <div class="admonition note">
@@ -278,8 +296,8 @@
 <p>The emulate-ios task is a shortcut for <code>cordova emulate ios</code>, a useful shortcut to use from VS Code's task runner.</p>
 <h2 id="gulp-emulate-android">gulp emulate-android</h2>
 <p>The emulate-android task is a shortcut for <code>cordova emulate android</code>,  a useful shortcut to use from VS Code's task runner.</p>
-<h2 id="gulp-remote-emulate-ios">gulp remote-emulate-ios</h2>
-<p>The remote-emulate-ios task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.</p>
+<h2 id="gulp-emulate-ios-remote">gulp emulate-ios-remote</h2>
+<p>The emulate-ios-remote task allows Windows or Linux developers to run the iOS simulator on a remote Mac OS X computer.</p>
 <p>See <a href="../development-tips/#running-ios-simulator-from-windows">Development Tips: Running iOS Simulator from Windows</a> for more details.</p>
 <h2 id="gulp-test">gulp test</h2>
 <p>The test task is used to compile the TypeScript unit tests and run them via the Karma test runner. See <code>karma.conf.js</code> for Karma configuration.</p>

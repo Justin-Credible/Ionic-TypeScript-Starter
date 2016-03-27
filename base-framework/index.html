@@ -84,6 +84,10 @@
                         </li>
                     
                         <li >
+                            <a href="../project-layout-resources-directory/">resources Directory</a>
+                        </li>
+                    
+                        <li >
                             <a href="../project-layout-other-directories/">Other Directories</a>
                         </li>
                     
@@ -207,7 +211,7 @@
 <p>You can switch between build schemes using the <code>gulp config --scheme scheme_name</code> command.</p>
 <p>See <a href="../development-tips/#build-schemes">Development Tips: Build Schemes</a> for more details.</p>
 <h1 id="boot-sequence">Boot Sequence</h1>
-<p>Cordova uses the the <code>src</code> attribute of the content element from <code>config.xml</code> to determine the initial page to load. This is set to <code>index.html</code> by default.</p>
+<p>Cordova uses the <code>src</code> attribute of the content element from <code>config.xml</code> to determine the initial page to load. This is set to <code>index.html</code> by default.</p>
 <p>The <code>index.html</code> file has static references to all of the CSS and JavaScript files to load. In addition to the main application bundle (<code>www/js/bundle.js</code>), the page also references the first-level boot loader: <code>www/js/boot1.js</code>. This file is responsible for executing any code before Cordova's JS API, Ionic, or Angular have been initialized. It then kicks off the second-level boot loader by invoking <code>JustinCredible.SampleApp.Boot2.main()</code>.</p>
 <p>The second-level boot loader is located at <code>src/Framework/Boot2.ts</code> (which is compiled into <code>www/js/bundle.js</code>). The second-level boot loader is responsible for initializing Ionic after the Cordova JavaScript ready event occurs. This is where you would configure Angular services and modules.</p>
 <p>The second-level boot loader automatically registers filters, directives, controllers, and services using a helper (<code>src/Framework/BootHelper.ts</code>). It does this by examining the applicable namespaces (e.g., <code>JustinCredible.SampleApp.Filters</code>, <code>JustinCredible.SampleApp.Services</code>, etc.). More details are provided in the applicable sections. The second-level boot loader also takes care of setting up the Angular routes using the <code>src/Application/RouteConfig.ts</code> file.</p>

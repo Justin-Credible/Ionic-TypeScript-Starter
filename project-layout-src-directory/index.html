@@ -84,6 +84,10 @@
                         </li>
                     
                         <li >
+                            <a href="../project-layout-resources-directory/">resources Directory</a>
+                        </li>
+                    
+                        <li >
                             <a href="../project-layout-other-directories/">Other Directories</a>
                         </li>
                     
@@ -209,11 +213,11 @@
 <h1 id="overview">Overview</h1>
 <p>This section will cover the <code>src</code> directories and its children.</p>
 <p>The <code>src</code> directory contains the bulk of the source code for your application. This includes TypeScript source code, SASS styling, and Angular HTML templates.</p>
-<p>TypeScript files are compiled using the internal module system, using the <code>namespace</code> keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This avoid the need to use a module loader at runtime.</p>
+<p>TypeScript files are compiled using the internal module system, using the <code>namespace</code> keyword for internal namespacing. The result is that all TypeScript file output will be bundled into a single file. This avoids the need to use a module loader at runtime.</p>
 <p>In most example Angular applications, you'll commonly see separate directories for each component (e.g., controllers, views, models, services etc.). While this is nice for tutorials and small applications, it is not ideal for applications containing a large number of files.</p>
 <p>In contrast, this project groups files by feature rather than type. Instead of having to look in multiple directories for all the files applicable for a given view, you'll be able to find them all in the same location.</p>
 <div class="admonition note">
-<p class="admonition-title">Note about namepsaces</p>
+<p class="admonition-title">Note about namespaces</p>
 <p>As you explore the directory structure, you'll notice that the namespaces and directory paths do not match as they would in other languages (e.g., Java).</p>
 <p>Instead, we use directories to group files by feature and namespaces to determine the behavior of a given file.</p>
 <p>For example, a class in the <code>Controllers</code> namespace will be treated as an Angular controller. Instead of placing it in a controllers directory, it can be placed in the same directory as the view model and template to which it belongs.</p>
@@ -277,7 +281,7 @@
 <h1 id="models">Models</h1>
 <p>This is where you can store model objects shared across multiple areas or services in your application (i.e., not view models).</p>
 <h1 id="services">Services</h1>
-<p>This is where all of your <a href="https://docs.angularjs.org/guide/services">Angular services</a> sholud live.</p>
+<p>This is where all of your <a href="https://docs.angularjs.org/guide/services">Angular services</a> should live.</p>
 <p>There are several services provided with the sample project; see <a href="../base-framework/#services">Base Framework: Services</a> for more details.</p>
 <h1 id="styles">Styles</h1>
 <p>This is where you should store your common or shared SASS styles. The <code>Index.scss</code> file is used to reference all the SASS files to be compiled.</p>

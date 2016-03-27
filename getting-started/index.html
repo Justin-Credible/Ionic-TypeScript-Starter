@@ -84,6 +84,10 @@
                         </li>
                     
                         <li >
+                            <a href="../project-layout-resources-directory/">resources Directory</a>
+                        </li>
+                    
+                        <li >
                             <a href="../project-layout-other-directories/">Other Directories</a>
                         </li>
                     
@@ -175,11 +179,11 @@
 <p>The guide assumes a Unix-like environment; deviations for Windows users will be called out with inline note blocks.</p>
 <h1 id="prerequisites">Prerequisites</h1>
 <p>Aside from mobile platform-specific SDKs, <a href="https://nodejs.org/dist">Node.js</a> 4.4.x is the only external prerequisite.</p>
-<p>While any version of 4.4.x or higher should work, I've specifically tested and verified with version <a href="https://nodejs.org/dist/v4.2.2/">4.4.2</a>.</p>
+<p>While any version of 4.4.x or higher should work, I've specifically tested and verified with version <a href="https://nodejs.org/dist/v4.4.0/">4.4.0</a>.</p>
 <p>Windows users can download the installer from the link above.</p>
-<p>For Mac OS, I recommend installing Node using <a href="https://www.npmjs.com/package/nvm">Node Version Manager</a>, which can be installed using <a href="http://brew.sh/">Homebrew</a>. I recommend following the instructions in <a href="http://stackoverflow.com/a/28025834">this post</a>, which will get you set up so that <code>npm install</code> does not require <code>sudo</code>.</p>
+<p>For Mac OS, I recommend installing Node using <a href="https://github.com/creationix/nvm">Node Version Manager</a>.</p>
 <h2 id="ios-specific">iOS Specific</h2>
-<p>If you are developing for iOS, you need XCode 7. I've specifically tested with version 7.1.</p>
+<p>If you are developing for iOS, you need XCode 7. I've specifically tested with version 7.3.</p>
 <ul>
 <li><a href="https://developer.apple.com/xcode/download/">Current Version</a></li>
 <li><a href="https://developer.apple.com/downloads/">Previous Versions</a></li>
@@ -236,7 +240,7 @@ $ gulp init
 <p>If you receive any errors while running <code>gulp init</code>, please double-check to ensure you've added <code>./node_modules/bin</code> to your path and that this path takes precedence over the globally installed node modules path.</p>
 </div>
 <p><code>gulp init</code> sets up the Cordova platform and plugins, obtains libraries, and compiles code. See <a href="../gulp-tasks/">Gulp Tasks</a> for details.</p>
-<p>Your envrionment should now be ready for development!</p></div>
+<p>Your environment should now be ready for development!</p></div>
         </div>
 
         <script src="../js/jquery-1.10.2.min.js"></script>

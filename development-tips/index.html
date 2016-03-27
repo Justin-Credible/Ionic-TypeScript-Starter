@@ -84,6 +84,10 @@
                         </li>
                     
                         <li >
+                            <a href="../project-layout-resources-directory/">resources Directory</a>
+                        </li>
+                    
+                        <li >
                             <a href="../project-layout-other-directories/">Other Directories</a>
                         </li>
                     
@@ -182,7 +186,12 @@
         
             <li><a href="#base-schemes">Base Schemes</a></li>
         
+            <li><a href="#platforms">Platforms</a></li>
+        
             <li><a href="#generated-files">Generated Files</a></li>
+        
+    
+        <li class="main "><a href="#faqs">FAQs</a></li>
         
     
     </ul>
@@ -229,17 +238,17 @@ $ open -a &quot;Google Chrome.app&quot; --ignore-certificate-errors --disable-we
 <p>Likewise, to run on an attached device, you can use the <code>ionic run ios --device</code> or <code>ionic run android --device</code> commands.</p>
 <p>It is important to remember that part of what Cordova does for you is generate the native projects in the platforms directory. These native projects can be opened in XCode and Android Studio. This is useful for debugging native code plugins. To update the generated projects, you can run <code>ionic prepare ios</code> or <code>ionic prepare android</code>.</p>
 <h1 id="running-ios-simulator-remotely">Running iOS Simulator Remotely</h1>
-<p>If you are developing your application on a Windows or Linux machine, but want to test and run your application on iOS, you can do so using the <code>gulp remote-emulate-ios</code> task to target a remote OS X machine.</p>
-<p>First, you'll need to install the <code>remotebuild</code> package via npm on the OS X machine you want to use to build the project and run the simulator. Note that since the Cordova project will be built on the OS X machine, you must make sure you have all the build prerequisites installed as well (Xcode, etc.).</p>
+<p>If you are developing your application on a Windows or Linux machine, but want to test and run your application on iOS, you can do so using the <code>gulp emulate-ios-remote</code> task to target a remote OS X machine.</p>
+<p>First, you'll need to install the <code>remotebuild</code> package via npm on the OS X machine you want to use to build the project and run the simulator. Note that since the Cordova project will be built on the OS X machine, you must make sure you have all the build prerequisites installed as well (XCode, etc.).</p>
 <pre><code>$ npm install -g remotebuild
 $ remotebuild start
 </code></pre>
 
-<p>Next, you'll edit <code>remote-build.json</code>, located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS X machine, as well as configure other settings.</p>
-<p>Finally, execute <code>gulp remote-emulate-ios</code> from the root of the starter project. This will take care of compiling TypeScript, building a payload, and uploading it to the OS X machine so it can be built.</p>
+<p>Next, you'll edit <code>resources/build/remote.yml</code>, located in the root of the starter project. This file will let you set the host name, port, and URL to point at your OS X machine, as well as configure other settings.</p>
+<p>Finally, execute <code>gulp emulate-ios-remote</code> from the root of the starter project. This will take care of compiling TypeScript, building a payload, and uploading it to the OS X machine so it can be built.</p>
 <h1 id="visual-studio-code">Visual Studio Code</h1>
 <h2 id="shortcuts">Shortcuts</h2>
-<p>If you are usig VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to build the application. This will execute the <code>gulp ts</code> task.</p>
+<p>If you are using VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to build the application. This will execute the <code>gulp ts</code> task.</p>
 <p>Additionally, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>R</kbd>, then begin typing the name of a gulp task to run.</p>
 <p><img alt="" src="../img/vscode-launcher.png" /></p>
 <h2 id="tasks">Tasks</h2>
@@ -248,41 +257,40 @@ $ remotebuild start
 <h1 id="build-schemes">Build Schemes</h1>
 <p>A common requirement during development is the ability to create different builds of your application. For example, you may have a development build to be used by developers while writing code, a staging environment for QA staff to use to test changes, and a production environment for live users.</p>
 <p>In each of these schemes, you may need to point at different API URLs, or use different Google Analytics accounts, for example.</p>
-<p>This starter project offers a gulp task and XML configuration to make it easy to switch between environments.</p>
+<p>This starter project offers a gulp task and configuration templates to make it easy to switch between environments.</p>
 <h2 id="configuration-task">Configuration Task</h2>
 <p>The <code>gulp config</code> task is responsible for configuring the application for the default scheme. If a scheme name is provided via the scheme argument, that scheme's configuration will be used instead.</p>
 <p>For example, to use a scheme named "staging":</p>
 <p><code>gulp config --scheme staging</code></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code>gulp ts</code> task first runs <code>gulp config</code>, so if you're using VS Code, pressing <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> will result in the app being configured for the default scheme in addition to compiling TypeScript code.</p>
-</div>
 <h2 id="scheme-definitions">Scheme Definitions</h2>
-<p>Build schemes are defined in the <code>config.master.xml</code> as child nodes under the <code>schemes</code> node:</p>
-<pre><code>&lt;schemes default=&quot;development&quot;&gt;
+<p>Build schemes are defined in the <code>resources/config/schemes.yml</code> file:</p>
+<pre><code>default: &quot;development&quot;
 
-  &lt;scheme name=&quot;development&quot; debug=&quot;true&quot;&gt;
-    &lt;replacement target=&quot;API_URL&quot; value=&quot;http://development.your-company.com/api&quot;/&gt;
-    &lt;replacement target=&quot;API_VERSION&quot; value=&quot;v1&quot;/&gt;
-  &lt;/scheme&gt;
+schemes:
 
-  &lt;scheme name=&quot;staging&quot; debug=&quot;true&quot;&gt;
-    &lt;replacement target=&quot;API_URL&quot; value=&quot;http://development.your-company.com/api&quot;/&gt;
-    &lt;replacement target=&quot;API_VERSION&quot; value=&quot;v1&quot;/&gt;
-  &lt;/scheme&gt;
+    development:
+        debug: true
+        replacements:
+            API_URL: &quot;http://development.your-company.com/api&quot;
+            API_VERSION: &quot;v2&quot;
 
-  &lt;scheme name=&quot;production&quot; debug=&quot;false&quot;&gt;
-    &lt;replacement target=&quot;API_URL&quot; value=&quot;http://www.your-company.com/api&quot;/&gt;
-    &lt;replacement target=&quot;API_VERSION&quot; value=&quot;v1&quot;/&gt;
-  &lt;/scheme&gt;
+    staging:
+        debug: true
+        replacements:
+            API_URL: &quot;http://staging.your-company.com/api&quot;
+            API_VERSION: &quot;v1&quot;
 
-&lt;/schemes&gt;
+    production:
+        debug: false
+        replacements:
+            API_URL: &quot;http://www.your-company.com/api&quot;
+            API_VERSION: &quot;v1&quot;
 </code></pre>
 
-<p>The <code>default</code> attribute indicates the name of the scheme to use if one isn't provided when executing <code>gulp config</code> (or using the VS Code shortcut).</p>
-<p>Each scheme has a <code>name</code> attribute and a <code>debug</code> attribute. The debug attribute sets the value of an arbitrary debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (e.g., <code>Utilities.isDebugMode</code>).</p>
-<p>Under each scheme node are replacement nodes. The <code>value</code> attribute is the content that should be used to replace any occurances of the value of the <code>target</code> attribute. Replacements will occur in the files listed in the generated files section.</p>
-<p>For example, using the "staging" scheme by running <code>gulp config --scheme staging</code> would replace the following configuration chunk from <code>config.master.xml</code>:</p>
+<p>The <code>default</code> property indicates the name of the scheme to use if one isn't provided when executing <code>gulp config</code> (or using the VS Code shortcut).</p>
+<p>Each scheme has a <code>debug</code> attribute which sets the value of an debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (e.g., <code>Utilities.isDebugMode</code>).</p>
+<p>Additionally, each scheme has replacement values. The name of a replacement item is used to replace any occurrence of that name with the given value. Replacements will occur in the files listed in the generated files section.</p>
+<p>For example, assuming the "staging" example scheme above, running <code>gulp config --scheme staging</code> would replace the following configuration chunk from <code>resources/cordova/config.master.xml</code>:</p>
 <pre><code>&lt;preference name=&quot;apiUrl&quot; value=&quot;${API_URL}&quot;/&gt;
 &lt;preference name=&quot;apiVersion&quot; value=&quot;${API_VERSION}&quot;/&gt;
 </code></pre>
@@ -295,29 +303,72 @@ $ remotebuild start
 <h2 id="base-schemes">Base Schemes</h2>
 <p>Some of your build schemes may have nearly identical configurations, save for a single value or two. For these cases you can create a base scheme that contains the common values, and a specific scheme that uses the base scheme.</p>
 <p>For example, perhaps you have two schemes that both point at production, but one is for pre-release testing, in which you don't want analytics tracking enabled:</p>
-<pre><code>&lt;scheme name=&quot;base&quot;&gt;
-  &lt;replacement target=&quot;API_URL&quot; value=&quot;http://app.company.com/api&quot;/&gt;
-  &lt;replacement target=&quot;API_VERSION&quot; value=&quot;v1&quot;/&gt;
-&lt;/scheme&gt;
+<pre><code>schemes:
 
-&lt;scheme name=&quot;prerelease&quot; debug=&quot;true&quot; base-scheme=&quot;base&quot;&gt;
-  &lt;replacement target=&quot;GoogleAnalyticsId&quot; value=&quot;&quot;/&gt;
-&lt;/scheme&gt;
+    _common:
+            API_URL: &quot;http://www.your-company.com/api&quot;
+            API_VERSION: &quot;v1&quot;
 
-&lt;scheme name=&quot;release&quot; debug=&quot;false&quot; base-scheme=&quot;base&quot;&gt;
-  &lt;replacement target=&quot;GoogleAnalyticsId&quot; value=&quot;1234567890&quot;/&gt;
-&lt;/scheme&gt;
+    prerelease:
+        debug: true
+        base: &quot;_common&quot;
+        GOOGLE_ANALYTICS_ID: &quot;1234567890&quot; # Testing GA Account
+
+    release:
+        debug: false
+        base: &quot;_common&quot;
+        GOOGLE_ANALYTICS_ID: &quot;0987654321&quot; # Production GA Account
 </code></pre>
 
-<h2 id="generated-files">Generated Files</h2>
-<p>The <code>gulp config</code> task generates the following files:</p>
+<p>Use of either the <code>prelease</code> or <code>release</code> scheme in this example would perform replacements using the same <code>API_URL</code> and <code>API_VERSION</code> values, but different <code>GOOGLE_ANALYTICS_ID</code> values.</p>
+<h2 id="platforms">Platforms</h2>
+<p>The configuration task can configure the project for three different platform types:</p>
 <ul>
-<li>Cordova's <code>config.xml</code> (from <code>config.master.xml</code>)</li>
-<li>Starting page <code>www/index.html</code> (from <code>www/index.master.html</code>)</li>
-<li>Runtime variables at <code>src/js/build-vars.js</code></li>
+<li>iOS/Android via Cordova (default)</li>
+<li>Chrome Extension</li>
+<li>Mobile Website</li>
 </ul>
-<p>Variable substitution will be automatically performed for the <code>config.xml</code> and <code>www/index.html</code> files based on the build scheme.</p>
-<p>The <code>build-vars.js</code> file will contain information about the build, such as application name, version number, debug flag, and build timestamp. In addition, all of the <code>preference</code> elements' values from <code>config.xml</code> will be present in a properties collection. All of these values are available via the <code>Configuration</code> service.</p></div>
+<p>By default the config task will assume the Cordova platform. However, the <code>--prep</code> flag can be used to specify two additional platforms: Chrome Extension or Mobile Website.</p>
+<p>Chrome Extension: <code>gulp config --scheme production --prep chrome</code></p>
+<p>Mobile Website: <code>gulp config --scheme production --prep web</code></p>
+<p>This flag adjusts which master files from the resources directory are used to generate the configuration files in the next section.</p>
+<h2 id="generated-files">Generated Files</h2>
+<p>This <code>gulp config</code> creates the following files:</p>
+<ul>
+<li>Cordova configuration: <code>config.xml</code> (from <code>resources/cordova/config.master.xml</code>)</li>
+<li>Chrome extension manifest: <code>build/chrome/manifest.json</code> (from <code>resources/chrome/manifest.master.json</code>)</li>
+<li>Starting page: <code>www/index.html</code> (from <code>resources/&lt;platform&gt;/index.master.html</code>) </li>
+<li>Runtime variables: <code>src/js/build-vars.js</code> (from <code>resources/config/config.yml</code>)</li>
+</ul>
+<p>These files will be generated from their master files, and variable substitution will be performed based on the scheme definitions. This allows for easy configuration of builds for different environments (e.g., development, staging, production).</p>
+<p>The <code>build-vars.js</code> file will contain information about the build, such as application name, version number, debug flag, and build timestamp. In addition, all of the key/value pairs <code>resources/config/config.yml</code> will be present in a properties collection. All of these values are available via the <code>Configuration</code> service.</p>
+<p>Example usage for Cordova: <code>gulp config --scheme production</code></p>
+<p>By default this task will assume Cordova, however the <code>--prep</code> flag can be used to specify a different platform as shown below. </p>
+<p>Example usage for Chrome Extension: <code>gulp config --scheme production --prep chrome</code></p>
+<p>Example usage for Mobile Website: <code>gulp config --scheme production --prep web</code></p>
+<h1 id="faqs">FAQs</h1>
+<blockquote>
+<p><em>Where is <code>config.xml</code> for Cordova?</em></p>
+</blockquote>
+<p>This file is generated from <code>resources/cordova/config.master.xml</code> when running the <code>gulp config</code> task. This allows you to substitute different values in the file based on a build scheme. See <a href="#build-schemes">Build Schemes</a> for more details.</p>
+<blockquote>
+<p><em>Why are Cordova plugins and platforms defined in <code>package.json</code> and not <code>config.xml</code>? Why not use <code>ionic state restore</code>?</em></p>
+</blockquote>
+<p>When I first started this project the <code>ionic state</code> command did not exist. I noticed that when adding a plugin via <code>ionic plugin add</code> the plugin name/version pair was added to <code>package.json</code> under the <code>cordovaPlugins</code> key. I needed a way to easily restore platforms and plugins so I wrote the <code>gulp init</code> task and use that instead.</p>
+<p>Since <code>gulp init</code> also acts as a hook for customizing the initialization process, I will probably continue using it instead of Ionic's built-in command.</p>
+<blockquote>
+<p><em>Why are all your npm packages defined in <code>dependencies</code> and not <code>devDependencies</code>?</em></p>
+</blockquote>
+<p>This starter project isn't a traditional node package; it is not designed to be published to npm or used as a dependency in another project.</p>
+<p>The dependencies specified in <code>package.json</code> are all build-time dependencies. This includes Cordova, Ionic, gulp, and all of the other tools used to build the project.</p>
+<p>The only two packages defined as <code>devDependencies</code> are <code>gulp-typedoc</code> and <code>typedoc</code> which can be used to optionally generate type documentation and are not used by the build process.</p>
+<blockquote>
+<p><em>Why are <code>platforms</code> and <code>plugins</code> in the <code>.gitignore</code>? Shouldn't I commit those?</em></p>
+</blockquote>
+<p>If you want to commit these directories you can, but I choose not to.</p>
+<p>I tend to think of Cordova as a tool similar to <a href="https://en.wikipedia.org/wiki/GYP_(software)">GYP</a>, that is, a project generator. I've found that committing these directories (particularly the <code>platforms</code> directory) adds development overhead as you have to keep track of what you're committing there and potentially reconciling diffs after each <code>cordova prepare</code> command (or whenever you upgrade your Cordova or platform version).</p>
+<p>So the upside is that you have less files to manage and keep track of and potentially reconcile as Cordova and the platform specific IDEs change.</p>
+<p>A potential downside is that if you need to do something platform specific that isn't in a plugin or something that Cordova does not support, you'll need to write a build hook so it can be applied every time you re-initialize your <code>platforms</code> directory.</p></div>
         </div>
 
         <script src="../js/jquery-1.10.2.min.js"></script>
