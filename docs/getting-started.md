@@ -8,15 +8,15 @@ The guide assumes a Unix-like environment; deviations for Windows users will be 
 
 Aside from mobile platform-specific SDKs, [Node.js](https://nodejs.org/dist) 4.4.x is the only external prerequisite.
 
-While any version of 4.4.x or higher should work, I've specifically tested and verified with version [4.4.2](https://nodejs.org/dist/v4.2.2/).
+While any version of 4.4.x or higher should work, I've specifically tested and verified with version [4.4.0](https://nodejs.org/dist/v4.4.0/).
 
 Windows users can download the installer from the link above.
 
-For Mac OS, I recommend installing Node using [Node Version Manager](https://www.npmjs.com/package/nvm), which can be installed using [Homebrew](http://brew.sh/). I recommend following the instructions in [this post](http://stackoverflow.com/a/28025834), which will get you set up so that `npm install` does not require `sudo`.
+For Mac OS, I recommend installing Node using [Node Version Manager](https://github.com/creationix/nvm).
 
 ## iOS Specific
 
-If you are developing for iOS, you need XCode 7. I've specifically tested with version 7.1.
+If you are developing for iOS, you need XCode 7. I've specifically tested with version 7.3.
 
 * [Current Version](https://developer.apple.com/xcode/download/)
 * [Previous Versions](https://developer.apple.com/downloads/)
@@ -77,4 +77,4 @@ To begin, edit your path, clone the repository, install the node packages, and i
 
 `gulp init` sets up the Cordova platform and plugins, obtains libraries, and compiles code. See [Gulp Tasks](gulp-tasks.md) for details.
 
-Your envrionment should now be ready for development!
+Your environment should now be ready for development!

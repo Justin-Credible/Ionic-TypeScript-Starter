@@ -2,17 +2,9 @@
 
 This section will cover the `www` directory, which should contain all of assets that will be used at runtime.
 
-## index.master.html
-
-This is the master index file used to generate `www/index.html` when running the `gulp config` task.
-
-The config task will perform variable substitution based on the current scheme.
-
-See `gulp config` in [Gulp Tasks](gulp-tasks.md#gulp-config) and [Base Framework: Build Schemes](base-framework.md#build-scemes) for more details.
-
 ## index.html _(generated)_
 
-This file is generated from `www/index.master.html` when running the `gulp config` task. It is the initial page that will be loaded by Cordova when the application starts.
+This file is generated from `resources/<platform>/index.master.html` when running the `gulp config` task. It is the initial page that will be loaded by Cordova when the application starts.
 
 See `gulp config` in [Gulp Tasks](gulp-tasks.md#gulp-config) and [Base Framework: Build Schemes](base-framework.md#build-scemes) for more details.
 
@@ -40,7 +32,7 @@ This is the first-level boot loader loaded by `www/index.html`. It handles any l
 
 ## js/build-vars.js _(generated)_
 
-This file is generated when running the `gulp config` task. It contains build information such as version number, build timestamp, and debug flag. It also contains all the preference element values from `config.xml`.
+This file is generated when running the `gulp config` task. It contains build information such as version number, build timestamp, and debug flag. It also contains configuration key/value pairs from `resources/config/config.yml`.
 
 The file's contents are accessible via the Configuration service (or as an Angular constant).
 

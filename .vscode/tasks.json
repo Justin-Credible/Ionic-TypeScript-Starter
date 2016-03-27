@@ -1,6 +1,14 @@
 {
     "version": "0.1.0",
-    "command": "gulp",
+    "windows": {
+        "command": ".\\node_modules\\.bin\\gulp"
+    },
+    "linux": {
+        "command": "./node_modules/.bin/gulp"
+    },
+    "osx": {
+        "command": "./node_modules/.bin/gulp"
+    },
     "isShellCommand": true,
     "args": [
         "--no-color"
@@ -57,7 +65,7 @@
             "showOutput": "never"
         },
         {
-            "taskName": "remote-emulate-ios",
+            "taskName": "emulate-ios-remote",
             "showOutput": "never"
         },
         {

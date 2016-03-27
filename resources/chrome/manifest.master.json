@@ -1,9 +1,11 @@
 {
     "manifest_version": 2,
 
-    "name": "Sample App",
-    "description": "SampleApp: A starter application using Ionic and TypeScript.",
-    "version": "1.0",
+    "name": "${APP_NAME}",
+    "description": "${APP_DESCRIPTION}",
+    "version": "${APP_VERSION}",
+
+    "author": "${AUTHOR_NAME} | ${AUTHOR_EMAIL} | ${AUTHOR_WEBSITE}",
 
     "browser_action": {
         "default_icon": "icon.png",

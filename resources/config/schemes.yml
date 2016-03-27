@@ -1,0 +1,66 @@
+--- # Build Schemes
+
+# The name of the scheme to use if one isn't provided via the --scheme flag.
+default: "localdev"
+
+# Different build schemes used by "gulp config --scheme scheme_name".
+# These are used to set the debug flag and perform variable replacement on other files.
+schemes:
+    # A common/base scheme for names, versions, etc.
+    # Not to be used directly; should be used as a base for all other schemes.
+    _common:
+        replacements:
+            APP_NAME: "Sample App"
+            APP_DESCRIPTION: "A starter application using Ionic and TypeScript."
+            APP_VERSION: "1.2.0"
+            AUTHOR_NAME: "Justin Unterreiner"
+            AUTHOR_EMAIL: "justin.unterreiner@gmail.com"
+            AUTHOR_WEBSITE: "http://www.justin-credible.net"
+
+    # Used for development on a host entry pointing to localhost.
+    localdev:
+        base: "_common"
+        debug: true
+        replacements:
+            API_URL: "http://localhost.your-company.com/api"
+            API_VERSION: "v1"
+            
+            # See: http://content-security-policy.com/
+            # Allows connecting to Ionic serve's LiveReload service via port 35279 and unsafe-inline script block.
+            CONTENT_SECURITY_POLICY: "default-src 'self' data: gap: https://ssl.gstatic.com; script-src * 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src *; connect-src 'self' https://*.your-company.com http://*.your-company.com ws://localhost:35279 ws://localhost:35729"
+
+
+    # Same as localdev, but points at an internal development server.
+    development:
+        base: "localdev"
+        debug: true
+        replacements:
+            API_URL: "http://development.your-company.com/api"
+
+
+    # Same as localdev, but points at an internal staging server.
+    staging:
+        base: "localdev"
+        debug: true
+        replacements:
+            API_URL: "http://staging.your-company.com/api"
+
+
+    # Same as localdev, but points at a production server.
+    production:
+        base: "localdev"
+        debug: true
+        replacements:
+            API_URL: "http://www.your-company.com/api"
+
+
+    # Used for shipping release builds, points at production.
+    release:
+        base: "_common"
+        debug: false
+        replacements:
+            API_URL: "http://www.your-company.com/api"
+            API_VERSION: "v1"
+            
+            # See: http://content-security-policy.com/
+            CONTENT_SECURITY_POLICY: "default-src 'self' data: gap: https://ssl.gstatic.com; script-src * 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src *; connect-src 'self' https://www.your-company.com http://www.your-company.com"

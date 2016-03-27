@@ -112,7 +112,7 @@
                 /* tslint:disable:no-string-literal */
 
                 // Specify the version of the API we can consume.
-                config.headers["X-API-Version"] = this.Configuration.buildVars.properties.apiVersion;
+                config.headers["X-API-Version"] = this.Configuration.buildVars.config.apiVersion;
 
                 // Specify the content type we are sending and the payload type that we want to receive.
                 config.headers["Content-Type"] = "application/json";

@@ -4,7 +4,7 @@ Ionic/TypeScript Starter
 [![Dependencies](https://david-dm.org/Justin-Credible/Ionic-TypeScript-Starter
 .svg)](https://david-dm.org/Justin-Credible/Ionic-TypeScript-Starter)
 
-This is a sample project that I use as a starting point for developing new mobile applications. This starter project targets iOS, Android, and Chrome (as an extension).
+This is a sample project that I use as a starting point for developing new mobile applications. This starter project targets iOS, Android, Chrome (as an extension), and the web.
 
 It uses the [Ionic](http://ionicframework.com/) framework (version 1.x, built on [AngularJS](https://angularjs.org/) 1.x) which makes it possible to rapidly build apps that feel native.
 
@@ -14,7 +14,7 @@ This project is IDE and platform agnostic. I recommend using the free and lightw
 
 In-browser development and debugging is possible via the Chrome developer tools. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container.
 
-If you are developing on Windows or Linux but want to compile and run your application on a remote OS X machine, you can use the built-in `gulp remote-emulate-ios` task.
+If you are developing on Windows or Linux but want to compile and run your application on a remote OS X machine, you can use the built-in `gulp emulate-ios-remote` task.
 
 # Documentation
 
@@ -22,7 +22,7 @@ Documentation is available in the `docs` directory, or online at the [project we
 
 # Quick Start
 
-Install [Node.js](https://nodejs.org/dist/v4.2.2/) 4.2.2
+Install [Node.js](https://nodejs.org/dist/v4.4.0/) 4.4.0
 
 All other dependencies are installed in the project directory via `npm`. To use them, **you must add `./node_modules/.bin` to your path**.
 

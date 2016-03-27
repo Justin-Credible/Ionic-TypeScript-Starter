@@ -1,0 +1,20 @@
+--- # iOS Remote Build Configuration
+
+# Used to specify the configuration used to perform remote iOS builds
+# when using the gulp emulate-ios-remote and package-remote-build tasks.
+
+host: "192.168.1.64"
+port: 3000
+path: "/"
+
+ssl: true
+allowInvalidSslCerts: true
+
+statusCheckDelayMs: 1000
+maxStatusChecks: 90
+
+logLevel: "warn"
+logFile: "build/remote/remote.log"
+
+cordovaVersion: "5.1.1"
+emulationTarget: "iPhone 6"
