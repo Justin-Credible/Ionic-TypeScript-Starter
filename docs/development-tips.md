@@ -224,17 +224,17 @@ Example usage for Mobile Website: `gulp config --scheme production --prep web`
 
 # FAQs
 
-*Where is `config.xml` for Cordova?*
+> *Where is `config.xml` for Cordova?*
 
 This file is generated from `resources/cordova/config.master.xml` when running the `gulp config` task. This allows you to substitute different values in the file based on a build scheme. See [Build Schemes](#build-schemes) for more details.
 
-*Why are Cordova plugins and platforms defined in `package.json` and not `config.xml`? Why not use `ionic state restore`?*
+> *Why are Cordova plugins and platforms defined in `package.json` and not `config.xml`? Why not use `ionic state restore`?*
 
 When I first started this project the `ionic state` command did not exist. I noticed that when adding a plugin via `ionic plugin add` the plugin name/version pair was added to `package.json` under the `cordovaPlugins` key. I needed a way to easily restore platforms and plugins so I wrote the `gulp init` task and use that instead.
 
 Since `gulp init` also acts as a hook for customizing the initialization process, I will probably continue using it instead of Ionic's built-in command.
 
-*Why are all your npm packages defined in `dependencies` and not `devDependencies`?*
+> *Why are all your npm packages defined in `dependencies` and not `devDependencies`?*
 
 This starter project isn't a traditional node package; it is not designed to be published to npm or used as a dependency in another project.
 
@@ -242,7 +242,7 @@ The dependencies specified in `package.json` are all build-time dependencies. Th
 
 The only two packages defined as `devDependencies` are `gulp-typedoc` and `typedoc` which can be used to optionally generate type documentation and are not used by the build process.
 
-*Why are `platforms` and `plugins` in the `.gitignore`? Shouldn't I commit those?*
+> *Why are `platforms` and `plugins` in the `.gitignore`? Shouldn't I commit those?*
 
 If you want to commit these directories you can, but I choose not to.
 
