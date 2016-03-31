@@ -28,6 +28,8 @@ module.exports = function(gulp, plugins) {
 
         var schemeName = helper.getCurrentSchemeName();
 
+        helper.info(helper.format("Configuring application with scheme: {0}", schemeName));
+
         if (helper.isPrepWeb()) {
             // Web Package: --prep web
 
@@ -63,6 +65,7 @@ module.exports = function(gulp, plugins) {
             helper.performReferenceReplacement("www/index.html", "www/index.html", false, null, "resources/cordova/index.references.yml");
         }
 
+        helper.info(helper.format("Generating runtime configuration at: www/js/build-vars.js using: resources/config/config.yml"));
         helper.createBuildVars(schemeName, "resources/config/config.yml", "www/js/build-vars.js");
 
         cb();

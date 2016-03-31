@@ -46,7 +46,7 @@
                     "owner": "gulp",
                     "fileLocation": ["relative", "${workspaceRoot}"],
                     "pattern": {
-                        "regexp": "^\\[sass\\] \\[(.*)\\] (.*):  (\\d+):(\\d+)  (.*)$",
+                        "regexp": "^\\[\\d\\d:\\d\\d:\\d\\d\\] \\[sass\\] \\[(.*)\\] (.*):  (\\d+):(\\d+)  (.*)$",
                         "file": 2,
                         "line": 3,
                         "column": 4,

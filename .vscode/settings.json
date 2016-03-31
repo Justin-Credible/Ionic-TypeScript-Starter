@@ -9,6 +9,7 @@
         "www/js/bundle.js.map": true,
         "www/js/bundle.d.ts": true,
         "www/js/src": true,
+        "docs-output": true,
         "build": true
     },
 
