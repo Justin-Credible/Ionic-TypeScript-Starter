@@ -123,6 +123,26 @@
             }
         }
 
+        /**
+         * Used to get the current dimensions of the viewport.
+         * 
+         * https://andylangton.co.uk/blog/development/get-viewportwindow-size-width-and-height-javascript
+         * 
+         * @returns An object with the current width and height of the viewport.
+         */
+        public get viewport(): { width: number; height: number } {
+
+            let e: any = window;
+            let a = "inner";
+
+            if (!("innerWidth" in window )) {
+                a = "client";
+                e = document.documentElement || document.body;
+            }
+
+            return { width : e[ a + "Width" ] , height : e[ a + "Height" ] };
+        }
+
         //#endregion
 
         //#region String Manipulation

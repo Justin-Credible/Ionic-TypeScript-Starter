@@ -22,45 +22,7 @@ interface Window {
     resolveLocalFileSystemURL(uri: string, successCallback: (directoryEntry: DirectoryEntry) => void, errorCallback: (error: FileError) => void): void;
 
     /**
-     * The available Cordova plug-ins.
-     * 
-     * If your plug-in isn't available here, check Cordova.plugins.
-     */
-    //plugins: ICordovaWindowPlugins;
-
-    /**
      * Variables emitted at build time which contain useful application information.
      */
     buildVars: JustinCredible.SampleApp.Interfaces.BuildVars;
-}
-
-/**
- * These are the Cordova plug-ins that are available via the global Cordova.plugins object.
- */
-interface CordovaPlugins {
-
-    /**
-     * This plugin allows access to the user's clipboard.
-     */
-    clipboard: ICordovaClipboardPlugin;
-}
-
-/**
- * These are the Cordova plug-ins that are available via the global window.plugins object.
- */
-interface Plugins {
-    /**
-     * This plugin allows showing toast messages cross platform for Android, iOS, and WP8.
-     */
-    toast: ICordovaToastPlugin;
-}
-
-/**
- * These are the Cordova plug-ins that are available via the global navigator object.
- */
-interface Navigator {
-    /**
-     * This plugin allows logging exception information to the Crashlytics backend service.
-     */
-    crashlytics: ICordovaCrashlyticsPlugin;
 }

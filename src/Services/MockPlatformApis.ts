@@ -31,7 +31,7 @@
 
         //#region Public API
 
-        public getToastPlugin(): ICordovaToastPlugin {
+        public getToastPlugin(): ToastPlugin.ToastPluginStatic {
             return {
                 show: _.bind(this.toast, this),
                 showLongBottom: _.bind(this.toast, this),
@@ -51,21 +51,21 @@
             };
         }
 
-        public getClipboardPlugin(): ICordovaClipboardPlugin {
+        public getClipboardPlugin(): ClipboardPlugin.ClipboardPluginStatic {
             return {
                 copy: _.bind(this.clipboard_copy, this),
                 paste: _.bind(this.clipboard_paste, this)
             };
         }
 
-        public getClipboardPluginForWindows(): ICordovaClipboardPlugin {
+        public getClipboardPluginForWindows(): ClipboardPlugin.ClipboardPluginStatic {
             return {
                 copy: _.bind(this.clipboard_windows_copy, this),
                 paste: _.bind(this.clipboard_windows_paste, this)
             };
         }
 
-        public getClipboardPluginForChromeExtension(): ICordovaClipboardPlugin {
+        public getClipboardPluginForChromeExtension(): ClipboardPlugin.ClipboardPluginStatic {
             return {
                 copy: _.bind(this.clipboard_chromeExtension_copy, this),
                 paste: _.bind(this.clipboard_chromeExtension_paste, this)
@@ -113,23 +113,6 @@
                 show: _.bind(this.noOp, this),
                 disableScroll: _.bind(this.noOp, this),
                 isVisible: false
-            };
-        }
-
-        public getCrashlyticsPlugin(): ICordovaCrashlyticsPlugin {
-            return {
-                logException: _.bind(this.crashlytics_logException, this),
-                log: _.bind(this.crashlytics_log, this),
-                setBool: _.bind(this.noOp, this),
-                setDouble: _.bind(this.noOp, this),
-                setFloat: _.bind(this.noOp, this),
-                setInt: _.bind(this.noOp, this),
-                setLong: _.bind(this.noOp, this),
-                setString: _.bind(this.noOp, this),
-                setUserEmail: _.bind(this.noOp, this),
-                setUserIdentifier: _.bind(this.noOp, this),
-                setUserName: _.bind(this.noOp, this),
-                simulateCrash: _.bind(this.noOp, this)
             };
         }
 
@@ -497,18 +480,6 @@
             if (successCallback) {
                 successCallback();
             }
-        }
-
-        //#endregion
-
-        //#region Crashlytics
-
-        private crashlytics_logException(exception: string): void {
-            console.error(exception);
-        }
-
-        private crashlytics_log(message: string): void {
-            console.warn(message);
         }
 
         //#endregion

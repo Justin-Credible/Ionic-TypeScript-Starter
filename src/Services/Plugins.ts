@@ -42,7 +42,7 @@ namespace JustinCredible.SampleApp.Services {
         /**
          * Exposes an API for showing toast messages.
          */
-        get toast(): ICordovaToastPlugin {
+        get toast(): ToastPlugin.ToastPluginStatic {
             if (!this.Utilities.isWindows && !this.Utilities.isWindows8 && window.plugins && window.plugins.toast) {
                 return window.plugins.toast;
             }
@@ -66,7 +66,7 @@ namespace JustinCredible.SampleApp.Services {
         /**
          * Exposes an API for working with the operating system's clipboard.
          */
-        get clipboard(): ICordovaClipboardPlugin {
+        get clipboard(): ClipboardPlugin.ClipboardPluginStatic {
             if (this.Utilities.isWindows) {
                 return this.MockPlatformApis.getClipboardPluginForWindows();
             }
@@ -102,18 +102,6 @@ namespace JustinCredible.SampleApp.Services {
             }
             else {
                 return this.MockPlatformApis.getKeyboardPlugin();
-            }
-        }
-
-        /**
-         * Exposes an API for logging exception information to the Crashlytics backend service.
-         */
-        get crashlytics(): ICordovaCrashlyticsPlugin {
-            if (typeof(navigator) !== "undefined" && navigator.crashlytics) {
-                return navigator.crashlytics;
-            }
-            else {
-                return this.MockPlatformApis.getCrashlyticsPlugin();
             }
         }
 

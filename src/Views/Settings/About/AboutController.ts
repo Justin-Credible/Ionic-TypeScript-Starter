@@ -34,11 +34,11 @@
 
             this.viewModel.logoClickCount = 0;
 
-            this.viewModel.applicationName = this.Configuration.buildVars.config.appName;
-            this.viewModel.versionString = this.Configuration.buildVars.config.appVersion;
-            this.viewModel.timestamp = this.Configuration.buildVars.buildTimestamp;
-            this.viewModel.commitShortSha = this.Configuration.buildVars.commitShortSha;
-            this.viewModel.authorName = this.Configuration.buildVars.config.authorName;
+            this.viewModel.applicationName = this.Configuration.values.appName;
+            this.viewModel.versionString = this.Configuration.values.appVersion;
+            this.viewModel.timestamp = this.Configuration.buildTimestamp;
+            this.viewModel.commitShortSha = this.Configuration.commitShortSha;
+            this.viewModel.authorName = this.Configuration.values.authorName;
         }
 
         //#endregion
@@ -63,15 +63,15 @@
         }
 
         protected copyrightInfo_click(): void {
-            window.open(this.Configuration.buildVars.config.licenseUrl, "_system");
+            window.open(this.Configuration.values.licenseUrl, "_system");
         }
 
         protected website_click(): void {
-            window.open(this.Configuration.buildVars.config.authorWebsite, "_system");
+            window.open(this.Configuration.values.authorWebsite, "_system");
         }
 
         protected gitHubRepo_click(): void {
-            window.open(this.Configuration.buildVars.config.githubUrl, "_system");
+            window.open(this.Configuration.values.githubUrl, "_system");
         }
 
         //#endregion
