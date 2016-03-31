@@ -9,6 +9,7 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
+                "$window",
                 Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.UiHelper.ID,
@@ -22,6 +23,7 @@
 
         constructor(
             $scope: ng.IScope,
+            private $window: ng.IWindowService,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
@@ -50,6 +52,12 @@
             this.viewModel.deviceOsVersion = this.Utilities.device.version;
             this.viewModel.deviceUuid = this.Utilities.device.uuid;
             this.viewModel.deviceCordovaVersion = this.Utilities.device.cordova;
+
+            this.viewModel.navigatorPlatform = this.$window.navigator.platform;
+            this.viewModel.navigatorProduct = this.$window.navigator.product;
+            this.viewModel.navigatorVendor = this.$window.navigator.vendor;
+            this.viewModel.viewport = this.Utilities.viewport;
+            this.viewModel.userAgent = this.$window.navigator.userAgent;
 
             this.viewModel.defaultStoragePathId = this.FileUtilities.getDefaultRootPathId();
             this.viewModel.defaultStoragePath = this.FileUtilities.getDefaultRootPath();
@@ -83,6 +91,15 @@
             this.UiHelper.alert(helpMessage, "Help");
         }
 
+        protected copyValue_click(value: any, name: string): void {
+            this.UiHelper.confirm("Copy " + name + " to clipboard?").then((result: string) => {
+                if (result === Constants.Buttons.Yes) {
+                    this.Plugins.clipboard.copy(value);
+                    this.Plugins.toast.showShortBottom(name + " copied to clipboard.");
+                }
+            });
+        }
+
         protected mockApiRequests_change(): void {
 
             this.Configuration.enableMockHttpCalls = this.viewModel.mockApiRequests;
@@ -108,15 +125,6 @@
                 this.Configuration.apiUrl = result.value;
                 this.viewModel.apiUrl = result.value;
                 this.Plugins.toast.showShortBottom("API URL changed for this session only.");
-            });
-        }
-
-        protected userToken_click(token: string): void {
-            this.UiHelper.confirm("Copy token to clipboard?").then((result: string) => {
-                if (result === Constants.Buttons.Yes) {
-                    this.Plugins.clipboard.copy(token);
-                    this.Plugins.toast.showShortBottom("Token copied to clipboard.");
-                }
             });
         }
 
@@ -170,14 +178,6 @@
         protected reEnableOnboarding_click(): void {
             this.Configuration.hasCompletedOnboarding = false;
             this.UiHelper.alert("Onboarding has been enabled and will occur upon next app boot.");
-        }
-
-        protected testNativeException_click(): void {
-            this.UiHelper.confirm("Are you sure you want to cause a native crash? This requires the Crashlytics plug-in to be installed.").then((result: string) => {
-                if (result === Constants.Buttons.Yes) {
-                    this.Plugins.crashlytics.simulateCrash();
-                }
-            });
         }
 
         protected testJsException_click(): void {

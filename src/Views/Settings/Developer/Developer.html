@@ -6,7 +6,36 @@
     <ion-content class="has-header">
 
         <div class="list card">
-            <div class="item item-divider">HTTP API</div>
+            <div class="item item-divider item-dark item-dark">Test Tools</div>
+
+            <div class="item">
+
+                <button class="button button-block button-positive"
+                    ng-click="controller.addServicesToGlobalScope_click()">
+                    Add Services to Global Scope
+                </button>
+
+                <button class="button button-block button-positive"
+                    ng-click="controller.setRequirePinThreshold_click()">
+                    Set Require PIN Threshold
+                </button>
+
+                <button class="button button-block button-positive"
+                    ng-click="controller.resetPinTimeout_click()">
+                    Reset PIN Entry Timeout
+                </button>
+
+                <button class="button button-block button-positive"
+                    ng-click="controller.reEnableOnboarding_click()">
+                    Re-enable Onboarding
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider item-dark">HTTP API</div>
 
             <label class="item item-toggle">
                 Mock API Requests
@@ -29,7 +58,7 @@
         </div>
 
         <div class="list card">
-            <div class="item item-divider">Logging</div>
+            <div class="item item-divider item-dark">Logging</div>
 
             <div ui-sref="app.logs" class="item item-icon-left item-icon-right">
                 <i class="icon ion-ios-copy-outline"></i>
@@ -40,15 +69,16 @@
         </div>
 
         <div class="list card">
-            <div class="item item-divider">Current User</div>
+            <div class="item item-divider item-dark">Current User</div>
 
-            <label class="item item-readonly-label">
+            <label class="item item-readonly-label"
+                ng-click="controller.copyValue_click(viewModel.userId, 'User ID')">
                 <span>User ID</span>
                 <span>{{viewModel.userId}}</span>
             </label>
 
             <label class="item item-readonly-label item-text-wrap"
-                ng-click="controller.userToken_click(viewModel.token)">
+                ng-click="controller.copyValue_click(viewModel.token, 'Token')">
                 Token
                 <br/>
                 {{viewModel.token}}
@@ -57,7 +87,7 @@
         </div>
 
         <div class="list card">
-            <div class="item item-divider">Platform Tools</div>
+            <div class="item item-divider item-dark">Platform Tools</div>
 
             <label class="item item-readonly-label">
                 <span>Platform</span>
@@ -81,39 +111,67 @@
             </label>
 
             <label class="item item-readonly-label">
-                <span>Cordova</span>
+                <span>Cordova Platform</span>
                 <span>{{viewModel.deviceCordovaVersion}}</span>
             </label>
 
-            <div class="item">
-                <button class="button button-block button-positive" ng-click="controller.addServicesToGlobalScope_click()">Add Services to Global Scope</button>
-                <button class="button button-block button-positive" ng-click="controller.setRequirePinThreshold_click()">Set Require PIN Threshold</button>
-                <button class="button button-block button-positive" ng-click="controller.resetPinTimeout_click()">Reset PIN Entry Timeout</button>
-                <button class="button button-block button-positive" ng-click="controller.reEnableOnboarding_click()">Re-enable Onboarding</button>
-            </div>
         </div>
 
         <div class="list card">
-            <div class="item item-divider item-icon-right">
+
+            <div class="item item-divider item-dark item-dark item-icon-right">
+                Navigator Information
+                <i class="icon ion-ios-help-outline"
+                    ng-click="controller.help_click('Information about the browser/navigator.')"></i>
+            </div>
+
+            <label class="item item-readonly-label">
+                <span>Platform</span>
+                <span>{{viewModel.navigatorPlatform}}</span>
+            </label>
+
+            <label class="item item-readonly-label">
+                <span>Product</span>
+                <span>{{viewModel.navigatorProduct}}</span>
+            </label>
+
+            <label class="item item-readonly-label">
+                <span>Vendor</span>
+                <span>{{viewModel.navigatorVendor}}</span>
+            </label>
+
+            <label class="item item-readonly-label">
+                <span>Viewport</span>
+                <span>{{viewModel.viewport.width}}x{{viewModel.viewport.height}}</span>
+            </label>
+
+            <label class="item item-readonly-label item-text-wrap"
+                ng-click="controller.copyValue_click(viewModel.userAgent, 'User Agent')">
+                User Agent
+                <br/>
+                {{viewModel.userAgent}}
+            </label>
+
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider item-dark item-icon-right">
                 Test Exception Handling
                 <i class="icon ion-ios-help-outline"
                     ng-click="controller.help_click('Used to simulate different exception types to test logging.')"></i>
                 </div>
             <div class="row">
-                <div class="col col-33">
-                    <button class="button button-block button-assertive" ng-click="controller.testNativeException_click()">Native</button>
-                </div>
-                <div class="col col-33">
+                <div class="col col-50">
                     <button class="button button-block button-assertive" ng-click="controller.testJsException_click()">JS</button>
                 </div>
-                <div class="col col-33">
+                <div class="col col-50">
                     <button class="button button-block button-assertive" ng-click="controller.testAngularException_click()">Angular</button>
                 </div>
             </div>
         </div>
 
         <div class="list card">
-            <div class="item item-divider item-icon-right">
+            <div class="item item-divider item-dark item-icon-right">
                 HTTP Progress Bar
                 <i class="icon ion-ios-help-outline"
                     ng-click="controller.help_click('Used to test the progress indicator functionality that is utilized during HTTP requests.')"></i>
@@ -136,7 +194,7 @@
         </div>
 
         <div class="list card">
-            <div class="item item-divider item-icon-right">
+            <div class="item item-divider item-dark item-icon-right">
                 Toast Notifications
                 <i class="icon ion-ios-help-outline"
                     ng-click="controller.help_click('Used to test the native toast notification plugin.')"></i>
@@ -156,7 +214,7 @@
         </div>
 
         <div class="list card">
-            <div class="item item-divider item-icon-right">
+            <div class="item item-divider item-dark item-icon-right">
                 Clipboard
                 <i class="icon ion-ios-help-outline"
                     ng-click="controller.help_click('Used to test the native clipboard plugin.')"></i>
@@ -172,7 +230,7 @@
         </div>
 
         <div class="list card">
-            <div class="item item-divider item-icon-right">
+            <div class="item item-divider item-dark item-icon-right">
                 File System I/O
                 <i class="icon ion-ios-help-outline"
                     ng-click="controller.help_click('Used to test the native file plugin; this requires cordova-plugin-file.')"></i>
@@ -185,7 +243,7 @@
             </label>
 
             <label class="item item-text-wrap"
-                ng-click="controller.defaultStoragePath_click(viewModel.defaultStoragePath)">
+                ng-click="controller.copyValue_click(viewModel.defaultStoragePath, 'Default Storage Path')">
                 Default Storage Path
                 <br/>
                 {{viewModel.defaultStoragePath}}
