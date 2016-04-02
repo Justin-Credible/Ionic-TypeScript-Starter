@@ -52,7 +52,7 @@ The sass task compiles the SASS source files, starting with `src/Styles/Index.sc
 
 You'll need to re-run this task to see any SASS styling changes during development.
 
-The SASS output will be minified if the debug flag is set to true via the current build scheme.
+The SASS output will be minified if the debug flag is set to false via the current build scheme.
 
 !!! note
 	If you run this task from VS Code, SASS problems will be shown in VS Code's error console.
@@ -85,7 +85,7 @@ The ts task is used to compile TypeScript using configuration from `src/tsconfig
 
 The resulting JavaScript bundle will be written to `www/js/bundle.js`.
 
-The JavaScript output will be minified if the debug flag is set to true via the current build scheme. Minification is done by delegating to the minify task.
+The JavaScript output will be minified if the debug flag is set to false via the current build scheme. Minification is done by delegating to the minify task.
 
 !!! note
 	If you are using VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to run the `ts` task with the default scheme. Any compilation problems will be shown in VS Code's error console.
