@@ -237,7 +237,7 @@
 <h2 id="gulp-sass">gulp sass</h2>
 <p>The sass task compiles the SASS source files, starting with <code>src/Styles/Index.scss</code>. The resulting CSS bundle will be output to <code>www/css/bundle.css</code>.</p>
 <p>You'll need to re-run this task to see any SASS styling changes during development.</p>
-<p>The SASS output will be minified if the debug flag is set to true via the current build scheme.</p>
+<p>The SASS output will be minified if the debug flag is set to false via the current build scheme.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you run this task from VS Code, SASS problems will be shown in VS Code's error console.</p>
@@ -256,7 +256,7 @@
 <h2 id="gulp-ts">gulp ts</h2>
 <p>The ts task is used to compile TypeScript using configuration from <code>src/tsconfig.json</code>.</p>
 <p>The resulting JavaScript bundle will be written to <code>www/js/bundle.js</code>.</p>
-<p>The JavaScript output will be minified if the debug flag is set to true via the current build scheme. Minification is done by delegating to the minify task.</p>
+<p>The JavaScript output will be minified if the debug flag is set to false via the current build scheme. Minification is done by delegating to the minify task.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you are using VS Code, you can use <kbd>⌘ Command</kbd><kbd>⇧ Shift</kbd><kbd>B</kbd> to run the <code>ts</code> task with the default scheme. Any compilation problems will be shown in VS Code's error console.</p>
