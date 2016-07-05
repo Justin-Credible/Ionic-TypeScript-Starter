@@ -86,7 +86,7 @@ module.exports = helper = {
             return "Unknown";
         }
         else {
-            return shResult.output.replace("\n", "");
+            // return shResult.output.replace("\n", "");
         }
     },
 

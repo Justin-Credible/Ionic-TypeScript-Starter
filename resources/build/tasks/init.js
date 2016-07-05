@@ -63,7 +63,7 @@ module.exports = function(gulp, plugins) {
             var result = sh.exec(platformCommand);
 
             if (result.code !== 0) {
-                cb(new Error(result.output));
+                // cb(new Error(result.output));
                 return;
             }
 
