@@ -13,7 +13,7 @@ module.exports = function(gulp, plugins) {
 
     return function(cb) {
 
-        var tsdBin = path.join("node_modules", ".bin", "tsd");
+        var tsdBin = path.join("node_modules", ".bin", "typings");
 
         // First reinstall any missing definitions to the typings directory.
         var result = sh.exec(tsdBin + " reinstall");

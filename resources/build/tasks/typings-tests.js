@@ -13,10 +13,10 @@ module.exports = function(gulp, plugins) {
 
     return function(cb) {
 
-        var tsdBin = path.join("node_modules", ".bin", "tsd");
+        var tsdBin = path.join("node_modules", ".bin", "typings");
 
         // First reinstall any missing definitions to the typings-tests directory.
-        var result = sh.exec(tsdBin + " reinstall --config tsd.tests.json");
+        var result = sh.exec(tsdBin + " reinstall --config typings.tests.json");
 
         if (result.code !== 0) {
             cb(new Error(result.output));
@@ -24,7 +24,7 @@ module.exports = function(gulp, plugins) {
         }
 
         // Rebuild the tests/tsd.d.ts bundle reference file.
-        result = sh.exec(tsdBin + " rebundle --config tsd.tests.json");
+        result = sh.exec(tsdBin + " rebundle --config typings.tests.json");
 
         if (result.code !== 0) {
             cb(new Error(result.output));
