@@ -16,7 +16,7 @@ module.exports = function(gulp, plugins) {
         var tsdBin = path.join("node_modules", ".bin", "typings");
 
         // First reinstall any missing definitions to the typings directory.
-        var result = sh.exec(tsdBin + " reinstall");
+        var result = sh.exec(tsdBin + " install");
 
         if (result.code !== 0) {
             cb(new Error(result.output));
@@ -24,7 +24,7 @@ module.exports = function(gulp, plugins) {
         }
 
         // Rebuild the src/tsd.d.ts bundle reference file.
-        result = sh.exec(tsdBin + " rebundle");
+        result = sh.exec(tsdBin + " bundle --out typings/index.d.ts --global");
 
         if (result.code !== 0) {
             cb(new Error(result.output));

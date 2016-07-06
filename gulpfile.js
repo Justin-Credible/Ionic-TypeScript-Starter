@@ -2,6 +2,7 @@
 var gulp = require("gulp");
 var plugins = require("gulp-load-plugins")();
 var del = require("del");
+var gulpTypings = require("gulp-typings");
 var runSequence = require("run-sequence");
 
 /**
@@ -16,7 +17,7 @@ function getTask(taskName) {
 gulp.task("help", plugins.taskListing.withFilters(/:/));
 
 gulp.task("default",  function (cb) {
-    runSequence("plugins", "libs", "typings", "templates", "sass", "ts", "config", cb);
+    runSequence("plugins", "libs", "installTypings", "templates", "sass", "ts", "config", cb);
 });
 
 gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:typings", "clean:templates", "clean:sass"], getTask("init"));
@@ -35,9 +36,15 @@ gulp.task("lint", getTask("lint"));
 gulp.task("test", ["ts:tests"], getTask("test"));
 gulp.task("typedoc", getTask("typedoc"));
 
-gulp.task("typings", getTask("typings"));
-gulp.task("typings:app", getTask("typings:app"));
-gulp.task("typings:tests", getTask("typings:tests"));
+gulp.task("installTypings",function(){
+    var stream = gulp.src("./typings.json")
+        .pipe(gulpTypings()); //will install all typingsfiles in pipeline. 
+    return stream; // by returning stream gulp can listen to events from the stream and knows when it is finished. 
+});
+
+// gulp.task("typings", getTask("typings"));
+// gulp.task("typings:app", getTask("typings:app"));
+// gulp.task("typings:tests", getTask("typings:tests"));
 
 gulp.task("ts", ["ts:src"], getTask("ts"));
 gulp.task("ts:src", ["ts:src-readme"], getTask("ts:src"));

@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
+        "module": "amd",
+        "experimentalDecorators": true,
+        "rootDir": "./",
         "target": "es5",
         "out": "www/js/bundle.js",
         "sourceMap": true,

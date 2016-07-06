@@ -6,6 +6,7 @@ var path = require("path");
 var helper = require("./helper");
 var runSequence = require("run-sequence");
 var sh = require("shelljs");
+var ts = require('gulp-typescript');
 
 /**
  * Used to perform compliation of the TypeScript source in the src directory and
@@ -20,21 +21,25 @@ module.exports = function(gulp, plugins) {
 
     return function(cb) {
 
-        var tscBin = path.join("node_modules", ".bin", "tsc");
+        gulp.src(['src/**/*.ts', 'typings/globals/**/*.d.ts'])
+        .pipe(ts({
+            noImplicitAny: false,
+            target: 'es5',
+            out: 'bundle.js'
+        }))
+        .pipe(gulp.dest('www/js'));
 
-        var result = sh.exec(tscBin + " -p src");
+        // if (result.code !== 0) {
+        //     cb(new Error("Error running TypeScript compiler (tsc)."));
+        //     return;
+        // }
 
-        if (result.code !== 0) {
-            cb(new Error("Error running TypeScript compiler (tsc)."));
-            return;
-        }
-
-        // For debug builds, we are done, but for release builds, minify the bundle.
-        if (helper.isDebugBuild()) {
-            cb();
-        }
-        else {
-            runSequence("minify", cb);
-        }
+        // // For debug builds, we are done, but for release builds, minify the bundle.
+        // if (helper.isDebugBuild()) {
+        //     cb();
+        // }
+        // else {
+        //     runSequence("minify", cb);
+        // }
     };
 };
