@@ -8,4 +8,8 @@ declare module Ionic {
 	interface IViewEventArguments {
 
 	}
+
+	interface IPlatform {
+		
+	}
 }
