@@ -5,6 +5,7 @@ var del = require("del");
 var gulpTypings = require("gulp-typings");
 var runSequence = require("run-sequence");
 
+
 /**
  * Used to load the gulp task with the given name from resources/build/tasks
  * http://macr.ae/article/splitting-gulpfile-multiple-files.html
@@ -17,7 +18,11 @@ function getTask(taskName) {
 gulp.task("help", plugins.taskListing.withFilters(/:/));
 
 gulp.task("default",  function (cb) {
-    runSequence("plugins", "libs", "installTypings", "templates", "sass", "ts", "config", cb);
+    runSequence("installTypings", "templates", "sass", "ts", "config", cb);
+});
+
+gulp.task("debug-ts",  function (cb) {
+    runSequence("installTypings", "ts", "config", cb);
 });
 
 gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:typings", "clean:templates", "clean:sass"], getTask("init"));
@@ -42,9 +47,6 @@ gulp.task("installTypings",function(){
     return stream; // by returning stream gulp can listen to events from the stream and knows when it is finished. 
 });
 
-// gulp.task("typings", getTask("typings"));
-// gulp.task("typings:app", getTask("typings:app"));
-// gulp.task("typings:tests", getTask("typings:tests"));
 
 gulp.task("ts", ["ts:src"], getTask("ts"));
 gulp.task("ts:src", ["ts:src-readme"], getTask("ts:src"));

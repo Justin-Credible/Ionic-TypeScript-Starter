@@ -22,7 +22,7 @@ declare module Interfaces {
 		data: string;
 	}
 
-	interface RequestConfig {
+	interface RequestConfig extends ng.IRequestConfig {
 		url: string;
 		showSpinner: boolean;
 		headers: any;
@@ -40,6 +40,7 @@ declare module Interfaces {
 		licenseUrl: string;
 		authorWebsite: string;
 		githubUrl: string;
-
+		authorType: string;
+		authorEmail: string;
 	}
 }
