@@ -35,6 +35,7 @@
     "keyboard": "github:DefinitelyTyped/DefinitelyTyped/cordova-ionic/plugins/keyboard.d.ts#af5b8275d1f2b92738b93fddabc461fc20c553a1",
     "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#aadd63ecae3feb76ea2d4be80511e266b5c2c4a7",
     "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#aadd63ecae3feb76ea2d4be80511e266b5c2c4a7",
+    "ng-cordova/toast": "registry:dt/ng-cordova/toast#0.0.0+20160316171810",
     "node": "registry:dt/node#6.0.0+20160621231320"
   }
 }

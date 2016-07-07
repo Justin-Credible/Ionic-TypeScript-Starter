@@ -12,14 +12,34 @@ declare module Interfaces {
 		debug: boolean;
 	}
 
-	interface RequestConfig {
+	interface IRequestConfig {
 		url: string;
-		blocking: any;
 		showSpinner: boolean;
 		headers: any;
+		blockingText: string;
+		blocking: boolean;
+		logRequestBody: string;
+		data: string;
+	}
+
+	interface RequestConfig {
+		url: string;
+		showSpinner: boolean;
+		headers: any;
+		blockingText: string;
+		blocking: boolean;
+		logRequestBody: string;
+		data: string;
 	}
 
 	interface BuildConfig {
 		apiVersion: string;
+		appName: string;
+		appVersion: string;
+		authorName: string;
+		licenseUrl: string;
+		authorWebsite: string;
+		githubUrl: string;
+
 	}
 }
