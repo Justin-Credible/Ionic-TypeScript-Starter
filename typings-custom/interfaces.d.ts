@@ -12,23 +12,13 @@ declare module Interfaces {
 		debug: boolean;
 	}
 
-	interface IRequestConfig {
-		url: string;
-		showSpinner: boolean;
-		headers: any;
-		blockingText: string;
-		blocking: boolean;
-		logRequestBody: string;
-		data: string;
-	}
-
 	interface RequestConfig extends ng.IRequestConfig {
 		url: string;
 		showSpinner: boolean;
 		headers: any;
 		blockingText: string;
 		blocking: boolean;
-		logRequestBody: string;
+		logRequestBody: boolean;
 		data: string;
 	}
 

@@ -593,7 +593,7 @@
          */
         public sanitizeConfigForLogging(config: Interfaces.RequestConfig): Interfaces.RequestConfig {
 
-            if (config && config.logRequestBody === false) {
+            if (config && config.logRequestBody == false) {
 
                 let filteredConfig = _.cloneDeep(config);
                 filteredConfig.data = "[FILTERED]";

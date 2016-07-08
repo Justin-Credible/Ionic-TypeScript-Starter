@@ -10,6 +10,6 @@ declare module Ionic {
 	}
 
 	interface IPlatform {
-		
+		ready: any;
 	}
 }
