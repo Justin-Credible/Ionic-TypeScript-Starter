@@ -11,16 +11,22 @@ var helper = require("./helper");
 module.exports = function(gulp, plugins) {
 
     return function(cb) {
-
+        // Slight restructure and add separate custom typings folder
         var filesToLint = [
             "./src/**/*.ts",
             "./tests/**/*.ts",
-            "./typings/custom/**/*.d.ts",
+            "./typings/**/*.d.ts",
+            "./typings-custom/*.d.ts",
             "./typings-tests/custom/**/*.d.ts"
         ];
 
-        return gulp.src(filesToLint)
+        try {
+            return gulp.src(filesToLint)
             .pipe(plugins.tslint())
             .pipe(plugins.tslint.report(helper.tsLintReporter));
+        } catch(err) {
+            console.log(err);
+        }
+        
     };
 };
