@@ -15,8 +15,6 @@ module.exports = function(gulp, plugins) {
         var filesToLint = [
             "./src/**/*.ts",
             "./tests/**/*.ts",
-            "./typings/**/*.d.ts",
-            "./typings-custom/*.d.ts",
             "./typings-tests/custom/**/*.d.ts"
         ];
 

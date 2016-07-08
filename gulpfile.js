@@ -20,6 +20,10 @@ gulp.task("default",  function (cb) {
     runSequence("plugins", "libs", "bower", "installTypings", "templates", "sass", "ts", "config", cb);
 });
 
+gulp.task("debug-ts",  function (cb) {
+    runSequence("installTypings", "ts", cb);
+});
+
 gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:typings", "clean:templates", "clean:sass"], getTask("init"));
 gulp.task("config", getTask("config"));
 gulp.task("watch", getTask("watch"));
