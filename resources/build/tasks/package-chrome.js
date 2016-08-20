@@ -27,6 +27,9 @@ module.exports = function(gulp, plugins) {
         sh.rm("-rf", "build/chrome");
         sh.rm("-rf", "build/chrome.tar.gz");
 
+        // Ensure the target directory exists.
+        sh.mkdir("-p", "build/chrome");
+
         // Delegate to the config task to generate the index, manifest, and build vars.
         runSequence("config", function (err) {
 
@@ -37,7 +40,7 @@ module.exports = function(gulp, plugins) {
 
             // Copy the www payload.
             helper.info("Copying www to build/chrome");
-            sh.cp("-R", "www", "build/chrome");
+            sh.cp("-R", "www/", "build/chrome");
 
             // Copy the icon.
             helper.info("Copying resources/icon.png to build/chrome/icon.png");

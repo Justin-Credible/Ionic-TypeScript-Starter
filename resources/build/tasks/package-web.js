@@ -31,6 +31,9 @@ module.exports = function(gulp, plugins) {
         sh.rm("-rf", "build/web");
         sh.rm("-rf", "build/web.tar.gz");
 
+        // Ensure the target directory exists.
+        sh.mkdir("-p", "build/web");
+
         // Delegate to the config task to generate the index, manifest, and build vars.
         runSequence("config", function (err) {
 
@@ -40,7 +43,7 @@ module.exports = function(gulp, plugins) {
             }
 
             helper.info("Copying www to build/web");
-            sh.cp("-R", "www", "build/web");
+            sh.cp("-R", "www/", "build/web");
 
             helper.info("Bundling css, lib, and js directories to build/web/resources-temp");
             sh.mkdir("-p", "build/web/resources-temp");
