@@ -43,7 +43,7 @@ module.exports = function(gulp, plugins) {
             // Chrome Extension: --prep chrome
 
             helper.info(helper.format("Generating: build/chrome/manifest.json from: resources/chrome/manifest.master.json"));
-            sh.mkdir("build/chrome");
+            sh.mkdir("-p", "build/chrome");
             helper.performVariableReplacement(schemeName, "resources/chrome/manifest.master.json", "build/chrome/manifest.json");
 
             helper.info(helper.format("Generating: www/index.html from resources/chrome/index.master.html"));
