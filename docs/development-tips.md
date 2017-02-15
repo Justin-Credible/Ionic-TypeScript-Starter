@@ -16,9 +16,9 @@ With these two features combined, you can rapidly build out your application wit
 
 When making HTTP requests to your backend API during development, you may find it useful to disable several security features, such as the same origin policy and SSL certificate checking. To do so, you can start Chrome using the following flags:
 
-```
+```bash
 # OS X
-$ open -a "Google Chrome.app" --ignore-certificate-errors --disable-web-security
+$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --ignore-certificate-errors --disable-web-security
 
 # Windows
 > chrome.exe --ignore-certificate-errors --disable-web-security
@@ -26,9 +26,9 @@ $ open -a "Google Chrome.app" --ignore-certificate-errors --disable-web-security
 
 Since these flags disable important security features, it is important that you do not use this Chrome instance for normal web browsing. If you use Chrome as your primary browser, I recommend launching a second instance pointed at a development-only profile:
 
-```
+```bash
 # OS X
-$ open -a "Google Chrome.app" --ignore-certificate-errors --disable-web-security --user-data-dir=/tmp/ChromeDev
+$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=/Users/$USER/Library/Application\ Support/Google/ChromeDev --ignore-certificate-errors --disable-web-security
 
 # Windows
 > chrome.exe --ignore-certificate-errors --disable-web-security --user-data-dir=C:\tmp\ChromeDev
