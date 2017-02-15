@@ -28,7 +28,7 @@ Since these flags disable important security features, it is important that you 
 
 ```bash
 # OS X
-$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=/Users/$USER/Library/Application\ Support/Google/ChromeDev --ignore-certificate-errors --disable-web-security
+$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --ignore-certificate-errors --disable-web-security --user-data-dir=/tmp/ChromeDev
 
 # Windows
 > chrome.exe --ignore-certificate-errors --disable-web-security --user-data-dir=C:\tmp\ChromeDev
