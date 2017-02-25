@@ -24,7 +24,7 @@
         //#endregion
 
         private _cloudIconPanel: Directives.IIconPanelDirectiveInstance;
-        private _updateInterval: number;
+        private _updateInterval: any;
 
         //#region BaseController Overrides
 

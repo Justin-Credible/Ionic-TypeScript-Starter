@@ -13,18 +13,10 @@ module.exports = function(gulp, plugins) {
 
     return function(cb) {
 
-        var tsdBin = path.join("node_modules", ".bin", "tsd");
+        var tsdBin = path.join("node_modules", ".bin", "bower");
 
         // First reinstall any missing definitions to the typings directory.
-        var result = sh.exec(tsdBin + " reinstall");
-
-        if (result.code !== 0) {
-            cb(new Error(result.output));
-            return;
-        }
-
-        // Rebuild the src/tsd.d.ts bundle reference file.
-        result = sh.exec(tsdBin + " rebundle");
+        var result = sh.exec(tsdBin + " install");
 
         if (result.code !== 0) {
             cb(new Error(result.output));

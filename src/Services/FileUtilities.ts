@@ -1,5 +1,5 @@
 ﻿namespace JustinCredible.SampleApp.Services {
-
+    declare var window: any;
     /**
      * Provides a common set of helper/utility methods for performing file I/O.
      * 

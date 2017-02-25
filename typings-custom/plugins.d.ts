@@ -1,0 +1,3 @@
+interface Plugins {
+	toast: any;
+}

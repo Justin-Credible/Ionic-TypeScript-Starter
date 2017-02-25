@@ -2,6 +2,7 @@
 var gulp = require("gulp");
 var plugins = require("gulp-load-plugins")();
 var del = require("del");
+var gulpTypings = require("gulp-typings");
 var runSequence = require("run-sequence");
 
 /**
@@ -16,10 +17,14 @@ function getTask(taskName) {
 gulp.task("help", plugins.taskListing.withFilters(/:/));
 
 gulp.task("default",  function (cb) {
-    runSequence("plugins", "libs", "tsd", "templates", "sass", "ts", "config", cb);
+    runSequence("plugins", "libs", "bower", "installTypings", "templates", "sass", "ts", "config", cb);
 });
 
-gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"], getTask("init"));
+gulp.task("debug-ts",  function (cb) {
+    runSequence("installTypings", "ts", cb);
+});
+
+gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:typings", "clean:templates", "clean:sass"], getTask("init"));
 gulp.task("config", getTask("config"));
 gulp.task("watch", getTask("watch"));
 
@@ -35,9 +40,15 @@ gulp.task("lint", getTask("lint"));
 gulp.task("test", ["ts:tests"], getTask("test"));
 gulp.task("typedoc", getTask("typedoc"));
 
-gulp.task("tsd", getTask("tsd"));
-gulp.task("tsd:app", getTask("tsd:app"));
-gulp.task("tsd:tests", getTask("tsd:tests"));
+gulp.task("installTypings",function(){
+    var stream = gulp.src("./typings.json")
+        .pipe(gulpTypings()); //will install all typingsfiles in pipeline. 
+    return stream; // by returning stream gulp can listen to events from the stream and knows when it is finished. 
+});
+
+// gulp.task("typings", getTask("typings"));
+// gulp.task("typings:app", getTask("typings:app"));
+// gulp.task("typings:tests", getTask("typings:tests"));
 
 gulp.task("ts", ["ts:src"], getTask("ts"));
 gulp.task("ts:src", ["ts:src-readme"], getTask("ts:src"));
@@ -48,9 +59,10 @@ gulp.task("plugins", ["git-check"], getTask("plugins"));
 gulp.task("libs", getTask("libs"));
 gulp.task("minify", getTask("minify"));
 gulp.task("templates", getTask("templates"));
+gulp.task("bower", getTask("bower"));
 gulp.task("sass", getTask("sass"));
 
-gulp.task("clean", ["clean:node", "clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:tsd", "clean:templates", "clean:sass"]);
+gulp.task("clean", ["clean:node", "clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:typings", "clean:templates", "clean:sass"]);
 gulp.task("clean:node", getTask("clean/clean:node"));
 gulp.task("clean:config", getTask("clean/clean:config"));
 gulp.task("clean:bower", getTask("clean/clean:bower"));
@@ -58,7 +70,7 @@ gulp.task("clean:platforms", getTask("clean/clean:platforms"));
 gulp.task("clean:plugins", getTask("clean/clean:plugins"));
 gulp.task("clean:libs", getTask("clean/clean:libs"));
 gulp.task("clean:ts", getTask("clean/clean:ts"));
-gulp.task("clean:tsd", getTask("clean/clean:tsd"));
+gulp.task("clean:typings", getTask("clean/clean:typings"));
 gulp.task("clean:templates", getTask("clean/clean:templates"));
 gulp.task("clean:sass", getTask("clean/clean:sass"));
 gulp.task("clean:chrome", getTask("clean/clean:chrome"));
