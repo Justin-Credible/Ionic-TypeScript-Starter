@@ -94,7 +94,7 @@ module.exports = function(gulp, plugins) {
             helper.performVariableReplacement(schemeName, "resources/web/index.master.html", "build/web/index.html");
 
             helper.info(helper.format("Adding app bundle resource references to: build/web/index.html"));
-            helper.performReferenceReplacement("build/web/index.html", "build/web/index.html", true, helper.getCommitShortSha());
+            helper.performReferenceReplacement("build/web/index.html", "build/web/index.html", true, helper.getCommitShortSha(), "resources/web/index.references.yml");
 
             // Archive the directory.
             gulp.src("build/web/**/*", { base: "build/web" })
