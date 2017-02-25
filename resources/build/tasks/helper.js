@@ -340,47 +340,15 @@ module.exports = helper = {
      * • JS Libs: app.bundle.lib.js
      * • JS: app.bundle.js
      * 
-     * If bundled is false, the map of files provided in the given referencesFilePath will be used
-     * to grab each file and emit a link/script tag for each resource type.
+     * The referencesFilePath is a path to a file containing a map of resource files that will be used
+     * to emit a link/script tag for each resource type. When bundled=true, a static path will be
+     * inserted for each bundle, as well as references for any http/https file references.
      */
     performReferenceReplacement: function(sourceFilePath, targetFilePath, bundled, cacheBusterValue, referencesFilePath) {
 
         var cssRegExp = /^([\t ]+)<!-- references:css -->/gm;
         var libRegExp = /^([\t ]+)<!-- references:lib -->/gm;
         var jsRegExp = /^([\t ]+)<!-- references:js -->/gm;
-
-        // Open the master file that we'll perform replacements on.
-        var content = fs.readFileSync(sourceFilePath, "utf8").toString();
-
-        // Lets handle the easy case first. If bundled is true, then we subsitute some static paths.
-        if (bundled) {
-
-            content = content.replace(cssRegExp, function (match, whitespaceMatch, offset, string) {
-                return helper.format('{0}<link rel="stylesheet" href="css/app.bundle.css{1}">',
-                            whitespaceMatch,
-                            cacheBusterValue ? "?v=" + cacheBusterValue : "");
-            });
-
-            content = content.replace(libRegExp, function (match, whitespaceMatch, offset, string) {
-                return helper.format('{0}<script type="text/javascript" src="lib/app.bundle.lib.js{1}"></script>',
-                            whitespaceMatch,
-                            cacheBusterValue ? "?v=" + cacheBusterValue : "");
-            });
-
-            content = content.replace(jsRegExp, function (match, whitespaceMatch, offset, string) {
-                return helper.format('{0}<script type="text/javascript" src="js/app.bundle.js{1}"></script>',
-                            whitespaceMatch,
-                            cacheBusterValue ? "?v=" + cacheBusterValue : "");
-            });
-
-            fs.writeFileSync(targetFilePath, content, "utf8");
-
-            return;
-        }
-
-        if (!referencesFilePath) {
-            throw new Error("The bundled flag was false, but no referencesFilePath was provided.");
-        }
 
         // Read in the file that contains the list of resource references.
         var resourceYmlRaw = fs.readFileSync(referencesFilePath, "utf8").toString();
@@ -389,6 +357,44 @@ module.exports = helper = {
         if (!resources) {
             throw new Error("Unable to read resource references from " + referencesFilePath);
         }
+
+        // Lets handle the special case first. If bundled is true, then we need to insert a static path
+        // to the bundled files (instead of all files) as well as any HTTP/HTTPS files.
+        if (bundled) {
+
+            // Filter the list down to only HTTP/HTTPS resources.
+            resources.css = _.filter(resources.css, function (resource) {
+                return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
+                    ? true : false;
+            });
+
+            // Add the path to the bundled CSS files.
+            resources.css.push(helper.format("css/app.bundle.css{0}",
+                                cacheBusterValue ? "?v=" + cacheBusterValue : ""));
+
+            // Filter the list down to only HTTP/HTTPS resources.
+            resources.lib = _.filter(resources.lib, function (resource) {
+                return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
+                    ? true : false;
+            });
+
+            // Add the path to the bundled JS libraries.
+            resources.lib.push(helper.format("lib/app.bundle.lib.js{0}",
+                                cacheBusterValue ? "?v=" + cacheBusterValue : ""));
+
+            // Filter the list down to only HTTP/HTTPS resources.
+            resources.js = _.filter(resources.js, function (resource) {
+                return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
+                    ? true : false;
+            });
+
+            // Add the path to the bundled JS files.
+            resources.js.push(helper.format("js/app.bundle.js{0}",
+                                cacheBusterValue ? "?v=" + cacheBusterValue : ""));
+        }
+
+        // Open the master file that we'll perform replacements on.
+        var content = fs.readFileSync(sourceFilePath, "utf8").toString();
 
         // Inject link tags for the CSS files.
         if (resources.css && resources.css.length > 0) {
@@ -525,9 +531,15 @@ module.exports = helper = {
         if (resourceManifest.css && resourceManifest.css.length > 0) {
 
             // Append the source directory path to each resource in the manifest.
+            // Files to be loaded via HTTP/HTTPS at runtime should be omitted.
             var cssReferences = _.map(resourceManifest.css, function (resource) {
-                return path.join(sourceDir, resource);
+                return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
+                    ? null // Don't include the live resource.
+                    : path.join(sourceDir, resource)
             });
+
+            // Ensure the null entries are removed from the list.
+            cssReferences = _.filter(cssReferences);
 
             // Concatenate all of the resources.
             var cssBundle = sh.cat(cssReferences);
@@ -539,12 +551,19 @@ module.exports = helper = {
         if (resourceManifest.lib && resourceManifest.lib.length > 0) {
 
             // Append the source directory path to each resource in the manifest.
+            // Files to be loaded via HTTP/HTTPS at runtime should be omitted.
             var libReferences = _.map(resourceManifest.lib, function (resource) {
-                return path.join(sourceDir, resource);
+                return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
+                    ? null // Don't include the live resource.
+                    : path.join(sourceDir, resource)
             });
+
+            // Ensure the null entries are removed from the list.
+            libReferences = _.filter(libReferences);
 
             // Concatenate all of the resources.
             var libBundle = sh.cat(libReferences);
+
 
             // Write the bundle
             fs.writeFileSync(path.join(targetDir, "app.bundle.lib.js"), libBundle, "utf8");
@@ -553,9 +572,15 @@ module.exports = helper = {
         if (resourceManifest.js && resourceManifest.js.length > 0) {
 
             // Append the source directory path to each resource in the manifest.
+            // Files to be loaded via HTTP/HTTPS at runtime should be omitted.
             var jsReferences = _.map(resourceManifest.js, function (resource) {
-                return path.join(sourceDir, resource);
+                return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
+                    ? null // Don't include the live resource.
+                    : path.join(sourceDir, resource)
             });
+
+            // Ensure the null entries are removed from the list.
+            jsReferences = _.filter(jsReferences);
 
             // Concatenate all of the resources.
             var jsBundle = sh.cat(jsReferences);
