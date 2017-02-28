@@ -40,6 +40,13 @@
         }
 
         /**
+         * Can be used to determine if this application was built to be served as a website.
+         */
+        public get isWebPlatform(): boolean {
+            return this.buildVars.config.isWebPlatform;
+        }
+
+        /**
          * Can be used to determine if the application is in debug or release mode.
          * 
          * @returns True if the application is in debug mode, false otherwise.

@@ -233,8 +233,16 @@ module.exports = helper = {
 
     /**
      * Used to get the scheme from resources/config/schemes.yml with the given name.
+     * 
+     * If an override scheme was specified in the name, the returned scheme will have
+     * values overrided by the specified override scheme. An override is specified by
+     * adding the name with a comma. For example: "dev1,web" for dev1 with the web override.
      */
     getSchemeByName: function(schemeName) {
+
+        if (!schemeName) {
+            throw new Error("A scheme name was not specified.");
+        }
 
         // Read and parse the schemes.yml file.
         var schemeConfigYmlRaw = fs.readFileSync("resources/config/schemes.yml", "utf8").toString();
@@ -242,6 +250,15 @@ module.exports = helper = {
 
         if (!schemesConfig || !schemesConfig.schemes) {
             throw new Error("Unable to load build schemes from resources/config/schemes.yml");
+        }
+
+        var overrideSchemeName = null;
+
+        // If the scheme name includes an override (designated by a comma) then we'll pull it out
+        // and re-set the base scheme name so it can be used below.
+        if (schemeName.indexOf(",") > -1) {
+            overrideSchemeName = schemeName.split(",")[1];
+            schemeName = schemeName.split(",")[0];
         }
 
         var scheme = schemesConfig.schemes[schemeName];
@@ -286,6 +303,29 @@ module.exports = helper = {
             // If this scheme has another base scheme, then we'll need to examine it as well.
             // Set the parent name here so the while loop executes again.
             baseSchemeName = baseScheme.base;
+        }
+
+        // If there was an override scheme name, grab it and attempt to merge the values into the scheme.
+        if (overrideSchemeName) {
+
+            if (!schemesConfig.overrides) {
+                throw new Error("Could not locate a build override section in resources/config/schemes.yml");
+            }
+
+            var overrideScheme = schemesConfig.overrides[overrideSchemeName];
+
+            if (!overrideScheme) {
+                throw new Error(helper.format("Could not locate a build override scheme with name '{0}' in resources/config/schemes.yml in the _overrides section.", overrideSchemeName));
+            }
+
+            for (var key in overrideScheme) {
+
+                if (!overrideScheme.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                scheme.replacements[key] = overrideScheme[key];
+            }
         }
 
         return scheme;

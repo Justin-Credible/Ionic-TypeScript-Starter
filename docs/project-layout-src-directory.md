@@ -124,9 +124,13 @@ Two example directives are provided with the sample project: a simple directive 
 
 See [Base Framework: Directives](base-framework.md#directives) for more details.
 
+# Interfaces
+
+This is where you can store interfaces that describe objects, but are not discrete classes or enumerations themselves.
+
 # Models
 
-This is where you can store model objects shared across multiple areas or services in your application (i.e., not view models).
+This is where you can store model object classes that are shared across multiple areas or services in your application (i.e., not view models).
 
 # Services
 

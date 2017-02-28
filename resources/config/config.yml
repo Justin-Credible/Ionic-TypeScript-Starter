@@ -21,3 +21,6 @@ apiUrl: "${API_URL}"
 
 # The version of the API to use; this will sent in the X-API-Version header.
 apiVersion: "${API_VERSION}"
+
+# Indicates if this application was built to be served as a website.
+isWebPlatform: ${IS_WEB_PLATFORM}

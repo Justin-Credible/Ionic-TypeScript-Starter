@@ -38,6 +38,8 @@ If the `--prep chrome` or `--prep web` flag is not specified, Cordova will be as
 
 If the `--scheme scheme_name` flag is not specified the default scheme will be used (as defined in `resources/config/schemes.yml`).
 
+Finally, you can provide an override for a scheme by appending the override scheme name to the scheme parameter like so: `--scheme scheme_name,override_name`.
+
 See [Development Tips: Build Schemes](development-tips.md#build-schemes) for more details.
 
 ## gulp templates

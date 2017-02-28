@@ -3,6 +3,14 @@
 # The name of the scheme to use if one isn't provided via the --scheme flag.
 default: "localdev"
 
+# This holds a collection of data that can be used to override and/or supplement existing
+# scheme replacement collections. These values will stomp over values from a scheme when
+# used. These can be used by appending the name on to an existing scheme with a comma.
+# For Example: gulp config --scheme development,web
+overrides:
+    web:
+        IS_WEB_PLATFORM: true
+
 # Different build schemes used by "gulp config --scheme scheme_name".
 # These are used to set the debug flag and perform variable replacement on other files.
 schemes:
@@ -16,6 +24,7 @@ schemes:
             AUTHOR_NAME: "Justin Unterreiner"
             AUTHOR_EMAIL: "justin.unterreiner@gmail.com"
             AUTHOR_WEBSITE: "http://www.justin-credible.net"
+            IS_WEB_PLATFORM: false
 
     # Used for development on a host entry pointing to localhost.
     localdev:

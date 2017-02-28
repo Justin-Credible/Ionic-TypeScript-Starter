@@ -169,21 +169,47 @@ For example, perhaps you have two schemes that both point at production, but one
 schemes:
 
 	_common:
+		replacements:
 			API_URL: "http://www.your-company.com/api"
 			API_VERSION: "v1"
 
 	prerelease:
 		debug: true
 		base: "_common"
-		GOOGLE_ANALYTICS_ID: "1234567890" # Testing GA Account
+		replacements:
+			GOOGLE_ANALYTICS_ID: "1234567890" # Testing GA Account
 
 	release:
 		debug: false
 		base: "_common"
-		GOOGLE_ANALYTICS_ID: "0987654321" # Production GA Account
+		replacements:
+			GOOGLE_ANALYTICS_ID: "0987654321" # Production GA Account
 ```
 
 Use of either the `prelease` or `release` scheme in this example would perform replacements using the same `API_URL` and `API_VERSION` values, but different `GOOGLE_ANALYTICS_ID` values.
+
+## Scheme Overrides
+
+You may wish to override specific scheme values without creating a seperate scheme. To to this, you can utilize the `overrides` property.
+
+```
+overrides:
+	web:
+		IS_WEB_PLATFORM: true
+		GOOGLE_ANALYTICS_ID: "XYZ"
+
+schemes:
+
+	development:
+		debug: true
+		replacements:
+			API_URL: "http://staging.your-company.com/api"
+			API_VERSION: "v1"
+			IS_WEB_PLATFORM: false
+			GOOGLE_ANALYTICS_ID: "ABC"
+```
+
+In order to use the `development` scheme with values overridden by the `web` scheme, you would run `gulp config --scheme development,web`. This will result in the values for `API_URL` and `API_VERSION` remaining unchanged, but override the values for `IS_WEB_PLATFORM` to `true` and `GOOGLE_ANALYTICS_ID` to `XYZ`.
 
 ## Platforms
 
