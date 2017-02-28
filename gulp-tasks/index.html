@@ -230,6 +230,7 @@
 <p>These files are generated from their master files in the resources directory for the specified platform, the shared configuration file at <code>resources/config/config.yml</code> and modified based on the active build scheme as defined in <code>resources/config/schemes.yml</code>.</p>
 <p>If the <code>--prep chrome</code> or <code>--prep web</code> flag is not specified, Cordova will be assumed.</p>
 <p>If the <code>--scheme scheme_name</code> flag is not specified the default scheme will be used (as defined in <code>resources/config/schemes.yml</code>).</p>
+<p>Finally, you can provide an override for a scheme by appending the override scheme name to the scheme parameter like so: <code>--scheme scheme_name,override_name</code>.</p>
 <p>See <a href="../development-tips/#build-schemes">Development Tips: Build Schemes</a> for more details.</p>
 <h2 id="gulp-templates">gulp templates</h2>
 <p>The templates task compiles Angular HTML templates from <code>src/Views/**/*.html</code> into a single JavaScript file at <code>www/js/templates.js</code>.</p>

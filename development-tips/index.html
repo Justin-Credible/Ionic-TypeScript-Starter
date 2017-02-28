@@ -186,6 +186,8 @@
         
             <li><a href="#base-schemes">Base Schemes</a></li>
         
+            <li><a href="#scheme-overrides">Scheme Overrides</a></li>
+        
             <li><a href="#platforms">Platforms</a></li>
         
             <li><a href="#generated-files">Generated Files</a></li>
@@ -306,21 +308,43 @@ schemes:
 <pre><code>schemes:
 
     _common:
+        replacements:
             API_URL: &quot;http://www.your-company.com/api&quot;
             API_VERSION: &quot;v1&quot;
 
     prerelease:
         debug: true
         base: &quot;_common&quot;
-        GOOGLE_ANALYTICS_ID: &quot;1234567890&quot; # Testing GA Account
+        replacements:
+            GOOGLE_ANALYTICS_ID: &quot;1234567890&quot; # Testing GA Account
 
     release:
         debug: false
         base: &quot;_common&quot;
-        GOOGLE_ANALYTICS_ID: &quot;0987654321&quot; # Production GA Account
+        replacements:
+            GOOGLE_ANALYTICS_ID: &quot;0987654321&quot; # Production GA Account
 </code></pre>
 
 <p>Use of either the <code>prelease</code> or <code>release</code> scheme in this example would perform replacements using the same <code>API_URL</code> and <code>API_VERSION</code> values, but different <code>GOOGLE_ANALYTICS_ID</code> values.</p>
+<h2 id="scheme-overrides">Scheme Overrides</h2>
+<p>You may wish to override specific scheme values without creating a seperate scheme. To to this, you can utilize the <code>overrides</code> property.</p>
+<pre><code>overrides:
+    web:
+        IS_WEB_PLATFORM: true
+        GOOGLE_ANALYTICS_ID: &quot;XYZ&quot;
+
+schemes:
+
+    development:
+        debug: true
+        replacements:
+            API_URL: &quot;http://staging.your-company.com/api&quot;
+            API_VERSION: &quot;v1&quot;
+            IS_WEB_PLATFORM: false
+            GOOGLE_ANALYTICS_ID: &quot;ABC&quot;
+</code></pre>
+
+<p>In order to use the <code>development</code> scheme with values overridden by the <code>web</code> scheme, you would run <code>gulp config --scheme development,web</code>. This will result in the values for <code>API_URL</code> and <code>API_VERSION</code> remaining unchanged, but override the values for <code>IS_WEB_PLATFORM</code> to <code>true</code> and <code>GOOGLE_ANALYTICS_ID</code> to <code>XYZ</code>.</p>
 <h2 id="platforms">Platforms</h2>
 <p>The configuration task can configure the project for three different platform types:</p>
 <ul>
