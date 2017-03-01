@@ -18,9 +18,12 @@ var sh = require("shelljs");
  * 
  * In addition, if the --prep web flag is specified:
  * • resources/web/index.master.html -> www/index.html
+ * • resources/web/manifest.master.json -> build/web/manifest.json
+ * • resources/web/browserconfig.master.xml -> build/web/browserconfig.xml
  * 
  * In addition, if the --prep chrome flag is specified:
  * • resources/chrome/index.master.html -> www/index.html
+ * • resources/chrome/manifest.master.json -> build/chrome/manifest.json
  */
 module.exports = function(gulp, plugins) {
 
@@ -33,6 +36,14 @@ module.exports = function(gulp, plugins) {
         if (helper.isPrepWeb()) {
             // Web Package: --prep web
 
+            sh.mkdir("-p", "build/web");
+
+            helper.info(helper.format("Generating: build/web/manifest.json from: resources/web/manifest.master.json"));
+            helper.performVariableReplacement(schemeName, "resources/web/manifest.master.json", "build/web/manifest.json");
+
+            helper.info(helper.format("Generating: build/web/browserconfig.xml from: resources/web/browserconfig.master.xml"));
+            helper.performVariableReplacement(schemeName, "resources/web/browserconfig.master.xml", "build/web/browserconfig.xml");
+
             helper.info(helper.format("Generating: www/index.html from: resources/web/index.master.html"));
             helper.performVariableReplacement(schemeName, "resources/web/index.master.html", "www/index.html");
 
@@ -42,8 +53,9 @@ module.exports = function(gulp, plugins) {
         else if (helper.isPrepChrome()) {
             // Chrome Extension: --prep chrome
 
-            helper.info(helper.format("Generating: build/chrome/manifest.json from: resources/chrome/manifest.master.json"));
             sh.mkdir("-p", "build/chrome");
+
+            helper.info(helper.format("Generating: build/chrome/manifest.json from: resources/chrome/manifest.master.json"));
             helper.performVariableReplacement(schemeName, "resources/chrome/manifest.master.json", "build/chrome/manifest.json");
 
             helper.info(helper.format("Generating: www/index.html from resources/chrome/index.master.html"));

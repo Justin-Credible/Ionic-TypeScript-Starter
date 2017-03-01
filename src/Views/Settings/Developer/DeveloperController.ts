@@ -47,6 +47,8 @@
             this.viewModel.userId = this.Preferences.userId;
             this.viewModel.token = this.Preferences.token;
 
+            this.viewModel.isWebPlatform = this.Utilities.isWebPlatform;
+            this.viewModel.isWebStandalone = this.Utilities.isWebStandalone;
             this.viewModel.devicePlatform = this.Utilities.platform;
             this.viewModel.deviceModel = this.Utilities.device.model;
             this.viewModel.deviceOsVersion = this.Utilities.device.version;

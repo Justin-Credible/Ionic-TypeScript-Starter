@@ -3,6 +3,9 @@
 var fs = require("fs");
 var path = require("path");
 
+// Gulp Plugins
+var plugins = require("gulp-load-plugins")();
+
 // Other Node Modules
 var helper = require("./helper");
 var runSequence = require("run-sequence");
@@ -31,7 +34,7 @@ module.exports = function(gulp, plugins) {
             // If we are preparing for the "web" or "chrome" platforms we can bail out here
             // because there is no need to add Cordova platforms in these cases.
             if (helper.isPrepWeb() || helper.isPrepChrome()) {
-                helper.info(helper.format("Skipping Cordova platforms because the '--prep {0}' flag was specified.", helper.util.env.prep));
+                helper.info(helper.format("Skipping Cordova platforms because the '--prep {0}' flag was specified.", plugins.util.env.prep));
                 runSequence("default", cb);
                 return;
             }

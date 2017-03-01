@@ -53,11 +53,16 @@ module.exports = function(gulp, plugins) {
             sh.rm("-rf", "build/web/css");
             sh.rm("-rf", "build/web/js");
 
+            // We can't just remove the entire lib directory (even though we've bundled up all
+            // of its JavaScript resources) because it can also contain other assets like fonts
+            // that will need to remain in place so they can be loaded at runtime. Here we remove
+            // all files EXCEPT for those with extensions as defined in this array.
+
             var libFileExtensionsToKeep = [
                 ".woff",
             ];
 
-            helper.info("Removing js/css/etc from build/web/lib");
+            helper.info("Removing redundant files from build/web/lib");
 
             sh.ls("-RA", "build/web/lib").forEach(function (file) {
 

@@ -3,6 +3,8 @@
     export class DeveloperViewModel {
         mockApiRequests: boolean;
 
+        isWebPlatform: boolean;
+        isWebStandalone: boolean;
         devicePlatform: string;
         deviceModel: string;
         deviceOsVersion: string;
