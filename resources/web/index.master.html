@@ -38,25 +38,103 @@
         <title>${APP_NAME}</title>
 
         <style>
+
+            body {
+                margin: 0;
+            }
+
             #web_splash {
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 background-color: #5e88f5;
-                color: black;
+                text-align: center;
+                padding-top: 50%;
             }
 
             #web_splash h2 {
-                font-family: serif !important;
+                color: white;
+                font-family: "Helvetica",sans-serif !important;
+                font-size: 18pt;
             }
-        </style>
+
+            #web_splash .loader {
+                font-size: 10px;
+                margin: 50px auto;
+                text-indent: -9999em;
+                width: 11em;
+                height: 11em;
+                border-radius: 50%;
+                background: #ffffff;
+                background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                position: relative;
+                -webkit-animation: load3 1.4s infinite linear;
+                animation: load3 1.4s infinite linear;
+                -webkit-transform: translateZ(0);
+                -ms-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+
+            #web_splash .loader:before {
+                width: 50%;
+                height: 50%;
+                background: #ffffff;
+                border-radius: 100% 0 0 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: '';
+            }
+
+            #web_splash .loader:after {
+                background: #5e88f5;
+                width: 75%;
+                height: 75%;
+                border-radius: 50%;
+                content: '';
+                margin: auto;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+            }
+
+            @-webkit-keyframes load3 {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes load3 {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+       </style>
 
     </head>
 
     <body>
 
         <div id="web_splash">
-            <h2>Loading, please wait!</h2>
+            <h2>${APP_NAME}</h2>
+            <div class="loader"></div>
         </div>
 
         <ion-nav-view></ion-nav-view>
