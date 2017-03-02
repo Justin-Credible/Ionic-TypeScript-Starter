@@ -9,6 +9,8 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
+                "$rootScope",
+                "$injector",
                 "$window",
                 Services.Plugins.ID,
                 Services.Utilities.ID,
@@ -23,6 +25,8 @@
 
         constructor(
             $scope: ng.IScope,
+            private $rootScope: ng.IRootScopeService,
+            private $injector: ng.auto.IInjectorService,
             private $window: ng.IWindowService,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
@@ -133,18 +137,32 @@
         protected addServicesToGlobalScope_click(): void {
 
             /* tslint:disable:no-string-literal */
-            window["__ngServices"] = {
-                "FileUtilities": this.FileUtilities,
-                "Logger": this.Logger,
-                "Utilities": this.Utilities,
-                "UiHelper": this.UiHelper,
-                "Plugins": this.Plugins,
-                "Preferences": this.Preferences,
-                "MockPlatformApis": this.MockPlatformApis
+
+            this.$window["__services"] = {
+                $rootScope: this.$rootScope
             };
+
+            for (var key in Services) {
+
+                if (!Services.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                let serviceId = Services[key].ID;
+
+                try {
+                    let service = this.$injector.get(serviceId);
+                    this.$window["__services"][key] = service;
+                }
+                catch (err) {
+                    /* tslint:disable:no-empty */
+                    /* tslint:enable:no-empty */
+                }
+            }
+
             /* tslint:enable:no-string-literal */
 
-            this.UiHelper.alert("Added services to the global variable __ngServices.");
+            this.UiHelper.alert("Added services to the global variable __services.");
         }
 
         protected setRequirePinThreshold_click(): void {
