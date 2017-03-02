@@ -442,7 +442,15 @@ module.exports = helper = {
             var cssReferences = [];
 
             resources.css.forEach(function (cssReference) {
-                cssReferences.push(helper.format('<link rel="stylesheet" href="{0}">', cssReference));
+
+                // If this was the app bundle, then use the loadCSS loader to prevent rendering from blocking.
+                if (cssReference.indexOf("css/app.bundle.css") > -1) {
+                    var cssLoaderScript = helper.getCssLoaderScript(cssReference);
+                    cssReferences.push(cssLoaderScript);
+                }
+                else {
+                    cssReferences.push(helper.format('<link rel="stylesheet" href="{0}">', cssReference));
+                }
             });
 
             content = content.replace(cssRegExp, function (match, whitespaceMatch, offset, string) {
@@ -459,7 +467,15 @@ module.exports = helper = {
             var libReferences = [];
 
             resources.lib.forEach(function (libReference) {
-                libReferences.push(helper.format('<script type="text/javascript" src="{0}"></script>', libReference));
+
+                var onLoadAttribute = "";
+
+                // If this was the app bundle, then add an attribute so we know when it has loaded.
+                if (libReference.indexOf("lib/app.bundle.lib.js") > -1) {
+                    onLoadAttribute = ' onload="window.__lib_loaded=true;"';
+                }
+
+                libReferences.push(helper.format('<script type="text/javascript" src="{0}"{1}></script>', libReference, onLoadAttribute));
             });
 
             content = content.replace(libRegExp, function (match, whitespaceMatch, offset, string) {
@@ -476,7 +492,15 @@ module.exports = helper = {
             var jsReferences = [];
 
             resources.js.forEach(function (jsReference) {
-                jsReferences.push(helper.format('<script type="text/javascript" src="{0}"></script>', jsReference));
+
+                var onLoadAttribute = "";
+
+                // If this was the app bundle, then add an attribute so we know when it has loaded.
+                if (jsReference.indexOf("js/app.bundle.js") > -1) {
+                    onLoadAttribute = ' onload="window.__js_loaded=true;"';
+                }
+
+                jsReferences.push(helper.format('<script type="text/javascript" src="{0}"{1}></script>', jsReference, onLoadAttribute));
             });
 
             content = content.replace(jsRegExp, function (match, whitespaceMatch, offset, string) {
@@ -488,6 +512,34 @@ module.exports = helper = {
         }
 
         fs.writeFileSync(targetFilePath, content, "utf8");
+    },
+
+    /**
+     * Used to build a <script> tag that will load the given CSS file in a non-blocking manner.
+     * This allows the HTML page to render immediately without waiting on the CSS reference.
+     */
+    getCssLoaderScript: function(cssBundlePath) {
+
+        var parts = [];
+
+        parts.push("<script>");
+
+        // https://github.com/filamentgroup/loadCSS/releases
+
+        // loadCSS.js 1.3.1
+        parts.push("/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */");
+        parts.push('!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);');
+
+        // onLoadCSS.js 1.3.1
+        parts.push("/*! onloadCSS. (onload callback for loadCSS) [c]2017 Filament Group, Inc. MIT License */");
+        parts.push('function onloadCSS(a,b){function c(){!d&&b&&(d=!0,b.call(a))}var d;a.addEventListener&&a.addEventListener("load",c),a.attachEvent&&a.attachEvent("onload",c),"isApplicationInstalled"in navigator&&"onloadcssdefined"in a&&a.onloadcssdefined(c)}');
+
+        parts.push('var __css = loadCSS("' + cssBundlePath + '");');
+        parts.push("onloadCSS(__css, function () { window.__css_loaded = true; });");
+
+        parts.push("</script>");
+
+        return parts.join("\n");
     },
 
     /**

@@ -90,6 +90,16 @@
             <div class="item item-divider item-dark">Platform Tools</div>
 
             <label class="item item-readonly-label">
+                <span>Web Platform?</span>
+                <span>{{viewModel.isWebPlatform}}</span>
+            </label>
+
+            <label class="item item-readonly-label">
+                <span>Web Standalone?</span>
+                <span>{{viewModel.isWebStandalone}}</span>
+            </label>
+
+            <label class="item item-readonly-label">
                 <span>Platform</span>
                 <span>{{viewModel.devicePlatform}}</span>
             </label>
@@ -111,7 +121,7 @@
             </label>
 
             <label class="item item-readonly-label">
-                <span>Cordova Platform</span>
+                <span>Cordova Platform Ver.</span>
                 <span>{{viewModel.deviceCordovaVersion}}</span>
             </label>
 

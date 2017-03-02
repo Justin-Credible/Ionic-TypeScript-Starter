@@ -26,3 +26,14 @@ interface Window {
      */
     buildVars: JustinCredible.SampleApp.Interfaces.BuildVars;
 }
+
+interface Navigator {
+
+    /**
+     * Indicates if the webpage has been pinned to the user's home screen on iOS and if
+     * it was launched from the homescreen instead of the Safari browser.
+     * 
+     * https://developer.apple.com/library/content/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html#//apple_ref/doc/uid/TP40002051-CH3-SW2
+     */
+    standalone: boolean;
+}

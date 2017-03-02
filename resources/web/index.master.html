@@ -3,20 +3,143 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <meta name="format-detection" content="telephone=no">
+
+        <link rel="shortcut icon" href="images/web-app-icons/favicon.ico" type="image/x-icon" />
+        <link rel="manifest" href="manifest.json">
+
+        <!-- Android Specific -->
+        <meta name="theme-color" content="#5e88f5">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" type="image/png" sizes="192x192" href="images/web-app-icons/android-icon-192x192.png">
+
+        <!-- iOS Specific -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="${APP_NAME}">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon" sizes="57x57" href="images/web-app-icons/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="images/web-app-icons/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="images/web-app-icons/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="images/web-app-icons/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="images/web-app-icons/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="images/web-app-icons/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="images/web-app-icons/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="images/web-app-icons/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="images/web-app-icons/apple-icon-180x180.png">
+
+        <!-- Windows Specific -->
+        <meta name="msapplication-config" content="browserconfig.xml" />
+        <meta name="msapplication-TileColor" content="#5e88f5">
+        <meta name="msapplication-TileImage" content="images/web-app-icons/ms-icon-144x144.png">
 
         <!-- See: http://content-security-policy.com/ -->
         <meta http-equiv="Content-Security-Policy" content="${CONTENT_SECURITY_POLICY}">
 
         <title>${APP_NAME}</title>
 
-        <!-- references:css -->
+        <style>
+
+            body {
+                margin: 0;
+            }
+
+            #web_splash {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: #5e88f5;
+                text-align: center;
+                padding-top: 50%;
+            }
+
+            #web_splash h2 {
+                color: white;
+                font-family: "Helvetica",sans-serif !important;
+                font-size: 18pt;
+            }
+
+            #web_splash .loader {
+                font-size: 10px;
+                margin: 50px auto;
+                text-indent: -9999em;
+                width: 11em;
+                height: 11em;
+                border-radius: 50%;
+                background: #ffffff;
+                background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+                position: relative;
+                -webkit-animation: load3 1.4s infinite linear;
+                animation: load3 1.4s infinite linear;
+                -webkit-transform: translateZ(0);
+                -ms-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+
+            #web_splash .loader:before {
+                width: 50%;
+                height: 50%;
+                background: #ffffff;
+                border-radius: 100% 0 0 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: '';
+            }
+
+            #web_splash .loader:after {
+                background: #5e88f5;
+                width: 75%;
+                height: 75%;
+                border-radius: 50%;
+                content: '';
+                margin: auto;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+            }
+
+            @-webkit-keyframes load3 {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes load3 {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+       </style>
+
     </head>
 
-    <!-- This is the root element for the Angular/Ionic application. -->
-    <body ng-app="JustinCredible.SampleApp.Application">
+    <body>
+
+        <div id="web_splash">
+            <h2>${APP_NAME}</h2>
+            <div class="loader"></div>
+        </div>
 
         <ion-nav-view></ion-nav-view>
 
+        <!-- references:css -->
         <!-- references:lib -->
         <!-- references:js -->
 
