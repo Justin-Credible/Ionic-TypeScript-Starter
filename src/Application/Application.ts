@@ -15,6 +15,7 @@ namespace JustinCredible.SampleApp {
                 "$ionicHistory",
                 Services.Plugins.ID,
                 Services.Utilities.ID,
+                Services.Compatibility.ID,
                 Services.UiHelper.ID,
                 Services.Configuration.ID,
                 Services.Logger.ID
@@ -28,6 +29,7 @@ namespace JustinCredible.SampleApp {
             private $ionicHistory: any,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
+            private Compatibility: Services.Compatibility,
             private UiHelper: Services.UiHelper,
             private Configuration: Services.Configuration,
             private Logger: Services.Logger) {
@@ -44,7 +46,7 @@ namespace JustinCredible.SampleApp {
 
         /**
          * Keeps track of the application being in the background or not.
-         * This flag is updated via the device_pause and device_resume events.
+         * This flag is updated via the pause and resume handlers.
          */
         private _appIsInBackground: boolean = false;
 
@@ -71,9 +73,14 @@ namespace JustinCredible.SampleApp {
             this.$window.onerror = _.bind(this.window_onerror, this);
 
             // Subscribe to device events.
-            document.addEventListener("menubutton", _.bind(this.device_menuButton, this));
-            document.addEventListener("pause", _.bind(this.device_pause, this));
-            document.addEventListener("resume", _.bind(this.device_resume, this, false));
+            if (this.Utilities.isWebPlatform) {
+                document.addEventListener(this.Compatibility.visibilityChangeEventName, _.bind(this.document_visibilitychange, this));
+            }
+            else {
+                document.addEventListener("pause", _.bind(this.device_pause, this));
+                document.addEventListener("resume", _.bind(this.device_resume, this));
+                document.addEventListener("menubutton", _.bind(this.device_menuButton, this));
+            }
 
             // Subscribe to Angular events.
             this.$rootScope.$on("$locationChangeStart", _.bind(this.angular_locationChangeStart, this));
@@ -86,31 +93,20 @@ namespace JustinCredible.SampleApp {
             this.Plugins.keyboard.disableScroll(true);
             this.Plugins.keyboard.hideKeyboardAccessoryBar(false);
 
-            // Now that the platform is ready, we'll delegate to the resume event.
+            // Now that the platform is ready, we'll delegate to the resume handler.
             // We do this so the same code that fires on resume also fires when the
             // application is started for the first time.
-            this.device_resume(true);
+            this.resume(true);
         }
 
-        //#endregoin
+        //#endregion
 
-        //#region Event Handlers
-
-        /**
-         * Fired when the menu hard (or soft) key is pressed on the device (eg Android menu key).
-         * This isn't used for iOS devices because they do not have a menu button key.
-         */
-        public device_menuButton(): void {
-            // Broadcast this event to all child scopes. This allows controllers for individual
-            // views to handle this event and show a contextual menu etc.
-            this.$rootScope.$broadcast(Constants.Events.APP_MENU_BUTTON);
-        }
+        //#region Application Pause and Resume Handlers
 
         /**
-         * Fired when the OS decides to minimize or pause the application. This usually
-         * occurs when the user presses the device's home button or switches applications.
+         * To be used when the app is being pushed into the background.
          */
-        public device_pause(): void {
+        private pause(): void {
             this._appIsInBackground = true;
 
             if (!this._isShowingPinPrompt) {
@@ -121,13 +117,12 @@ namespace JustinCredible.SampleApp {
         }
 
         /**
-         * Fired when the OS restores an application to the foreground. This usually occurs
-         * when the user launches an app that is already open or uses the OS task manager
-         * to switch back to the application.
+         * To be used when the application is resuming from the background or starting up
+         * from a cold boot.
          * 
          * @param coldBoot True if the application is starting up, false if resuming from background.
          */
-        public device_resume(coldBoot: boolean): void {
+        private resume(coldBoot: boolean): void {
 
             this._appIsInBackground = false;
 
@@ -178,10 +173,61 @@ namespace JustinCredible.SampleApp {
             });
         }
 
+        //#endregion
+
+        //#region Event Handlers
+
+        /**
+         * Fired when the document or window's visibility changes (for example, when the user
+         * switches tabs in the browser or minimizes the window).
+         * 
+         * This is only applicable when the app is running in a standard web browser.
+         */
+        private document_visibilitychange(): void {
+
+            if (this.Compatibility.isDocumentHidden) {
+                this.pause();
+            }
+            else {
+                this.resume(false);
+            }
+        }
+
+        /**
+         * Fired when the menu hard (or soft) key is pressed on the device (eg Android menu key).
+         * This isn't used for iOS devices because they do not have a menu button key.
+         */
+        private device_menuButton(): void {
+            // Broadcast this event to all child scopes. This allows controllers for individual
+            // views to handle this event and show a contextual menu etc.
+            this.$rootScope.$broadcast(Constants.Events.APP_MENU_BUTTON);
+        }
+
+        /**
+         * Fired when the OS decides to minimize or pause the application. This usually
+         * occurs when the user presses the device's home button or switches applications.
+         * 
+         * This is only applicable when the app is running in a Cordova container.
+         */
+        private device_pause(): void {
+            this.pause();
+        }
+
+        /**
+         * Fired when the OS restores an application to the foreground. This usually occurs
+         * when the user launches an app that is already open or uses the OS task manager
+         * to switch back to the application.
+         * 
+         * This is only applicable when the app is running in a Cordova container.
+         */
+        private device_resume(): void {
+            this.resume(false);
+        }
+
         /**
          * Fired when Angular's route/location (eg URL hash) is changing.
          */
-        public angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string): void {
+        private angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string): void {
 
             // Chop off the long "file://..." prefix (we only care about the hash tag).
             newRoute = newRoute.substring(newRoute.indexOf("#"));
