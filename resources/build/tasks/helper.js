@@ -398,61 +398,59 @@ module.exports = helper = {
             throw new Error("Unable to read resource references from " + referencesFilePath);
         }
 
-        // Lets handle the special case first. If bundled is true, then we need to insert a static path
-        // to the bundled files (instead of all files) as well as any HTTP/HTTPS files.
+        // Lets handle a special case first. If bundled is true, we need to filter the references
+        // down to just resources that are loaded via HTTP/HTTPS. The bundled references will be added
+        // below, but the HTTP/HTTPS resources are not bundled, so they still need to be included.
         if (bundled) {
 
-            // Filter the list down to only HTTP/HTTPS resources.
             resources.css = _.filter(resources.css, function (resource) {
                 return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
                     ? true : false;
             });
 
-            // Add the path to the bundled CSS files.
-            resources.css.push(helper.format("css/app.bundle.css{0}",
-                                cacheBusterValue ? "?v=" + cacheBusterValue : ""));
-
-            // Filter the list down to only HTTP/HTTPS resources.
             resources.lib = _.filter(resources.lib, function (resource) {
                 return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
                     ? true : false;
             });
 
-            // Add the path to the bundled JS libraries.
-            resources.lib.push(helper.format("lib/app.bundle.lib.js{0}",
-                                cacheBusterValue ? "?v=" + cacheBusterValue : ""));
-
-            // Filter the list down to only HTTP/HTTPS resources.
             resources.js = _.filter(resources.js, function (resource) {
                 return resource.indexOf("https:") == 0 || resource.indexOf("http:") == 0
                     ? true : false;
             });
-
-            // Add the path to the bundled JS files.
-            resources.js.push(helper.format("js/app.bundle.js{0}",
-                                cacheBusterValue ? "?v=" + cacheBusterValue : ""));
         }
 
         // Open the master file that we'll perform replacements on.
         var content = fs.readFileSync(sourceFilePath, "utf8").toString();
 
         // Inject link tags for the CSS files.
-        if (resources.css && resources.css.length > 0) {
 
-            var cssReferences = [];
+        var cssReferences = [];
+
+        if (resources.css && resources.css.length > 0) {
 
             resources.css.forEach(function (cssReference) {
 
-                // If this was the app bundle, then use the loadCSS loader to prevent rendering from blocking.
-                if (cssReference.indexOf("css/app.bundle.css") > -1) {
-                    var cssLoaderScript = helper.getCssLoaderScript(cssReference);
-                    cssReferences.push(cssLoaderScript);
-                }
-                else {
-                    cssReferences.push(helper.format('<link rel="stylesheet" href="{0}">', cssReference));
-                }
-            });
+                var suffix = "";
 
+                // Ensure live resources are loaded asynchronously.
+                if (cssReference.indexOf("http:")  == 0 || cssReference.indexOf("https:") == 0) {
+                    suffix = " async";
+                }
+
+                cssReferences.push(helper.format('<link rel="stylesheet" href="{0}"{1}>', cssReference, suffix));
+            });
+        }
+
+        // If bundling, add the non-blocking CSS loader for the CSS bundle.
+        if (bundled) {
+            var cssBundleReference = helper.format("css/app.bundle.css{0}",
+                                        cacheBusterValue ? "?v=" + cacheBusterValue : "");
+
+            var cssLoaderScript = helper.getCssLoaderScript(cssBundleReference);
+            cssReferences.push(cssLoaderScript);
+        }
+
+        if (cssReferences.length > 0) {
             content = content.replace(cssRegExp, function (match, whitespaceMatch, offset, string) {
                 return whitespaceMatch + cssReferences.join("\n" + whitespaceMatch);
             });
@@ -462,22 +460,25 @@ module.exports = helper = {
         }
 
         // Inject script tags for the JS libraries.
-        if (resources.lib && resources.lib.length > 0) {
 
-            var libReferences = [];
+        var libReferences = [];
+
+        if (resources.lib && resources.lib.length > 0) {
 
             resources.lib.forEach(function (libReference) {
 
-                var onLoadAttribute = "";
+                var suffix = "";
 
-                // If this was the app bundle, then add an attribute so we know when it has loaded.
-                if (libReference.indexOf("lib/app.bundle.lib.js") > -1) {
-                    onLoadAttribute = ' onload="window.__lib_loaded=true;"';
+                // Ensure live resources are loaded asynchronously.
+                if (libReference.indexOf("http:")  == 0 || libReference.indexOf("https:") == 0) {
+                    suffix = " async";
                 }
 
-                libReferences.push(helper.format('<script type="text/javascript" src="{0}"{1}></script>', libReference, onLoadAttribute));
+                libReferences.push(helper.format('<script type="text/javascript" src="{0}"{1}></script>', libReference, suffix));
             });
+        }
 
+        if (libReferences.length > 0) {
             content = content.replace(libRegExp, function (match, whitespaceMatch, offset, string) {
                 return whitespaceMatch + libReferences.join("\n" + whitespaceMatch);
             });
@@ -487,22 +488,41 @@ module.exports = helper = {
         }
 
         // Inject script tags for the JS files.
-        if (resources.js && resources.js.length > 0) {
 
-            var jsReferences = [];
+        var jsReferences = [];
+
+        if (resources.js && resources.js.length > 0) {
 
             resources.js.forEach(function (jsReference) {
 
-                var onLoadAttribute = "";
+                var suffix = "";
 
-                // If this was the app bundle, then add an attribute so we know when it has loaded.
-                if (jsReference.indexOf("js/app.bundle.js") > -1) {
-                    onLoadAttribute = ' onload="window.__js_loaded=true;"';
+                // Ensure live resources are loaded asynchronously.
+                if (jsReference.indexOf("http:")  == 0 || jsReference.indexOf("https:") == 0) {
+                    suffix = " async";
                 }
 
-                jsReferences.push(helper.format('<script type="text/javascript" src="{0}"{1}></script>', jsReference, onLoadAttribute));
+                jsReferences.push(helper.format('<script type="text/javascript" src="{0}"{1}></script>', jsReference, suffix));
             });
+        }
 
+        // If bundling, add the non-blocking loader for the JS and lib bundles.
+        if (bundled) {
+
+            // Add the path to the bundled JS libraries.
+            var libBundleReference = helper.format("lib/app.bundle.lib.js{0}",
+                                        cacheBusterValue ? "?v=" + cacheBusterValue : "");
+
+            // Add the path to the bundled JS files.
+            var jsBundleReference = helper.format("js/app.bundle.js{0}",
+                                        cacheBusterValue ? "?v=" + cacheBusterValue : "");
+
+
+            var jsLoaderScript = helper.getLibAndJsBundleLoaderScript(libBundleReference, jsBundleReference);
+            jsReferences.push(jsLoaderScript);
+        }
+
+        if (jsReferences.length > 0) {
             content = content.replace(jsRegExp, function (match, whitespaceMatch, offset, string) {
                 return whitespaceMatch + jsReferences.join("\n" + whitespaceMatch);
             });
@@ -538,6 +558,38 @@ module.exports = helper = {
         parts.push("onloadCSS(__css, function () { window.__css_loaded = true; });");
 
         parts.push("</script>");
+
+        return parts.join("\n");
+    },
+
+    /**
+     * Used to build a <script> tag that will load the given lib and JS bundle files in a non-blocking
+     * manner. This allows the HTML page to render immediately without waiting on the lib/JS references.
+     */
+    getLibAndJsBundleLoaderScript: function(libBundlePath, jsBundlePath) {
+
+        var parts = [];
+
+        parts.push('<script type="text/javascript">');
+
+        parts.push('window.onload = function() {');
+        parts.push('    var lib = document.createElement("script");');
+        parts.push('    lib.type = "text/javascript";');
+        parts.push('    lib.async = false;');
+        parts.push('    lib.src = "' + libBundlePath + '";');
+        parts.push('    lib.onload = function () { window.__lib_loaded = true; };');
+        parts.push('    document.body.appendChild(lib);');
+
+        parts.push('    var js = document.createElement("script");');
+        parts.push('    js.type = "text/javascript";');
+        parts.push('    js.async = false;');
+        parts.push('    js.src = "' + jsBundlePath + '";');
+        parts.push('    js.onload = function () { window.__js_loaded = true; };');
+        parts.push('    document.body.appendChild(js);');
+
+        parts.push('}');
+
+        parts.push('</script>');
 
         return parts.join("\n");
     },

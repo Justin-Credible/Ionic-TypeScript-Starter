@@ -157,7 +157,7 @@ namespace JustinCredible.SampleApp {
                 }
 
                 // If the user is still at the blank sreen, then push them to their default view.
-                if (this.$location.url() === "/app/blank") {
+                if (this.$location.url() === "" || this.$location.url() === "/app/blank") {
 
                     // Tell Ionic to not animate and clear the history (hide the back button)
                     // for the next view that we'll be navigating to below.
