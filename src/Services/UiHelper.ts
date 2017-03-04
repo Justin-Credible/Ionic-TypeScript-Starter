@@ -25,8 +25,8 @@
         constructor(
             private $window: Window,
             private $q: ng.IQService,
-            private $ionicModal: any,
-            private $ionicSideMenuDelegate: any,
+            private $ionicModal: ionic.modal.IonicModalService,
+            private $ionicSideMenuDelegate: ionic.sideMenu.IonicSideMenuDelegate,
             private Plugins: Plugins,
             private Logger: Logger,
             private Preferences: Preferences,
@@ -471,7 +471,10 @@
                 this._sideMenuMediaQuery = this._sideMenuMediaQueryNeverVisible;
             }
 
-            this.$ionicSideMenuDelegate._instances[0].exposeAside(this.$window.matchMedia(this._sideMenuMediaQuery).matches);
+            /* tslint:disable:no-string-literal */
+            this.$ionicSideMenuDelegate["_instances"][0].exposeAside(this.$window.matchMedia(this._sideMenuMediaQuery).matches);
+            /* tslint:enable:no-string-literal */
+
             this.$ionicSideMenuDelegate.canDragContent(allow);
         }
 

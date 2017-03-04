@@ -18,7 +18,7 @@
 
         constructor(
             $scope: ng.IScope,
-            private $ionicHistory: any,
+            private $ionicHistory: ionic.navigation.IonicHistoryService,
             private Utilities: Services.Utilities,
             private Configuration: Services.Configuration,
             private Plugins: Services.Plugins) {
@@ -29,7 +29,7 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             this.viewModel.logoClickCount = 0;

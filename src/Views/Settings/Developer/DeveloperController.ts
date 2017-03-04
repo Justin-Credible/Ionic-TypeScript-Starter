@@ -43,7 +43,7 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             this.viewModel.mockApiRequests = this.Configuration.enableMockHttpCalls;

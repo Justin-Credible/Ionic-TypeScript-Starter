@@ -85,7 +85,7 @@ namespace JustinCredible.SampleApp.Controllers {
 
         //#region BaseController Events
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             // Set the category number into the view model using the value as provided
@@ -352,7 +352,7 @@ Although this starter project does not contain a specific base class for Ionic's
 A popover is generally initialized via the `view_beforeEnter` event by specifying the path to an HTML template and the scope to use (which can be the same scope as the current controller). The popover can later be shown by invoking its `show()` method:
 
 ```
-protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
     super.view_beforeEnter(event, eventArgs);
 
     this.$ionicPopover.fromTemplateUrl("Views/Settings/Logs-List/Log-Filter-Menu.html", {

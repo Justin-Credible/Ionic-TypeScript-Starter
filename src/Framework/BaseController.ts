@@ -53,7 +53,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_loaded(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_loaded(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
 
@@ -66,7 +66,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_enter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_enter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
 
@@ -79,7 +79,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_leave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_leave(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
 
@@ -92,7 +92,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
 
@@ -105,7 +105,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_beforeLeave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_beforeLeave(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
 
@@ -118,7 +118,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_afterEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_afterEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
 
@@ -131,7 +131,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_afterLeave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_afterLeave(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
 
@@ -144,7 +144,7 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        protected view_unloaded(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_unloaded(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             /* tslint:disable:no-empty */
             /* tslint:enable:no-empty */
 
