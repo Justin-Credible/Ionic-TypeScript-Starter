@@ -103,7 +103,7 @@ namespace JustinCredible.SampleApp.Boot2 {
      * dependency injection based on the name of each parameter.
      */
     function angular_initialize(
-        $ionicPlatform: Ionic.IPlatform,
+        $ionicPlatform: ionic.platform.IonicPlatformService,
         Application: Application,
         Configuration: Services.Configuration,
         MockHttpApis: Services.MockHttpApis
@@ -133,7 +133,7 @@ namespace JustinCredible.SampleApp.Boot2 {
         $provide: ng.auto.IProvideService,
         $httpProvider: ng.IHttpProvider,
         $compileProvider: ng.ICompileProvider,
-        $ionicConfigProvider: any
+        $ionicConfigProvider: ionic.utility.IonicConfigProvider
         ): void {
 
         // Intercept the default Angular exception handler.

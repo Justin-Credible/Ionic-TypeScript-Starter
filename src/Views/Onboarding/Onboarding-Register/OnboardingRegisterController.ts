@@ -21,7 +21,7 @@ namespace JustinCredible.SampleApp.Controllers {
         constructor(
             $scope: ng.IScope,
             private $location: ng.ILocationService,
-            private $ionicHistory: any,
+            private $ionicHistory: ionic.navigation.IonicHistoryService,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
@@ -33,7 +33,7 @@ namespace JustinCredible.SampleApp.Controllers {
 
         //#region BaseController Events
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             this.viewModel.showSignIn = false;

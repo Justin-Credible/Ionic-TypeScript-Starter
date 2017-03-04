@@ -17,7 +17,7 @@
 
         constructor(
             $scope: ng.IScope,
-            private $ionicPopover: any,
+            private $ionicPopover: ionic.popover.IonicPopoverService,
             private Logger: Services.Logger,
             private UiHelper: Services.UiHelper) {
             super($scope, ViewModels.LogsListViewModel);
@@ -29,7 +29,7 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             this.$ionicPopover.fromTemplateUrl("Views/Settings/Logs-List/Log-Filter-Menu.html", {

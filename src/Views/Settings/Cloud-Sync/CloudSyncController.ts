@@ -15,7 +15,7 @@
 
         constructor(
             $scope: ng.IScope,
-            private $ionicHistory: any) {
+            private $ionicHistory: ionic.navigation.IonicHistoryService) {
             super($scope, ViewModels.CloudSyncViewModel);
 
             this.scope.$on("icon-panel.cloud-icon-panel.created", _.bind(this.iconPanel_created, this));
@@ -28,7 +28,7 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             // Setup the view model.
@@ -38,7 +38,7 @@
             this.viewModel.userCount = 2344;
         }
 
-        protected view_leave(event?: ng.IAngularEvent, eventArgs?: Ionic.IViewEventArguments): void {
+        protected view_leave(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
             super.view_leave(event, eventArgs);
 
             // Stop the toggleIcon function from firing.

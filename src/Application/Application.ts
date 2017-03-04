@@ -26,7 +26,7 @@ namespace JustinCredible.SampleApp {
             private $rootScope: ng.IRootScopeService,
             private $window: ng.IWindowService,
             private $location: ng.ILocationService,
-            private $ionicHistory: any,
+            private $ionicHistory: ionic.navigation.IonicHistoryService,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private Compatibility: Services.Compatibility,

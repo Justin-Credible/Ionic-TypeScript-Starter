@@ -20,8 +20,8 @@
 
         constructor(
             private $q: ng.IQService,
-            private $ionicPopup: any,
-            private $ionicLoading: any,
+            private $ionicPopup: ionic.popup.IonicPopupService,
+            private $ionicLoading: ionic.loading.IonicLoadingService,
             private Utilities: Utilities) {
         }
 

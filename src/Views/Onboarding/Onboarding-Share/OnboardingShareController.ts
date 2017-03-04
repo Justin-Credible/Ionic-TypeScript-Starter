@@ -21,7 +21,7 @@ namespace JustinCredible.SampleApp.Controllers {
         constructor(
             $scope: ng.IScope,
             private $location: ng.ILocationService,
-            private $ionicHistory: any,
+            private $ionicHistory: ionic.navigation.IonicHistoryService,
             private Utilities: Services.Utilities,
             private UiHelper: Services.UiHelper,
             private Plugins: Services.Plugins,
