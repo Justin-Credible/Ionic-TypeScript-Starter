@@ -14,7 +14,9 @@
                 "$window",
                 "$q",
                 "$ionicModal",
+                "$ionicPopover",
                 "$ionicSideMenuDelegate",
+                Utilities.ID,
                 Plugins.ID,
                 Logger.ID,
                 Preferences.ID,
@@ -26,7 +28,9 @@
             private $window: Window,
             private $q: ng.IQService,
             private $ionicModal: ionic.modal.IonicModalService,
+            private $ionicPopover: ionic.popover.IonicPopoverService,
             private $ionicSideMenuDelegate: ionic.sideMenu.IonicSideMenuDelegate,
+            private Utilities: Utilities,
             private Plugins: Plugins,
             private Logger: Logger,
             private Preferences: Preferences,
@@ -421,6 +425,90 @@
                     q.resolve(modal.result);
 
                 });
+            });
+
+            return q.promise;
+        }
+
+        //#endregion
+
+        //#region Popovers
+
+        /**
+         * Used to create an Ionic popover instance using the controller with the given
+         * ID from the Controllers namespace.
+         * 
+         * The controller should extend BasePopoverController and should have a public
+         * static string property named TemplatePath, which is the path to the Angular
+         * template to use.
+         * 
+         * The Angular template should have have an ng-controller reference to the same
+         * controller ID.
+         * 
+         * this.UIHelper.createPopover(MyPopoverController.ID, this.scope);
+         * 
+         * <ion-popover-view ng-controller="MyPopoverController">
+         * 
+         * Once the popover is created, the promise will resolve with the popover instance
+         * which can then be used to show or hide the popover.
+         * 
+         * @param controllerID The ID of the controller to use in the popover.
+         * @param scope The parent scope for the popover.
+         * @returns A promise that will be resolved when the popover is created, which will contain the popover instance.
+         */
+        public createPopover(controllerID: string, scope: ng.IScope): angular.IPromise<ionic.popover.IonicPopoverController> {
+            let q = this.$q.defer<ionic.popover.IonicPopoverController>();
+
+            if (!controllerID) {
+                q.reject(new Error("A controllerID is required."));
+                return q.promise;
+            }
+
+            // Lookup the controller in the Controllers namespace.
+            let controllerReference = this.Utilities.getValue(Controllers, controllerID);
+
+            if (!controllerReference) {
+                q.reject(new Error("Could not locate a controller with ID in the Controllers namespace."));
+                return q.promise;
+            }
+
+            // Ensure the controller given actually extends the BasePopoverController class.
+
+            let hasProperBase = this.Utilities.derivesFrom(controllerReference, Controllers.BasePopoverController);
+
+            if (!hasProperBase) {
+                q.reject(new Error(`The controller with ID ${controllerID} must extend BasePopoverController.`));
+                return q.promise;
+            }
+
+            // Grab the template path from the controller static property.
+            let templatePath = this.Utilities.getValue(controllerReference, "TemplatePath");
+
+            if (typeof(templatePath) !== "string" ) {
+                q.reject(new Error(`A static TemplatePath string property was not found on controller with ID ${controllerID}.`));
+                return q.promise;
+            }
+
+            if (!scope) {
+                q.reject(new Error("A scope is required."));
+                return q.promise;
+            }
+
+            let options: ionic.popover.IonicPopoverOptions = {
+                scope: scope,
+            };
+
+            // Set the controllerID onto the options; this is used by BasePopoverController.
+            this.Utilities.setValue(options, "controllerID", controllerID);
+
+            // Delegate to the Ionic service to do the actual creation work.
+            this.$ionicPopover.fromTemplateUrl(templatePath, options)
+                .then((popover: ionic.popover.IonicPopoverController) => {
+
+                q.resolve(popover);
+
+            }).catch((error: any) => {
+                q.reject(error);
             });
 
             return q.promise;
