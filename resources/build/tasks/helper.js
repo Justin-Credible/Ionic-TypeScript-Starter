@@ -348,6 +348,11 @@ module.exports = helper = {
         // Open the master file that we'll perform replacements on.
         var content = fs.readFileSync(sourceFilePath, "utf8").toString();
 
+        // Morph the content security policy object into a flag string that can be used in the meta tag.
+        if (typeof(scheme.replacements["CONTENT_SECURITY_POLICY"]) === "object") {
+            scheme.replacements["CONTENT_SECURITY_POLICY"] = this.buildCspStringFromObject(scheme.replacements["CONTENT_SECURITY_POLICY"]);
+        }
+
         // Loop through each replacement variable we have defined.
         for (var key in scheme.replacements) {
 
@@ -732,5 +737,55 @@ module.exports = helper = {
             // Write the bundle
             fs.writeFileSync(path.join(targetDir, "app.bundle.js"), jsBundle, "utf8");
         }
-    }
+    },
+
+    /**
+     * Used to build a string for the content of the Content-Security-Policy meta tag
+     * from the given object. See: http://content-security-policy.com/
+     * 
+     * @param csp The object representing the content security policy. Top level keys are directives whose values are arrays of strings.
+     * @returns A content security policy string.
+     */
+    buildCspStringFromObject: function(csp) {
+
+        console.log("!!!!!!!!!!!!!!!! " + JSON.stringify(csp, null, 4));
+
+        if (!csp || typeof(csp) !== "object") {
+            return null;
+        }
+
+        var directiveNames = [
+            "default-src",
+            "script-src",
+            "style-src",
+            "img-src",
+            "connect-src",
+            "font-src",
+            "object-src",
+            "media-src",
+            "frame-src",
+            "sandbox",
+            "report-uri",
+            "child-src",
+            "form-action",
+            "frame-ancestors",
+            "plugin-types",
+        ];
+
+        var cspParts = [];
+
+        directiveNames.forEach(function (directiveName) {
+
+            var yamlDirectiveName = directiveName.replace(/-/g, "_");
+            var values = csp[yamlDirectiveName];
+
+            if (values) {
+                cspParts.push(directiveName + " " + values.join(" "));
+            }
+        });
+
+        console.log("!!!!result " + cspParts.join("; "));
+
+        return cspParts.join("; ");
+    },
 }
