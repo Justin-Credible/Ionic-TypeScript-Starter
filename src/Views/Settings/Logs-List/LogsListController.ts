@@ -29,7 +29,7 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             this.$ionicPopover.fromTemplateUrl("Views/Settings/Logs-List/Log-Filter-Menu.html", {

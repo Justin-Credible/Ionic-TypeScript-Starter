@@ -34,7 +34,7 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             this.viewModel.logEntry = this.Logger.getLog(this.$stateParams.id);

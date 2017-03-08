@@ -31,7 +31,7 @@ namespace JustinCredible.SampleApp.Controllers {
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             // During onboarding the menu shouldn't be visible.

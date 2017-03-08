@@ -33,7 +33,7 @@ namespace JustinCredible.SampleApp.Controllers {
 
         //#region BaseController Events
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             this.viewModel.showSignIn = false;

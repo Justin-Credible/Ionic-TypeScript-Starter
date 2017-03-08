@@ -27,7 +27,7 @@
 
         //#region BaseController Events
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             // Set the category number into the view model using the value as provided

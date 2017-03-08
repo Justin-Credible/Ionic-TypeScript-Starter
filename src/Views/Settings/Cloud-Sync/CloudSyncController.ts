@@ -28,7 +28,7 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
             // Setup the view model.
@@ -38,7 +38,7 @@
             this.viewModel.userCount = 2344;
         }
 
-        protected view_leave(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
+        protected view_leave(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_leave(event, eventArgs);
 
             // Stop the toggleIcon function from firing.

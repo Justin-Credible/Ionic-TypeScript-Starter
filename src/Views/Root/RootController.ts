@@ -35,7 +35,7 @@
 
         //#region BaseController Overrides
 
-        protected view_loaded(event?: ng.IAngularEvent, eventArgs?: IonicExtras.IViewEventArguments): void {
+        protected view_loaded(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_loaded(event, eventArgs);
 
             // In most cases Ionic's load event only fires once, the first time the controller is

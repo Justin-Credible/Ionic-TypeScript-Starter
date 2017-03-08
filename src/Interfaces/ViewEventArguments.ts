@@ -1,10 +1,10 @@
 
-declare module IonicExtras {
+namespace JustinCredible.SampleApp.Interfaces {
 
     /**
      * Describes the event arguments passed to $ionicView events.
      */
-    interface IViewEventArguments {
+    export interface ViewEventArguments {
         viewId: string;
         historyId: string;
         stateId: string;
