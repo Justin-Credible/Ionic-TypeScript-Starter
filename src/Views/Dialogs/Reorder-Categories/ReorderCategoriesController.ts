@@ -12,7 +12,7 @@
                 "$scope",
                 Services.Utilities.ID,
                 Services.Preferences.ID,
-                Services.UiHelper.ID
+                Services.UIHelper.ID
             ];
         }
 
@@ -20,7 +20,7 @@
             $scope: ng.IScope,
             private Utilities: Services.Utilities,
             private Preferences: Services.Preferences,
-            private UiHelper: Services.UiHelper) {
+            private UIHelper: Services.UIHelper) {
             super($scope, ViewModels.ReorderCategoriesViewModel, ReorderCategoriesController.ID);
         }
 

@@ -3,11 +3,11 @@
     /**
      * Provides a common set of helper methods for working with the UI.
      */
-    export class UiHelper {
+    export class UIHelper {
 
         //#region Injection
 
-        public static ID = "UiHelper";
+        public static ID = "UIHelper";
 
         public static get $inject(): string[] {
             return [
@@ -288,18 +288,18 @@
                 throw new Error("A templatePath is required when registering a dialog.");
             }
 
-            if (UiHelper.dialogTemplateMap[dialogId]) {
-                this.Logger.warn(UiHelper.ID, "registerDialog", "A dialog with the same ID has already been registered; it will be overwritten.", dialogId);
+            if (UIHelper.dialogTemplateMap[dialogId]) {
+                this.Logger.warn(UIHelper.ID, "registerDialog", "A dialog with the same ID has already been registered; it will be overwritten.", dialogId);
             }
 
-            UiHelper.dialogTemplateMap[dialogId] = templatePath;
+            UIHelper.dialogTemplateMap[dialogId] = templatePath;
         }
 
         /**
          * Used to open the modal dialog with the given dialog ID.
          * 
          * If a dialog with the given ID is already open, another will not be opened
-         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * and the promise will be rejected with UIHelper.DIALOG_ALREADY_OPEN.
          * 
          * @param dialogId The ID of the dialog to show/open.
          * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
@@ -340,31 +340,31 @@
             }
 
             // Ensure the array is initialized.
-            if (UiHelper._openDialogIds == null) {
-                UiHelper._openDialogIds = [];
+            if (UIHelper._openDialogIds == null) {
+                UIHelper._openDialogIds = [];
             }
 
             // If a dialog with this ID is already open, we can reject immediately.
             // This ensures that only a single dialog with a given ID can be open
             // at one time.
-            if (_.contains(UiHelper._openDialogIds, dialogId)) {
+            if (_.contains(UIHelper._openDialogIds, dialogId)) {
                 this.$q.reject(Constants.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
 
             // Lookup the template to use for this dialog based on the dialog ID.
-            template = UiHelper.dialogTemplateMap[dialogId];
+            template = UIHelper.dialogTemplateMap[dialogId];
 
             // If we were unable to find a dialog ID in the template map then we
             // can bail out here as there is nothing to do.
             if (!template) {
-                this.Logger.warn(UiHelper.ID, "showDialog", "A call was made to openDialog, but a template is not registered with the given ID in the dialogTemplateMap.", dialogId);
+                this.Logger.warn(UIHelper.ID, "showDialog", "A call was made to openDialog, but a template is not registered with the given ID in the dialogTemplateMap.", dialogId);
                 this.$q.reject(Constants.DIALOG_ID_NOT_REGISTERED);
                 return q.promise;
             }
 
             // Add the ID of this dialog to the list of dialogs that are open.
-            UiHelper._openDialogIds.push(dialogId);
+            UIHelper._openDialogIds.push(dialogId);
 
             // Define the arguments that will be used to create the modal instance.
             creationArgs = {
@@ -414,7 +414,7 @@
                     }
 
                     // Remove this dialog's ID from the list of ones that are open.
-                    UiHelper._openDialogIds = _.without(UiHelper._openDialogIds, dialogId);
+                    UIHelper._openDialogIds = _.without(UIHelper._openDialogIds, dialogId);
 
                     // Once the dialog is closed, resolve the original promise
                     // using the result data object from the dialog (if any).

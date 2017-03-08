@@ -16,7 +16,7 @@ namespace JustinCredible.SampleApp {
                 Services.Plugins.ID,
                 Services.Utilities.ID,
                 Services.Compatibility.ID,
-                Services.UiHelper.ID,
+                Services.UIHelper.ID,
                 Services.Configuration.ID,
                 Services.Logger.ID
             ];
@@ -30,7 +30,7 @@ namespace JustinCredible.SampleApp {
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
             private Compatibility: Services.Compatibility,
-            private UiHelper: Services.UiHelper,
+            private UIHelper: Services.UIHelper,
             private Configuration: Services.Configuration,
             private Logger: Services.Logger) {
         }
@@ -85,7 +85,7 @@ namespace JustinCredible.SampleApp {
             // Subscribe to Angular events.
             this.$rootScope.$on("$locationChangeStart", _.bind(this.angular_locationChangeStart, this));
 
-            // Register all of the dialogs with the UiHelper.
+            // Register all of the dialogs with the UIHelper.
             this.registerDialogs(this._ngModule);
 
             // We use this combination of settings so prevent the visual jank that
@@ -129,7 +129,7 @@ namespace JustinCredible.SampleApp {
             this._isShowingPinPrompt = true;
 
             // Potentially display the PIN screen.
-            this.UiHelper.showPinEntryAfterResume().then(() => {
+            this.UIHelper.showPinEntryAfterResume().then(() => {
                 this._isShowingPinPrompt = false;
 
                 // We should show onboarding if the user hasn't completed it yet and they are not
@@ -324,14 +324,14 @@ namespace JustinCredible.SampleApp {
 
         /**
          * Used to register each of the Controller classes that extend BaseDialog as dialogs
-         * with the UiHelper.
+         * with the UIHelper.
          * 
          * @params ngModule The root Angular module to use for registration.
          */
         private registerDialogs(ngModule: ng.IModule): void {
 
             // Loop over each of the controllers, and for any controller that dervies from BaseController
-            // register it as a dialog using its ID with the UiHelper.
+            // register it as a dialog using its ID with the UIHelper.
             _.each(Controllers, (Controller: any) => {
 
                 // Don't try to register the BaseDialogController since it is abstract.
@@ -340,7 +340,7 @@ namespace JustinCredible.SampleApp {
                 }
 
                 if (this.Utilities.derivesFrom(Controller, Controllers.BaseDialogController)) {
-                    this.UiHelper.registerDialog(Controller.ID, Controller.TemplatePath);
+                    this.UIHelper.registerDialog(Controller.ID, Controller.TemplatePath);
                 }
             });
         }

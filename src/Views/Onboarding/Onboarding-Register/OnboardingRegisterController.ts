@@ -13,7 +13,7 @@ namespace JustinCredible.SampleApp.Controllers {
                 "$ionicHistory",
                 Services.Plugins.ID,
                 Services.Utilities.ID,
-                Services.UiHelper.ID,
+                Services.UIHelper.ID,
                 Services.Configuration.ID
             ];
         }
@@ -24,7 +24,7 @@ namespace JustinCredible.SampleApp.Controllers {
             private $ionicHistory: ionic.navigation.IonicHistoryService,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
-            private UiHelper: Services.UiHelper,
+            private UIHelper: Services.UIHelper,
             private Configuration: Services.Configuration) {
             super($scope, ViewModels.OnboardingRegisterViewModel);
         }
@@ -46,17 +46,17 @@ namespace JustinCredible.SampleApp.Controllers {
         protected createAccount_click(): void {
 
             if (!this.viewModel.email) {
-                this.UiHelper.alert("Please enter a valid e-mail address.");
+                this.UIHelper.alert("Please enter a valid e-mail address.");
                 return;
             }
 
             if (!this.viewModel.password || !this.viewModel.confirmPassword) {
-                this.UiHelper.alert("Please fill in both password fields.");
+                this.UIHelper.alert("Please fill in both password fields.");
                 return;
             }
 
             if (this.viewModel.password !== this.viewModel.confirmPassword) {
-                this.UiHelper.alert("The passwords do not match; please try again.");
+                this.UIHelper.alert("The passwords do not match; please try again.");
                 this.viewModel.password = "";
                 this.viewModel.confirmPassword = "";
                 return;
@@ -84,12 +84,12 @@ namespace JustinCredible.SampleApp.Controllers {
         protected signIn_click(): void {
 
             if (!this.viewModel.email) {
-                this.UiHelper.alert("Please enter a valid e-mail address.");
+                this.UIHelper.alert("Please enter a valid e-mail address.");
                 return;
             }
 
             if (!this.viewModel.password) {
-                this.UiHelper.alert("Please enter a password.");
+                this.UIHelper.alert("Please enter a password.");
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace JustinCredible.SampleApp.Controllers {
         protected skip_click(): void {
 
             // Allow the side menu to be shown again.
-            this.UiHelper.setAllowSideMenu(true);
+            this.UIHelper.setAllowSideMenu(true);
 
             // Set the preference value so onboarding doesn't occur again.
             this.Configuration.hasCompletedOnboarding = true;

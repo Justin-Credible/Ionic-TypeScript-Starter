@@ -273,7 +273,7 @@ Used as a facade to access native Cordova plugins. If a plugin is not available 
 
 Used to store user preferences that should persist when the application has closed. The default backing store is the web view's local storage (which is sandboxed and specific to your application instance).
 
-### UiHelper
+### UIHelper
 
 Contains several helper methods for user interface-related tasks. These include alert, confirm, and prompt dialogs as well as a PIN dialog.
 
@@ -299,14 +299,14 @@ This view is a good location for items that are used during development. By defa
 
 # Dialogs
 
-Ionic provides the `$ionicModal` service, which can be used to show modal dialogs. This sample project includes the `BaseDialogController` base class and a `UiHelper` method `showDialog()`, which are used to simplify usage and normalize dialog behavior.
+Ionic provides the `$ionicModal` service, which can be used to show modal dialogs. This sample project includes the `BaseDialogController` base class and a `UIHelper` method `showDialog()`, which are used to simplify usage and normalize dialog behavior.
 
 Two example dialogs are included with this sample project, located at `src/Views/Dialogs`.
 
 The `showDialog` method wraps Ionic's modal implementation. It should be invoked with the ID of the controller for the dialog and optional dialog options. It returns a promise that is resolved once the dialog has been closed.
 
 ```
-this.UiHelper.showDialog(PinEntryController.ID, options)
+this.UIHelper.showDialog(PinEntryController.ID, options)
 	.then((result: Models.PinEntryDialogResultModel) => {
 
 	// Dialog closed with result object.

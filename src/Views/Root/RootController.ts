@@ -13,7 +13,7 @@
                 "$http",
                 Services.Plugins.ID,
                 Services.Utilities.ID,
-                Services.UiHelper.ID,
+                Services.UIHelper.ID,
                 Services.Preferences.ID
             ];
         }
@@ -24,7 +24,7 @@
             private $http: ng.IHttpService,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
-            private UiHelper: Services.UiHelper,
+            private UIHelper: Services.UIHelper,
             private Preferences: Services.Preferences) {
             super($scope, ViewModels.RootViewModel);
         }
@@ -102,7 +102,7 @@
         //#region Controller Methods
 
         protected reorder_click() {
-            this.UiHelper.showDialog(ReorderCategoriesController.ID).then(() => {
+            this.UIHelper.showDialog(ReorderCategoriesController.ID).then(() => {
                 // After the re-order dialog is closed, re-populate the category
                 // items since they may have been re-ordered.
                 this.viewModel.categories = this.Utilities.categories;

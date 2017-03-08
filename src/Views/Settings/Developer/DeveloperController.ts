@@ -14,7 +14,7 @@
                 "$window",
                 Services.Plugins.ID,
                 Services.Utilities.ID,
-                Services.UiHelper.ID,
+                Services.UIHelper.ID,
                 Services.FileUtilities.ID,
                 Services.Logger.ID,
                 Services.Preferences.ID,
@@ -30,7 +30,7 @@
             private $window: ng.IWindowService,
             private Plugins: Services.Plugins,
             private Utilities: Services.Utilities,
-            private UiHelper: Services.UiHelper,
+            private UIHelper: Services.UIHelper,
             private FileUtilities: Services.FileUtilities,
             private Logger: Services.Logger,
             private Preferences: Services.Preferences,
@@ -78,13 +78,13 @@
         private alertFileIoError(error: any) {
             if (error) {
                 if (error.code) {
-                    this.UiHelper.alert(error.code);
+                    this.UIHelper.alert(error.code);
                 }
                 else if (error.message) {
-                    this.UiHelper.alert(error.message);
+                    this.UIHelper.alert(error.message);
                 }
                 else {
-                    this.UiHelper.alert(error);
+                    this.UIHelper.alert(error);
                 }
             }
         }
@@ -94,11 +94,11 @@
         //#region Controller Methods
 
         protected help_click(helpMessage: string): void {
-            this.UiHelper.alert(helpMessage, "Help");
+            this.UIHelper.alert(helpMessage, "Help");
         }
 
         protected copyValue_click(value: any, name: string): void {
-            this.UiHelper.confirm("Copy " + name + " to clipboard?").then((result: string) => {
+            this.UIHelper.confirm("Copy " + name + " to clipboard?").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
                     this.Plugins.clipboard.copy(value);
                     this.Plugins.toast.showShortBottom(name + " copied to clipboard.");
@@ -112,7 +112,7 @@
 
             var message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
 
-            this.UiHelper.confirm(message, "Confirm Reload").then((result: string) => {
+            this.UIHelper.confirm(message, "Confirm Reload").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
                     document.location.href = "index.html";
                 }
@@ -122,7 +122,7 @@
         protected apiUrl_click(): void {
             var message = "Here you can edit the API URL for this session.";
 
-            this.UiHelper.prompt(message, "API URL", null, this.Configuration.apiUrl).then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt(message, "API URL", null, this.Configuration.apiUrl).then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key === Constants.Buttons.Cancel) {
                     return;
@@ -162,27 +162,27 @@
 
             /* tslint:enable:no-string-literal */
 
-            this.UiHelper.alert("Added services to the global variable __services.");
+            this.UIHelper.alert("Added services to the global variable __services.");
         }
 
         protected setRequirePinThreshold_click(): void {
 
             var message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Configuration.requirePinThreshold);
 
-            this.UiHelper.prompt(message, "Require PIN Threshold", null, this.Configuration.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt(message, "Require PIN Threshold", null, this.Configuration.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
                 if (isNaN(parseInt(result.value, 10))) {
-                    this.UiHelper.alert("Invalid value; a number is required.");
+                    this.UIHelper.alert("Invalid value; a number is required.");
                     return;
                 }
 
                 this.Configuration.requirePinThreshold = parseInt(result.value, 10);
 
-                this.UiHelper.alert(this.Utilities.format("PIN prompt threshold is now set to {0} minutes.", result.value));
+                this.UIHelper.alert(this.Utilities.format("PIN prompt threshold is now set to {0} minutes.", result.value));
             });
         }
 
@@ -192,12 +192,12 @@
 
             var message = "The PIN timeout has been set to more than 10 minutes ago. To see the PIN screen, terminate the application via the OS task manager (don't just background it), and then re-launch.";
 
-            this.UiHelper.alert(message, "Reset PIN Timeout");
+            this.UIHelper.alert(message, "Reset PIN Timeout");
         }
 
         protected reEnableOnboarding_click(): void {
             this.Configuration.hasCompletedOnboarding = false;
-            this.UiHelper.alert("Onboarding has been enabled and will occur upon next app boot.");
+            this.UIHelper.alert("Onboarding has been enabled and will occur upon next app boot.");
         }
 
         protected testJsException_click(): void {
@@ -243,25 +243,25 @@
 
         protected clipboard_copy(): void {
 
-            this.UiHelper.prompt("Enter a value to copy to the clipboard.").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter a value to copy to the clipboard.").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
                 this.Plugins.clipboard.copy(result.value, () => {
-                    this.UiHelper.alert("Copy OK!");
+                    this.UIHelper.alert("Copy OK!");
                 }, (err: Error) => {
-                    this.UiHelper.alert("Copy Failed!\n\n" + (err ? err.message : "Unknown Error"));
+                    this.UIHelper.alert("Copy Failed!\n\n" + (err ? err.message : "Unknown Error"));
                 });
             });
         }
 
         protected clipboard_paste(): void {
             this.Plugins.clipboard.paste((result: string) => {
-                this.UiHelper.alert("Paste OK! Value retrieved is:\n\n" + result);
+                this.UIHelper.alert("Paste OK! Value retrieved is:\n\n" + result);
             }, (err: Error) => {
-                this.UiHelper.alert("Paste Failed!\n\n" + (err ? err.message : "Unknown Error"));
+                this.UIHelper.alert("Paste Failed!\n\n" + (err ? err.message : "Unknown Error"));
             });
         }
 
@@ -278,14 +278,14 @@
         }
 
         protected readFile_click(): void {
-            this.UiHelper.prompt("Enter file name to read from", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter file name to read from", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
                 this.FileUtilities.readTextFile(result.value)
-                    .then((text: string) => { this.Logger.debug(DeveloperController.ID, "readFile_click", "Read OK.", text); this.UiHelper.alert(text); },
+                    .then((text: string) => { this.Logger.debug(DeveloperController.ID, "readFile_click", "Read OK.", text); this.UIHelper.alert(text); },
                     (err: Error) => { this.Logger.error(DeveloperController.ID, "readFile_click", "An error occurred.", err); this.alertFileIoError(err); });
             });
         }
@@ -294,7 +294,7 @@
             var path: string,
                 contents: string;
 
-            this.UiHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
@@ -302,7 +302,7 @@
 
                 path = result.value;
 
-                this.UiHelper.prompt("Enter file contents").then((result: Models.KeyValuePair<string, string>) => {
+                this.UIHelper.prompt("Enter file contents").then((result: Models.KeyValuePair<string, string>) => {
 
                     if (result.key !== Constants.Buttons.OK) {
                         return;
@@ -311,7 +311,7 @@
                     contents = result.value;
 
                     this.FileUtilities.writeTextFile(path, contents, false)
-                        .then(() => { this.Logger.debug(DeveloperController.ID, "writeFile_click", "Write OK.", { path: path, contents: contents }); this.UiHelper.alert("Write OK."); },
+                        .then(() => { this.Logger.debug(DeveloperController.ID, "writeFile_click", "Write OK.", { path: path, contents: contents }); this.UIHelper.alert("Write OK."); },
                         (err: Error) => { this.Logger.error(DeveloperController.ID, "writeFile_click", "An error occurred.", err); this.alertFileIoError(err); });
                 });
             });
@@ -321,13 +321,13 @@
             var path: string,
                 contents: string;
 
-            this.UiHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
                 }
 
-                this.UiHelper.prompt("Enter file contents", "File I/O Test", null, " / ").then((result: Models.KeyValuePair<string, string>) => {
+                this.UIHelper.prompt("Enter file contents", "File I/O Test", null, " / ").then((result: Models.KeyValuePair<string, string>) => {
 
                     if (result.key !== Constants.Buttons.OK) {
                         return;
@@ -336,7 +336,7 @@
                     contents = result.value;
 
                     this.FileUtilities.writeTextFile(path, contents, true)
-                        .then(() => { this.Logger.debug(DeveloperController.ID, "appendFile_click", "Append OK.", { path: path, contents: contents }); this.UiHelper.alert("Append OK."); },
+                        .then(() => { this.Logger.debug(DeveloperController.ID, "appendFile_click", "Append OK.", { path: path, contents: contents }); this.UIHelper.alert("Append OK."); },
                         (err: Error) => { this.Logger.error(DeveloperController.ID, "appendFile_click", "An error occurred.", err); this.alertFileIoError(err); });
                 });
             });
@@ -345,7 +345,7 @@
         protected createDir_click(): void {
             var path: string;
 
-            this.UiHelper.prompt("Enter dir name to create", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter dir name to create", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
@@ -354,7 +354,7 @@
                 path = result.value;
 
                 this.FileUtilities.createDirectory(path)
-                    .then(() => { this.Logger.debug(DeveloperController.ID, "createDir_click", "Create directory OK.", path); this.UiHelper.alert("Create directory OK."); },
+                    .then(() => { this.Logger.debug(DeveloperController.ID, "createDir_click", "Create directory OK.", path); this.UIHelper.alert("Create directory OK."); },
                     (err: Error) => { this.Logger.error(DeveloperController.ID, "createDir_click", "An error occurred.", err); this.alertFileIoError(err); });
             });
         }
@@ -363,7 +363,7 @@
             var path: string,
                 list = "";
 
-            this.UiHelper.prompt("Enter path to list files", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter path to list files", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
@@ -379,7 +379,7 @@
                             list += "\n" + value;
                         });
 
-                        this.UiHelper.alert(list);
+                        this.UIHelper.alert(list);
                     },
                     (err: Error) => {
                         this.Logger.error(DeveloperController.ID, "listFiles_click", "An error occurred.", err);
@@ -392,7 +392,7 @@
             var path: string,
                 list = "";
 
-            this.UiHelper.prompt("Enter path to list dirs", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter path to list dirs", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
@@ -408,7 +408,7 @@
                             list += "\n" + value;
                         });
 
-                        this.UiHelper.alert(list);
+                        this.UIHelper.alert(list);
                     },
                     (err: Error) => {
                         this.Logger.error(DeveloperController.ID, "listDirs_click", "An error occurred.", err);
@@ -420,7 +420,7 @@
         protected deleteFile_click(): void {
             var path: string;
 
-            this.UiHelper.prompt("Enter path to delete file", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter path to delete file", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
@@ -429,7 +429,7 @@
                 path = result.value;
 
                 this.FileUtilities.deleteFile(path)
-                    .then(() => { this.Logger.debug(DeveloperController.ID, "deleteFile_click", "Delete file OK.", path); this.UiHelper.alert("Delete file OK."); },
+                    .then(() => { this.Logger.debug(DeveloperController.ID, "deleteFile_click", "Delete file OK.", path); this.UIHelper.alert("Delete file OK."); },
                     (err: Error) => { this.Logger.error(DeveloperController.ID, "deleteFile_click", "An error occurred.", err); this.alertFileIoError(err); });
             });
         }
@@ -437,7 +437,7 @@
         protected deleteDir_click(): void {
             var path: string;
 
-            this.UiHelper.prompt("Enter path to delete dir", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
+            this.UIHelper.prompt("Enter path to delete dir", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
                 if (result.key !== Constants.Buttons.OK) {
                     return;
@@ -446,7 +446,7 @@
                 path = result.value;
 
                 this.FileUtilities.deleteDirectory(path)
-                    .then(() => { this.Logger.debug(DeveloperController.ID, "deleteDir_click", "Delete directory OK.", path); this.UiHelper.alert("Delete directory OK"); },
+                    .then(() => { this.Logger.debug(DeveloperController.ID, "deleteDir_click", "Delete directory OK.", path); this.UIHelper.alert("Delete directory OK"); },
                     (err: Error) => { this.Logger.error(DeveloperController.ID, "deleteDir_click", "An error occurred.", err); this.alertFileIoError(err); });
             });
         }

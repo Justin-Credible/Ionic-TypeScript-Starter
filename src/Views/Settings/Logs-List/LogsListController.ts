@@ -11,7 +11,7 @@
                 "$scope",
                 "$ionicPopover",
                 Services.Logger.ID,
-                Services.UiHelper.ID
+                Services.UIHelper.ID
             ];
         }
 
@@ -19,7 +19,7 @@
             $scope: ng.IScope,
             private $ionicPopover: ionic.popover.IonicPopoverService,
             private Logger: Services.Logger,
-            private UiHelper: Services.UiHelper) {
+            private UIHelper: Services.UIHelper) {
             super($scope, ViewModels.LogsListViewModel);
         }
 
@@ -158,7 +158,7 @@
         }
 
         protected clear_click() {
-            this.UiHelper.confirm("Are you sure you want to clear the logs?", "Clear Logs").then((result: string) => {
+            this.UIHelper.confirm("Are you sure you want to clear the logs?", "Clear Logs").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
                     this.Logger.clear();
                     this.viewModel.logs = {};

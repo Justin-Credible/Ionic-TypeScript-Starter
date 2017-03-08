@@ -2,7 +2,7 @@
 
     /**
      * Used to specify options for a dialog.
-     * For use with UiHelper.openDialog().
+     * For use with UIHelper.openDialog().
      */
     export class DialogOptions {
 
