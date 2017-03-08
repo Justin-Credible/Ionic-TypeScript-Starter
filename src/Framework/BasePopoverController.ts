@@ -14,7 +14,7 @@ namespace JustinCredible.SampleApp.Controllers {
         /**
          * The Ionic popover instance.
          */
-        private _popoverInstance: any;
+        private _popoverInstance: ionic.popover.IonicPopoverController;
 
         /**
          * The Angular scope for this controller.
@@ -83,7 +83,7 @@ namespace JustinCredible.SampleApp.Controllers {
              * If you are using more than one class of popover from the same
              * controller, then you'll need to set the controllerID on the 
              * popover options so we know which controller goes with which 
-             * popover. This is done by using UiHelper.createPopover().
+             * popover. This is done by using UIHelper.createPopover().
              */
 
             /* tslint:disable:no-string-literal */

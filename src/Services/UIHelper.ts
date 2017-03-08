@@ -11,6 +11,7 @@
 
         public static get $inject(): string[] {
             return [
+                "$rootScope",
                 "$window",
                 "$q",
                 "$ionicModal",
@@ -25,6 +26,7 @@
         }
 
         constructor(
+            private $rootScope: ng.IRootScopeService,
             private $window: Window,
             private $q: ng.IQService,
             private $ionicModal: ionic.modal.IonicModalService,
@@ -45,14 +47,6 @@
          * Keeps track of the currently open dialogs. Used by the showDialog helper method.
          */
         private static _openDialogIds: string[];
-
-        /**
-         * A map of dialog IDs to the templates that they use. Used by the showDialog helper method.
-         * Entries are added to this map via the registerDialog method.
-         * 
-         * The template's root element should have a controller that extends BaseDialogController.
-         */
-         private static dialogTemplateMap: { [dialogId: string]: string } = {};
 
         //#endregion
 
@@ -277,66 +271,103 @@
         //#region Modal Dialogs
 
         /**
-         * Used to register a dialog for use with showDialog().
-         * 
-         * @param dialogId The unique identifier for the dialog.
-         * @param templatePath The path to the Angular HTML template for the dialog.
-         */
-        public registerDialog(dialogId: string, templatePath: string): void {
-
-            if (!dialogId) {
-                throw new Error("A dialogId is required when registering a dialog.");
-            }
-
-            if (!templatePath) {
-                throw new Error("A templatePath is required when registering a dialog.");
-            }
-
-            if (UIHelper.dialogTemplateMap[dialogId]) {
-                this.Logger.warn(UIHelper.ID, "registerDialog", "A dialog with the same ID has already been registered; it will be overwritten.", dialogId);
-            }
-
-            UIHelper.dialogTemplateMap[dialogId] = templatePath;
-        }
-
-        /**
          * Used to open the modal dialog with the given dialog ID.
+         * 
+         * The controller should extend BaseDialogController and should have a public
+         * static string property named TemplatePath, which is the path to the Angular
+         * template to use.
+         * 
+         * The Angular template should have have an ng-controller reference to the same
+         * controller ID.
+         * 
+         * this.UIHelper.showDialog(MyDialog.ID);
+         * 
+         * <ion-popover-view ng-controller="MyDialog">
          * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with UIHelper.DIALOG_ALREADY_OPEN.
          * 
-         * @param dialogId The ID of the dialog to show/open.
+         * @param dialogID The ID of the dialog to show/open.
          * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
          */
-        public showDialog(dialogId: string): ng.IPromise<any>;
+        public showDialog(dialogID: string): ng.IPromise<any>;
 
         /**
          * Used to open the modal dialog with the given dialog ID.
          * 
+         * The controller should extend BaseDialogController and should have a public
+         * static string property named TemplatePath, which is the path to the Angular
+         * template to use.
+         * 
+         * The Angular template should have have an ng-controller reference to the same
+         * controller ID.
+         * 
+         * this.UIHelper.showDialog(MyDialog.ID);
+         * 
+         * <ion-popover-view ng-controller="MyDialog">
+         * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
-         * @param dialogId The ID of the dialog to show/open.
+         * @param dialogID The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
          * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
          */
-        public showDialog(dialogId: string, options: Models.DialogOptions): ng.IPromise<any>;
+        public showDialog(dialogID: string, options: Models.DialogOptions): ng.IPromise<any>;
 
         /**
          * Used to open the modal dialog with the given dialog ID.
          * 
+         * The controller should extend BaseDialogController and should have a public
+         * static string property named TemplatePath, which is the path to the Angular
+         * template to use.
+         * 
+         * The Angular template should have have an ng-controller reference to the same
+         * controller ID.
+         * 
+         * this.UIHelper.showDialog(MyDialog.ID);
+         * 
+         * <ion-popover-view ng-controller="MyDialog">
+         * 
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
-         * @param dialogId The ID of the dialog to show/open.
+         * @param dialogID The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
          * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
          */
-        public showDialog(dialogId: string, options?: Models.DialogOptions): ng.IPromise<any> {
-            var q = this.$q.defer<any>(),
-                template: string,
-                creationArgs: any,
-                creationPromise: ng.IPromise<any>;
+        public showDialog(dialogID: string, options?: Models.DialogOptions): ng.IPromise<any> {
+            var q = this.$q.defer<any>();
+
+            if (!dialogID) {
+                q.reject(new Error("A dialogID is required."));
+                return q.promise;
+            }
+
+            // Lookup the controller in the Controllers namespace.
+            let controllerReference = this.Utilities.getValue(Controllers, dialogID);
+
+            if (!controllerReference) {
+                q.reject(new Error("Could not locate a controller with ID in the Controllers namespace."));
+                return q.promise;
+            }
+
+            // Ensure the controller given actually extends the BaseDialogController class.
+
+            let hasProperBase = this.Utilities.derivesFrom(controllerReference, Controllers.BaseDialogController);
+
+            if (!hasProperBase) {
+                q.reject(Error(`The controller with ID ${dialogID} must extend BaseDialogController.`));
+                return q.promise;
+            }
+
+            // Grab the template path from the controller static property.
+            let templatePath = this.Utilities.getValue(controllerReference, "TemplatePath");
+
+            if (typeof(templatePath) !== "string" ) {
+                q.reject(new Error(`A static TemplatePath string property was not found on controller with ID ${dialogID}.`));
+                return q.promise;
+            }
 
             // Ensure the options object is present.
             if (!options) {
@@ -351,44 +382,29 @@
             // If a dialog with this ID is already open, we can reject immediately.
             // This ensures that only a single dialog with a given ID can be open
             // at one time.
-            if (_.contains(UIHelper._openDialogIds, dialogId)) {
+            if (_.contains(UIHelper._openDialogIds, dialogID)) {
                 this.$q.reject(Constants.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
 
-            // Lookup the template to use for this dialog based on the dialog ID.
-            template = UIHelper.dialogTemplateMap[dialogId];
-
-            // If we were unable to find a dialog ID in the template map then we
-            // can bail out here as there is nothing to do.
-            if (!template) {
-                this.Logger.warn(UIHelper.ID, "showDialog", "A call was made to openDialog, but a template is not registered with the given ID in the dialogTemplateMap.", dialogId);
-                this.$q.reject(Constants.DIALOG_ID_NOT_REGISTERED);
-                return q.promise;
-            }
-
             // Add the ID of this dialog to the list of dialogs that are open.
-            UIHelper._openDialogIds.push(dialogId);
+            UIHelper._openDialogIds.push(dialogID);
 
             // Define the arguments that will be used to create the modal instance.
-            creationArgs = {
-                // Include the dialog ID so we can identify the dialog later on.
-                dialogId: dialogId,
-
-                // Include the dialog data object so the BaseDialogController can
-                // get the dialog for the dialog.
-                dialogData: options.dialogData,
-
-                // Include Ionic modal options.
+            let modalOptions: ionic.modal.IonicModalOptions = {
                 backdropClickToClose: options.backdropClickToClose,
                 hardwareBackButtonClose: options.hardwareBackButtonClose
             };
 
+            // Piggyback the ID and data on the options; these are used by BaseDialogController.
+            this.Utilities.setValue(modalOptions, "dialogId", dialogID);
+            this.Utilities.setValue(modalOptions, "dialogData", options.dialogData);
+
             // Schedule the modal instance to be created.
-            creationPromise = this.$ionicModal.fromTemplateUrl(template, creationArgs);
+            let creationPromise = this.$ionicModal.fromTemplateUrl(templatePath, modalOptions);
 
             // Once the modal instance has been created...
-            creationPromise.then((modal: any) => {
+            creationPromise.then((modal: ionic.modal.IonicModalController) => {
                 var backdrop: HTMLDivElement;
 
                 // Show it.
@@ -406,7 +422,7 @@
                 modal.scope.$on("modal.hidden", (eventArgs: ng.IAngularEvent, instance: any) => {
 
                     // Only handle events for the relevant dialog.
-                    if (dialogId !== instance.dialogId) {
+                    if (dialogID !== instance.dialogId) {
                         return;
                     }
 
@@ -418,16 +434,33 @@
                     }
 
                     // Remove this dialog's ID from the list of ones that are open.
-                    UIHelper._openDialogIds = _.without(UIHelper._openDialogIds, dialogId);
+                    UIHelper._openDialogIds = _.without(UIHelper._openDialogIds, dialogID);
 
                     // Once the dialog is closed, resolve the original promise
                     // using the result data object from the dialog (if any).
-                    q.resolve(modal.result);
+                    let result = this.Utilities.getValue(modal, "result");
+                    q.resolve(result);
 
                 });
             });
 
             return q.promise;
+        }
+
+        /**
+         * Used to close all of the open dialogs.
+         */
+        public closeAllDialogs(): void {
+            this.$rootScope.$broadcast(Constants.Events.APP_CLOSE_DIALOG, null);
+        }
+
+        /**
+         * Used to close the dialog with the given ID.
+         * 
+         * @param dialogId the ID of the dialog to close.
+         */
+        public closeDialog(dialogId: string): void {
+            this.$rootScope.$broadcast(Constants.Events.APP_CLOSE_DIALOG, dialogId);
         }
 
         //#endregion
@@ -445,18 +478,19 @@
          * The Angular template should have have an ng-controller reference to the same
          * controller ID.
          * 
-         * this.UIHelper.createPopover(MyPopoverController.ID, this.scope);
+         * this.UIHelper.createPopover(MyPopover.ID, this.scope);
          * 
-         * <ion-popover-view ng-controller="MyPopoverController">
+         * <ion-popover-view ng-controller="MyPopover">
          * 
          * Once the popover is created, the promise will resolve with the popover instance
          * which can then be used to show or hide the popover.
          * 
          * @param controllerID The ID of the controller to use in the popover.
          * @param scope The parent scope for the popover.
+         * @param options The options to use when creating the popover.
          * @returns A promise that will be resolved when the popover is created, which will contain the popover instance.
          */
-        public createPopover(controllerID: string, scope: ng.IScope): angular.IPromise<ionic.popover.IonicPopoverController> {
+        public createPopover(controllerID: string, options?: ionic.popover.IonicPopoverOptions): angular.IPromise<ionic.popover.IonicPopoverController> {
             let q = this.$q.defer<ionic.popover.IonicPopoverController>();
 
             if (!controllerID) {
@@ -489,14 +523,10 @@
                 return q.promise;
             }
 
-            if (!scope) {
-                q.reject(new Error("A scope is required."));
-                return q.promise;
+            // Ensure the options object is present.
+            if (!options) {
+                options = {};
             }
-
-            let options: ionic.popover.IonicPopoverOptions = {
-                scope: scope,
-            };
 
             // Set the controllerID onto the options; this is used by BasePopoverController.
             this.Utilities.setValue(options, "controllerID", controllerID);

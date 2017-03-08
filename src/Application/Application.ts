@@ -85,9 +85,6 @@ namespace JustinCredible.SampleApp {
             // Subscribe to Angular events.
             this.$rootScope.$on("$locationChangeStart", _.bind(this.angular_locationChangeStart, this));
 
-            // Register all of the dialogs with the UIHelper.
-            this.registerDialogs(this._ngModule);
-
             // We use this combination of settings so prevent the visual jank that
             // would otherwise occur when tapping an input that shows the keyboard.
             this.Plugins.keyboard.disableScroll(true);
@@ -316,33 +313,6 @@ namespace JustinCredible.SampleApp {
                 this.Logger.warn("Application", "angular_exceptionHandler", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
                 alert("An error has occurred; please try again.");
             }
-        }
-
-        //#endregion
-
-        //#region Private Helpers
-
-        /**
-         * Used to register each of the Controller classes that extend BaseDialog as dialogs
-         * with the UIHelper.
-         * 
-         * @params ngModule The root Angular module to use for registration.
-         */
-        private registerDialogs(ngModule: ng.IModule): void {
-
-            // Loop over each of the controllers, and for any controller that dervies from BaseController
-            // register it as a dialog using its ID with the UIHelper.
-            _.each(Controllers, (Controller: any) => {
-
-                // Don't try to register the BaseDialogController since it is abstract.
-                if (Controller === Controllers.BaseDialogController) {
-                    return; // Continue
-                }
-
-                if (this.Utilities.derivesFrom(Controller, Controllers.BaseDialogController)) {
-                    this.UIHelper.registerDialog(Controller.ID, Controller.TemplatePath);
-                }
-            });
         }
 
         //#endregion

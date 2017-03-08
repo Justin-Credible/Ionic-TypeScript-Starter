@@ -184,6 +184,7 @@ declare namespace ionic {
             hide(): angular.IPromise<void>;
             remove(): angular.IPromise<void>;
             isShown(): boolean;
+            scope: ng.IScope;
         }
 
         interface IonicModalOptions {
@@ -248,6 +249,7 @@ declare namespace ionic {
             hide(): angular.IPromise<any>;
             isShown(): boolean;
             remove(): angular.IPromise<any>;
+            scope: ng.IScope;
         }
         interface IonicPopoverOptions {
             scope?: any;

@@ -40,4 +40,5 @@ namespace JustinCredible.SampleApp.Constants.Events {
     export const HTTP_ERROR = "http.error";
 
     export const APP_MENU_BUTTON = "app.menuButton";
+    export const APP_CLOSE_DIALOG = "app.appCloseDialog";
 }

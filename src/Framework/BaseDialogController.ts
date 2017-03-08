@@ -14,7 +14,7 @@
     export class BaseDialogController<V, D, R> extends BaseController<V> {
 
         private dialogId: string;
-        private modalInstance: any;
+        private modalInstance: ionic.modal.IonicModalController;
         private data: D;
 
         constructor(scope: ng.IScope, ViewModelType: { new (): V; }, dialogId: string) {
@@ -24,6 +24,7 @@
 
             this.scope.$on("modal.shown", _.bind(this.modal_shown, this));
             this.scope.$on("modal.hidden", _.bind(this.modal_hidden, this));
+            this.scope.$on(Constants.Events.APP_CLOSE_DIALOG, _.bind(this.app_closeDialog, this));
         }
 
         //#region Events
@@ -31,7 +32,8 @@
         private modal_shown(ngEvent: ng.IAngularEvent, instance: any) {
 
             // Only respond to modal.shown events for this dialog.
-            if (this.dialogId !== instance.dialogId) {
+            if (this.dialogId !== instance.dialogId ||
+                (this.modalInstance && this.modalInstance !== instance)) {
                 return;
             }
 
@@ -48,12 +50,40 @@
         private modal_hidden(eventArgs: ng.IAngularEvent, instance: any) {
 
             // Only respond to modal.hidden events for this dialog.
-            if (this.dialogId !== instance.dialogId) {
+            if (this.dialogId !== instance.dialogId ||
+                (this.modalInstance && this.modalInstance !== instance)) {
                 return;
             }
 
             // Call the dialog hidden event which descendants can override.
             this.dialog_hidden();
+
+            // When the user clicks off of modal to close it or uses the back button on Android
+            // the dialog is never disposed. We will do it manually here and remove it from the
+            // DOM. This event we are in was triggered from the modal, so we need a setTimeout
+            // to run this code after the modal is finished calling us. We can't just call
+            // remove() since that calls hidden() (which we are in).
+
+            /* tslint:disable:no-string-literal */
+            setTimeout(() => {
+                this.scope.$destroy();
+                if (this.modalInstance && this.modalInstance["$el"]) {
+                    this.modalInstance["$el"].remove();
+                }
+            }, 2000);
+            /* tslint:enable:no-string-literal */
+        }
+
+        /**
+         * Fired by the UIHelper.closeAllDialogs() or UIHelper.closeDialog(...) methods.
+         */
+        private app_closeDialog(eventArgs: ng.IAngularEvent, dialogId: string): void {
+
+            // If the close event does not specify the dialog ID then it applies to all dialgos.
+            // If it does specify the ID it is only applicable to the dialog with the given ID.
+            if (!dialogId || dialogId === this.dialogId) {
+                this.close();
+            }
         }
 
         //#endregion
@@ -85,7 +115,11 @@
          * @param result The return result value for this dialog.
          */
         public close(result?: R): void {
-            this.modalInstance.result = result;
+
+            /* tslint:disable:no-string-literal */
+            this.modalInstance["result"] = result;
+            /* tslint:enable:no-string-literal */
+
             this.modalInstance.hide();
             this.modalInstance.remove();
         }
