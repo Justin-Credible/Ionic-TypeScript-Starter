@@ -25,22 +25,39 @@
 
         //#endregion
 
-        private _popover: any;
+        private _filterMenu: ionic.popover.IonicPopoverController;
 
         //#region BaseController Overrides
 
         protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
-            this.$ionicPopover.fromTemplateUrl("Views/Settings/Logs-List/Log-Filter-Menu.html", {
-                scope: this.scope
-            }).then((popover: any) => {
-                this._popover = popover;
+            this.UIHelper.createPopover(LogFilterMenuController.ID)
+                .then((popover: ionic.popover.IonicPopoverController) => {
+
+                this._filterMenu = popover;
+                this._filterMenu.scope.$on("filtersChanged", _.bind(this.filterMenu_filtersChanged, this));
             });
 
             this.viewModel.showError = true;
             this.viewModel.showWarn = true;
             this.viewModel.showFatal = true;
+
+            this.populateViewModel(this.Logger.logs);
+        }
+
+        //#endregion
+
+        //#region Events
+
+        private filterMenu_filtersChanged($event: ng.IAngularEvent, filters: ViewModels.LogFilterMenuViewModel): void {
+
+            this.viewModel.showTrace = filters.showTrace;
+            this.viewModel.showDebug = filters.showDebug;
+            this.viewModel.showInfo = filters.showInfo;
+            this.viewModel.showWarn = filters.showWarn;
+            this.viewModel.showError = filters.showError;
+            this.viewModel.showFatal = filters.showFatal;
 
             this.populateViewModel(this.Logger.logs);
         }
@@ -124,37 +141,18 @@
         //#region Controller Methods
 
         protected filter_click(event: ng.IAngularEvent) {
-            this._popover.show(event);
-        }
 
-        protected trace_click(): void {
-            this.viewModel.showTrace = !this.viewModel.showTrace;
-            this.populateViewModel(this.Logger.logs);
-        }
+            let filters = new ViewModels.LogFilterMenuViewModel();
+            filters.showTrace = this.viewModel.showTrace;
+            filters.showDebug = this.viewModel.showDebug;
+            filters.showInfo = this.viewModel.showInfo;
+            filters.showWarn = this.viewModel.showWarn;
+            filters.showError = this.viewModel.showError;
+            filters.showFatal = this.viewModel.showFatal;
 
-        protected debug_click(): void {
-            this.viewModel.showDebug = !this.viewModel.showDebug;
-            this.populateViewModel(this.Logger.logs);
-        }
+            this._filterMenu.scope.$broadcast("setFilters", filters);
 
-        protected info_click(): void {
-            this.viewModel.showInfo = !this.viewModel.showInfo;
-            this.populateViewModel(this.Logger.logs);
-        }
-
-        protected warn_click(): void {
-            this.viewModel.showWarn = !this.viewModel.showWarn;
-            this.populateViewModel(this.Logger.logs);
-        }
-
-        protected error_click(): void {
-            this.viewModel.showError = !this.viewModel.showError;
-            this.populateViewModel(this.Logger.logs);
-        }
-
-        protected fatal_click(): void {
-            this.viewModel.showFatal = !this.viewModel.showFatal;
-            this.populateViewModel(this.Logger.logs);
+            this._filterMenu.show(event);
         }
 
         protected clear_click() {

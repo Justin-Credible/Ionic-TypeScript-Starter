@@ -264,6 +264,7 @@
             logEntry.tag = tagPrefix ? tagPrefix + "." + tag : tag;
             logEntry.message = message;
             logEntry.metadata = metadata;
+            logEntry.timestamp = new Date();
 
             if (this._logs.length >= this._maxLogEntries) {
                 this._logs = this._logs.slice(1);

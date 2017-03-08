@@ -68,6 +68,12 @@ This base class should be used by all Angular controllers used for Ionic modal d
 
 See [Base Framework: Dialogs](base-framework.md#dialogs) for more information.
 
+## Framework/BasePopoverController.ts
+
+This base class should be used by all Angular controllers used for Ionic popovers.
+
+See [Base Framework: Popovers](base-framework.md#popovers) for more information.
+
 ## Framework/BaseElementDirective.ts
 
 This base class should be used by all the Angular directives for elements.
