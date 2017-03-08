@@ -349,9 +349,9 @@ There are are two base helper methods provided. The first, `getData()`, is used 
 
 Ionic provides the `$ionicPopover` service, which can be used to show a non-modal, popover UI element. This sample project includes the `BasePopoverController` base class and a `UIHelper` method `createPopover()`, which are used to simplify usage and normalize popover behavior.
 
-An example popover is used on the Develper Tools > Logs view, and its code is located at `src/Views/Settings/Log-List`.
+An example popover is used on the Develper Tools > Logs view, and its code is located at `src/Views/Settings/Logs-List/Log-Filter-Menu`.
 
-The `createPopover` method wraps Ionic's popover creation API. It should be invoked with the ID of the controller for the popover and optional popover options. It returns a promise that is resolved once the popover has been created.
+The `createPopover()` method wraps Ionic's popover creation API. It should be invoked with the ID of the controller for the popover and optional popover options. It returns a promise that is resolved once the popover has been created.
 
 ```
 this.UIHelper.createPopover(LogFilterMenuController.ID, options)
@@ -363,9 +363,14 @@ this.UIHelper.createPopover(LogFilterMenuController.ID, options)
 	// Also, you can listen for any events that you may emit from the popover's controller.
 	this._myPopover.scope.$on("customEvent", _.bind(this.popover_customEvent, this));
 
-	// Optionally, you can pass in data using an event (you'd listen for this event in your popver's controller).
+	// Optionally, you can pass in data using an event (you'd listen for this event in your popover's controller).
 	this._myPopover.scope.$broadcast("setData", { your: "data" });
 });
+
+
+// Later in some other method, you show or hiden the popover.
+this._myPopover.show();
+this._myPopover.hide();
 ```
 
 To build a popover, you first need to create a template with the `ion-popover-view` directive and the `ng-controller` attribute to specify the ID of your popover's controller:
@@ -374,7 +379,7 @@ To build a popover, you first need to create a template with the `ion-popover-vi
 <ion-popover-view ng-controller="LogFilterMenuController">
 ```
 
-Then you'll need to create a controller that extends `BasePopoverController`. If you examine the base class, you'll see that it requires a single templated types, which is the type of view model that will be used in the controller.
+Then you'll need to create a controller that extends `BasePopoverController`. If you examine the base class, you'll see that it requires a single templated type, which is the type of view model that will be used in the controller.
 
 ```
 export class LogFilterMenuController
@@ -388,6 +393,6 @@ export class LogFilterMenuController
 
 If you examine the sample popover, you'll see that the base class provides two events that are fired when the popover is shown and is hidden (`popover_shown` and `popover_hidden`, respectively).
 
-There is also a `hide` helper method, so that the popover can be closed programmatically.
+There is also a `hide()` helper method, so that the popover can be closed programmatically.
 
-Unlike dialogs, there is no mechanism to pass data into, or out of, popovers. Instead, you should use events. To pass data in, you can `$broadcast` to the popover's scope after it is created. To pass data or events out, you'd use `this.scope.$emit` from an event handler in your popover's controller.
+Unlike dialogs, there is no mechanism to pass data into, or out of, popovers. Instead, you should use events. To pass data in, you would broadcast to your popover by using `this._myPopover.scope.$broadcast("event_name", data)` before you show it. To pass data or events out, you'd use `this.scope.$emit("event_name", data)` from an event handler in your popover's controller.
