@@ -32,7 +32,7 @@ namespace JustinCredible.SampleApp.Boot2 {
      * It will be made available as an Angular constant with name "initialRoute".
      */
     export function setInitialRoute(route: string): void {
-        this._initialRoute = route;
+        initialRoute = route;
     }
 
     //#endregion
@@ -53,7 +53,7 @@ namespace JustinCredible.SampleApp.Boot2 {
         ngModule.constant("isCordova", typeof(cordova) !== "undefined");
         ngModule.constant("buildVars", window.buildVars);
         ngModule.constant("isChromeExtension", typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" && typeof (chrome.runtime.id) !== "undefined");
-        ngModule.constant("initialRoute", this._initialRoute);
+        ngModule.constant("initialRoute", initialRoute);
 
         // Register the services, directives, filters, and controllers with Angular.
         BootHelper.registerServices(ngModule);
