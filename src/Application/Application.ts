@@ -14,11 +14,12 @@ namespace JustinCredible.SampleApp {
                 "$location",
                 "$ionicHistory",
                 Services.Plugins.ID,
-                Services.Utilities.ID,
+                Services.Platform.ID,
                 Services.Compatibility.ID,
                 Services.UIHelper.ID,
                 Services.Configuration.ID,
-                Services.Logger.ID
+                Services.Logger.ID,
+                Services.MenuDataSource.ID,
             ];
         }
 
@@ -28,11 +29,12 @@ namespace JustinCredible.SampleApp {
             private $location: ng.ILocationService,
             private $ionicHistory: ionic.navigation.IonicHistoryService,
             private Plugins: Services.Plugins,
-            private Utilities: Services.Utilities,
+            private Platform: Services.Platform,
             private Compatibility: Services.Compatibility,
             private UIHelper: Services.UIHelper,
             private Configuration: Services.Configuration,
-            private Logger: Services.Logger) {
+            private Logger: Services.Logger,
+            private MenuDataSource: Services.MenuDataSource) {
         }
 
         //#endregion
@@ -73,7 +75,7 @@ namespace JustinCredible.SampleApp {
             this.$window.onerror = _.bind(this.window_onerror, this);
 
             // Subscribe to device events.
-            if (this.Utilities.isWebPlatform) {
+            if (this.Platform.web) {
                 document.addEventListener(this.Compatibility.visibilityChangeEventName, _.bind(this.document_visibilitychange, this));
             }
             else {
@@ -164,7 +166,7 @@ namespace JustinCredible.SampleApp {
                     });
 
                     // Navigate the user to their default view.
-                    this.$location.path(this.Utilities.defaultCategory.href.substring(1));
+                    this.$location.path(this.MenuDataSource.defaultCategory.href.substring(1));
                     this.$location.replace();
                 }
             });

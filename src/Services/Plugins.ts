@@ -13,13 +13,13 @@ namespace JustinCredible.SampleApp.Services {
 
         public static get $inject(): string[] {
             return [
-                Utilities.ID,
+                Platform.ID,
                 MockPlatformApis.ID
             ];
         }
 
         constructor(
-            private Utilities: Utilities,
+            private Platform: Platform,
             private MockPlatformApis: MockPlatformApis) {
         }
 
@@ -43,7 +43,7 @@ namespace JustinCredible.SampleApp.Services {
          * Exposes an API for showing toast messages.
          */
         get toast(): ToastPlugin.ToastPluginStatic {
-            if (!this.Utilities.isWindows && !this.Utilities.isWindows8 && window.plugins && window.plugins.toast) {
+            if (!this.Platform.windowsCordova && !this.Platform.windows8Cordova && window.plugins && window.plugins.toast) {
                 return window.plugins.toast;
             }
             else {
@@ -67,13 +67,13 @@ namespace JustinCredible.SampleApp.Services {
          * Exposes an API for working with the operating system's clipboard.
          */
         get clipboard(): ClipboardPlugin.ClipboardPluginStatic {
-            if (this.Utilities.isWindows) {
+            if (this.Platform.windowsCordova) {
                 return this.MockPlatformApis.getClipboardPluginForWindows();
             }
             else if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
                 return cordova.plugins.clipboard;
             }
-            else if (this.Utilities.isChromeExtension) {
+            else if (this.Platform.chromeExtension) {
                 return this.MockPlatformApis.getClipboardPluginForChromeExtension();
             }
             else {

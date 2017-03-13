@@ -748,8 +748,6 @@ module.exports = helper = {
      */
     buildCspStringFromObject: function(csp) {
 
-        console.log("!!!!!!!!!!!!!!!! " + JSON.stringify(csp, null, 4));
-
         if (!csp || typeof(csp) !== "object") {
             return null;
         }

@@ -10,7 +10,7 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
-                Services.Utilities.ID,
+                Services.MenuDataSource.ID,
                 Services.Preferences.ID,
                 Services.UIHelper.ID
             ];
@@ -18,7 +18,7 @@
 
         constructor(
             $scope: ng.IScope,
-            private Utilities: Services.Utilities,
+            private MenuDataSource: Services.MenuDataSource,
             private Preferences: Services.Preferences,
             private UIHelper: Services.UIHelper) {
             super($scope, ViewModels.ReorderCategoriesViewModel, ReorderCategoriesController.ID);
@@ -32,7 +32,7 @@
             super.dialog_shown();
 
             // Grab the available categories.
-            this.viewModel.categories = this.Utilities.categories;
+            this.viewModel.categories = this.MenuDataSource.categories;
         }
 
         //#endregion

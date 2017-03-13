@@ -11,7 +11,7 @@ namespace JustinCredible.SampleApp.Controllers {
                 "$scope",
                 "$location",
                 "$ionicHistory",
-                Services.Utilities.ID,
+                Services.MenuDataSource.ID,
                 Services.UIHelper.ID,
                 Services.Plugins.ID,
                 Services.Configuration.ID
@@ -22,7 +22,7 @@ namespace JustinCredible.SampleApp.Controllers {
             $scope: ng.IScope,
             private $location: ng.ILocationService,
             private $ionicHistory: ionic.navigation.IonicHistoryService,
-            private Utilities: Services.Utilities,
+            private MenuDataSource: Services.MenuDataSource,
             private UIHelper: Services.UIHelper,
             private Plugins: Services.Plugins,
             private Configuration: Services.Configuration) {
@@ -51,7 +51,7 @@ namespace JustinCredible.SampleApp.Controllers {
             });
 
             // Navigate the user to their default view.
-            this.$location.path(this.Utilities.defaultCategory.href.substring(1));
+            this.$location.path(this.MenuDataSource.defaultCategory.href.substring(1));
             this.$location.replace();
         }
 

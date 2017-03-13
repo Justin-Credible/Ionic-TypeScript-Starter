@@ -14,13 +14,15 @@
         public static get $inject(): string[] {
             return [
                 "$q",
-                Utilities.ID
+                Utilities.ID,
+                Platform.ID,
             ];
         }
 
         constructor(
             private $q: ng.IQService,
-            private Utilities: Utilities) {
+            private Utilities: Utilities,
+            private Platform: Platform) {
         }
 
         //#endregion
@@ -41,7 +43,7 @@
             // and it can't handle two consecutive forward slashes in a path. Here we remove the
             // leading backslash from the given path, if it is present (iOS on the other had requires
             // a leading slash).
-            if (this.Utilities.isAndroid && this.Utilities.startsWith(path, "/")) {
+            if (this.Platform.androidCordova && this.Utilities.startsWith(path, "/")) {
                 path = path.substr(1);
             }
 
