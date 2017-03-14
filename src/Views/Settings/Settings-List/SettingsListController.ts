@@ -26,7 +26,7 @@
         protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
 
-            this.viewModel.isDebugMode = this.Configuration.isDebug;
+            this.viewModel.isDebugMode = this.Configuration.debug;
             this.viewModel.isDeveloperMode = this.Configuration.enableDeveloperTools;
         }
 
