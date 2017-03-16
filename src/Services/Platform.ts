@@ -55,7 +55,7 @@ namespace JustinCredible.SampleApp.Services {
          * Regular expression for matching the Android version number from navigator.userAgent.
          * Taken from: http://stackoverflow.com/a/5960300
          */
-        private _androidVersionRegEx = /Android (\d+(?:\.\d+)+)/;
+        private _androidVersionRegEx = /Android (\d+)\.?(\d+)?\.?(\d+)?/;
 
         /**
          * Will hold the cached device object, if one was created. Used by the device property.
