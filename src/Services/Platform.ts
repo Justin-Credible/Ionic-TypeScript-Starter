@@ -11,6 +11,7 @@ namespace JustinCredible.SampleApp.Services {
 
         public static get $inject(): string[] {
             return [
+                "$window",
                 "isCordova",
                 "buildVars",
                 "isChromeExtension",
@@ -18,6 +19,7 @@ namespace JustinCredible.SampleApp.Services {
         }
 
         constructor(
+            private $window: ng.IWindowService,
             private _isCordova_: boolean,
             private _buildVars_: Interfaces.BuildVars,
             private _isChromeExtension_: boolean) {
@@ -46,13 +48,13 @@ namespace JustinCredible.SampleApp.Services {
         private _iPodRegEx = /iPod/;
 
         /**
-         * Regular expression for matching the iOS version number from navigator.userAgent.
+         * Regular expression for matching the iOS version number from the user agent.
          * Taken from: http://stackoverflow.com/a/14223920
          */
         private _iOSVersionRegEx = /OS (\d+)_(\d+)_?(\d+)?/;
 
         /**
-         * Regular expression for matching the Android version number from navigator.userAgent.
+         * Regular expression for matching the Android version number from the user agent.
          * Taken from: http://stackoverflow.com/a/5960300
          */
         private _androidVersionRegEx = /Android (\d+)\.?(\d+)?\.?(\d+)?/;
@@ -90,8 +92,8 @@ namespace JustinCredible.SampleApp.Services {
             }
 
             // http://stackoverflow.com/questions/21125337/how-to-detect-if-web-app-running-standalone-on-chrome-mobile
-            return window.navigator.standalone // iOS Safari
-                || window.matchMedia("(display-mode: standalone)").matches; // Android Chrome
+            return this.$window.navigator.standalone // iOS Safari
+                || this.$window.matchMedia("(display-mode: standalone)").matches; // Android Chrome
         }
 
         /**
@@ -123,7 +125,7 @@ namespace JustinCredible.SampleApp.Services {
          * Used to check if the current platform is the web app on Android.
          */
         public get androidWeb(): boolean {
-            return !this.cordova && navigator.userAgent.indexOf("Android") > -1;
+            return !this.cordova && this.userAgent.indexOf("Android") > -1;
         }
 
         /**
@@ -146,7 +148,7 @@ namespace JustinCredible.SampleApp.Services {
          * Used to check if the current platform is the web app on iOS.
          */
         public get iOSWeb(): boolean {
-            return !this.cordova && this._iOSDeviceRegEx.test(navigator.userAgent);
+            return !this.cordova && this._iOSDeviceRegEx.test(this.userAgent);
         }
 
         /**
@@ -155,7 +157,7 @@ namespace JustinCredible.SampleApp.Services {
          * This does not distinguish between running in Cordova or as a web app.
          */
         public get iPhone(): boolean {
-            return this._iPhoneRegEx.test(navigator.userAgent);
+            return this._iPhoneRegEx.test(this.userAgent);
         }
 
         /**
@@ -164,7 +166,7 @@ namespace JustinCredible.SampleApp.Services {
          * This does not distinguish between running in Cordova or as a web app.
          */
         public get iPad(): boolean {
-            return this._iPadRegEx.test(navigator.userAgent);
+            return this._iPadRegEx.test(this.userAgent);
         }
 
         /**
@@ -173,7 +175,7 @@ namespace JustinCredible.SampleApp.Services {
          * This does not distinguish between running in Cordova or as a web app.
          */
         public get iPod(): boolean {
-            return this._iPodRegEx.test(navigator.userAgent);
+            return this._iPodRegEx.test(this.userAgent);
         }
 
         /**
@@ -263,6 +265,13 @@ namespace JustinCredible.SampleApp.Services {
         //#region Private Members
 
         /**
+         * A convenience getter for the user agent.
+         */
+        private get userAgent(): string {
+            return this.$window.navigator.userAgent;
+        }
+
+        /**
          * Gets the version number of the iOS operating system.
          * Returns a string in the form of "major.minor.revision".
          */
@@ -286,11 +295,11 @@ namespace JustinCredible.SampleApp.Services {
 
             // Adapted from: http://stackoverflow.com/a/14223920
 
-            if (!this._iOSDeviceRegEx.test(navigator.userAgent)) {
+            if (!this._iOSDeviceRegEx.test(this.userAgent)) {
                 return [];
             }
 
-            let matches = navigator.userAgent.match(this._iOSVersionRegEx);
+            let matches = this.userAgent.match(this._iOSVersionRegEx);
 
             try {
                 return [
@@ -326,11 +335,11 @@ namespace JustinCredible.SampleApp.Services {
          */
         private get androidVersion(): number[] {
 
-            if (navigator.userAgent.indexOf("Android ") === -1) {
+            if (this.userAgent.indexOf("Android ") === -1) {
                 return [];
             }
 
-            let matches = navigator.userAgent.match(this._androidVersionRegEx);
+            let matches = this.userAgent.match(this._androidVersionRegEx);
 
             try {
                 return [
