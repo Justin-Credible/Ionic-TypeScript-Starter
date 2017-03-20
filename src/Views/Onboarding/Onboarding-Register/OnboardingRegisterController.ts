@@ -12,7 +12,7 @@ namespace JustinCredible.SampleApp.Controllers {
                 "$location",
                 "$ionicHistory",
                 Services.Plugins.ID,
-                Services.Utilities.ID,
+                Services.MenuDataSource.ID,
                 Services.UIHelper.ID,
                 Services.Configuration.ID
             ];
@@ -23,7 +23,7 @@ namespace JustinCredible.SampleApp.Controllers {
             private $location: ng.ILocationService,
             private $ionicHistory: ionic.navigation.IonicHistoryService,
             private Plugins: Services.Plugins,
-            private Utilities: Services.Utilities,
+            private MenuDataSource: Services.MenuDataSource,
             private UIHelper: Services.UIHelper,
             private Configuration: Services.Configuration) {
             super($scope, ViewModels.OnboardingRegisterViewModel);
@@ -137,7 +137,7 @@ namespace JustinCredible.SampleApp.Controllers {
             });
 
             // Navigate the user to their default view.
-            this.$location.path(this.Utilities.defaultCategory.href.substring(1));
+            this.$location.path(this.MenuDataSource.defaultCategory.href.substring(1));
             this.$location.replace();
         }
 

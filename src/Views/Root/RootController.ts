@@ -12,7 +12,7 @@
                 "$location",
                 "$http",
                 Services.Plugins.ID,
-                Services.Utilities.ID,
+                Services.MenuDataSource.ID,
                 Services.UIHelper.ID,
                 Services.Preferences.ID
             ];
@@ -23,7 +23,7 @@
             private $location: ng.ILocationService,
             private $http: ng.IHttpService,
             private Plugins: Services.Plugins,
-            private Utilities: Services.Utilities,
+            private MenuDataSource: Services.MenuDataSource,
             private UIHelper: Services.UIHelper,
             private Preferences: Services.Preferences) {
             super($scope, ViewModels.RootViewModel);
@@ -54,7 +54,7 @@
             this.scope.$on(Constants.Events.HTTP_UNKNOWN_ERROR, _.bind(this.http_unknownError, this));
             this.scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
 
-            this.viewModel.categories = this.Utilities.categories;
+            this.viewModel.categories = this.MenuDataSource.categories;
         }
 
         //#endregion
@@ -105,7 +105,7 @@
             this.UIHelper.showDialog(ReorderCategoriesController.ID).then(() => {
                 // After the re-order dialog is closed, re-populate the category
                 // items since they may have been re-ordered.
-                this.viewModel.categories = this.Utilities.categories;
+                this.viewModel.categories = this.MenuDataSource.categories;
             });
         }
 

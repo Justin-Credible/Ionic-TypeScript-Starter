@@ -46,7 +46,7 @@ namespace JustinCredible.SampleApp.Services {
          * True if the application was build in debug configuration, false if it was
          * build a release or distribution configuration.
          */
-        get isDebug(): boolean {
+        get debug(): boolean {
             return this.buildVars.debug;
         }
 

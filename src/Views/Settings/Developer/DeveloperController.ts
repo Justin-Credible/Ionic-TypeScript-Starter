@@ -13,7 +13,7 @@
                 "$injector",
                 "$window",
                 Services.Plugins.ID,
-                Services.Utilities.ID,
+                Services.Platform.ID,
                 Services.UIHelper.ID,
                 Services.FileUtilities.ID,
                 Services.Logger.ID,
@@ -29,7 +29,7 @@
             private $injector: ng.auto.IInjectorService,
             private $window: ng.IWindowService,
             private Plugins: Services.Plugins,
-            private Utilities: Services.Utilities,
+            private Platform: Services.Platform,
             private UIHelper: Services.UIHelper,
             private FileUtilities: Services.FileUtilities,
             private Logger: Services.Logger,
@@ -51,18 +51,18 @@
             this.viewModel.userId = this.Preferences.userId;
             this.viewModel.token = this.Preferences.token;
 
-            this.viewModel.isWebPlatform = this.Utilities.isWebPlatform;
-            this.viewModel.isWebStandalone = this.Utilities.isWebStandalone;
-            this.viewModel.devicePlatform = this.Utilities.platform;
-            this.viewModel.deviceModel = this.Utilities.device.model;
-            this.viewModel.deviceOsVersion = this.Utilities.device.version;
-            this.viewModel.deviceUuid = this.Utilities.device.uuid;
-            this.viewModel.deviceCordovaVersion = this.Utilities.device.cordova;
+            this.viewModel.isWebPlatform = this.Platform.web;
+            this.viewModel.isWebStandalone = this.Platform.webStandalone;
+            this.viewModel.devicePlatform = this.Platform.device.platform;
+            this.viewModel.deviceModel = this.Platform.device.model;
+            this.viewModel.deviceOsVersion = this.Platform.device.version;
+            this.viewModel.deviceUuid = this.Platform.device.uuid;
+            this.viewModel.deviceCordovaVersion = this.Platform.device.cordova;
 
             this.viewModel.navigatorPlatform = this.$window.navigator.platform;
             this.viewModel.navigatorProduct = this.$window.navigator.product;
             this.viewModel.navigatorVendor = this.$window.navigator.vendor;
-            this.viewModel.viewport = this.Utilities.viewport;
+            this.viewModel.viewport = this.Platform.viewport;
             this.viewModel.userAgent = this.$window.navigator.userAgent;
 
             this.viewModel.defaultStoragePathId = this.FileUtilities.getDefaultRootPathId();
@@ -167,7 +167,7 @@
 
         protected setRequirePinThreshold_click(): void {
 
-            var message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Configuration.requirePinThreshold);
+            var message = `Enter the value (in minutes) for PIN prompt threshold? Current setting is ${this.Configuration.requirePinThreshold} minutes.`;
 
             this.UIHelper.prompt(message, "Require PIN Threshold", null, this.Configuration.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
 
@@ -182,7 +182,7 @@
 
                 this.Configuration.requirePinThreshold = parseInt(result.value, 10);
 
-                this.UIHelper.alert(this.Utilities.format("PIN prompt threshold is now set to {0} minutes.", result.value));
+                this.UIHelper.alert(`PIN prompt threshold is now set to ${result.value} minutes.`);
             });
         }
 
