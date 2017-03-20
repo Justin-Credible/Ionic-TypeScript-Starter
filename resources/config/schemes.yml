@@ -20,7 +20,7 @@ schemes:
         replacements:
             APP_NAME: "Sample App"
             APP_DESCRIPTION: "A starter application using Ionic and TypeScript."
-            APP_VERSION: "1.2.1"
+            APP_VERSION: "1.3.0"
             AUTHOR_NAME: "Justin Unterreiner"
             AUTHOR_EMAIL: "justin.unterreiner@gmail.com"
             AUTHOR_WEBSITE: "http://www.justin-credible.net"
