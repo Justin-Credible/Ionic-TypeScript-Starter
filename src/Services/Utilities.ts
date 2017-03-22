@@ -88,16 +88,50 @@
          * used like this: Utilities.format(t, "dude", "nice") would result in:
          * "Hello there dude, it is nice to meet you!".
          * 
-         * @param str The string value to use for formatting.
-         * @param ... args The values to inject into the format string.
+         * @param formatString The string value to use for formatting.
+         * @param args The values to inject into the format string.
          */
         public format(formatString: string, ...args: any[]): string {
-            var i, reg;
-            i = 0;
 
-            for (i = 0; i < arguments.length - 1; i += 1) {
-                reg = new RegExp("\\{" + i + "\\}", "gm");
-                formatString = formatString.replace(reg, arguments[i + 1]);
+            if (formatString == null) {
+                return null;
+            }
+
+            let dollarRegExp = /\$/g;
+
+            for (let i = 0; i < args.length; i++) {
+
+                // Grab the replacement value that should go in at this location.
+                let replacement = args[i];
+
+                // Treat null or undefined values as an empty string.
+                if (replacement == null) {
+                    replacement = "";
+                }
+
+                // Ensure we're working with a string.
+                if (typeof(replacement) !== "string") {
+
+                    if (typeof(replacement.toString) === "function") {
+                        replacement = replacement.toString();
+                    }
+                    else {
+                        replacement = replacement + "";
+                    }
+                }
+
+                // Ensure $ are escaped in the replacement parameters because
+                // the string patterns $$, $&, $`, $' have special behavior.
+                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter
+
+                if (replacement.indexOf("$") > -1) {
+                    replacement = replacement.replace(dollarRegExp, "$$$$");
+                }
+
+                // Now build a regular expression that matches the argument placeholder
+                // (e.g. {0}, {1}) and use it to replace the placeholder with the value.
+                let regExp = new RegExp(`\\{${i}\\}`, "gm");
+                formatString = formatString.replace(regExp, replacement);
             }
 
             return formatString;
