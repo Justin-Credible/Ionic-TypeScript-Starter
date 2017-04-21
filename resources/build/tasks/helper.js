@@ -782,8 +782,6 @@ module.exports = helper = {
             }
         });
 
-        console.log("!!!!result " + cspParts.join("; "));
-
         return cspParts.join("; ");
     },
 }

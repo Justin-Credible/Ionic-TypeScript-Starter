@@ -141,7 +141,7 @@ schemes:
 
 The `default` property indicates the name of the scheme to use if one isn't provided when executing `gulp config` (or using the VS Code shortcut).
 
-Each scheme has a `debug` attribute which sets the value of an debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (e.g., `Utilities.isDebugMode`).
+Each scheme has a `debug` attribute which sets the value of an debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (e.g., `Configuration.debug`).
 
 Additionally, each scheme has replacement values. The name of a replacement item is used to replace any occurrence of that name with the given value. Replacements will occur in the files listed in the generated files section.
 
