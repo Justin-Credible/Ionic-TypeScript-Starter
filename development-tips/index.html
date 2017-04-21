@@ -290,7 +290,7 @@ schemes:
 </code></pre>
 
 <p>The <code>default</code> property indicates the name of the scheme to use if one isn't provided when executing <code>gulp config</code> (or using the VS Code shortcut).</p>
-<p>Each scheme has a <code>debug</code> attribute which sets the value of an debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (e.g., <code>Utilities.isDebugMode</code>).</p>
+<p>Each scheme has a <code>debug</code> attribute which sets the value of an debug flag that is available at application runtime. This flag can be checked to perform different behavior based on the flag's value (e.g., <code>Configuration.debug</code>).</p>
 <p>Additionally, each scheme has replacement values. The name of a replacement item is used to replace any occurrence of that name with the given value. Replacements will occur in the files listed in the generated files section.</p>
 <p>For example, assuming the "staging" example scheme above, running <code>gulp config --scheme staging</code> would replace the following configuration chunk from <code>resources/cordova/config.master.xml</code>:</p>
 <pre><code>&lt;preference name=&quot;apiUrl&quot; value=&quot;${API_URL}&quot;/&gt;
