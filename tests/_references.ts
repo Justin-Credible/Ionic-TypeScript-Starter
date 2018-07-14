@@ -6,4 +6,3 @@
  */
 
 /// <reference path="../www/js/bundle.d.ts" />
-/// <reference path="../src/tsd.d.ts" />

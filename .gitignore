@@ -8,10 +8,6 @@
 /bower_components
 /platforms
 /plugins
-/typings/*
-!/typings/custom/
-/typings-tests/*
-!/typings-tests/custom/
 /docs-output
 
 # Development Artifacts
@@ -23,8 +19,6 @@
 /www/js/templates.js
 /www/js/src/
 /www/css/bundle.*
-/src/tsd.d.ts
-/tests/tsd.d.ts
 /build
 /tests/**/*.js
 /tests/**/*.map
