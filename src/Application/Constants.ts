@@ -33,10 +33,6 @@ namespace JustinCredible.SampleApp.Constants.Buttons {
  * A collection of names of events used within the application.
  */
 namespace JustinCredible.SampleApp.Constants.Events {
-    export const HTTP_UNAUTHORIZED = "http.unauthorized";
-    export const HTTP_FORBIDDEN = "http.forbidden";
-    export const HTTP_NOT_FOUND = "http.notFound";
-    export const HTTP_UNKNOWN_ERROR = "http.unknownError";
     export const HTTP_ERROR = "http.error";
 
     export const APP_MENU_BUTTON = "app.menuButton";

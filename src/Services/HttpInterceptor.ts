@@ -19,15 +19,21 @@
         constructor(
             private $rootScope: ng.IRootScopeService,
             private $injector: ng.auto.IInjectorService,
-            private $q: ng.IQService) {
+            private $timeout: ng.ITimeoutService,
+            private $q: ng.IQService,
+            ) {
+        }
+
+        private get $http(): ng.IHttpService {
+            return this.$injector.get("$http");
         }
 
         private get Utilities(): Utilities {
             return this.$injector.get(Utilities.ID);
         }
 
-        private get Plugins(): Plugins {
-            return this.$injector.get(Plugins.ID);
+        private get UIHelper(): UIHelper {
+            return this.$injector.get(UIHelper.ID);
         }
 
         private get Preferences(): Preferences {
@@ -55,10 +61,9 @@
 
             // Angular expects the factory function to return the object that is used
             // for the factory when it is injected into other objects.
-            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService) {
-
+            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $timeout: ng.ITimeoutService, $q: ng.IQService) {
                 // Create an instance our strongly-typed service.
-                var instance = new HttpInterceptor($rootScope, $injector, $q);
+                var instance = new HttpInterceptor($rootScope, $injector, $timeout, $q);
 
                 // Return an object that exposes the functions that we want to be exposed.
                 // We use bind here so that the correct context is used (Angular normally
@@ -75,6 +80,7 @@
             factory.$inject = [
                 "$rootScope",
                 "$injector",
+                "$timeout",
                 "$q"
             ];
 
@@ -101,6 +107,16 @@
                 return config;
             }
 
+            // Initialize the retry fields; these are used to retry the requests HTTP status 0 requests.
+
+            if (config.isRetry == null) {
+                config.isRetry = false;
+            }
+
+            if (config.retryCount == null) {
+                config.retryCount = 2;
+            }
+
             // Keep track of how many requests are in progress and show spinners etc.
             this.handleRequestStart(config);
 
@@ -114,7 +130,7 @@
                 config.headers["X-API-Version"] = this.Configuration.values.apiVersion;
 
                 // Specify the content type we are sending and the payload type that we want to receive.
-                config.headers["Content-Type"] = "application/json";
+                config.headers["Content-Type"] = config.headers["Content-Type"] || "application/json";
                 config.headers["Accept"] = "application/json";
 
                 // If we currently have a user ID and token, then include it in the authorization header.
@@ -153,6 +169,8 @@
                     throw new Error("An HTTP call cannot be made because a data source was not selected.");
                 }
             }
+
+            this.Logger.debug(HttpInterceptor.ID, "request", "Request is about to go out.", config);
 
             return config;
         }
@@ -234,6 +252,21 @@
                 // Cast to our custom type which includes some extra flags.
                 config = <Interfaces.RequestConfig>httpResponse.config;
 
+                // An HTTP status 0 can occur if a connection is dropped (which is common on cellular connections).
+                // In this case, we may want to retry the request a few times because the connection may have been
+                // able to reconnect since the last attempt.
+                if (httpResponse.status === 0 && config.retryCount > 0) {
+
+                    config.isRetry = true;
+                    config.retryCount--;
+
+                    this.Logger.debug(HttpInterceptor.ID, "responseError", "A response error occurred with a status of 0; retrying the request.", config);
+
+                    return this.$timeout(() => {
+                        return this.$http(config);
+                    }, 2000);
+                }
+
                 // Do nothing for Angular's template requests.
                 if (this.Utilities.endsWith(config.url, ".html")) {
                     return this.$q.reject(responseOrError);
@@ -244,23 +277,8 @@
                 // Keep track of how many requests are still in progress and hide spinners etc.
                 this.handleResponseEnd(config);
 
-                // For certain response codes, we'll broadcast an event to the rest of the app
-                // so that it can handle the event in whatever way is appropriate.
-                if (httpResponse.status === 401) {
-                    this.$rootScope.$broadcast(Constants.Events.HTTP_UNAUTHORIZED, httpResponse);
-                }
-                else if (httpResponse.status === 403) {
-                    this.$rootScope.$broadcast(Constants.Events.HTTP_FORBIDDEN, httpResponse);
-                }
-                else if (httpResponse.status === 404) {
-                    this.$rootScope.$broadcast(Constants.Events.HTTP_NOT_FOUND, httpResponse);
-                }
-                else if (httpResponse.status === 0) {
-                    this.$rootScope.$broadcast(Constants.Events.HTTP_UNKNOWN_ERROR, httpResponse);
-                }
-                else {
-                    this.$rootScope.$broadcast(Constants.Events.HTTP_ERROR, httpResponse);
-                }
+                // Broadcast an even to the rest of the application so an un-successful response can be handled.
+                this.$rootScope.$broadcast(Constants.Events.HTTP_ERROR, httpResponse);
             }
 
             return this.$q.reject(responseOrError);
@@ -275,6 +293,12 @@
          * as shows any UI blocking or animated spinners.
          */
         private handleRequestStart(config: Interfaces.RequestConfig) {
+
+            // If this is a request that is being re-issued, then we don't want to run through all
+            // of this code again because it isn't actually a new request that is going out.
+            if (config.isRetry) {
+                return;
+            }
 
             // Default the blocking flag if it isn't present.
             if (typeof (config.blocking) === "undefined") {
@@ -296,11 +320,11 @@
                 // If this wasn't the first blocking HTTP request, we need to hide the previous
                 // blocking progress indicator before we show the new one.
                 if (this.blockingRequestsInProgress > 1) {
-                    this.Plugins.spinner.activityStop();
+                    this.UIHelper.activityStop();
                 }
 
                 // Show the blocking progress indicator with or without text.
-                this.Plugins.spinner.activityStart(config.blockingText ? config.blockingText : null);
+                this.UIHelper.activityStart(config.blockingText ? config.blockingText : null);
             }
 
             // If this request should show the spinner, then we have extra work to do.
@@ -310,7 +334,7 @@
                 // are also currently showing the spinner.
                 this.spinnerRequestsInProgress += 1;
 
-                // If the spinner isn't already visible, then show it.
+                // // If the spinner isn't already visible, then show it.
                 // if (!NProgress.isStarted()) {
                 //     NProgress.start();
                 // }
@@ -326,7 +350,7 @@
             this.blockingRequestsInProgress = 0;
             this.spinnerRequestsInProgress = 0;
             // NProgress.done();
-            this.Plugins.spinner.activityStop();
+            this.UIHelper.activityStop();
         }
 
         /**
@@ -346,7 +370,7 @@
 
             // If there are no more blocking requests in progress, then hide the blocker.
             if (config.blocking && this.blockingRequestsInProgress === 0) {
-                this.Plugins.spinner.activityStop();
+                this.UIHelper.activityStop();
             }
 
             if (config.showSpinner && this.spinnerRequestsInProgress === 0) {

@@ -26,6 +26,3 @@ js:
 
     # Includes the bulk of the main application; this contains all the compiled TypeScript.
     - js/bundle.js
-
-    # This main script handles starting the application, typically by invoking the main method.
-    - js/boot1.js

@@ -14,12 +14,13 @@ namespace JustinCredible.SampleApp.Services {
 
         public static get $inject(): string[] {
             return [
-                "buildVars"
+                "buildVars",
             ];
         }
 
         constructor(
-            private buildVars: Interfaces.BuildVars) {
+            private buildVars: Interfaces.BuildVars,
+            ) {
         }
 
         //#endregion

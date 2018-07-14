@@ -13,6 +13,7 @@ namespace JustinCredible.SampleApp {
                 "$window",
                 "$location",
                 "$ionicHistory",
+                Services.Utilities.ID,
                 Services.Plugins.ID,
                 Services.Platform.ID,
                 Services.Compatibility.ID,
@@ -20,6 +21,7 @@ namespace JustinCredible.SampleApp {
                 Services.Configuration.ID,
                 Services.Logger.ID,
                 Services.MenuDataSource.ID,
+                Services.Preferences.ID,
             ];
         }
 
@@ -28,13 +30,16 @@ namespace JustinCredible.SampleApp {
             private $window: ng.IWindowService,
             private $location: ng.ILocationService,
             private $ionicHistory: ionic.navigation.IonicHistoryService,
+            private Utilities: Services.Utilities,
             private Plugins: Services.Plugins,
             private Platform: Services.Platform,
             private Compatibility: Services.Compatibility,
             private UIHelper: Services.UIHelper,
             private Configuration: Services.Configuration,
             private Logger: Services.Logger,
-            private MenuDataSource: Services.MenuDataSource) {
+            private MenuDataSource: Services.MenuDataSource,
+            private Preferences: Services.Preferences,
+            ) {
         }
 
         //#endregion
@@ -56,6 +61,9 @@ namespace JustinCredible.SampleApp {
             // Set the default error handler for all uncaught exceptions.
             this.$window.onerror = _.bind(this.window_onerror, this);
 
+            // Listen for all non-200 level HTTP responses.
+            this.$rootScope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
+
             // Subscribe to device events.
             if (this.Platform.web) {
                 document.addEventListener(this.Compatibility.visibilityChangeEventName, _.bind(this.document_visibilitychange, this));
@@ -73,6 +81,15 @@ namespace JustinCredible.SampleApp {
             // would otherwise occur when tapping an input that shows the keyboard.
             this.Plugins.keyboard.disableScroll(true);
             this.Plugins.keyboard.hideKeyboardAccessoryBar(false);
+
+            // Add a helper function that should be used with all controller event handlers that are async.
+            // This ensures that any rejections at the top level are logged (otherwise they'd be eaten).
+            this.Utilities.setValue(this.$rootScope, "awaitOn", (promise: ng.IPromise<any>) => {
+
+                promise.catch((error: any) => {
+                    this.angular_exceptionHandler(error, "Unhandled promise rejection.");
+                });
+            });
 
             // Now that the platform is ready, we'll delegate to the resume handler.
             // We do this so the same code that fires on resume also fires when the
@@ -211,7 +228,7 @@ namespace JustinCredible.SampleApp {
             newRoute = newRoute.substring(newRoute.indexOf("#"));
             oldRoute = oldRoute.substring(oldRoute.indexOf("#"));
 
-            this.Logger.debug("Application", "angular_locationChangeStart", "Angular location changed.", {
+            this.Logger.debug(Application.ID, "angular_locationChangeStart", "Angular location changed.", {
                 oldRoute: oldRoute,
                 newRoute: newRoute
             });
@@ -224,14 +241,15 @@ namespace JustinCredible.SampleApp {
         /**
          * Fired when an unhandled JavaScript exception occurs outside of Angular.
          */
-        private window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number): void {
+        private window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number, error?: Error): void {
 
             // Log the exception using the built-in logger.
             try {
-                this.Logger.error("Application", "window_onerror", message, {
+                this.Logger.error(Application.ID, "window_onerror", message, {
                     uri: uri,
                     lineNumber: lineNumber,
-                    columnNumber: columnNumber
+                    columnNumber: columnNumber,
+                    error: error,
                 });
             }
             catch (ex) {
@@ -240,15 +258,17 @@ namespace JustinCredible.SampleApp {
 
             // Alert the user to the error.
             try {
-                // Show a generic message to the user.
-                this.UIHelper.showErrorSnackbar("An error has occurred; please try again.");
+
+                // Only show the message in debug mode.
+                if (this.Configuration.debug) {
+                    this.UIHelper.showErrorSnackbar("Error: " + message);
+                }
 
                 // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
-                this.Plugins.spinner.activityStop();
+                this.UIHelper.activityStop();
             }
             catch (ex) {
-                this.Logger.warn("Application", "window_onerror", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
-                alert("An error has occurred; please try again.");
+                this.Logger.warn(Application.ID, "window_onerror", "An exception occurred, and was caught, in the window error handler.", ex);
             }
         }
 
@@ -257,7 +277,7 @@ namespace JustinCredible.SampleApp {
          * 
          * This includes uncaught exceptions in ng-click methods for example.
          * 
-         * This is public so it can be registered via Boot2.ts.
+         * This is public so it can be registered via Boot.ts.
          */
         public angular_exceptionHandler(exception: Error, cause: string): void {
 
@@ -273,7 +293,7 @@ namespace JustinCredible.SampleApp {
 
             // Log the exception using the built-in logger.
             try {
-                this.Logger.error("Application", "angular_exceptionHandler", message, {
+                this.Logger.error(Application.ID, "angular_exceptionHandler", message, {
                     cause: cause,
                     exception: exception
                 });
@@ -284,15 +304,50 @@ namespace JustinCredible.SampleApp {
 
             // Alert the user to the error.
             try {
-                // Show a generic message to the user.
-                this.UIHelper.showErrorSnackbar("An error has occurred; please try again.");
+
+                // Only show the message in debug mode.
+                if (this.Configuration.debug) {
+                    this.UIHelper.showErrorSnackbar("Angular Exception: " + message);
+                }
 
                 // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
-                this.Plugins.spinner.activityStop();
+                this.UIHelper.activityStop();
             }
             catch (ex) {
-                this.Logger.warn("Application", "angular_exceptionHandler", "There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
-                alert("An error has occurred; please try again.");
+                this.Logger.warn(Application.ID, "angular_exceptionHandler", "An exception occurred, and was caught, in the Angular exception handler.", ex);
+            }
+        }
+
+        /**
+         * Fired whenever there is a non-200 level HTTP response.
+         */
+        private http_error(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>): void {
+
+            if (response.status === 401) {
+
+                // Unauthorized should mean that a token wasn't sent, but we'll null these out anyways.
+                this.Preferences.userId = null;
+                this.Preferences.token = null;
+
+                this.UIHelper.showErrorSnackbar("You do not have a token (401); please login.");
+            }
+            else if (response.status === 403) {
+
+                // A token was sent, but was no longer valid. Null out the invalid token.
+                this.Preferences.userId = null;
+                this.Preferences.token = null;
+
+                this.UIHelper.showErrorSnackbar("Your token has expired (403); please login again.");
+            }
+            else if (response.status === 404) {
+                this.UIHelper.showErrorSnackbar("Resource unavailable (404); please contact your administrator.");
+            }
+            else if (response.status === 0) {
+                // No network connection, invalid certificate, or other system level error.
+                this.UIHelper.showErrorSnackbar("Network error; please try again later.");
+            }
+            else {
+                this.UIHelper.showErrorSnackbar("An error has occurred; please try again.");
             }
         }
 

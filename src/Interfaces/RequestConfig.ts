@@ -31,5 +31,17 @@ namespace JustinCredible.SampleApp.Interfaces {
          * the default value is false.
          */
         logRequestBody?: boolean;
+
+        /**
+         * Indicates if this HTTP request is a retry from one that previously failed with an HTTP status
+         * 0 failure. This will be set internally by the HttpInterceptor service.
+         */
+        isRetry?: boolean;
+
+        /**
+         * Indicates the number of times this request should be re-issued after an HTTP status 0 failure.
+         * This will be set internally by the HttpInterceptor service.
+         */
+        retryCount?: number;
     }
 }

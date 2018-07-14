@@ -11,7 +11,6 @@ namespace JustinCredible.SampleApp.Controllers {
                 "$scope",
                 "$location",
                 "$ionicHistory",
-                Services.Plugins.ID,
                 Services.MenuDataSource.ID,
                 Services.UIHelper.ID,
                 Services.Configuration.ID
@@ -22,7 +21,6 @@ namespace JustinCredible.SampleApp.Controllers {
             $scope: ng.IScope,
             private $location: ng.ILocationService,
             private $ionicHistory: ionic.navigation.IonicHistoryService,
-            private Plugins: Services.Plugins,
             private MenuDataSource: Services.MenuDataSource,
             private UIHelper: Services.UIHelper,
             private Configuration: Services.Configuration) {

@@ -11,7 +11,6 @@
                 "$scope",
                 Services.MenuDataSource.ID,
                 Services.UIHelper.ID,
-                Services.Preferences.ID
             ];
         }
 
@@ -19,7 +18,6 @@
             $scope: ng.IScope,
             private MenuDataSource: Services.MenuDataSource,
             private UIHelper: Services.UIHelper,
-            private Preferences: Services.Preferences,
             ) {
             super($scope, ViewModels.RootViewModel);
         }
@@ -43,53 +41,7 @@
 
             this._hasLoaded = true;
 
-            this.scope.$on(Constants.Events.HTTP_UNAUTHORIZED, _.bind(this.http_unauthorized, this));
-            this.scope.$on(Constants.Events.HTTP_FORBIDDEN, _.bind(this.http_forbidden, this));
-            this.scope.$on(Constants.Events.HTTP_NOT_FOUND, _.bind(this.http_notFound, this));
-            this.scope.$on(Constants.Events.HTTP_UNKNOWN_ERROR, _.bind(this.http_unknownError, this));
-            this.scope.$on(Constants.Events.HTTP_ERROR, _.bind(this.http_error, this));
-
             this.viewModel.categories = this.MenuDataSource.categories;
-        }
-
-        //#endregion
-
-        //#region Event Handlers
-
-        private http_unauthorized(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
-
-            // Unauthorized should mean that a token wasn't sent, but we'll null these out anyways.
-            this.Preferences.userId = null;
-            this.Preferences.token = null;
-
-            this.UIHelper.showErrorSnackbar("You do not have a token (401); please login.");
-        }
-
-        private http_forbidden(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
-
-            // A token was sent, but was no longer valid. Null out the invalid token.
-            this.Preferences.userId = null;
-            this.Preferences.token = null;
-
-            this.UIHelper.showErrorSnackbar("Your token has expired (403); please login again.");
-        }
-
-        private http_notFound(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
-            // The restful API services are down maybe?
-            this.UIHelper.showErrorSnackbar("Server not available (404); please contact your administrator.");
-        }
-
-        private http_unknownError(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
-            // No network connection, invalid certificate, or other system level error.
-            this.UIHelper.showErrorSnackbar("Network error; please try again later.");
-        }
-
-        /**
-         * A generic catch all for HTTP errors that are not handled above in the other
-         * error handlers.
-         */
-        private http_error(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>): void {
-            this.UIHelper.showErrorSnackbar("An error has occurred; please try again.");
         }
 
         //#endregion
