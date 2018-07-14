@@ -166,7 +166,7 @@
                     config.url = baseUrl + config.url;
                 }
                 else {
-                    throw new Error("An HTTP call cannot be made because a data source was not selected.");
+                    throw new Error("An HTTP call cannot be made because a Configuration.apiUrl was not specified.");
                 }
             }
 

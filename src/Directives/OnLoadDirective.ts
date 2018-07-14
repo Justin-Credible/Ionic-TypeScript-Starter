@@ -12,11 +12,14 @@ namespace JustinCredible.SampleApp.Directives {
         public static ID = "onLoad";
 
         public static get $inject(): string[] {
-            return ["$parse"];
+            return [
+                "$parse",
+            ];
         }
 
         constructor(
-            private $parse: ng.IParseService) {
+            private $parse: ng.IParseService,
+            ) {
 
             // Ensure that the link function is bound to this instance so we can
             // access instance variables like $parse. AngularJs normally executes

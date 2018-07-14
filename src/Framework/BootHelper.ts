@@ -77,9 +77,9 @@ namespace JustinCredible.SampleApp.BootHelper {
     export function registerFilters(ngModule: ng.IModule): void {
 
         _.each(Filters, (Filter: any) => {
-            if (Filter.ID && typeof(Filter.filter) === "function") {
-                console.log("Registering filter " + Filter.ID + "...");
-                ngModule.filter(Filter.ID, getFilterFactoryFunction(Filter.filter));
+            if (Filter.ID) {
+                // console.log("Registering filter " + Filter.ID + "...");
+                ngModule.filter(Filter.ID, getFilterFactoryFunction(Filter));
             }
         });
     }

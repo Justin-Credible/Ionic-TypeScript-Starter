@@ -38,12 +38,13 @@
 
         public static get $inject(): string[] {
             return [
-                Services.Utilities.ID
+                Services.Utilities.ID,
             ];
         }
 
         constructor(
-            private Utilities: Services.Utilities) {
+            private Utilities: Services.Utilities,
+            ) {
             super();
         }
 
