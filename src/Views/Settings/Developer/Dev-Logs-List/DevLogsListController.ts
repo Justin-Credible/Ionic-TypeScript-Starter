@@ -1,26 +1,28 @@
-﻿namespace JustinCredible.SampleApp.Controllers {
 
-    export class LogsListController extends BaseController<ViewModels.LogsListViewModel> {
+namespace JustinCredible.SampleApp.Controllers {
+
+    export class DevLogsListController extends BaseController<ViewModels.DevLogsListViewModel> {
 
         //#region Injection
 
-        public static ID = "LogsListController";
+        public static ID = "DevLogsListController";
 
         public static get $inject(): string[] {
             return [
                 "$scope",
-                "$ionicPopover",
+                "$ionicScrollDelegate",
                 Services.Logger.ID,
-                Services.UIHelper.ID
+                Services.UIHelper.ID,
             ];
         }
 
         constructor(
             $scope: ng.IScope,
-            private $ionicPopover: ionic.popover.IonicPopoverService,
+            private $ionicScrollDelegate: ionic.scroll.IonicScrollDelegate,
             private Logger: Services.Logger,
-            private UIHelper: Services.UIHelper) {
-            super($scope, ViewModels.LogsListViewModel);
+            private UIHelper: Services.UIHelper,
+            ) {
+            super($scope, ViewModels.DevLogsListViewModel);
         }
 
         //#endregion
@@ -29,19 +31,25 @@
 
         //#region BaseController Overrides
 
-        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
-            super.view_beforeEnter(event, eventArgs);
+        protected view_loaded(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
+            super.view_loaded(event, eventArgs);
 
-            this.UIHelper.createPopover(LogFilterMenuController.ID)
+            this.UIHelper.createPopover(DevLogsFilterController.ID)
                 .then((popover: ionic.popover.IonicPopoverController) => {
 
                 this._filterMenu = popover;
                 this._filterMenu.scope.$on("filtersChanged", _.bind(this.filterMenu_filtersChanged, this));
             });
 
+            this.viewModel.showDebug = false;
+            this.viewModel.showDebugOnlyHTTP = true;
+            this.viewModel.showInfo = true;
             this.viewModel.showError = true;
             this.viewModel.showWarn = true;
-            this.viewModel.showFatal = true;
+        }
+
+        protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
+            super.view_beforeEnter(event, eventArgs);
 
             this.populateViewModel(this.Logger.logs);
         }
@@ -50,16 +58,17 @@
 
         //#region Events
 
-        private filterMenu_filtersChanged($event: ng.IAngularEvent, filters: ViewModels.LogFilterMenuViewModel): void {
+        private filterMenu_filtersChanged($event: ng.IAngularEvent, filters: ViewModels.DevLogsFilterViewModel): void {
 
-            this.viewModel.showTrace = filters.showTrace;
             this.viewModel.showDebug = filters.showDebug;
+            this.viewModel.showDebugOnlyHTTP = filters.showDebugOnlyHTTP;
             this.viewModel.showInfo = filters.showInfo;
             this.viewModel.showWarn = filters.showWarn;
             this.viewModel.showError = filters.showError;
-            this.viewModel.showFatal = filters.showFatal;
 
             this.populateViewModel(this.Logger.logs);
+
+            this.$ionicScrollDelegate.scrollTop();
         }
 
         //#endregion
@@ -80,25 +89,53 @@
 
             // Now use the actual log entry to create the view model.
             logEntries.forEach((logEntry: Models.LogEntry) => {
-                var formattedDate: string,
-                    viewModel: ViewModels.LogEntryViewModel;
 
                 if (!this.isApplicableForCurrentFilter(logEntry)) {
                     return;
                 }
 
-                viewModel = new ViewModels.LogEntryViewModel();
+                let viewModel = new ViewModels.DevLogDetailViewModel();
 
                 // Put the actual log entry into the view model.
                 viewModel.logEntry = logEntry;
 
                 viewModel.time = moment(logEntry.timestamp).format("h:mm:ss a");
-                viewModel.icon = this.Logger.getIconForLevel(logEntry.level);
-                viewModel.color = this.Logger.getColorForLevel(logEntry.level);
-                viewModel.levelDisplay = this.Logger.getDisplayLevelForLevel(logEntry.level);
+                viewModel.color = Models.LogLevel.getColor(logEntry.level);
+                viewModel.levelDisplay = Models.LogLevel.getDisplayText(logEntry.level);
+
+                // If this was a log from the HTTP interceptor, use the network icon.
+                // Otherwise we'll delegate to the enum to show the pre-chosen icon.
+                if (logEntry.tag.indexOf(Services.HttpInterceptor.ID) > -1) {
+                    viewModel.icon = "ion-ios-world-outline";
+
+                    if (logEntry.metadata) {
+                        if (logEntry.metadata.method) {
+                            viewModel.httpVerb = logEntry.metadata.method;
+                        }
+
+                        if (logEntry.metadata.url) {
+                            viewModel.httpUrl = logEntry.metadata.url;
+                        }
+
+                        if (logEntry.metadata.status) {
+                            viewModel.httpCode = logEntry.metadata.status;
+                        }
+
+                        if (logEntry.metadata.config && logEntry.metadata.config.method) {
+                            viewModel.httpVerb = logEntry.metadata.config.method;
+                        }
+
+                        if (logEntry.metadata.config && logEntry.metadata.config.url) {
+                            viewModel.httpUrl = logEntry.metadata.config.url;
+                        }
+                    }
+                }
+                else {
+                    viewModel.icon = Models.LogLevel.getIcon(logEntry.level);
+                }
 
                 // Format the date and time for display.
-                formattedDate = moment(logEntry.timestamp).format("l");
+                let formattedDate = moment(logEntry.timestamp).format("l");
 
                 // The view model is a dictionary of formatted dates to an
                 // array of log entries that happened on that date. So first,
@@ -118,19 +155,21 @@
                 return true;
             }
 
+            // Special case for when we're showing only debug HTTP logs and this happens to be one.
+            if (this.viewModel.showDebugOnlyHTTP
+                && logEntry.tag.indexOf(Services.HttpInterceptor.ID) > -1) {
+                return true;
+            }
+
             switch (logEntry.level) {
-                case Models.LogLevel.TRACE:
-                    return this.viewModel.showTrace;
-                case Models.LogLevel.DEBUG:
+                case Models.LogLevel.Debug:
                     return this.viewModel.showDebug;
-                case Models.LogLevel.WARN:
+                case Models.LogLevel.Warn:
                     return this.viewModel.showWarn;
-                case Models.LogLevel.INFO:
+                case Models.LogLevel.Info:
                     return this.viewModel.showInfo;
-                case Models.LogLevel.ERROR:
+                case Models.LogLevel.Error:
                     return this.viewModel.showError;
-                case Models.LogLevel.FATAL:
-                    return this.viewModel.showFatal;
                 default:
                     return true;
             }
@@ -142,13 +181,12 @@
 
         protected filter_click(event: ng.IAngularEvent) {
 
-            let filters = new ViewModels.LogFilterMenuViewModel();
-            filters.showTrace = this.viewModel.showTrace;
+            let filters = new ViewModels.DevLogsFilterViewModel();
             filters.showDebug = this.viewModel.showDebug;
+            filters.showDebugOnlyHTTP = this.viewModel.showDebugOnlyHTTP;
             filters.showInfo = this.viewModel.showInfo;
             filters.showWarn = this.viewModel.showWarn;
             filters.showError = this.viewModel.showError;
-            filters.showFatal = this.viewModel.showFatal;
 
             this._filterMenu.scope.$broadcast("setFilters", filters);
 
@@ -156,7 +194,10 @@
         }
 
         protected clear_click() {
-            this.UIHelper.confirm("Are you sure you want to clear the logs?", "Clear Logs").then((result: string) => {
+
+            this.UIHelper.confirm("Are you sure you want to clear the logs?", "Clear Logs")
+                .then((result: string) => {
+
                 if (result === Constants.Buttons.Yes) {
                     this.Logger.clear();
                     this.viewModel.logs = {};

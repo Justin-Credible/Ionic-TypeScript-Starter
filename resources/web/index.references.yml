@@ -15,9 +15,6 @@ lib:
     # Ionic Framework (includes AngularJS)
     - lib/ionic/js/ionic.bundle.min.js
 
-    # Allows us to perform mocking in Angular (eg fake HTTP calls etc). Module name: "ngMockE2E"
-    - lib/angular-mocks/angular-mocks.js
-
     # Third Party Libraries
     - lib/lodash/lodash.min.js
     - lib/moment/moment.min.js

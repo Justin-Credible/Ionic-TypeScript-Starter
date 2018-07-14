@@ -19,7 +19,6 @@
                 "$ionicSideMenuDelegate",
                 Utilities.ID,
                 Plugins.ID,
-                Logger.ID,
                 Preferences.ID,
                 Configuration.ID
             ];
@@ -34,7 +33,6 @@
             private $ionicSideMenuDelegate: ionic.sideMenu.IonicSideMenuDelegate,
             private Utilities: Utilities,
             private Plugins: Plugins,
-            private Logger: Logger,
             private Preferences: Preferences,
             private Configuration: Services.Configuration) {
         }
@@ -234,8 +232,7 @@
          */
         public prompt(message: string, title?: string, buttonLabels?: string[], defaultText?: string): ng.IPromise<Models.KeyValuePair<string, string>> {
             var q = this.$q.defer<Models.KeyValuePair<string, string>>(),
-                callback: (result: NotificationPromptResult) => void,
-                notificationPlugin: Notification;
+                callback: (result: NotificationPromptResult) => void;
 
             // Default the title
             title = title || "Prompt";

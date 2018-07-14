@@ -1,6 +1,7 @@
+
 namespace JustinCredible.SampleApp.ViewModels {
 
-    export class LogEntryViewModel {
+    export class DevLogDetailViewModel {
         public logEntry: Models.LogEntry;
         public icon: string;
         public date: string;
@@ -8,5 +9,9 @@ namespace JustinCredible.SampleApp.ViewModels {
         public levelDisplay: string;
         public color: string;
         public formattedMetadata: string;
+
+        public httpVerb: string;
+        public httpUrl: string;
+        public httpCode: string;
     }
 }

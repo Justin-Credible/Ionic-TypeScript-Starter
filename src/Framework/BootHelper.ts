@@ -17,7 +17,7 @@ namespace JustinCredible.SampleApp.BootHelper {
     export function construct(constructor, args) {
         function F(): void {
             return constructor.apply(this, args);
-        };
+        }
         F.prototype = constructor.prototype;
         return new F();
     }

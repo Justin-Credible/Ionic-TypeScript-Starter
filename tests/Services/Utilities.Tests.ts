@@ -1,89 +1,148 @@
 
-/**
- * Tests for the Utilities.format() method.
- */
-describe("Utilities.format()", function() {
+namespace JustinCredible.SampleApp.UnitTests.TestCases {
 
-    // This will hold a reference to an instance of the utilities class.
-    var Utilities: JustinCredible.SampleApp.Services.Utilities;
+    export class UtilitiesTests extends TestFramework.BaseTestCase {
 
-    // Before each test, ensure that the main application module is available.
-    beforeEach(module("JustinCredible.SampleApp.Application"));
+        protected Utilities: Services.Utilities;
 
-    // Before each test, grab a reference to the Utilities class.
-    beforeEach(inject(function (_Utilities_) {
-        Utilities = _Utilities_;
-    }));
+        protected inject(): void {
 
-    it("handles null format strings without an exception.", () => {
-        var result = Utilities.format(null);
-        expect(result).toEqual(null);
-    });
+            beforeEach(() => {
+                inject((_Utilities_) => {
+                    this.Utilities = _Utilities_;
+                });
+            });
+        }
 
-    it("handles omitted format parameters without an exception.", () => {
-        var result = Utilities.format("Hello World, {0}!");
-        expect(result).toEqual("Hello World, {0}!");
-    });
+        public execute(): void {
 
-    it("handles null format arguments without an exception.", () => {
-        var result = Utilities.format("Hello World, {0}!", null);
-        expect(result).toEqual("Hello World, !");
-    });
+            describe("format", () => { this._test_format(); });
+            describe("getValue", () => { this._test_getValue(); });
+        }
 
-    it("formats a string with a single parameter.", () => {
-        var result = Utilities.format("Hello World, {0}!", "Bob");
-        expect(result).toEqual("Hello World, Bob!");
-    });
+        private _test_format(): void {
 
-    it("handles extra parameters without an exception.", () => {
-        var result = Utilities.format("Hello World, {0}!", "Bob", "Terra");
-        expect(result).toEqual("Hello World, Bob!");
-    });
+            it("handles null format strings without an exception.", () => {
+                var result = this.Utilities.format(null);
+                expect(result).toEqual(null);
+            });
 
-    it("handles numbers without an exception.", () => {
-        var result = Utilities.format("Hello World, {0}! Your favorite number is {1}.", "Bob", 42);
-        expect(result).toEqual("Hello World, Bob! Your favorite number is 42.");
-    });
+            it("handles omitted format parameters without an exception.", () => {
+                var result = this.Utilities.format("Hello World, {0}!");
+                expect(result).toEqual("Hello World, {0}!");
+            });
 
-    it("handles objects without an exception.", () => {
-        var result = Utilities.format("Hello World, {0}! The magic value is: {1}.", "Bob", {});
-        expect(result).toEqual("Hello World, Bob! The magic value is: [object Object].");
-    });
+            it("handles null format arguments without an exception.", () => {
+                var result = this.Utilities.format("Hello World, {0}!", null);
+                expect(result).toEqual("Hello World, !");
+            });
 
-    it("handles uses the replacement value's toString method, if one exists.", () => {
+            it("formats a string with a single parameter.", () => {
+                var result = this.Utilities.format("Hello World, {0}!", "Bob");
+                expect(result).toEqual("Hello World, Bob!");
+            });
 
-        var obj = {
-            toString: function () {
-                return "FOO";
-            }
-        };
+            it("handles extra parameters without an exception.", () => {
+                var result = this.Utilities.format("Hello World, {0}!", "Bob", "Terra");
+                expect(result).toEqual("Hello World, Bob!");
+            });
 
-        var result = Utilities.format("Hello World, {0}! The magic value is: {1}.", "Bob", obj);
-        expect(result).toEqual("Hello World, Bob! The magic value is: FOO.");
-    });
+            it("handles numbers without an exception.", () => {
+                var result = this.Utilities.format("Hello World, {0}! Your favorite number is {1}.", "Bob", 42);
+                expect(result).toEqual("Hello World, Bob! Your favorite number is 42.");
+            });
 
-    it("handles multiple parameters with out of order replacements.", () => {
-        var result = Utilities.format("{1} World, {0}! Welcome to {2}.", "Bob", "Hello", "Sparta");
-        expect(result).toEqual("Hello World, Bob! Welcome to Sparta.");
-    });
+            it("handles objects without an exception.", () => {
+                var result = this.Utilities.format("Hello World, {0}! The magic value is: {1}.", "Bob", {});
+                expect(result).toEqual("Hello World, Bob! The magic value is: [object Object].");
+            });
 
-    it("handles strings with '$$'.", () => {
-        var result = Utilities.format("Testing {0} Testing", "P@$$");
-        expect(result).toEqual("Testing P@$$ Testing");
-    });
+            it("handles uses the replacement value's toString method, if one exists.", () => {
 
-    it("handles strings with '$&'.", () => {
-        var result = Utilities.format("Testing {0} Testing", "P@$&");
-        expect(result).toEqual("Testing P@$& Testing");
-    });
+                var obj = {
+                    toString: function () {
+                        return "FOO";
+                    }
+                };
 
-    it("handles strings with '$`'.", () => {
-        var result = Utilities.format("Testing {0} Testing", "P@$`");
-        expect(result).toEqual("Testing P@$` Testing");
-    });
+                var result = this.Utilities.format("Hello World, {0}! The magic value is: {1}.", "Bob", obj);
+                expect(result).toEqual("Hello World, Bob! The magic value is: FOO.");
+            });
 
-    it("handles strings with \"$'\".", () => {
-        var result = Utilities.format("Testing {0} Testing", "P@$'");
-        expect(result).toEqual("Testing P@$' Testing");
-    });
-});
+            it("handles multiple parameters with out of order replacements.", () => {
+                var result = this.Utilities.format("{1} World, {0}! Welcome to {2}.", "Bob", "Hello", "Sparta");
+                expect(result).toEqual("Hello World, Bob! Welcome to Sparta.");
+            });
+
+            it("handles strings with '$$'.", () => {
+                var result = this.Utilities.format("Testing {0} Testing", "P@$$");
+                expect(result).toEqual("Testing P@$$ Testing");
+            });
+
+            it("handles strings with '$&'.", () => {
+                var result = this.Utilities.format("Testing {0} Testing", "P@$&");
+                expect(result).toEqual("Testing P@$& Testing");
+            });
+
+            it("handles strings with '$`'.", () => {
+                var result = this.Utilities.format("Testing {0} Testing", "P@$`");
+                expect(result).toEqual("Testing P@$` Testing");
+            });
+
+            it("handles strings with \"$'\".", () => {
+                var result = this.Utilities.format("Testing {0} Testing", "P@$'");
+                expect(result).toEqual("Testing P@$' Testing");
+            });
+        }
+
+        private _test_getValue(): void {
+
+            it("handles null without an exception.", () => {
+                var result = this.Utilities.getValue(null, null);
+                expect(result).toEqual(null);
+            });
+
+            it("handles finding an object with a period in the key name.", () => {
+                var obj = {
+                    "key.edge.case": "value!"
+                };
+
+                var result = this.Utilities.getValue(obj, "key.edge.case");
+
+                expect(result).toEqual("value!");
+            });
+
+            it("handles finding an object at the top level.", () => {
+                var obj = {
+                    "key1": "value1"
+                };
+
+                var result = this.Utilities.getValue(obj, "key1");
+
+                expect(result).toEqual("value1");
+            });
+
+            it("handles finding a false boolean value.", () => {
+                var obj = {
+                    "key1": false
+                };
+
+                var result = this.Utilities.getValue(obj, "key1");
+
+                expect(result).toEqual(false);
+            });
+
+            it("handles finding a nested value.", () => {
+                var obj = {
+                    "key1": {
+                        "key2": "value2"
+                    }
+                };
+
+                var result = this.Utilities.getValue(obj, "key1.key2");
+
+                expect(result).toEqual("value2");
+            });
+        }
+    }
+}

@@ -27,6 +27,7 @@
       "angular-animate",
       "angular-sanitize",
       "angular-ui-router",
+      "angular-mocks",
       "jquery"
     ]
   },

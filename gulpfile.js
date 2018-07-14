@@ -35,9 +35,7 @@ gulp.task("lint", getTask("lint"));
 gulp.task("test", ["ts:tests"], getTask("test"));
 gulp.task("typedoc", getTask("typedoc"));
 
-gulp.task("ts", ["ts:src"], getTask("ts"));
-gulp.task("ts:src", ["ts:src-readme"], getTask("ts:src"));
-gulp.task("ts:src-readme", getTask("ts:src-readme"));
+gulp.task("ts", getTask("ts"));
 gulp.task("ts:tests", ["ts"], getTask("ts:tests"));
 
 gulp.task("plugins", ["git-check"], getTask("plugins"));

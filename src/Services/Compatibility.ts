@@ -33,7 +33,7 @@ namespace JustinCredible.SampleApp.Services {
             /* tslint:disable:no-string-literal */
 
             if (typeof document.hidden !== "undefined") {
-                // Opera 12.10 and Firefox 18 and later support 
+                // Opera 12.10 and Firefox 18 and later support.
                 propertyName = "hidden";
             }
             else if (typeof document["msHidden"] !== "undefined") {
@@ -64,7 +64,7 @@ namespace JustinCredible.SampleApp.Services {
             /* tslint:disable:no-string-literal */
 
             if (typeof document.hidden !== "undefined") {
-                // Opera 12.10 and Firefox 18 and later support 
+                // Opera 12.10 and Firefox 18 and later support.
                 propertyName = "visibilitychange";
             }
             else if (typeof document["msHidden"] !== "undefined") {

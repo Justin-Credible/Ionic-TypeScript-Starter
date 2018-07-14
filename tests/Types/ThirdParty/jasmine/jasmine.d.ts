@@ -58,7 +58,7 @@ declare module jasmine {
     function addMatchers(matchers: CustomMatcherFactories): void;
     function stringMatching(str: string): Any;
     function stringMatching(str: RegExp): Any;
-    
+
     interface Any {
 
         new (expectedClass: any): any;

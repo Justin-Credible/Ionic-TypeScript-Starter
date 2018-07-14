@@ -11,12 +11,7 @@
 
         public static get $inject(): string[] {
             return [
-                Preferences.ID
             ];
-        }
-
-        constructor(
-            private Preferences: Preferences) {
         }
 
         //#endregion

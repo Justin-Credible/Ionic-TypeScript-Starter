@@ -12,7 +12,6 @@
                 "$scope",
                 Services.MenuDataSource.ID,
                 Services.Preferences.ID,
-                Services.UIHelper.ID
             ];
         }
 
@@ -20,7 +19,7 @@
             $scope: ng.IScope,
             private MenuDataSource: Services.MenuDataSource,
             private Preferences: Services.Preferences,
-            private UIHelper: Services.UIHelper) {
+            ) {
             super($scope, ViewModels.ReorderCategoriesViewModel, ReorderCategoriesController.ID);
         }
 

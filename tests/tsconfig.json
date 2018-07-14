@@ -1,9 +1,22 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "out": "tests/bundle.tests.js",
-        "sourceMap": true,
-        "removeComments": true,
-        "sourceRoot": "../"
-    }
+        "out": "tests/unit-tests.bundle.js",
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "declaration": false,
+        "removeComments": false,
+    },
+    "include": [
+
+        // Unit test framework, tests, and type definitions.
+        "./**/*.ts",
+        "./**/*.d.ts",
+
+        // Type definitions for the compiled app.
+        "../www/js/bundle.d.ts",
+
+        // Type definitions used by the app.
+        "../src/**/*.d.ts"
+    ]
 }

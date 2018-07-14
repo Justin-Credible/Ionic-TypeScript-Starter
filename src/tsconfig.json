@@ -2,9 +2,11 @@
     "compilerOptions": {
         "target": "es5",
         "out": "www/js/bundle.js",
-        "sourceMap": true,
+        "inlineSourceMap": true,
+        "inlineSources": true,
         "declaration": true,
         "removeComments": true,
-        "sourceRoot": ""
+        "noUnusedLocals": true,
+        "lib": ["dom", "es5", "scripthost", "es2015.promise"]
     }
 }

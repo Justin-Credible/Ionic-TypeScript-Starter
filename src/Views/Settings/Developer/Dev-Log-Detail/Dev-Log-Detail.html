@@ -1,4 +1,4 @@
-﻿<ion-view view-title="Log Entry">
+<ion-view view-title="Log Details">
 
     <ion-nav-buttons side="right">
     </ion-nav-buttons>
@@ -12,13 +12,17 @@
                 <p>{{viewModel.date}}&nbsp;&nbsp;&nbsp;{{viewModel.time}}</p>
             </div>
 
-            <div class="item item-body">
+            <div class="item item-text-wrap">
+                <p>{{viewModel.logEntry.tag}}</p>
+            </div>
+
+            <div class="item item-text-wrap">
                 <p>{{viewModel.logEntry.message}}</p>
             </div>
 
-            <div class="item item-body">
-                <p>{{viewModel.formattedMetadata}}</p>
-            </div>
+            <label class="item item-readonly-label item-text-wrap">
+                <pre>{{viewModel.formattedMetadata}}</pre>
+            </label>
 
             <div class="item tabs tabs-secondary tabs-icon-left">
                 <a class="tab-item" ng-click="controller.copy_click()">

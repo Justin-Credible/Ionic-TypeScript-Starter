@@ -1,0 +1,63 @@
+
+<ion-popover-view
+    ng-controller="DevLogsFilterController"
+    style="height: 310px; width: 270px;">
+
+    <ion-content>
+        <ion-list>
+
+            <div
+                class="item item-icon-left item-icon-right"
+                ng-click="controller.debug_click()">
+                <i class="icon {{viewModel.debugIcon}}"
+                    style="color: {{viewModel.debugColor}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showDebug }"></i>
+                Debug
+            </div>
+
+            <div
+                class="item item-icon-left item-icon-right"
+                ng-click="controller.debugOnlyHTTP_click()">
+                <i class="icon {{viewModel.httpIcon}}"
+                    style="color: {{viewModel.httpColor}}"></i>
+                Debug
+                <p>(Just HTTP Activity)</p>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showDebugOnlyHTTP }"></i>
+            </div>
+
+            <div
+                class="item item-icon-left item-icon-right"
+                ng-click="controller.info_click()">
+                <i class="icon {{viewModel.infoIcon}}"
+                    style="color: {{viewModel.infoColor}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showInfo }"></i>
+                Info
+            </div>
+
+            <div
+                class="item item-icon-left item-icon-right"
+                ng-click="controller.warn_click()">
+                <i class="icon {{viewModel.warnIcon}}"
+                    style="color: {{viewModel.warnColor}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showWarn }"></i>
+                Warning
+            </div>
+
+            <div
+                class="item item-icon-left item-icon-right"
+                ng-click="controller.error_click()">
+                <i class="icon {{viewModel.errorIcon}}"
+                    style="color: {{viewModel.errorColor}}"></i>
+                <i class="icon"
+                    ng-class="{ 'ion-checkmark-round': viewModel.showError }"></i>
+                Error
+            </div>
+
+        </ion-list>
+    </ion-content>
+
+</ion-popover-view>

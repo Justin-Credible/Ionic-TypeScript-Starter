@@ -15,11 +15,8 @@
                 Services.Plugins.ID,
                 Services.Platform.ID,
                 Services.UIHelper.ID,
-                Services.FileUtilities.ID,
-                Services.Logger.ID,
                 Services.Preferences.ID,
                 Services.Configuration.ID,
-                Services.MockPlatformApis.ID
             ];
         }
 
@@ -31,11 +28,9 @@
             private Plugins: Services.Plugins,
             private Platform: Services.Platform,
             private UIHelper: Services.UIHelper,
-            private FileUtilities: Services.FileUtilities,
-            private Logger: Services.Logger,
             private Preferences: Services.Preferences,
             private Configuration: Services.Configuration,
-            private MockPlatformApis: Services.MockPlatformApis) {
+            ) {
             super($scope, ViewModels.DeveloperViewModel);
         }
 
@@ -65,28 +60,7 @@
             this.viewModel.viewport = this.Platform.viewport;
             this.viewModel.userAgent = this.$window.navigator.userAgent;
 
-            this.viewModel.defaultStoragePathId = this.FileUtilities.getDefaultRootPathId();
-            this.viewModel.defaultStoragePath = this.FileUtilities.getDefaultRootPath();
-
             this.viewModel.apiUrl = this.Configuration.apiUrl;
-        }
-
-        //#endregion
-
-        //#region Private Helper Methods
-
-        private alertFileIoError(error: any) {
-            if (error) {
-                if (error.code) {
-                    this.UIHelper.alert(error.code);
-                }
-                else if (error.message) {
-                    this.UIHelper.alert(error.message);
-                }
-                else {
-                    this.UIHelper.alert(error);
-                }
-            }
         }
 
         //#endregion
@@ -206,7 +180,7 @@
             // Cause an exception by referencing an undefined variable.
             // We use defer so we can execute outside of the context of Angular.
             _.defer(function () {
-                var x = window["____asdf"].blah();
+                window["____asdf"].blah();
             });
 
             /* tslint:enable:no-string-literal */
@@ -216,7 +190,7 @@
             /* tslint:disable:no-string-literal */
 
             // Cause an exception by referencing an undefined variable.
-            var x = window["____asdf"].blah();
+            window["____asdf"].blah();
 
             /* tslint:enable:no-string-literal */
         }
@@ -275,180 +249,6 @@
 
         protected doneProgress_click(): void {
             NProgress.done();
-        }
-
-        protected readFile_click(): void {
-            this.UIHelper.prompt("Enter file name to read from", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
-
-                if (result.key !== Constants.Buttons.OK) {
-                    return;
-                }
-
-                this.FileUtilities.readTextFile(result.value)
-                    .then((text: string) => { this.Logger.debug(DeveloperController.ID, "readFile_click", "Read OK.", text); this.UIHelper.alert(text); },
-                    (err: Error) => { this.Logger.error(DeveloperController.ID, "readFile_click", "An error occurred.", err); this.alertFileIoError(err); });
-            });
-        }
-
-        protected writeFile_click(): void {
-            var path: string,
-                contents: string;
-
-            this.UIHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
-
-                if (result.key !== Constants.Buttons.OK) {
-                    return;
-                }
-
-                path = result.value;
-
-                this.UIHelper.prompt("Enter file contents").then((result: Models.KeyValuePair<string, string>) => {
-
-                    if (result.key !== Constants.Buttons.OK) {
-                        return;
-                    }
-
-                    contents = result.value;
-
-                    this.FileUtilities.writeTextFile(path, contents, false)
-                        .then(() => { this.Logger.debug(DeveloperController.ID, "writeFile_click", "Write OK.", { path: path, contents: contents }); this.UIHelper.alert("Write OK."); },
-                        (err: Error) => { this.Logger.error(DeveloperController.ID, "writeFile_click", "An error occurred.", err); this.alertFileIoError(err); });
-                });
-            });
-        }
-
-        protected appendFile_click(): void {
-            var path: string,
-                contents: string;
-
-            this.UIHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
-
-                if (result.key !== Constants.Buttons.OK) {
-                    return;
-                }
-
-                this.UIHelper.prompt("Enter file contents", "File I/O Test", null, " / ").then((result: Models.KeyValuePair<string, string>) => {
-
-                    if (result.key !== Constants.Buttons.OK) {
-                        return;
-                    }
-
-                    contents = result.value;
-
-                    this.FileUtilities.writeTextFile(path, contents, true)
-                        .then(() => { this.Logger.debug(DeveloperController.ID, "appendFile_click", "Append OK.", { path: path, contents: contents }); this.UIHelper.alert("Append OK."); },
-                        (err: Error) => { this.Logger.error(DeveloperController.ID, "appendFile_click", "An error occurred.", err); this.alertFileIoError(err); });
-                });
-            });
-        }
-
-        protected createDir_click(): void {
-            var path: string;
-
-            this.UIHelper.prompt("Enter dir name to create", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
-
-                if (result.key !== Constants.Buttons.OK) {
-                    return;
-                }
-
-                path = result.value;
-
-                this.FileUtilities.createDirectory(path)
-                    .then(() => { this.Logger.debug(DeveloperController.ID, "createDir_click", "Create directory OK.", path); this.UIHelper.alert("Create directory OK."); },
-                    (err: Error) => { this.Logger.error(DeveloperController.ID, "createDir_click", "An error occurred.", err); this.alertFileIoError(err); });
-            });
-        }
-
-        protected listFiles_click(): void {
-            var path: string,
-                list = "";
-
-            this.UIHelper.prompt("Enter path to list files", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
-
-                if (result.key !== Constants.Buttons.OK) {
-                    return;
-                }
-
-                path = result.value;
-
-                this.FileUtilities.getFilePaths(path)
-                    .then((files: any) => {
-                        this.Logger.debug(DeveloperController.ID, "listFiles_click", "Get file paths OK.", files);
-
-                        files.forEach((value: string) => {
-                            list += "\n" + value;
-                        });
-
-                        this.UIHelper.alert(list);
-                    },
-                    (err: Error) => {
-                        this.Logger.error(DeveloperController.ID, "listFiles_click", "An error occurred.", err);
-                        this.alertFileIoError(err);
-                    });
-            });
-        }
-
-        protected listDirs_click(): void {
-            var path: string,
-                list = "";
-
-            this.UIHelper.prompt("Enter path to list dirs", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
-
-                if (result.key !== Constants.Buttons.OK) {
-                    return;
-                }
-
-                path = result.value;
-
-                this.FileUtilities.getDirectoryPaths(path)
-                    .then((dirs: any) => {
-                        this.Logger.debug(DeveloperController.ID, "listDirs_click", "Get directory paths OK.", dirs);
-
-                        dirs.forEach((value: string) => {
-                            list += "\n" + value;
-                        });
-
-                        this.UIHelper.alert(list);
-                    },
-                    (err: Error) => {
-                        this.Logger.error(DeveloperController.ID, "listDirs_click", "An error occurred.", err);
-                        this.alertFileIoError(err);
-                    });
-            });
-        }
-
-        protected deleteFile_click(): void {
-            var path: string;
-
-            this.UIHelper.prompt("Enter path to delete file", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
-
-                if (result.key !== Constants.Buttons.OK) {
-                    return;
-                }
-
-                path = result.value;
-
-                this.FileUtilities.deleteFile(path)
-                    .then(() => { this.Logger.debug(DeveloperController.ID, "deleteFile_click", "Delete file OK.", path); this.UIHelper.alert("Delete file OK."); },
-                    (err: Error) => { this.Logger.error(DeveloperController.ID, "deleteFile_click", "An error occurred.", err); this.alertFileIoError(err); });
-            });
-        }
-
-        protected deleteDir_click(): void {
-            var path: string;
-
-            this.UIHelper.prompt("Enter path to delete dir", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
-
-                if (result.key !== Constants.Buttons.OK) {
-                    return;
-                }
-
-                path = result.value;
-
-                this.FileUtilities.deleteDirectory(path)
-                    .then(() => { this.Logger.debug(DeveloperController.ID, "deleteDir_click", "Delete directory OK.", path); this.UIHelper.alert("Delete directory OK"); },
-                    (err: Error) => { this.Logger.error(DeveloperController.ID, "deleteDir_click", "An error occurred.", err); this.alertFileIoError(err); });
-            });
         }
 
         //#endregion

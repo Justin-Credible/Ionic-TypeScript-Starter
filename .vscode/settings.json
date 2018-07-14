@@ -5,14 +5,22 @@
         "bower_components": true,
         "platforms": true,
         "plugins": true,
-        "www/js/bundle.js": true,
-        "www/js/bundle.js.map": true,
-        "www/js/bundle.d.ts": true,
-        "www/js/src": true,
+        "www/js/bundle.*": true,
+        "www/css/bundle.*": true,
+        "www/lib": true,
+        "tests/unit-tests.bundle.*": true,
         "docs-output": true,
         "build": true
     },
 
     "editor.tabSize": 4,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+
+    "files.insertFinalNewline": true,
+
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.referencesCodeLens.enabled": false,
+
+    "tslint.configFile": "tslint.json",
+    "tslint.ignoreDefinitionFiles": true,
 }

@@ -114,30 +114,25 @@ namespace JustinCredible.SampleApp {
                 }
             });
 
-            $stateProvider.state("app.logs", {
-                url: "/settings/logs",
+            $stateProvider.state("app.dev-logs-list", {
+                url: "/settings/developer/logs/list",
                 views: {
                     "root-view": {
-                        templateUrl: "Views/Settings/Logs-List/Logs-List.html",
-                        controller: Controllers.LogsListController.ID
-                    }
-                }
+                        templateUrl: "Views/Settings/Developer/Dev-Logs-List/Dev-Logs-List.html",
+                        controller: Controllers.DevLogsListController.ID,
+                    },
+                },
             });
 
-            $stateProvider.state("app.log-entry", {
-                url: "/settings/log-entry/:id",
-                params: {
-                    id: {
-                        value: "",
-                        squash: false
-                    }
-                },
+            $stateProvider.state("app.dev-log-detail", {
+                url: "/settings/developer/logs/detail/:id",
                 views: {
                     "root-view": {
-                        templateUrl: "Views/Settings/Log-Entry/Log-Entry.html",
-                        controller: Controllers.LogEntryController.ID
-                    }
-                }
+                        templateUrl: "Views/Settings/Developer/Dev-Log-Detail/Dev-Log-Detail.html",
+                        controller: Controllers.DevLogDetailController.ID,
+                    },
+                },
+                params: new Models.DevLogDetailParams(),
             });
 
             $stateProvider.state("app.about", {

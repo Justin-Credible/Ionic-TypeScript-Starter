@@ -2,7 +2,7 @@
 
     export class LogEntry {
         public id: string;
-        public timestamp: Date;
+        public timestamp: moment.Moment;
         public level: LogLevel;
         public tag: string;
         public message: string;

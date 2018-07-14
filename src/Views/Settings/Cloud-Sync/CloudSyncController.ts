@@ -9,13 +9,12 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
-                "$ionicHistory"
             ];
         }
 
         constructor(
             $scope: ng.IScope,
-            private $ionicHistory: ionic.navigation.IonicHistoryService) {
+            ) {
             super($scope, ViewModels.CloudSyncViewModel);
 
             this.scope.$on("icon-panel.cloud-icon-panel.created", _.bind(this.iconPanel_created, this));

@@ -10,7 +10,6 @@
             return [
                 "$scope",
                 "$ionicHistory",
-                Services.Utilities.ID,
                 Services.Configuration.ID,
                 Services.Plugins.ID
             ];
@@ -19,7 +18,6 @@
         constructor(
             $scope: ng.IScope,
             private $ionicHistory: ionic.navigation.IonicHistoryService,
-            private Utilities: Services.Utilities,
             private Configuration: Services.Configuration,
             private Plugins: Services.Plugins) {
             super($scope, ViewModels.AboutViewModel);

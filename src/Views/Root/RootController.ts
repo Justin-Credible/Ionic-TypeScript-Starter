@@ -9,8 +9,6 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
-                "$location",
-                "$http",
                 Services.Plugins.ID,
                 Services.MenuDataSource.ID,
                 Services.UIHelper.ID,
@@ -20,12 +18,11 @@
 
         constructor(
             $scope: ng.IScope,
-            private $location: ng.ILocationService,
-            private $http: ng.IHttpService,
             private Plugins: Services.Plugins,
             private MenuDataSource: Services.MenuDataSource,
             private UIHelper: Services.UIHelper,
-            private Preferences: Services.Preferences) {
+            private Preferences: Services.Preferences,
+            ) {
             super($scope, ViewModels.RootViewModel);
         }
 

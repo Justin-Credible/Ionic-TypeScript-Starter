@@ -3,7 +3,7 @@
     /**
      * Provides a common set of helper/utility methods for logging errors.
      */
-    export class Logger {
+    export class Logger implements Interfaces.Services.Logger {
 
         //#region Injection
 
@@ -11,117 +11,73 @@
 
         public static get $inject(): string[] {
             return [
-                Utilities.ID
+                "$rootScope",
+                Configuration.ID,
+                Platform.ID,
+                Utilities.ID,
             ];
         }
 
         constructor(
-            private Utilities: Utilities) {
-
-            this._logs = [];
+            private $rootScope: ng.IRootScopeService,
+            private Configuration: Configuration,
+            private Platform: Platform,
+            private Utilities: Utilities,
+            ) {
         }
 
         //#endregion
 
         private _logs: Models.LogEntry[];
-        private _maxLogEntries = 20;
+        private _maxLogEntries = 75;
 
-        //#region Logging Convenience Methods
+        private _currentRoute: string;
 
-        /**
-         * Used to log debbuging information (like method timings etc).
-         * 
-         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
-         * @param tag The tag for the log (normally the name of the method).
-         * @param message The descriptive text for the log entry.
-         * @param metadata An optional object to be logged with the log entry.
-         */
-        public trace(tagPrefix: string, tag: string, message: string, metadata?: any): void {
-            this.log(Models.LogLevel.TRACE, tagPrefix, tag, message, metadata);
-        }
+        //#region Properties
 
         /**
-         * Used to log debugging information.
-         * 
-         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
-         * @param tag The tag for the log (normally the name of the method).
-         * @param message The descriptive text for the log entry.
-         * @param metadata An optional object to be logged with the log entry.
+         * Used to obtain a list of log entries that are stored in memory
+         * when running a debug build.
          */
-        public debug(tagPrefix: string, tag: string, message: string, metadata?: any): void {
-            this.log(Models.LogLevel.DEBUG, tagPrefix, tag, message, metadata);
-        }
-
-        /**
-         * Used to log an informational message.
-         * 
-         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
-         * @param tag The tag for the log (normally the name of the method).
-         * @param message The descriptive text for the log entry.
-         * @param metadata An optional object to be logged with the log entry.
-         */
-        public info(tagPrefix: string, tag: string, message: string, metadata?: any): void {
-            this.log(Models.LogLevel.INFO, tagPrefix, tag, message, metadata);
-        }
-
-        /**
-         * Used to log a warning.
-         * 
-         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
-         * @param tag The tag for the log (normally the name of the method).
-         * @param message The descriptive text for the log entry.
-         * @param metadata An optional object to be logged with the log entry.
-         */
-        public warn(tagPrefix: string, tag: string, message: string, metadata?: any): void {
-            this.log(Models.LogLevel.WARN, tagPrefix, tag, message, metadata);
-        }
-
-        /**
-         * Used to log an error.
-         * 
-         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
-         * @param tag The tag for the log (normally the name of the method).
-         * @param message The descriptive text for the log entry.
-         * @param metadata An optional object to be logged with the log entry.
-         */
-        public error(tagPrefix: string, tag: string, message: string, metadata?: any): void {
-            this.log(Models.LogLevel.ERROR, tagPrefix, tag, message, metadata);
-        }
-
-        /**
-         * Used to log a fatal error.
-         * 
-         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
-         * @param tag The tag for the log (normally the name of the method).
-         * @param message The descriptive text for the log entry.
-         * @param metadata An optional object to be logged with the log entry.
-         */
-        public fatal(tagPrefix: string, tag: string, message: string, metadata?: any): void {
-            this.log(Models.LogLevel.FATAL, tagPrefix, tag, message, metadata);
+        public get logs(): Models.LogEntry[] {
+            return this._logs;
         }
 
         //#endregion
 
         //#region Public Methods
 
+        public initialize(): void {
+
+            // Subscribe to Angular events.
+            this.$rootScope.$on("$locationChangeStart", _.bind(this.angular_locationChangeStart, this));
+        }
+
+        public debug(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.Debug, `${tagPrefix}.${tag}`, message, metadata);
+        }
+
+        public info(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.Info, `${tagPrefix}.${tag}`, message, metadata);
+        }
+
+        public warn(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.Warn, `${tagPrefix}.${tag}`, message, metadata);
+        }
+
+        public error(tagPrefix: string, tag: string, message: string, metadata?: any): void {
+            this.log(Models.LogLevel.Error, `${tagPrefix}.${tag}`, message, metadata);
+        }
+
         /**
-         * Used to clear the logs that are current in memory.
+         * Used to clear the in memory list of log entries.
          */
         public clear(): void {
             this._logs = [];
         }
 
         /**
-         * Used to return all of the logs that are currently in memory.
-         * 
-         * @returns An array of log entries.
-         */
-        public get logs(): Models.LogEntry[] {
-            return this._logs;
-        }
-
-        /**
-         * Used to get a single log entry by log ID.
+         * Used to get a single in memory log entry by its ID.
          * 
          * @param id The log ID of the log to retrieve.
          * @returns A single log entry with the given ID.
@@ -132,175 +88,203 @@
             });
         }
 
-        /**
-         * A helper used to get an icon name for the given log level.
-         * 
-         * @param level The level of the log to get an icon name for.
-         * @returns A string of an icon name for the given log level.
-         */
-        public getIconForLevel(level: number): string {
+        //#endregion
 
-            if (level == null) {
-                return "";
-            }
-
-            switch (level) {
-                case Models.LogLevel.TRACE:
-                    return "ion-code-working";
-                case Models.LogLevel.DEBUG:
-                    return "ion-bug";
-                case Models.LogLevel.INFO:
-                    return "ion-information-circled";
-                case Models.LogLevel.WARN:
-                    return "ion-alert-circled";
-                case Models.LogLevel.ERROR:
-                    return "ion-alert";
-                case Models.LogLevel.FATAL:
-                    return "ion-nuclear";
-                default:
-                    return "ion-alert";
-            }
-        }
+        //#region Events
 
         /**
-         * A helper used to get a color in hex value for the given log level.
-         * 
-         * @param level The level of the log to get a color for.
-         * @returns A hex value of a color for the given log level.
+         * Fired when Angular's route/location (eg URL hash) is changing.
          */
-        public getColorForLevel(level: number): string {
+        private angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string): void {
 
-            if (level == null) {
-                return "";
-            }
-
-            switch (level) {
-                case Models.LogLevel.TRACE:
-                    return "#551A8B"; // Purple
-                case Models.LogLevel.DEBUG:
-                    return "#000080"; // Navy
-                case Models.LogLevel.INFO:
-                    return "#000000"; // Black
-                case Models.LogLevel.WARN:
-                    return "#ff8000"; // Orange
-                case Models.LogLevel.ERROR:
-                    return "#ff0000"; // Red
-                case Models.LogLevel.FATAL:
-                    return "#ff0000"; // Red
-                default:
-                    return "#000000"; // Black
-            }
-        }
-
-        /**
-         * A helper used to get friendly name for display for the given log level.
-         * 
-         * @param level The level of the log to get a display name for.
-         * @returns A display name of for the given log level.
-         */
-        public getDisplayLevelForLevel(level: number): string {
-
-            if (level == null) {
-                return "";
-            }
-
-            switch (level) {
-                case Models.LogLevel.TRACE:
-                    return "Trace";
-                case Models.LogLevel.DEBUG:
-                    return "Debug";
-                case Models.LogLevel.INFO:
-                    return "Info";
-                case Models.LogLevel.WARN:
-                    return "Warning";
-                case Models.LogLevel.ERROR:
-                    return "Error";
-                case Models.LogLevel.FATAL:
-                    return "Fatal";
-                default:
-                    return "Unknown";
-            }
+            // Chop off the long "file://..." prefix (we only care about the hash tag).
+            this._currentRoute = newRoute.substring(newRoute.indexOf("#"));
         }
 
         //#endregion
 
-        //#region Base logging method
+        //#region Private Methods
+
+        private log(level: Models.LogLevel, tag: string, message: string, metadata?: any): void {
+
+            try {
+                let console_logFn,
+                    levelDisplay: string;
+
+                //# region Determine variables based on log level
+
+                switch (level) {
+                    case Models.LogLevel.Debug:
+                        levelDisplay = "[DEBUG]";
+                        console_logFn = console.debug;
+                        break;
+                    case Models.LogLevel.Info:
+                        levelDisplay = "[INFO]";
+                        console_logFn = console.info;
+                        break;
+                    case Models.LogLevel.Warn:
+                        levelDisplay = "[WARN]";
+                        console_logFn = console.warn;
+                        break;
+                    case Models.LogLevel.Error:
+                        levelDisplay = "[ERROR]";
+                        console_logFn = console.error;
+                        break;
+                    default:
+                        levelDisplay = "[LOG]";
+                        console_logFn = console.log;
+                        break;
+                }
+
+                //#endregion
+
+                // Allows us to morph the data to be logged.
+                let preppedMetadata = this.prepareMetadata(metadata);
+
+                // Include the current route with the log entry.
+                preppedMetadata.currentRoute = this._currentRoute;
+
+                // In debug builds, we keep the log entries in memory so we can see them from the
+                // device developer tools view.
+                if (this.Configuration.debug) {
+
+                    if (!this._logs) {
+                        this._logs = [];
+                    }
+
+                    if (this._logs.length >= this._maxLogEntries) {
+                        this._logs = this._logs.slice(1);
+                    }
+
+                    let entry = new Models.LogEntry();
+                    entry.id = this.Utilities.generateGuid();
+                    entry.timestamp = moment();
+                    entry.level = level;
+                    entry.tag = tag;
+                    entry.message = message;
+                    entry.metadata = preppedMetadata;
+
+                    this._logs.push(entry);
+                }
+
+                // Log to both the browser console and native device console.
+                // Logging is slighting different based on if a metadata object is present or not.
+                if (preppedMetadata == null) {
+
+                    // Handle the simple case first-- no metadata is being logged.
+
+                    // Show the log entry in the browser's developer tools and Android's logcat.
+                    console_logFn.call(console, `${levelDisplay} ${tag}: ${message}`);
+
+                    // TODO: STARTER
+                    // On iOS we need to use a plugin to invoke the native NSLog macro.
+                    // if (this.Platform.iOSCordova) {
+                    //     ExternalLoggerPlugin.logUsingNsLog(`${levelDisplay} ${tag}: ${message}`);
+                    // }
+                }
+                else {
+
+                    // Handle the more complicated case-- a metadata object is being logged.
+                    // In this case we want to make sure the metadata is logged for display by the
+                    // browser's debugging tools and included as a JSON string in the native logs.
+
+                    let metadataJson: string;
+
+                    if (this.Platform.androidCordova || this.Platform.iOSCordova) {
+
+                        try {
+                            metadataJson = JSON.stringify(preppedMetadata);
+                        }
+                        catch (error) {
+                            /* tslint:disable:no-empty */
+                            /* tslint:enable:no-empty */
+                        }
+                    }
+
+                    if (this.Platform.androidCordova) {
+
+                        // Show the log entry in the browser's developer tools and Android's logcat.
+                        console_logFn.call(console, `${levelDisplay} ${tag}: ${message} [Metadata]: ${metadataJson}`, metadata);
+                    }
+                    else if (this.Platform.iOSCordova) {
+
+                        // Show the log entry in the browser's developer tools.
+                        console_logFn.call(console, `${levelDisplay} ${tag}: ${message}`, metadata);
+
+                        // TODO: STARTER
+                        // On iOS we need to use a plugin to invoke the native NSLog macro.
+                        // ExternalLoggerPlugin.logUsingNsLog(`${levelDisplay} ${tag}: ${message} [Metadata]: ${metadataJson}`);
+                    }
+                    else {
+                        console_logFn.call(console, `${levelDisplay} ${tag}: ${message}`, metadata);
+                    }
+                }
+            }
+            catch (exception) {
+                console.error("Error logging via Logger.logToConsole().", exception);
+            }
+        }
 
         /**
-         * Logs a log entry.
+         * Prepare the metadata object for logging by ensuring any properties that do not normally
+         * serialize to JSON are converted into plain objects.
          * 
-         * Currently logs to an in-memory array whose max size is _maxLogEntries.
-         * 
-         * This can easily be modified to use a third party logging service (eg Ouralabs).
-         * 
-         * @param logLevel The severity of the log (see Models.LogLevel for possible values).
-         * @param tagPrefix The prefix for the log entries tag (normally the ID of the service or controller).
-         * @param tag The tag for the log (normally the name of the method).
-         * @param message The descriptive text for the log entry.
-         * @param metadata An optional object to be logged with the log entry.
+         * @param metadata The metadata to prepare.
+         * @returns The prepared metadata object.
          */
-        private log(logLevel: Models.LogLevel, tagPrefix: string, tag: string, message: string, metadata?: any): void {
+        private prepareMetadata(metadata: any): any {
 
-            if (logLevel == null) {
-                logLevel = Models.LogLevel.DEBUG;
+            if (!metadata) {
+                return null;
             }
 
-            if (!tag) {
-                tag = "[No Tag]";
+            // The easiest way to do this is to leverage the filter functionality of the JSON.stringify()
+            // method. The filter function is invoked for each key/value pair recursively. In the function
+            // we can massage the data for types that we choose. Finally, we'll deserialize back into a
+            // plain object. If this becomes a bottleneck at some point we'll have to revisit.
+            try {
+                // Handler for objects that do not serialize natively via JSON.stringify().
+                let filter = (key: string, value: any) => {
+
+                    if (value instanceof Exception) {
+
+                        let exception = <Exception>value;
+
+                        return {
+                            type: "Exception",
+                            message: exception.message,
+                            innerError: {
+                                message: exception.innerError ? exception.innerError.message : null,
+                                stack: exception.innerError ? exception.innerError.stack : null,
+                            },
+                            context: exception.context,
+                            stack: value.stack,
+                        };
+                    }
+                    else if (value instanceof Error) {
+
+                        let error = <Error>value;
+
+                        return {
+                            type: "Error",
+                            message: error.message,
+                            stack: error.stack,
+                        };
+                    }
+                    else {
+                        return value;
+                    }
+                };
+
+                // Serialize into JSON with our custom filter function to massage the data.
+                let metadataJson = JSON.stringify(metadata, filter);
+
+                // Convert back into an object.
+                return JSON.parse(metadataJson);
             }
-
-            if (!tagPrefix) {
-                tagPrefix = "";
+            catch (error) {
+                return metadata;
             }
-
-            if (!message) {
-                message = "[No Message]";
-            }
-
-            var logEntry = new Models.LogEntry();
-
-            logEntry.id = this.Utilities.generateGuid();
-            logEntry.level = logLevel;
-            logEntry.tag = tagPrefix ? tagPrefix + "." + tag : tag;
-            logEntry.message = message;
-            logEntry.metadata = metadata;
-            logEntry.timestamp = new Date();
-
-            if (this._logs.length >= this._maxLogEntries) {
-                this._logs = this._logs.slice(1);
-            }
-
-            this._logs.push(logEntry);
-
-            var consoleMessage = this.Utilities.format("[{0}] {1}", tagPrefix ? tagPrefix + "." + tag : tag, message);
-
-            /* tslint:disable:no-console */
-
-            switch (logLevel) {
-                case Models.LogLevel.TRACE:
-                    console.trace.call(console, consoleMessage, metadata);
-                    break;
-                case Models.LogLevel.DEBUG:
-                    console.debug(consoleMessage, metadata);
-                    break;
-                case Models.LogLevel.INFO:
-                    console.info(consoleMessage, metadata);
-                    break;
-                case Models.LogLevel.WARN:
-                    console.warn(consoleMessage, metadata);
-                    break;
-                case Models.LogLevel.ERROR:
-                    console.error(consoleMessage, metadata);
-                    break;
-                case Models.LogLevel.FATAL:
-                    console.error(consoleMessage + " (FATAL)", metadata);
-                    break;
-                default:
-                    console.debug(consoleMessage, metadata);
-                    break;
-            }
-
-            /* tslint:enable:no-console */
         }
 
         //#endregion

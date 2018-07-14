@@ -11,18 +11,17 @@
 
         public static get $inject(): string[] {
             return [
-                "$q",
                 "$ionicPopup",
                 "$ionicLoading",
-                Utilities.ID
+                Utilities.ID,
             ];
         }
 
         constructor(
-            private $q: ng.IQService,
             private $ionicPopup: ionic.popup.IonicPopupService,
             private $ionicLoading: ionic.loading.IonicLoadingService,
-            private Utilities: Utilities) {
+            private Utilities: Utilities,
+            ) {
         }
 
         //#endregion
@@ -73,7 +72,7 @@
         }
 
         public getNotificationPlugin(): Notification {
-            return {
+            return <any>{
                 alert: _.bind(this.notification_alert, this),
                 confirm: _.bind(this.notification_confirm, this),
                 prompt: _.bind(this.notification_prompt, this),

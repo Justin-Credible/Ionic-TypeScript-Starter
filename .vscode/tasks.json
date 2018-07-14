@@ -15,7 +15,17 @@
     ],
     "tasks": [
         {
+            "taskName": "config",
+            "showOutput": "silent"
+        },
+        {
             "taskName": "ts",
+            "isBuildCommand": true,
+            "showOutput": "silent",
+            "problemMatcher": "$tsc"
+        },
+        {
+            "taskName": "ts:tests",
             "isBuildCommand": true,
             "showOutput": "silent",
             "problemMatcher": "$tsc"
@@ -23,20 +33,7 @@
         {
             "taskName": "lint",
             "showOutput": "silent",
-            "problemMatcher": [
-                {
-                    "owner": "gulp",
-                    "fileLocation": ["absolute"],
-                    "pattern": {
-                        "regexp": "^\\[\\d\\d:\\d\\d:\\d\\d\\] \\[gulp-tslint\\] (.*) \\(.*\\) (.*)\\[(\\d*), (\\d*)\\]: (.*)$",
-                        "file": 2,
-                        "line": 3,
-                        "column": 4,
-                        "message": 5,
-                        "severity": 1
-                    }
-                }
-            ]
+            "problemMatcher": "$tslint5"
         },
         {
             "taskName": "sass",
@@ -59,6 +56,14 @@
         {
             "taskName": "templates",
             "showOutput": "never"
+        },
+        {
+            "taskName": "platforms",
+            "showOutput": "silent"
+        },
+        {
+            "taskName": "deploy-lcl",
+            "showOutput": "silent"
         },
         {
             "taskName": "emulate-ios",

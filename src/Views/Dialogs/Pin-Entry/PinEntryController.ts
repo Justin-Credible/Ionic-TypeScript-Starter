@@ -11,16 +11,13 @@
             return [
                 "$scope",
                 Services.Plugins.ID,
-                Services.Utilities.ID,
-                Services.Preferences.ID
             ];
         }
 
         constructor(
             $scope: ng.IScope,
             private Plugins: Services.Plugins,
-            private Utilities: Services.Utilities,
-            private Preferences: Services.Preferences) {
+            ) {
             super($scope, ViewModels.PinEntryViewModel, PinEntryController.ID);
         }
 

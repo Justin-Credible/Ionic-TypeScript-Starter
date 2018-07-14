@@ -13,17 +13,22 @@ module.exports = function(gulp, plugins) {
     return function(cb) {
 
         var filesToLint = [
-            "./src/**/*.ts",
-            "./tests/**/*.ts",
-            "./typings/custom/**/*.d.ts",
-            "./typings-tests/custom/**/*.d.ts",
 
-            // Ignore: This was written by a third party and does not match our lint rules.
-            "!./typings/custom/ionic.d.ts",
+            // The app source code.
+            "./src/**/*.ts",
+
+            // The API and unit test source code.
+            "./tests/**/*.ts",
+
+            // Third party type definitions not written by us (from DefinitelyTyped etc).
+            "!./src/Types/ThirdParty/**/*.d.ts",
+            "!./tests/Types/ThirdParty/**/*.d.ts",
         ];
 
         return gulp.src(filesToLint)
             .pipe(plugins.tslint())
-            .pipe(plugins.tslint.report(helper.tsLintReporter));
+            .pipe(plugins.tslint.report({
+                emitError: false,
+            }));
     };
 };

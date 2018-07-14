@@ -1,14 +1,14 @@
 
 /**
- * This is the second level boot loader invoked via boot1.js from index.html.
+ * This is the main startup class delegated to by index.html.
  * 
- * This handles the configuration of AngularJS and it's controllers, services etc.
- * 
- * After Angular is initialized it will delegate to the Application.ts->start().
+ * It handles the building the app configuration based on the current environment,
+ * configuration of AngularJS and it's controllers, services etc, and starting the
+ * app by invoking Application.start().
  */
-namespace JustinCredible.SampleApp.Boot2 {
+namespace JustinCredible.SampleApp.Boot {
 
-    //#region Variables
+    //#region Static Variables
 
     /**
      * The root Angular application module.
@@ -20,40 +20,46 @@ namespace JustinCredible.SampleApp.Boot2 {
      */
     var applicationInstance: Application;
 
-    /**
-     * Holds the initial hashtag route that was present when the app started.
-     */
-    var initialRoute: string;
-
     //#endregion
 
-    /**
-     * Used to set the initial hashtag route that was used to launch the app.
-     * It will be made available as an Angular constant with name "initialRoute".
-     */
-    export function setInitialRoute(route: string): void {
-        initialRoute = route;
-    }
-
-    //#endregion
+    //#region Main Entrypoint
 
     /**
      * This is the main entry point for the application. It is used to setup Angular and
      * configure its controllers, services, etc.
      * 
-     * It is invoked via the boot1.js script included from the index.html page.
+     * It is invoked via an inline script included on the index.html page.
+     * 
+     * @param element The target element for the root of the Angular application.
      */
-    export function boot(): void {
+    export function main(element: HTMLElement): void {
+
+        // Save off the value of the initial client-side route (hashtag).
+        let initialHashRoute = window.location.hash;
+
+        // Ensure the hash or server routes are empty when launch the app. If a route is present Angular
+        // will pick it up and attempt to load the first route. This causes the document ready event
+        // to be delayed until the first route has finished (which could be a long amount of time
+        // if the first route is loading images etc). This delay would then delay $ionicPlatform's
+        // ready event and therefore our own Application.start() event to execute after the first
+        // view has been loaded. We'll handle navigation later via Navigator.handleNavigationOnResume().
+
+        if (window.location.hash) {
+            window.location.hash = "";
+        }
 
         // Define the top level Angular module for the application.
         // Here we also specify the Angular modules this module depends upon.
-        ngModule = angular.module("JustinCredible.SampleApp.Application", ["ui.router", "ionic", "templates", "ngMockE2E"]);
+        ngModule = angular.module("JustinCredible.SampleApp.Application", ["ui.router", "ionic", "templates"]);
+
+        // tslint:disable-next-line:no-string-literal
+        let chrome = window["chrome"];
 
         // Define our constants.
         ngModule.constant("isCordova", typeof(cordova) !== "undefined");
         ngModule.constant("buildVars", window.buildVars);
         ngModule.constant("isChromeExtension", typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" && typeof (chrome.runtime.id) !== "undefined");
-        ngModule.constant("initialRoute", initialRoute);
+        ngModule.constant("initialRoute", initialHashRoute);
 
         // Register the services, directives, filters, and controllers with Angular.
         BootHelper.registerServices(ngModule);
@@ -66,13 +72,12 @@ namespace JustinCredible.SampleApp.Boot2 {
 
         // Define the injection parameters for the initialize method.
         var $inject_angular_initialize: any[] = [
+            "$q",
             "$ionicPlatform",
             Application.ID,
-            Services.Configuration.ID,
-            Services.MockHttpApis.ID,
 
             // The method we are annotating.
-            angular_initialize
+            angular_initialize,
         ];
 
         // Define the injection parameters for the configure method.
@@ -85,15 +90,29 @@ namespace JustinCredible.SampleApp.Boot2 {
             "$ionicConfigProvider",
 
             // The method we are annotating.
-            angular_configure
+            angular_configure,
         ];
 
         // Specify the initialize/run and configuration functions.
         ngModule.run($inject_angular_initialize);
         ngModule.config($inject_angular_configure);
+
+        // Now manually bootstrap Angular with the provided element.
+        if (element) {
+
+            console.log("[INFO] Boot.main: Now bootstrapping the application.", {
+                buildTimestamp: window.buildVars.buildTimestamp,
+                commitShortSha: window.buildVars.commitShortSha,
+                buidVars: window.buildVars,
+            });
+
+            angular.bootstrap(element, ["JustinCredible.SampleApp.Application"]);
+        }
     }
 
-    //#region Platform Configuration
+    //#endregion
+
+    //#region Angular Configuration Handlers
 
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework
@@ -103,23 +122,24 @@ namespace JustinCredible.SampleApp.Boot2 {
      * dependency injection based on the name of each parameter.
      */
     function angular_initialize(
+        $q: ng.IQService,
         $ionicPlatform: ionic.platform.IonicPlatformService,
         Application: Application,
-        Configuration: Services.Configuration,
-        MockHttpApis: Services.MockHttpApis
         ): void {
+
+        // Polyfill and/or override the brower's Promise implementation with Angular's.
+        // This allows TypeScript's await keyword generator to use Angular's promise
+        // implementation, which is required so that the digest cycle will execute.
+        // https://arnhem.luminis.eu/using-typescrip-2-1-async-and-wait-in-an-angular-1-application-yes-yes-yes/
+        (<any>window).Promise = $q;
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(() => {
             applicationInstance = Application;
-            Application.setAngularModule(ngModule);
             Application.start();
         });
-
-        // Mock up or allow HTTP responses.
-        MockHttpApis.mockHttpCalls(Configuration.enableMockHttpCalls);
-    };
+    }
 
     /**
      * Function that is used to configure AngularJs.
@@ -133,7 +153,7 @@ namespace JustinCredible.SampleApp.Boot2 {
         $provide: ng.auto.IProvideService,
         $httpProvider: ng.IHttpProvider,
         $compileProvider: ng.ICompileProvider,
-        $ionicConfigProvider: ionic.utility.IonicConfigProvider
+        $ionicConfigProvider: ionic.utility.IonicConfigProvider,
         ): void {
 
         // Intercept the default Angular exception handler.
@@ -152,7 +172,7 @@ namespace JustinCredible.SampleApp.Boot2 {
 
         // Whitelist several URI schemes to prevent Angular from marking them as un-safe.
         // http://stackoverflow.com/questions/19590818/angularjs-and-windows-8-route-error
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0|chrome-extension):/);
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|ghttps?|ms-appx|x-wmapp0|chrome-extension):/);
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
 
         // Register our custom interceptor with the HTTP provider so we can hook into AJAX request events.
@@ -163,13 +183,7 @@ namespace JustinCredible.SampleApp.Boot2 {
 
         // Setup all of the client side routes and their controllers and views.
         RouteConfig.setupRoutes($stateProvider, $urlRouterProvider);
-
-        // If mock API calls are enabled, then we'll add a random delay for all HTTP requests to simulate
-        // network latency so we can see the spinners and loading bars. Useful for demo purposes.
-        if (localStorage.getItem("ENABLE_MOCK_HTTP_CALLS") === "true") {
-            Services.MockHttpApis.setupMockHttpDelay($provide);
-        }
-    };
+    }
 
     //#endregion
 }

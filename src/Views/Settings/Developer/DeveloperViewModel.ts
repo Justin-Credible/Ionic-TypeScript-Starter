@@ -20,9 +20,6 @@
         userId: string;
         token: string;
 
-        defaultStoragePathId: string;
-        defaultStoragePath: string;
-
         apiUrl: string;
     }
 }

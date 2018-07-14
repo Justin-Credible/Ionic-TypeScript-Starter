@@ -6,7 +6,10 @@
 // Copyright (c) Microsoft Open Technologies, Inc.
 // Licensed under the MIT license.
 
-interface Window {
+// NOTE: Modified the following lines marked with HACK to support TypeScript 2.x.
+
+// interface Window {
+interface InAppBrowser { // HACK: Types
     /**
      * Opens a URL in a new InAppBrowser instance, the current browser instance, or the system browser.
      * @param  url     The URL to load.
@@ -49,7 +52,8 @@ interface Window {
  * The object returned from a call to window.open.
  * NOTE: The InAppBrowser window behaves like a standard web browser, and can't access Cordova APIs.
  */
-interface InAppBrowser extends Window {
+// interface InAppBrowser extends Window {
+    interface InAppBrowser { // HACK: Types
     onloadstart: (type: InAppBrowserEvent) => void;
     onloadstop: (type: InAppBrowserEvent) => void;
     onloaderror: (type: InAppBrowserEvent) => void;

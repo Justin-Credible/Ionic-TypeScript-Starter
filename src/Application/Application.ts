@@ -42,17 +42,6 @@ namespace JustinCredible.SampleApp {
         //#region Private Instance Variables
 
         /**
-         * The root Angular application module.
-         */
-        private _ngModule: ng.IModule;
-
-        /**
-         * Keeps track of the application being in the background or not.
-         * This flag is updated via the pause and resume handlers.
-         */
-        private _appIsInBackground: boolean = false;
-
-        /**
          * Keeps track of whether or not the PIN prompt or not.
          * This flag is updated via the device_pause and device_resume events.
          */
@@ -61,13 +50,6 @@ namespace JustinCredible.SampleApp {
         //#endregion
 
         //#region Public Methods
-
-        /**
-         * Used to set the Angular module for the application.
-         */
-        public setAngularModule(ngModule: ng.IModule): void {
-            this._ngModule = ngModule;
-        }
 
         public start(): void {
 
@@ -106,7 +88,6 @@ namespace JustinCredible.SampleApp {
          * To be used when the app is being pushed into the background.
          */
         private pause(): void {
-            this._appIsInBackground = true;
 
             if (!this._isShowingPinPrompt) {
                 // Store the current date/time. This will be used to determine if we need to
@@ -122,8 +103,6 @@ namespace JustinCredible.SampleApp {
          * @param coldBoot True if the application is starting up, false if resuming from background.
          */
         private resume(coldBoot: boolean): void {
-
-            this._appIsInBackground = false;
 
             this._isShowingPinPrompt = true;
 
@@ -236,7 +215,7 @@ namespace JustinCredible.SampleApp {
                 oldRoute: oldRoute,
                 newRoute: newRoute
             });
-        };
+        }
 
         //#endregion
 

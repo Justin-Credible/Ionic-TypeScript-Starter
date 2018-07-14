@@ -1,15 +1,15 @@
+
 namespace JustinCredible.SampleApp.ViewModels {
 
-    export class LogsListViewModel {
+    export class DevLogsListViewModel {
 
-        public logs: { [day: string]: ViewModels.LogEntryViewModel[] };
+        public logs: { [day: string]: ViewModels.DevLogDetailViewModel[] };
 
-        public showTrace: boolean;
         public showDebug: boolean;
+        public showDebugOnlyHTTP: boolean;
         public showInfo: boolean;
         public showWarn: boolean;
         public showError: boolean;
-        public showFatal: boolean;
 
         constructor() {
             this.logs = {};

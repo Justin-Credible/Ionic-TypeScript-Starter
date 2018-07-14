@@ -83,7 +83,6 @@
 
         //#endregion
 
-        private requestsInProgress: number = 0;
         private blockingRequestsInProgress: number = 0;
         private spinnerRequestsInProgress: number = 0;
 
@@ -287,9 +286,6 @@
                 config.showSpinner = true;
             }
 
-            // Increment the total number of HTTP requests that are in progress.
-            this.requestsInProgress += 1;
-
             // If this request should block the UI, then we have extra work to do.
             if (config.blocking) {
 
@@ -327,7 +323,6 @@
          * screen so we don't block the user.
          */
         private handleFatalError() {
-            this.requestsInProgress = 0;
             this.blockingRequestsInProgress = 0;
             this.spinnerRequestsInProgress = 0;
             NProgress.done();
@@ -339,9 +334,6 @@
          * as hides any UI blocking or animated spinners.
          */
         private handleResponseEnd(config: Interfaces.RequestConfig) {
-
-            // Decrement the total number of HTTP requests that are in progress.
-            this.requestsInProgress -= 1;
 
             // If this was a blocking request, also decrement the blocking counter.
             if (config.blocking) {
