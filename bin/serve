@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Detect if this script was executed directly, or sourced.
+# https://stackoverflow.com/a/9727942
+
+SOURCED=0
+
+if [ -n "$ZSH_EVAL_CONTEXT" ]; then 
+    case $ZSH_EVAL_CONTEXT in *:file) SOURCED=1;; esac
+elif [ -n "$KSH_VERSION" ]; then
+    [ "$(cd $(dirname -- $0) && pwd -P)/$(basename -- $0)" != "$(cd $(dirname -- ${.sh.file}) && pwd -P)/$(basename -- ${.sh.file})" ] && sourced=1
+elif [ -n "$BASH_VERSION" ]; then
+    [ "$0" != "$BASH_SOURCE" ] && SOURCED=1
+else # All other shells: examine $0 for known shell binary filenames
+    # Detects `sh` and `dash`; add additional shell filenames as needed.
+    case ${0##*/} in sh|dash) SOURCED=1;; esac
+fi
+
+if [ "$SOURCED" = "1" ]; then 
+    echo "This script should NOT be sourced, just execute it directly. Try this instead:"
+    echo "    ./bin/serve"
+    exit
+fi
+
+# Get the path to the script's parent directory.
+if [ -n "$ZSH_VERSION" ]; then
+    # https://stackoverflow.com/a/23259585
+    SCRIPT_PATH=$( cd "$(dirname "${(%):-%N}")" ; pwd -P )
+else
+    # Assume Bash
+    # https://stackoverflow.com/a/4774063
+    SCRIPT_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+fi
+
+source "$SCRIPT_PATH/setup-toolchain" --only-node
+
+if [ -z "$1" ]; then
+    PORT=8100
+else
+    PORT=$1;
+fi
+
+# Force any subsequent commands which fail will cause the shell script to exit immediately.
+# http://stackoverflow.com/a/2871034
+set -e
+
+echo ""
+echo "Launching Ionic serve on port $PORT..."
+cd "$SCRIPT_PATH/../"
+./node_modules/.bin/ionic serve --nobrowser --port $PORT

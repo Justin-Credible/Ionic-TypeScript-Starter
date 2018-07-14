@@ -1,0 +1,82 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    PORT=8100
+else
+    PORT=$1;
+fi
+
+# Detect if this script was executed directly, or sourced.
+# https://stackoverflow.com/a/9727942
+
+SOURCED=0
+
+if [ -n "$ZSH_EVAL_CONTEXT" ]; then 
+    case $ZSH_EVAL_CONTEXT in *:file) SOURCED=1;; esac
+elif [ -n "$KSH_VERSION" ]; then
+    [ "$(cd $(dirname -- $0) && pwd -P)/$(basename -- $0)" != "$(cd $(dirname -- ${.sh.file}) && pwd -P)/$(basename -- ${.sh.file})" ] && sourced=1
+elif [ -n "$BASH_VERSION" ]; then
+    [ "$0" != "$BASH_SOURCE" ] && SOURCED=1
+else # All other shells: examine $0 for known shell binary filenames
+    # Detects `sh` and `dash`; add additional shell filenames as needed.
+    case ${0##*/} in sh|dash) SOURCED=1;; esac
+fi
+
+if [ "$SOURCED" = "1" ]; then 
+    echo "This script should NOT be sourced, just execute it directly. Try this instead:"
+    echo "    ./bin/launch-browser"
+    exit
+fi
+
+# If not on macOS give manual steps.
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    echo "macOS detected; continuing..."
+else
+    echo "Sorry, this script only works on macOS, try this instead:"
+    echo "First, use ./bin/serve to launch the Ionic local server."
+    echo "Then launch Google Chrome with the following parameters:"
+    echo "--user-data-dir=/tmp/ChromeDev --args --ignore-certificate-errors --disable-web-security --use-spdy=off --remote-debugging-port=9222 --auto-open-devtools-for-tabs \"http://localhost:8100\""
+    exit;
+fi
+
+# Get the path to the script's parent directory.
+if [ -n "$ZSH_VERSION" ]; then
+    # https://stackoverflow.com/a/23259585
+    SCRIPT_PATH=$( cd "$(dirname "${(%):-%N}")" ; pwd -P )
+else
+    # Assume Bash
+    # https://stackoverflow.com/a/4774063
+    SCRIPT_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+fi
+
+if ! nc -z localhost $PORT; then
+
+    echo ""
+    echo "Launching local Ionic development server in a new terminal window..."
+
+    # https://stackoverflow.com/a/29511052
+    #open -a Terminal.app "$SCRIPT_PATH/serve" --args $PORT
+    echo "$SCRIPT_PATH/serve $PORT" > /tmp/launch-browser-terminal-script.sh
+    chmod +x /tmp/launch-browser-terminal-script.sh
+    open -a Terminal /tmp/launch-browser-terminal-script.sh
+
+    # https://stackoverflow.com/a/27601038
+    echo "Waiting for development server on to launch on $PORT..."
+    while ! nc -z localhost $PORT; do
+        sleep 1
+    done
+else
+    echo ""
+    echo "Local Ionic development server already running on port $PORT!"
+fi
+
+if [ -f /tmp/launch-browser-terminal-script.sh ]; then
+    rm /tmp/launch-browser-terminal-script.sh
+fi
+
+echo ""
+echo "Starting a development instance of Google Chrome (with CORS disabled) with URL http://localhost:$PORT"
+echo ""
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=/Users/$USER/Library/Application\ Support/Google/ChromeDev --user-data-dir=/Users/$USER/Library/Application\ Support/Google/ChromeDev --args --ignore-certificate-errors --disable-web-security --use-spdy=off --remote-debugging-port=9222 --auto-open-devtools-for-tabs "http://localhost:$PORT" &> /dev/null &
+
+echo ""

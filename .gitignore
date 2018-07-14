@@ -2,6 +2,8 @@
 # http://git-scm.com/docs/gitignore
 
 # Toolchain
+/bin/nvm
+/bin/.has_run_gulp_init
 /node_modules
 /bower_components
 /platforms

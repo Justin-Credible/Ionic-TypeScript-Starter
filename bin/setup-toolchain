@@ -1,0 +1,260 @@
+#!/bin/sh
+
+# Get the path to the script's parent directory.
+if [ -n "$ZSH_VERSION" ]; then
+    # https://stackoverflow.com/a/23259585
+    SCRIPT_PATH=$( cd "$(dirname "${(%):-%N}")" ; pwd -P )
+else
+    # Assume Bash
+    # https://stackoverflow.com/a/4774063
+    SCRIPT_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+fi
+
+NODE_ONLY=0
+PACKAGE_MANAGER="yarn"
+
+# Command line argument parsing
+while [ "$1" != "" ]; do
+    case $1 in
+        -no|--node-only )
+            NODE_ONLY=1
+            ;;
+        -pm|--package-manager )
+            shift
+            PACKAGE_MANAGER=$1
+            ;;
+        -h|--help )
+            echo "usage: source ./bin/setup-toolchain [--node-only] [--package-manager yarn|npm] [--help]"
+            return
+            ;;
+        * )
+            break
+            ;;
+    esac
+    shift
+done
+
+NVM_VERSION="0.33.4"
+NODE_VERSION="8.11.3"
+NPM_VERSION="6.1.0"
+YARN_VERSION="1.7.0"
+GULP_VERSION="3.9.0"
+
+echo ""
+echo "Ionic/TypeScript Mobile App - Toolchain Setup"
+echo ""
+
+# Detect if this script was executed directly, or sourced.
+# https://stackoverflow.com/a/9727942
+
+SOURCED=0
+
+if [ -n "$ZSH_EVAL_CONTEXT" ]; then 
+    case $ZSH_EVAL_CONTEXT in *:file) SOURCED=1;; esac
+elif [ -n "$KSH_VERSION" ]; then
+    [ "$(cd $(dirname -- $0) && pwd -P)/$(basename -- $0)" != "$(cd $(dirname -- ${.sh.file}) && pwd -P)/$(basename -- ${.sh.file})" ] && sourced=1
+elif [ -n "$BASH_VERSION" ]; then
+    [ "$0" != "$BASH_SOURCE" ] && SOURCED=1
+else # All other shells: examine $0 for known shell binary filenames
+    # Detects `sh` and `dash`; add additional shell filenames as needed.
+    case ${0##*/} in sh|dash) SOURCED=1;; esac
+fi
+
+if [ "$SOURCED" = "0" ]; then 
+    echo "This script should be sourced, not directly executed. Try this instead:"
+    echo "    source ./bin/setup-toolchain"
+    exit 1
+fi
+
+if [ ! -d "$SCRIPT_PATH/nvm" ]; then
+    echo "Node Version Manager (nvm) not found locally; attempting to install to bin/nvm"
+
+    # https://github.com/creationix/nvm
+    #curl -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash
+    git clone https://github.com/creationix/nvm.git "$SCRIPT_PATH/nvm"
+
+    git --git-dir="$SCRIPT_PATH/nvm/.git" --work-tree="$SCRIPT_PATH/nvm" checkout v$NVM_VERSION
+
+else
+    echo "Node Version Manager (nvm) found locally at bin/nvm; skipping installation"
+fi
+
+# Ensure nvm has been pulled down.
+if [ ! -f "$SCRIPT_PATH/nvm/nvm.sh" ]; then
+    echo "ERROR: Could not locate bin/nvm/nvm.sh; aborting..."
+    return
+fi
+
+# https://github.com/creationix/nvm
+echo ""
+echo "Loading nvm..."
+export NVM_DIR="$SCRIPT_PATH/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+echo "Checking nvm version..."
+ACTUAL_NVM_VERSION=$(nvm --version)
+
+# Ensure nvm has been pulled down and is at the correct version.
+if [ "$ACTUAL_NVM_VERSION" != "$NVM_VERSION" ]; then 
+    echo "ERROR: Found nvm version $ACTUAL_NVM_VERSION, but was expecting $NVM_VERSION; aborting!"
+    return
+else
+    echo "Version: $NVM_VERSION"
+fi
+
+# Install Node if it isn't already present.
+echo ""
+echo "Ensuring node v$NODE_VERSION is available..."
+nvm install v$NODE_VERSION
+nvm use v$NODE_VERSION
+
+echo ""
+echo "Confirming Node version..."
+ACTUAL_NODE_VERSION=$(node --version)
+
+# Ensure nvm has been pulled down and is at the correct version.
+if [ "$ACTUAL_NODE_VERSION" != "v$NODE_VERSION" ]; then
+    echo "ERROR: Found node version $ACTUAL_NODE_VERSION, but was expecting $NODE_VERSION; aborting!"
+    return
+else
+    echo "Version: $ACTUAL_NODE_VERSION"
+fi
+
+# If the user specified this flag, they only wanted to setup nvm and node.
+if [ "$1" == "--only-node" ]; then
+
+    echo ""
+    echo "Adding ./node_modules/.bin to the \$PATH"
+    PATH=$PATH:./node_modules/.bin
+
+    return
+fi
+
+# Install a package manager.
+if [ "$PACKAGE_MANAGER" == "yarn" ]; then
+
+    # Install yarn
+    echo ""
+    echo "Ensuring yarn v$YARN_VERSION is available..."
+    npm install yarn@$YARN_VERSION -g
+
+    if [ $? -eq 0 ]; then
+        echo "Successfully installed yarn."
+    else
+        echo "ERROR: Problem occurred when installing yarn"
+        return
+    fi
+
+    echo ""
+    echo "Confirming yarn version..."
+    ACTUAL_YARN_VERSION=$(yarn --version)
+
+    # Ensure yarn has been pulled down and is at the correct version.
+    if [ "$ACTUAL_YARN_VERSION" != "$YARN_VERSION" ]; then
+        echo "ERROR: Found npm version $ACTUAL_YARN_VERSION, but was expecting $YARN_VERSION; aborting!"
+        return
+    else
+        echo "Version: $ACTUAL_YARN_VERSION"
+    fi
+
+    # Install packages
+    echo ""
+    echo "Running yarn install"
+    yarn install --cwd "$SCRIPT_PATH/../"
+
+    if [ $? -eq 0 ]; then
+        echo "Successfully completed yarn install."
+    else
+        echo "ERROR: Problem occurred when running yarn install"
+        return
+    fi
+
+elif [ "$PACKAGE_MANAGER" == "npm" ]; then
+
+    # Install npm
+    echo ""
+    echo "Ensuring npm v$NPM_VERSION is available..."
+    npm install npm@$NPM_VERSION -g
+
+    if [ $? -eq 0 ]; then
+        echo "Successfully installed npm."
+    else
+        echo "ERROR: Problem occurred when installing npm"
+        return
+    fi
+
+    echo ""
+    echo "Confirming npm version..."
+    ACTUAL_NPM_VERSION=$(npm --version)
+
+    # Ensure npm has been pulled down and is at the correct version.
+    if [ "$ACTUAL_NPM_VERSION" != "$NPM_VERSION" ]; then
+        echo "ERROR: Found npm version $ACTUAL_NPM_VERSION, but was expecting $NPM_VERSION; aborting!"
+        return
+    else
+        echo "Version: $ACTUAL_NPM_VERSION"
+    fi
+
+    # Install packages
+    echo ""
+    echo "Running npm install"
+    npm install "$SCRIPT_PATH/../"
+
+    if [ $? -eq 0 ]; then
+        echo "Successfully completed npm install."
+    else
+        echo "ERROR: Problem occurred when running npm install"
+        return
+    fi
+
+else
+    echo "ERROR: Unsupported or unknown package manager: $PACKAGE_MAANGER; supported package managers: yarn, npm."
+    return
+fi
+
+echo ""
+echo "Adding ./node_modules/.bin to the \$PATH"
+PATH=$PATH:./node_modules/.bin
+
+echo ""
+echo "Confirming gulp version..."
+ACTUAL_GULP_VERSION=$(cd $SCRIPT_PATH/../ && gulp --version)
+
+# Ensure we can execute gulp (which confirms node_modules is in the path).
+if [[ "$ACTUAL_GULP_VERSION" != *"$GULP_VERSION"* ]]; then
+    echo "ERROR: Found gulp version $ACTUAL_GULP_VERSION, but was expecting $GULP_VERSION; aborting!"
+    return
+else
+    echo "gulp OK!"
+fi
+
+if [ ! -f "$SCRIPT_PATH/.has_run_gulp_init" ]; then
+
+    echo ""
+    echo "Running `gulp init` for the first time..."
+    pushd .
+    cd $SCRIPT_PATH/../
+    gulp init --scheme localdev
+    popd
+
+    echo "This is a placeholder so setup-toolchain knows to only run gulp init once." > "$SCRIPT_PATH/.has_run_gulp_init"
+fi
+
+echo ""
+echo "Your Ionic/TypeScript mobile app toolchain is ready for development! 🚀"
+echo ""
+echo "Some useful gulp commands:"
+echo " • gulp ts                                - Compiles TypeScript"
+echo " • gulp sass                              - Compiles SASS"
+echo " • gulp templates                         - Compiles Angular HTML templates"
+echo " • gulp platforms                         - Syncs www content to native project directories"
+echo " • gulp config --scheme staging           - Changes configuration (see resources/config/schemes.yml)"
+echo " • gulp show-config                       - Shows the current configuration"
+echo " • gulp init --scheme development         - Re-initializes environment (useful after switching branches)"
+echo " • gulp                                   - Default task that runs gulp ts, sass, templates, platforms"
+echo " • gulp help                              - Lists all available gulp tasks"
+echo ""
+echo "To start a local server and launch a special instance of Chrome (e.g. no CORS) for development:"
+echo " ./bin/launch-browser"
+echo ""

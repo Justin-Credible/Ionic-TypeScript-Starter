@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Get the path to the script's parent directory.
+if [ -n "$ZSH_VERSION" ]; then
+    # https://stackoverflow.com/a/23259585
+    SCRIPT_PATH=$( cd "$(dirname "${(%):-%N}")" ; pwd -P )
+else
+    # Assume Bash
+    # https://stackoverflow.com/a/4774063
+    SCRIPT_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+fi
+
+rm "$SCRIPT_PATH/.has_run_gulp_init"
+rm -rf "$SCRIPT_PATH/nvm"
