@@ -1,6 +1,5 @@
 
 // Overrides/Variables
-@import "Overrides/NProgress";
 @import "Overrides/Ionic";
 @import "Overrides/Ionic-Variables";
 
@@ -11,6 +10,7 @@
 @import "Common/Devices";
 @import "Common/Misc-Layout";
 @import "Common/Overlay-Spinner";
+@import "Common/Snackbar";
 
 // Directives
 @import "../Directives/Icon-Panel/Icon-Panel";

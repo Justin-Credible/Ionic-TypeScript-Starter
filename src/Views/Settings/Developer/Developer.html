@@ -37,18 +37,6 @@
         <div class="list card">
             <div class="item item-divider item-dark">HTTP API</div>
 
-            <label class="item item-toggle">
-                Mock API Requests
-                <label class="toggle toggle-balanced">
-                    <input type="checkbox"
-                        ng-model="viewModel.mockApiRequests"
-                        ng-change="controller.mockApiRequests_change()">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </label>
-
             <label class="item item-text-wrap" ng-click="controller.apiUrl_click()">
                 API URL
                 <br/>
@@ -181,44 +169,37 @@
         </div>
 
         <div class="list card">
+
             <div class="item item-divider item-dark item-icon-right">
-                HTTP Progress Bar
+                HTTP Activity Indicator
                 <i class="icon ion-ios-help-outline"
                     ng-click="controller.help_click('Used to test the progress indicator functionality that is utilized during HTTP requests.')"></i>
             </div>
 
             <div class="row">
-                <div class="col col-25">
-                    <button class="button button-block button-calm" ng-click="controller.startProgress_click()">Start</button>
-                </div>
-                <div class="col col-25">
-                    <button class="button button-block button-calm" ng-click="controller.incrementProgress_click()">Inc.</button>
-                </div>
-                <div class="col col-25">
-                    <button class="button button-block button-calm" ng-click="controller.doneProgress_click()">Done</button>
-                </div>
-                <div class="col col-25">
-                    <button class="button button-block button-calm" ng-click="controller.showFullScreenBlock_click()">Block</button>
+                <div class="col col-100">
+                    <button class="button button-block button-calm" ng-click="controller.showFullScreenBlock_click()">Fullscreen Block</button>
                 </div>
             </div>
+
         </div>
 
         <div class="list card">
             <div class="item item-divider item-dark item-icon-right">
-                Toast Notifications
+                Snackbar UI
                 <i class="icon ion-ios-help-outline"
-                    ng-click="controller.help_click('Used to test the native toast notification plugin.')"></i>
+                    ng-click="controller.help_click('Used to test the snackbar user interface.')"></i>
             </div>
 
             <div class="row">
                 <div class="col col-33">
-                    <button class="button button-block button-calm" ng-click="controller.showToast_top()">Top</button>
+                    <button class="button button-block button-calm" ng-click="controller.snackBar_top()">Top</button>
                 </div>
                 <div class="col col-33">
-                    <button class="button button-block button-calm" ng-click="controller.showToast_center()">Center</button>
+                    <button class="button button-block button-calm" ng-click="controller.snackBar_action()">Action</button>
                 </div>
                 <div class="col col-33">
-                    <button class="button button-block button-calm" ng-click="controller.showToast_bottom()">Bottom</button>
+                    <button class="button button-block button-calm" ng-click="controller.snackBar_bottom()">Bottom</button>
                 </div>
             </div>
         </div>
@@ -237,62 +218,6 @@
                     <button class="button button-block button-calm" ng-click="controller.clipboard_paste()">Paste</button>
                 </div>
             </div>
-        </div>
-
-        <div class="list card">
-            <div class="item item-divider item-dark item-icon-right">
-                File System I/O
-                <i class="icon ion-ios-help-outline"
-                    ng-click="controller.help_click('Used to test the native file plugin; this requires cordova-plugin-file.')"></i>
-            </div>
-
-            <label class="item item-text-wrap">
-                Default Storage Path ID
-                <br/>
-                {{viewModel.defaultStoragePathId}}
-            </label>
-
-            <label class="item item-text-wrap"
-                ng-click="controller.copyValue_click(viewModel.defaultStoragePath, 'Default Storage Path')">
-                Default Storage Path
-                <br/>
-                {{viewModel.defaultStoragePath}}
-            </label>
-
-            <div class="row">
-                <div class="col col-50">
-                    <button class="button button-block button-royal" ng-click="controller.listFiles_click()">List Files</button>
-                </div>
-                <div class="col col-50">
-                    <button class="button button-block button-royal" ng-click="controller.listDirs_click()">List Dirs</button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-50">
-                    <button class="button button-block button-calm" ng-click="controller.readFile_click()">Read File</button>
-                </div>
-                <div class="col col-50">
-                    <button class="button button-block button-calm" ng-click="controller.writeFile_click()">Write File</button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-50">
-                    <button class="button button-block button-calm" ng-click="controller.appendFile_click()">Append File</button>
-                </div>
-                <div class="col col-50"><button class="button button-block button-calm" ng-click="controller.createDir_click()">Create Dir</button></div>
-            </div>
-
-            <div class="row">
-                <div class="col col-50">
-                    <button class="button button-block button-assertive" ng-click="controller.deleteFile_click()">Delete File</button>
-                </div>
-                <div class="col col-50">
-                    <button class="button button-block button-assertive" ng-click="controller.deleteDir_click()">Delete Dir</button>
-                </div>
-            </div>
-
         </div>
 
 </ion-content>

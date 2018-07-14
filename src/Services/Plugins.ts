@@ -40,18 +40,6 @@ namespace JustinCredible.SampleApp.Services {
         }
 
         /**
-         * Exposes an API for showing toast messages.
-         */
-        get toast(): ToastPlugin.ToastPluginStatic {
-            if (!this.Platform.windowsCordova && !this.Platform.windows8Cordova && window.plugins && window.plugins.toast) {
-                return window.plugins.toast;
-            }
-            else {
-                return this.MockPlatformApis.getToastPlugin();
-            }
-        }
-
-        /**
          * Exposes an API for working with progress indicators.
          */
         get spinner(): SpinnerPlugin.SpinnerPluginStatic {

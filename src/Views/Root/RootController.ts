@@ -9,7 +9,6 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
-                Services.Plugins.ID,
                 Services.MenuDataSource.ID,
                 Services.UIHelper.ID,
                 Services.Preferences.ID
@@ -18,7 +17,6 @@
 
         constructor(
             $scope: ng.IScope,
-            private Plugins: Services.Plugins,
             private MenuDataSource: Services.MenuDataSource,
             private UIHelper: Services.UIHelper,
             private Preferences: Services.Preferences,
@@ -64,7 +62,7 @@
             this.Preferences.userId = null;
             this.Preferences.token = null;
 
-            this.Plugins.toast.showLongBottom("You do not have a token (401); please login.");
+            this.UIHelper.showErrorSnackbar("You do not have a token (401); please login.");
         }
 
         private http_forbidden(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
@@ -73,17 +71,17 @@
             this.Preferences.userId = null;
             this.Preferences.token = null;
 
-            this.Plugins.toast.showLongBottom("Your token has expired (403); please login again.");
+            this.UIHelper.showErrorSnackbar("Your token has expired (403); please login again.");
         }
 
         private http_notFound(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
             // The restful API services are down maybe?
-            this.Plugins.toast.showLongBottom("Server not available (404); please contact your administrator.");
+            this.UIHelper.showErrorSnackbar("Server not available (404); please contact your administrator.");
         }
 
         private http_unknownError(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>) {
             // No network connection, invalid certificate, or other system level error.
-            this.Plugins.toast.showLongBottom("Network error; please try again later.");
+            this.UIHelper.showErrorSnackbar("Network error; please try again later.");
         }
 
         /**
@@ -91,7 +89,7 @@
          * error handlers.
          */
         private http_error(event: ng.IAngularEvent, response: ng.IHttpPromiseCallbackArg<any>): void {
-            this.Plugins.toast.showLongBottom("An error has occurred; please try again.");
+            this.UIHelper.showErrorSnackbar("An error has occurred; please try again.");
         }
 
         //#endregion

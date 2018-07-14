@@ -20,7 +20,8 @@
                 Utilities.ID,
                 Plugins.ID,
                 Preferences.ID,
-                Configuration.ID
+                Configuration.ID,
+                Snackbar.ID,
             ];
         }
 
@@ -34,7 +35,9 @@
             private Utilities: Utilities,
             private Plugins: Plugins,
             private Preferences: Preferences,
-            private Configuration: Services.Configuration) {
+            private Configuration: Configuration,
+            private Snackbar: Snackbar,
+            ) {
         }
 
         //#endregion
@@ -265,6 +268,44 @@
 
         //#endregion
 
+        //#region Toast
+
+        public showInfoSnackbar(message: string, title?: string): void {
+            this.Snackbar.info(message, title);
+        }
+
+        public showSuccessSnackbar(message: string, title?: string): void {
+            this.Snackbar.success(message, title);
+        }
+
+        public showErrorSnackbar(message: string, title?: string): void {
+            this.Snackbar.error(message, title);
+        }
+
+        //#endregion
+
+        //#region Activity Indicator
+
+        /**
+         * Blocks user input using an indeterminate spinner.
+         * 
+         * An optional label can be shown below the spinner.
+         * 
+         * @param message The optional value to show in a label under the spinner.
+         */
+        public activityStart(message?: string): void {
+            this.Plugins.spinner.activityStart(message);
+        }
+
+        /**
+         * Allows user input by hiding the indeterminate spinner.
+         */
+        public activityStop(): void {
+            this.Plugins.spinner.activityStop();
+        }
+
+        //#endregion
+
         //#region Modal Dialogs
 
         /**
@@ -407,6 +448,9 @@
                 // Show it.
                 modal.show();
 
+                // The dialog's header is dark, therefore we want the light text.
+                this.Plugins.statusBar.styleBlackTranslucent();
+
                 if (!options.showBackground) {
                     // HACK: Here we adjust the background color's alpha value so the user can't
                     // see through the overlay. At some point we should update this to use a blur
@@ -414,6 +458,10 @@
                     backdrop = <HTMLDivElement> document.querySelector("div.modal-backdrop");
                     backdrop.style.backgroundColor = "rgba(0, 0, 0, 1)";
                 }
+
+                // Ensure awaitOn helper function is available in the dialog's views.
+                let awaitOn = this.Utilities.getValue(this.$rootScope, "awaitOn");
+                this.Utilities.setValue(modal.scope, "awaitOn", awaitOn);
 
                 // Subscribe to the close event.
                 modal.scope.$on("modal.hidden", (eventArgs: ng.IAngularEvent, instance: any) => {
@@ -433,6 +481,11 @@
                     // Remove this dialog's ID from the list of ones that are open.
                     UIHelper._openDialogIds = _.without(UIHelper._openDialogIds, dialogID);
 
+                    // If this was the last dialog, revert the styling back to dark text.
+                    if (UIHelper._openDialogIds.length === 0) {
+                        this.Plugins.statusBar.styleDefault();
+                    }
+
                     // Once the dialog is closed, resolve the original promise
                     // using the result data object from the dialog (if any).
                     let result = this.Utilities.getValue(modal, "result");
@@ -442,6 +495,23 @@
             });
 
             return q.promise;
+        }
+
+        /**
+         * Used to check if the dialog with the given ID is open.
+         * 
+         * If no ID is provided, used to check if any dialogs are open.
+         * 
+         * @param dialogId The ID to check.
+         * @returns True if the dialog with the given ID is open.
+         */
+        public isDialogOpen(dialogId?: string): boolean {
+
+            if (!dialogId) {
+                return UIHelper._openDialogIds.length > 0;
+            }
+
+            return UIHelper._openDialogIds.indexOf(dialogId) > -1;
         }
 
         /**
@@ -586,9 +656,8 @@
                 this._sideMenuMediaQuery = this._sideMenuMediaQueryNeverVisible;
             }
 
-            /* tslint:disable:no-string-literal */
+            // tslint:disable-next-line:no-string-literal
             this.$ionicSideMenuDelegate["_instances"][0].exposeAside(this.$window.matchMedia(this._sideMenuMediaQuery).matches);
-            /* tslint:enable:no-string-literal */
 
             this.$ionicSideMenuDelegate.canDragContent(allow);
         }

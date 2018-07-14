@@ -13,11 +13,11 @@
      *      1321  -> 1.3K
      *      10700 -> 10K
      */
-    export class ThousandsFilter {
+    export class ThousandsFilter implements Interfaces.AngularFilter<number> {
 
         public static ID = "Thousands";
 
-        public static filter(input: number): string {
+        public filter(input: number): string {
 
             if (input == null) {
                 return "";

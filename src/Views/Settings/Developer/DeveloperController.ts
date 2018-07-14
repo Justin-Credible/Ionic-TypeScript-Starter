@@ -12,11 +12,13 @@
                 "$rootScope",
                 "$injector",
                 "$window",
-                Services.Plugins.ID,
-                Services.Platform.ID,
                 Services.UIHelper.ID,
+                Services.Plugins.ID,
+                Services.Logger.ID,
+                Services.Platform.ID,
                 Services.Preferences.ID,
                 Services.Configuration.ID,
+                Services.Snackbar.ID,
             ];
         }
 
@@ -25,11 +27,13 @@
             private $rootScope: ng.IRootScopeService,
             private $injector: ng.auto.IInjectorService,
             private $window: ng.IWindowService,
-            private Plugins: Services.Plugins,
-            private Platform: Services.Platform,
             private UIHelper: Services.UIHelper,
+            private Plugins: Services.Plugins,
+            private Logger: Services.Logger,
+            private Platform: Services.Platform,
             private Preferences: Services.Preferences,
             private Configuration: Services.Configuration,
+            private Snackbar: Services.Snackbar,
             ) {
             super($scope, ViewModels.DeveloperViewModel);
         }
@@ -40,8 +44,6 @@
 
         protected view_beforeEnter(event?: ng.IAngularEvent, eventArgs?: Interfaces.ViewEventArguments): void {
             super.view_beforeEnter(event, eventArgs);
-
-            this.viewModel.mockApiRequests = this.Configuration.enableMockHttpCalls;
 
             this.viewModel.userId = this.Preferences.userId;
             this.viewModel.token = this.Preferences.token;
@@ -65,7 +67,7 @@
 
         //#endregion
 
-        //#region Controller Methods
+        //#region Controller Methods - Common
 
         protected help_click(helpMessage: string): void {
             this.UIHelper.alert(helpMessage, "Help");
@@ -75,23 +77,14 @@
             this.UIHelper.confirm("Copy " + name + " to clipboard?").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
                     this.Plugins.clipboard.copy(value);
-                    this.Plugins.toast.showShortBottom(name + " copied to clipboard.");
+                    this.UIHelper.showInfoSnackbar(name + " copied to clipboard.");
                 }
             });
         }
 
-        protected mockApiRequests_change(): void {
+        //#endregion
 
-            this.Configuration.enableMockHttpCalls = this.viewModel.mockApiRequests;
-
-            var message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
-
-            this.UIHelper.confirm(message, "Confirm Reload").then((result: string) => {
-                if (result === Constants.Buttons.Yes) {
-                    document.location.href = "index.html";
-                }
-            });
-        }
+        //#region Controller Methods - Test Tools
 
         protected apiUrl_click(): void {
             var message = "Here you can edit the API URL for this session.";
@@ -104,7 +97,7 @@
 
                 this.Configuration.apiUrl = result.value;
                 this.viewModel.apiUrl = result.value;
-                this.Plugins.toast.showShortBottom("API URL changed for this session only.");
+                this.UIHelper.showSuccessSnackbar("API URL changed for this session only.");
             });
         }
 
@@ -174,46 +167,82 @@
             this.UIHelper.alert("Onboarding has been enabled and will occur upon next app boot.");
         }
 
+        //#endregion
+
+        //#region Controller Methods - Test Exception Handling
+
         protected testJsException_click(): void {
-            /* tslint:disable:no-string-literal */
 
             // Cause an exception by referencing an undefined variable.
             // We use defer so we can execute outside of the context of Angular.
             _.defer(function () {
+                // tslint:disable-next-line:no-string-literal
                 window["____asdf"].blah();
             });
-
-            /* tslint:enable:no-string-literal */
         }
 
         protected testAngularException_click(): void {
-            /* tslint:disable:no-string-literal */
-
             // Cause an exception by referencing an undefined variable.
+            // tslint:disable-next-line:no-string-literal
             window["____asdf"].blah();
-
-            /* tslint:enable:no-string-literal */
         }
 
+        //#endregion
+
+        //#region Controller Methods - HTTP Progress Bar
+
         protected showFullScreenBlock_click(): void {
-            this.Plugins.spinner.activityStart("Blocking...");
+            this.UIHelper.activityStart("Blocking...");
 
             setTimeout(() => {
-                this.Plugins.spinner.activityStop();
+                this.UIHelper.activityStop();
             }, 4000);
         }
 
-        protected showToast_top(): void {
-            this.Plugins.toast.showShortTop("This is a test toast notification.");
+        //#endregion
+
+        //#region Controller Methods - Toast Notifications
+
+        private _snackbarCounter: number = 0;
+
+        protected snackBar_top(): void {
+            let message = "Hello World #" + this._snackbarCounter++;
+
+            let options = new Services.SnackbarOptions(message,
+                "Title!",
+                Services.SnackbarLevel.Success,
+                Services.SnackbarLocation.Top);
+
+            this.Snackbar.show(options).then((result: boolean) => {
+                this.Logger.debug(DeveloperController.ID, "snackBar_top", "Snackbar dismissed with: " + result);
+            });
         }
 
-        protected showToast_center(): void {
-            this.Plugins.toast.showShortCenter("This is a test toast notification.");
+        protected snackBar_action(): void {
+            let message = "Hello World #" + this._snackbarCounter++;
+
+            let options = new Services.SnackbarOptions(message,
+                "Title!",
+                Services.SnackbarLevel.Error,
+                Services.SnackbarLocation.Bottom,
+                "View");
+
+            this.Snackbar.show(options).then((result: boolean) => {
+                this.Logger.debug(DeveloperController.ID, "snackBar_action", "Snackbar dismissed with: " + result);
+            });
         }
 
-        protected showToast_bottom(): void {
-            this.Plugins.toast.showShortBottom("This is a test toast notification.");
+        protected snackBar_bottom(): void {
+            let message = "Hello World #" + this._snackbarCounter++;
+
+            this.Snackbar.info(message).then((result: boolean) => {
+                this.Logger.debug(DeveloperController.ID, "snackBar_bottom", "Snackbar dismissed with: " + result);
+            });
         }
+
+        //#endregion
+
+        //#region Controller Methods - Clipboard
 
         protected clipboard_copy(): void {
 
@@ -237,18 +266,6 @@
             }, (err: Error) => {
                 this.UIHelper.alert("Paste Failed!\n\n" + (err ? err.message : "Unknown Error"));
             });
-        }
-
-        protected startProgress_click(): void {
-            NProgress.start();
-        }
-
-        protected incrementProgress_click(): void {
-            NProgress.inc();
-        }
-
-        protected doneProgress_click(): void {
-            NProgress.done();
         }
 
         //#endregion

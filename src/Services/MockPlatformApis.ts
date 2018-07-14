@@ -30,18 +30,6 @@
 
         //#region Public API
 
-        public getToastPlugin(): ToastPlugin.ToastPluginStatic {
-            return {
-                show: _.bind(this.toast, this),
-                showLongBottom: _.bind(this.toast, this),
-                showLongCenter: _.bind(this.toast, this),
-                showLongTop: _.bind(this.toast, this),
-                showShortBottom: _.bind(this.toast, this),
-                showShortCenter: _.bind(this.toast, this),
-                showShortTop: _.bind(this.toast, this)
-            };
-        }
-
         public getPushNotificationPlugin(): PushNotification {
             return {
                 register: _.bind(this.pushNotification_register, this),
@@ -121,46 +109,6 @@
 
         private noOp(): void {
             // No Op!
-        }
-
-        //#endregion
-
-        //#region Toast
-
-        private toast(message: string) {
-
-            var div = document.createElement("div");
-            div.className = "mockToast";
-            div.style.position = "absolute";
-            div.style.bottom = "60px";
-            div.style.width = "100%";
-            div.style.textAlign = "center";
-            div.style.zIndex = "9000";
-
-            var span = document.createElement("span");
-            span.style.backgroundColor = "#444444";
-            span.style.opacity = "0.8";
-            span.style.color = "#fff";
-            span.style.padding = "10px";
-            span.style.borderRadius = "40px";
-            span.innerText = message;
-            div.appendChild(span);
-
-            document.body.appendChild(div);
-
-            var removeToast = function () {
-                try {
-                    document.body.removeChild(div);
-                }
-                catch (err) {
-                    /* tslint:disable:no-empty */
-                    /* tslint:enable:no-empty */
-                }
-            };
-
-            div.addEventListener("click", removeToast);
-
-            setTimeout(removeToast, 3000);
         }
 
         //#endregion
@@ -319,6 +267,9 @@
         private notification_alert(message: string, alertCallback: () => void, title?: string, buttonName?: string): void {
             var buttons = [];
 
+            // Default the message.
+            message = message || "";
+
             // Default the title.
             title = title || "Alert";
 
@@ -342,6 +293,9 @@
 
         private notification_confirm(message: string, confirmCallback: (choice: number) => void, title?: string, buttonLabels?: string[]): void {
             var buttons = [];
+
+            // Default the message.
+            message = message || "";
 
             // Default the title.
             title = title || "Confirm";
@@ -375,6 +329,9 @@
         private notification_prompt(message: string, promptCallback: (result: NotificationPromptResult) => void, title?: string, buttonLabels?: string[], defaultText?: string): void {
             var buttons = [],
                 template: string;
+
+            // Default the message.
+            message = message || "";
 
             // The Ionic pop-up uses HTML to display content, so for line breaks (\n) to render
             // we need to replace them with actual line break takes.

@@ -9,7 +9,6 @@
         public static get $inject(): string[] {
             return [
                 "$scope",
-                Services.Plugins.ID,
                 Services.UIHelper.ID,
                 Services.Preferences.ID
             ];
@@ -17,7 +16,6 @@
 
         constructor(
             $scope: ng.IScope,
-            private Plugins: Services.Plugins,
             private UIHelper: Services.UIHelper,
             private Preferences: Services.Preferences) {
             super($scope, ViewModels.ConfigurePinViewModel);
@@ -64,7 +62,7 @@
                             this.Preferences.pin = result2.pin;
                             this.viewModel.isPinSet = true;
 
-                            this.Plugins.toast.showShortBottom("Your PIN has been configured.");
+                            this.UIHelper.showSuccessSnackbar("Your PIN has been configured.");
                         }
                     });
                 }
@@ -106,7 +104,7 @@
                                 this.Preferences.pin = result3.pin;
                                 this.viewModel.isPinSet = true;
 
-                                this.Plugins.toast.showShortBottom("Your PIN has been configured.");
+                                this.UIHelper.showSuccessSnackbar("Your PIN has been configured.");
                             }
                         });
                     });
@@ -129,7 +127,7 @@
                     this.Preferences.pin = null;
                     this.viewModel.isPinSet = false;
 
-                    this.Plugins.toast.showShortBottom("The PIN has been removed.");
+                    this.UIHelper.showSuccessSnackbar("The PIN has been removed.");
                 }
 
             });

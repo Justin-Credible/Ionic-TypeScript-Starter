@@ -11,7 +11,7 @@
                 "$scope",
                 "$ionicHistory",
                 Services.Configuration.ID,
-                Services.Plugins.ID
+                Services.UIHelper.ID,
             ];
         }
 
@@ -19,7 +19,8 @@
             $scope: ng.IScope,
             private $ionicHistory: ionic.navigation.IonicHistoryService,
             private Configuration: Services.Configuration,
-            private Plugins: Services.Plugins) {
+            private UIHelper: Services.UIHelper,
+            ) {
             super($scope, ViewModels.AboutViewModel);
         }
 
@@ -55,7 +56,7 @@
             // and push them back to the settings page.
             if (this.viewModel.logoClickCount > 9) {
                 this.Configuration.enableDeveloperTools = true;
-                this.Plugins.toast.showShortBottom("Development Tools Enabled!");
+                this.UIHelper.showSuccessSnackbar("Development Tools Enabled!");
                 this.$ionicHistory.goBack();
             }
         }

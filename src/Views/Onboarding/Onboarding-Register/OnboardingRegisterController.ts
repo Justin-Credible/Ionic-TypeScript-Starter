@@ -62,12 +62,12 @@ namespace JustinCredible.SampleApp.Controllers {
                 return;
             }
 
-            this.Plugins.spinner.activityStart("Creating Account...");
+            this.UIHelper.activityStart("Creating Account...");
 
             // Simulate a wait period for an HTTP request.
             // This is where you'd use a service to interact with your API.
             setTimeout(() => {
-                this.Plugins.spinner.activityStop();
+                this.UIHelper.activityStop();
 
                 // Tell Ionic to to hide the back button for the next view.
                 this.$ionicHistory.nextViewOptions({
@@ -93,12 +93,12 @@ namespace JustinCredible.SampleApp.Controllers {
                 return;
             }
 
-            this.Plugins.spinner.activityStart("Signing in...");
+            this.UIHelper.activityStart("Signing in...");
 
             // Simulate a wait period for an HTTP request.
             // This is where you'd use a service to interact with your API.
             setTimeout(() => {
-                this.Plugins.spinner.activityStop();
+                this.UIHelper.activityStop();
 
                 // Tell Ionic to to hide the back button for the next view.
                 this.$ionicHistory.nextViewOptions({

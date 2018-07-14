@@ -1,4 +1,25 @@
 
+// We are using "(max-aspect-ratio: 13/9)" here instead of "(orientation: portrait)" etc so we can
+// handle cases with Android keyboards adjusting the viewport size (and thus the orientation calculation)
+// at runtime. See the following blog post for a more in depth explanation:
+// http://blog.abouthalf.com/development/orientation-media-query-challenges-in-android-browsers/
+$PhonePortraitMediaQuery: "only screen and (max-width: 755px) and (max-aspect-ratio: 13/9)";
+$PhoneLandscapeMediaQuery: "only screen and (max-width: 1023px) and (min-aspect-ratio: 13/9)";
+$TabletPortraitMediaQuery: "only screen and (min-width: 768px) and (orientation: portrait)";
+$TabletLandscapeMediaQuery: "only screen and (min-width: 1024px) and (orientation: landscape)";
+
+$PhoneBothMediaQuery: #{$PhonePortraitMediaQuery}, #{$PhoneLandscapeMediaQuery};
+$TabletBothMediaQuery: #{$TabletPortraitMediaQuery}, #{$TabletLandscapeMediaQuery};
+
+// For iPhone 4 height in portrait or less
+$iPhone4HeightPortraitMediaQuery: "only screen and (max-height: 480px)";
+
+// For iPhone 5 in portrait; http://stackoverflow.com/a/14364303
+$iPhone5PortraitMediaQuery: "(device-height : 568px) and (device-width : 320px) and (-webkit-min-device-pixel-ratio: 2)";
+
+// https://stackoverflow.com/a/46313641
+$iPhone678MediaQuery: "(device-width : 375px) and (device-height : 667px) and (-webkit-device-pixel-ratio : 2)";
+
 @media only screen and (orientation: portrait) {
     .portrait {
         display: auto;

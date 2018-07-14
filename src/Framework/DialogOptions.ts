@@ -21,7 +21,7 @@
 
         /**
          * Specifies if the dialog should be able to be closed by pressing the device's
-         * hardware back button. Default is true.
+         * hardware back button. Default is false.
          */
         hardwareBackButtonClose: boolean;
 
@@ -35,7 +35,7 @@
         constructor(dialogData?: any) {
             this.dialogData = dialogData;
 
-            this.backdropClickToClose = true;
+            this.backdropClickToClose = false;
             this.hardwareBackButtonClose = true;
             this.showBackground = true;
         }

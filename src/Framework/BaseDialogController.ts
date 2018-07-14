@@ -11,7 +11,7 @@
      * D - The type of data object that will be passed in when this dialog is opened.
      * R - The type of the data object that will be returned when this dialog is closed.
      */
-    export class BaseDialogController<V, D, R> extends BaseController<V> {
+    export abstract class BaseDialogController<V, D, R> extends BaseController<V> {
 
         private dialogId: string;
         private modalInstance: ionic.modal.IonicModalController;
@@ -116,9 +116,8 @@
          */
         public close(result?: R): void {
 
-            /* tslint:disable:no-string-literal */
+            // tslint:disable-next-line:no-string-literal
             this.modalInstance["result"] = result;
-            /* tslint:enable:no-string-literal */
 
             this.modalInstance.hide();
             this.modalInstance.remove();

@@ -142,7 +142,9 @@
                 let preppedMetadata = this.prepareMetadata(metadata);
 
                 // Include the current route with the log entry.
-                preppedMetadata.currentRoute = this._currentRoute;
+                if (preppedMetadata) {
+                    preppedMetadata.currentRoute = this._currentRoute;
+                }
 
                 // In debug builds, we keep the log entries in memory so we can see them from the
                 // device developer tools view.

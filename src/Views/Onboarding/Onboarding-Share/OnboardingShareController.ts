@@ -13,7 +13,6 @@ namespace JustinCredible.SampleApp.Controllers {
                 "$ionicHistory",
                 Services.MenuDataSource.ID,
                 Services.UIHelper.ID,
-                Services.Plugins.ID,
                 Services.Configuration.ID
             ];
         }
@@ -24,7 +23,6 @@ namespace JustinCredible.SampleApp.Controllers {
             private $ionicHistory: ionic.navigation.IonicHistoryService,
             private MenuDataSource: Services.MenuDataSource,
             private UIHelper: Services.UIHelper,
-            private Plugins: Services.Plugins,
             private Configuration: Services.Configuration) {
             super($scope, ViewModels.EmptyViewModel);
         }
@@ -34,7 +32,7 @@ namespace JustinCredible.SampleApp.Controllers {
         //#region UI Events
 
         protected share_click(platformName: string): void {
-            this.Plugins.toast.showShortCenter("Share for " + platformName);
+            this.UIHelper.showSuccessSnackbar("Share for " + platformName);
         }
 
         protected done_click(): void {

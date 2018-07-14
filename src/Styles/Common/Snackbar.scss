@@ -1,0 +1,164 @@
+/**
+ * Service for showing "snackbar"-like user notifications.
+ * 
+ * Similar to: https://material.io/guidelines/components/snackbars-toasts.html#snackbars-toasts-usage
+ * Inspired by: http://codepen.io/wibblymat/pen/avAjq
+ */
+
+ .snackbar {
+
+    position: absolute;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    min-height: 14px;
+    line-height: 22px;
+
+    padding: 10px 10px;
+
+    @media #{$PhoneBothMediaQuery} {
+        left: 0%;
+        right: 0%;
+    }
+
+    @media #{$TabletBothMediaQuery} {
+        left: 15%;
+        right: 15%;
+    }
+
+    font-size: 14px;
+    color: white;
+
+    transition-property: opacity, top, bottom, left, right, width, margin, border-radius;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+
+    i {
+        font-size: 16pt;
+        color: white;
+    }
+
+    .content {
+        padding-left: 10px;
+
+        .title {
+            font-weight: bold;
+        }
+
+        .message {
+            font-weight: normal;
+        }
+    }
+
+    button {
+        color: white;
+        font-weight: bold;
+        border: none;
+        min-width: min-content;
+        background: inherit;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    &.top {
+
+        &.animation-state-start {
+            top: 0px;
+            opacity: 0;
+        }
+
+        &.animation-state-display {
+            top: 44px; // Default for web; see iOS and Android overrides below.
+            opacity: 1;
+        }
+
+        &.animation-state-hide {
+            top: 0px;
+
+            // This must be zero for the TransitionEnd event in Snackbar.ts
+            // so that the element can be removed from the DOM.
+            opacity: 0;
+        }
+    }
+
+    &.bottom {
+
+        &.animation-state-start {
+            bottom: 0px;
+            opacity: 0;
+        }
+
+        &.animation-state-display {
+            bottom: 0px; // Default for web and iOS; see Android overrides below.
+            opacity: 1;
+        }
+
+        &.animation-state-hide {
+            bottom: 0px;
+
+            // This must be zero for the TransitionEnd event in Snackbar.ts
+            // so that the element can be removed from the DOM.
+            opacity: 0;
+        }
+    }
+
+    &.info {
+        background-color: #20C4F4;
+    }
+
+    &.success {
+        background-color: #69C8C2;
+    }
+
+    &.error {
+        background-color: #EF3A5C;
+    }
+}
+
+.platform-ios {
+    .snackbar {
+        &.top {
+            &.animation-state-display {
+                // This accounts for the iOS top status bar.
+                top: 64px;
+            }
+        }
+    }
+}
+
+.platform-ios.platform-browser {
+    .snackbar {
+        &.top {
+            &.animation-state-display {
+                // There is no iOS status bar overlay when running as a webpage.
+                top: 44px;
+            }
+        }
+    }
+}
+
+.platform-android {
+    .snackbar {
+        &.bottom {
+            &.animation-state-display {
+                // This accounts for the lack of bottom tab strip on Android.
+                bottom: 0px;
+            }
+        }
+    }
+}
+
+.modal-open.platform-ios {
+    .snackbar {
+        &.bottom {
+            &.animation-state-display {
+                // When a dialog is open you can't see the bottom tap strip.
+                // Therefore, there is no need to account for its height.
+                bottom: 0px;
+            }
+        }
+    } 
+}

@@ -241,7 +241,7 @@ namespace JustinCredible.SampleApp {
             // Alert the user to the error.
             try {
                 // Show a generic message to the user.
-                this.Plugins.toast.showLongBottom("An error has occurred; please try again.");
+                this.UIHelper.showErrorSnackbar("An error has occurred; please try again.");
 
                 // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
                 this.Plugins.spinner.activityStop();
@@ -285,7 +285,7 @@ namespace JustinCredible.SampleApp {
             // Alert the user to the error.
             try {
                 // Show a generic message to the user.
-                this.Plugins.toast.showLongBottom("An error has occurred; please try again.");
+                this.UIHelper.showErrorSnackbar("An error has occurred; please try again.");
 
                 // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
                 this.Plugins.spinner.activityStop();

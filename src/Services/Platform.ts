@@ -20,9 +20,10 @@ namespace JustinCredible.SampleApp.Services {
 
         constructor(
             private $window: ng.IWindowService,
-            private _isCordova_: boolean,
-            private _buildVars_: Interfaces.BuildVars,
-            private _isChromeExtension_: boolean) {
+            private isCordova: boolean,
+            private buildVars: Interfaces.BuildVars,
+            private isChromeExtension: boolean,
+            ) {
         }
 
         //#endregion
@@ -70,14 +71,14 @@ namespace JustinCredible.SampleApp.Services {
          * Can be used to determine if this application is being run in the Cordova runtime.
          */
         public get cordova(): boolean {
-            return this._isCordova_;
+            return this.isCordova;
         }
 
         /**
          * Can be used to determine if this application was built to be served as a website.
          */
         public get web(): boolean {
-            return this._buildVars_.config.isWebPlatform;
+            return this.buildVars.config.isWebPlatform;
         }
 
         /**
@@ -102,7 +103,7 @@ namespace JustinCredible.SampleApp.Services {
          * @returns True if the application is running as a Chrome Extension, false otherwise.
          */
         public get chromeExtension(): boolean {
-            return this._isChromeExtension_;
+            return this.isChromeExtension;
         }
 
         /**

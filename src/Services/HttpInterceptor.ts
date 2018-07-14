@@ -311,9 +311,9 @@
                 this.spinnerRequestsInProgress += 1;
 
                 // If the spinner isn't already visible, then show it.
-                if (!NProgress.isStarted()) {
-                    NProgress.start();
-                }
+                // if (!NProgress.isStarted()) {
+                //     NProgress.start();
+                // }
             }
         }
 
@@ -325,7 +325,7 @@
         private handleFatalError() {
             this.blockingRequestsInProgress = 0;
             this.spinnerRequestsInProgress = 0;
-            NProgress.done();
+            // NProgress.done();
             this.Plugins.spinner.activityStop();
         }
 
@@ -351,12 +351,12 @@
 
             if (config.showSpinner && this.spinnerRequestsInProgress === 0) {
                 // If there are no more spinner requests in progress, then hide the spinner.
-                NProgress.done();
+                // NProgress.done();
             }
             else if (config.showSpinner) {
                 // If there are still spinner requests in progress, then kick up the progress
                 // bar a little bit to show some of the work has completed.
-                NProgress.inc();
+                // NProgress.inc();
             }
         }
 

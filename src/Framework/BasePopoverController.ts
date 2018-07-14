@@ -9,7 +9,7 @@ namespace JustinCredible.SampleApp.Controllers {
      * 
      * T - The parameter type for the model.
      */
-    export class BasePopoverController<T> {
+    export abstract class BasePopoverController<T> {
 
         /**
          * The Ionic popover instance.
@@ -46,20 +46,18 @@ namespace JustinCredible.SampleApp.Controllers {
             // Create the view model.
             this.viewModel = new ModelType();
 
-            /* tslint:disable:no-string-literal */
-
             // Push the view model onto the scope so it can be
             // referenced from the template/views.
+            // tslint:disable-next-line:no-string-literal
             this.scope["viewModel"] = this.viewModel;
 
             // Push the controller onto the scope so it can be
             // used to reference events for controls etc.
+            // tslint:disable-next-line:no-string-literal
             this.scope["controller"] = this;
 
             // Initialize to an empty dictionary.
             this.elements = {};
-
-            /* tslint:enable:no-string-literal */
 
             // Subscribe to various events.
             this.scope.$on("popover.shown", _.bind(this.base_popover_shown, this));
@@ -86,12 +84,11 @@ namespace JustinCredible.SampleApp.Controllers {
              * popover. This is done by using UIHelper.createPopover().
              */
 
-            /* tslint:disable:no-string-literal */
             if (instance && instance.controllerID &&
+                // tslint:disable-next-line:no-string-literal
                 instance.controllerID !== this.constructor["ID"]) {
                 return;
             }
-            /* tslint:enable:no-string-literal */
 
             this._popoverInstance = instance;
 
@@ -111,12 +108,11 @@ namespace JustinCredible.SampleApp.Controllers {
             // console.log("popover.hidden " + this.constructor["ID"]);
 
             // Only respond to popover.hidden events for this dialog.
-            /* tslint:disable:no-string-literal */
             if (instance && instance.controllerID &&
+                // tslint:disable-next-line:no-string-literal
                 instance.controllerID !== this.constructor["ID"]) {
                 return;
             }
-            /* tslint:enable:no-string-literal */
 
             // Call our popover hidden event which descendants can override.
             this.popover_hidden(event, instance);

@@ -27,7 +27,6 @@ namespace JustinCredible.SampleApp.Services {
         //#region Local Storage Keys
 
         private static ENABLE_DEVELOPER_TOOLS = "ENABLE_DEVELOPER_TOOLS";
-        private static ENABLE_MOCK_HTTP_CALLS = "ENABLE_MOCK_HTTP_CALLS";
         private static REQUIRE_PIN_THRESHOLD = "REQUIRE_PIN_THRESHOLD";
         private static LAST_PAUSED_AT = "LAST_PAUSED_AT";
         private static HAS_COMPLETED_ONBOARDING = "HAS_COMPLETED_ONBOARDING";
@@ -116,19 +115,6 @@ namespace JustinCredible.SampleApp.Services {
             }
             else {
                 sessionStorage.setItem(Configuration.ENABLE_DEVELOPER_TOOLS, value.toString());
-            }
-        }
-
-        get enableMockHttpCalls(): boolean {
-            return localStorage.getItem(Configuration.ENABLE_MOCK_HTTP_CALLS) === "true";
-        }
-
-        set enableMockHttpCalls(value: boolean) {
-            if (value == null) {
-                localStorage.removeItem(Configuration.ENABLE_MOCK_HTTP_CALLS);
-            }
-            else {
-                localStorage.setItem(Configuration.ENABLE_MOCK_HTTP_CALLS, value.toString());
             }
         }
 

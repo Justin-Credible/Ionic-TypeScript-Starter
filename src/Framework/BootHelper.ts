@@ -36,11 +36,11 @@ namespace JustinCredible.SampleApp.BootHelper {
                 if (typeof(Service.getFactory) === "function") {
                     // If a static method named getFactory() is available we'll invoke it
                     // to get a factory function to register as a factory.
-                    console.log("Registering factory " + Service.ID + "...");
+                    // console.log("Registering factory " + Service.ID + "...");
                     ngModule.factory(Service.ID, Service.getFactory());
                 }
                 else {
-                    console.log("Registering service " + Service.ID + "...");
+                    // console.log("Registering service " + Service.ID + "...");
                     ngModule.service(Service.ID, Service);
                 }
             }
@@ -58,7 +58,7 @@ namespace JustinCredible.SampleApp.BootHelper {
         _.each(Directives, (Directive: any) => {
             if (Directive.ID) {
                 if (Directive.__BaseElementDirective) {
-                    console.log("Registering element directive " + Directive.ID + "...");
+                    // console.log("Registering element directive " + Directive.ID + "...");
                     ngModule.directive(Directive.ID, getElementDirectiveFactoryFunction(Directive));
                 }
                 else {
@@ -95,7 +95,7 @@ namespace JustinCredible.SampleApp.BootHelper {
         // Register each of the controllers that exist in the Controllers namespace.
         _.each(Controllers, (Controller: any) => {
             if (Controller.ID) {
-                console.log("Registering controller " + Controller.ID + "...");
+                // console.log("Registering controller " + Controller.ID + "...");
                 ngModule.controller(Controller.ID, Controller);
             }
         });
@@ -109,7 +109,7 @@ namespace JustinCredible.SampleApp.BootHelper {
      * @param Directive A class reference (not instance) to a element directive class that implements Directives.IElementDirective.
      * @returns A factory function that can be used by Angular to create an instance of the element directive.
      */
-    export function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): any[] {
+    export function getElementDirectiveFactoryFunction(Directive: Directives.BaseElementDirective<any>): any[] {
         var params = [],
             injectedArguments: IArguments = null,
             descriptor: ng.IDirective = {};
@@ -126,6 +126,7 @@ namespace JustinCredible.SampleApp.BootHelper {
         // We get these values from the static fields on the class reference.
         descriptor.restrict = Directive["restrict"];
         descriptor.template = Directive["template"];
+        descriptor.templateUrl = Directive["templateUrl"];
         descriptor.replace = Directive["replace"];
         descriptor.transclude = Directive["transclude"];
         descriptor.scope = Directive["scope"];
@@ -152,6 +153,10 @@ namespace JustinCredible.SampleApp.BootHelper {
             instance["attributes"] = instanceAttributes;
             instance["controller"] = controller;
             instance["transclude"] = transclude;
+
+            // Push a reference to this element directive instance onto the scope so it can
+            // be used from the template to reference protected event handler functions.
+            scope["directive"] = instance;
 
             /* tslint:enable:no-string-literal */
 
@@ -213,7 +218,33 @@ namespace JustinCredible.SampleApp.BootHelper {
      * 
      * @param fn The function that will provide the filter's logic.
      */
-    export function getFilterFactoryFunction(fn: Function): () => Function {
-        return function () { return fn; };
+    export function getFilterFactoryFunction(Filter: any): any {
+
+        var params = [];
+
+        /* tslint:disable:no-string-literal */
+
+        // If the filter is annotated with an injection array, we'll add the injection
+        // array's values to the list first.
+        if (Filter["$inject"]) {
+            params = params.concat(Filter["$inject"]);
+        }
+
+        /* tslint:enable:no-string-literal */
+
+        // The last parameter in the array is the function that will be executed by Angular
+        // when the filter is being used.
+        params.push(function () {
+            // Create a new instance of the filter, passing along the arguments (which
+            // will be the values injected via the $inject annotation).
+            let instance = construct(Filter, arguments);
+
+            // Angular expends to receive a function it can execute to perform the filter.
+            return _.bind(instance.filter, instance);
+        });
+
+        return params;
     }
+
+    //#endregion
 }

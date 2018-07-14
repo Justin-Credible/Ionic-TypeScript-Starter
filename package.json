@@ -57,7 +57,6 @@
     "cordova-plugin-statusbar@1.0.1",
     "cordova-plugin-spinner@1.0.0",
     "ionic-plugin-keyboard@1.0.7",
-    "cordova-plugin-x-toast@2.2.1",
     "cordova-universal-clipboard@0.1.0"
   ],
   "cordovaPlatforms": [

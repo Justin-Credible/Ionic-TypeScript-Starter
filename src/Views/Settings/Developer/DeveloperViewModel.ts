@@ -1,7 +1,6 @@
 ﻿namespace JustinCredible.SampleApp.ViewModels {
 
     export class DeveloperViewModel {
-        mockApiRequests: boolean;
 
         isWebPlatform: boolean;
         isWebStandalone: boolean;
