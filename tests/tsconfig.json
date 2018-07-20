@@ -6,6 +6,14 @@
         "inlineSources": true,
         "declaration": false,
         "removeComments": false,
+        "noUnusedLocals": true,
+        "lib": ["dom", "es5", "es2015.promise"],
+
+        /**
+        * http://www.typescriptlang.org/docs/handbook/tsconfig-json.html#types-typeroots-and-types
+        * Empty to tell compiler to ignore automatically importing all types from ./node_modules/@types/*
+        */
+        "types": [],
     },
     "include": [
 
@@ -18,5 +26,5 @@
 
         // Type definitions used by the app.
         "../src/**/*.d.ts"
-    ]
+    ],
 }

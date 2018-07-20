@@ -34,7 +34,7 @@ namespace JustinCredible.SampleApp.UnitTests.TestCases {
         private _test_injection(): void {
 
             // Create a lookup dictionary of all services from the services and controller namespaces.
-            let Services = {};
+            let Services: Interfaces.Dictionary<any> = {};
 
             // tslint:disable-next-line:no-string-literal
             Services["Application"] = Application;
@@ -51,7 +51,7 @@ namespace JustinCredible.SampleApp.UnitTests.TestCases {
                 Services[serviceID] = JustinCredible.SampleApp.Directives[serviceID];
             }
 
-            for (let Service of _.values(Services)) {
+            for (let Service of <any>_.values(Services)) {
 
                 // A static ID property is required to register a service; see BootHelper.registerServices().
                 if (!Service.ID) {

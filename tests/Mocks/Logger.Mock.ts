@@ -68,32 +68,7 @@ namespace JustinCredible.SampleApp.UnitTests.Mocks {
 
                 //#endregion
 
-                // Log to both the browser console and native device console.
-                // Logging is slighting different based on if a metadata object is present or not.
-                if (metadata == null) {
-
-                    // Handle the simple case first-- no metadata is being logged.
-
-                    console_logFn.call(console, levelDisplay + " " + tag + ": " + message);
-                }
-                else {
-
-                    // Handle the more complicated case-- a metadata object is being logged.
-                    // In this case we want to make sure the metadata is logged for display by the
-                    // browser's debugging tools and included as a JSON string in the native logs.
-
-                    let metadataJson: string;
-
-                    try {
-                        metadataJson = JSON.stringify(metadata);
-                    }
-                    catch (error) {
-                        /* tslint:disable:no-empty */
-                        /* tslint:enable:no-empty */
-                    }
-
-                    console_logFn.call(console, levelDisplay + " " + tag + ": " + message, metadata);
-                }
+                console_logFn.call(console, levelDisplay + " " + tag + ": " + message, metadata);
             }
             catch (exception) {
                 console.error("Error logging via Logger.logToConsole().", exception);

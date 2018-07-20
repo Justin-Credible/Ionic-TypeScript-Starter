@@ -1,0 +1,21 @@
+
+import * as gulp from "gulp";
+import { GulpPlugins } from "../../types";
+import { TaskFunc } from "orchestrator";
+
+import * as del from "del";
+
+/**
+ * Removes the node_modules directory.
+ */
+module.exports = function(gulp: gulp.Gulp, plugins: GulpPlugins): TaskFunc {
+
+    return function(cb) {
+
+        del([
+            "node_modules"
+        ]).then(function () {
+            cb();
+        });
+    };
+};

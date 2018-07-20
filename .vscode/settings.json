@@ -23,4 +23,5 @@
 
     "tslint.configFile": "tslint.json",
     "tslint.ignoreDefinitionFiles": true,
+    "typescript.disableAutomaticTypeAcquisition": true,
 }

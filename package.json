@@ -10,6 +10,15 @@
     "url": "https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git"
   },
   "dependencies": {
+    "@types/del": "2.2.33",
+    "@types/gulp": "3.8.36",
+    "@types/gulp-load-plugins": "0.0.31",
+    "@types/js-yaml": "3.5.31",
+    "@types/karma": "0.13.36",
+    "@types/lodash": "3.10.0",
+    "@types/node": "^8.10.21",
+    "@types/run-sequence": "0.0.30",
+    "@types/shelljs": "0.6.0",
     "bower": "1.6.3",
     "bower-installer": "1.2.0",
     "cordova": "5.4.1",
@@ -40,8 +49,9 @@
     "request": "2.65.0",
     "run-sequence": "1.1.4",
     "shelljs": "0.6.0",
+    "ts-node": "7.0.0",
     "tslint": "5.9.1",
-    "typescript": "2.6.2"
+    "typescript": "2.9.2"
   },
   "scripts": {
     "pretest": "gulp lint",
@@ -62,9 +72,5 @@
   "cordovaPlatforms": [
     "android",
     "ios"
-  ],
-  "devDependencies": {
-    "gulp-typedoc": "^1.2.1",
-    "typedoc": "^0.3.8"
-  }
+  ]
 }
