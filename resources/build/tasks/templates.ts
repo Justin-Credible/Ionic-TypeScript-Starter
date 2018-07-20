@@ -1,6 +1,6 @@
 
 import * as gulp from "gulp";
-import { GulpPlugins } from "../types";
+import { GulpPlugins } from "./types";
 import { TaskFunc } from "orchestrator";
 
 /**

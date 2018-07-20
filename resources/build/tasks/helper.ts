@@ -1,5 +1,5 @@
 
-import { GulpPlugins, Scheme, SchemesConfig, ContentSecurityPolicyDictionary, ReferencesConfig } from "../types";
+import { GulpPlugins, Scheme, SchemesConfig, ContentSecurityPolicyDictionary, ReferencesConfig } from "./types";
 
 import * as fs from "fs";
 import * as path from "path";

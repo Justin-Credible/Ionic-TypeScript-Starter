@@ -1,6 +1,6 @@
 
 import * as gulp from "gulp";
-import { GulpPlugins } from "./resources/build/types";
+import { GulpPlugins } from "./resources/build/tasks/types";
 import { TaskFunc } from "orchestrator";
 
 import * as runSequence from "run-sequence";
