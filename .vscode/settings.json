@@ -20,8 +20,8 @@
 
     "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.referencesCodeLens.enabled": false,
+    "typescript.disableAutomaticTypeAcquisition": true,
 
     "tslint.configFile": "tslint.json",
     "tslint.ignoreDefinitionFiles": true,
-    "typescript.disableAutomaticTypeAcquisition": true,
 }

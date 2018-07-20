@@ -9,7 +9,7 @@ import * as helper from "./helper";
  * Used to perform compilation of the SASS styles in the styles directory (using
  * Index.scss as the root file) and output the CSS to www/css/bundle.css.
  */
-module.exports = function(gulp, plugins) {
+module.exports = function(gulp: gulp.Gulp, plugins: GulpPlugins): TaskFunc {
 
     return function(cb) {
 

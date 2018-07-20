@@ -1,6 +1,6 @@
 
 import * as gulp from "gulp";
-import { GulpPlugins } from "../types";
+import { GulpPlugins, Scheme, SchemesConfig, ContentSecurityPolicyDictionary, ReferencesConfig } from "../types";
 import { TaskFunc } from "orchestrator";
 
 import * as fs from "fs";
@@ -11,64 +11,7 @@ import * as _ from "lodash";
 import * as yaml from "js-yaml";
 import * as gulpLoadPlugins from "gulp-load-plugins";
 
-type TaskFactory = (gulp: gulp.Gulp, plugins: GulpPlugins) => TaskFunc;
-
 let plugins = gulpLoadPlugins<GulpPlugins>();
-
-/**
- * A simple interface that describes a dictionary of objects indexed by string.
- */
-export interface Dictionary<T> {
-    [index: string]: T;
-}
-
-/**
- * Describes an object parsed from schemes.yml
- */
-export interface SchemesConfig {
-    default: string;
-    overrides: Dictionary<Dictionary<any>>;
-    schemes: Dictionary<Scheme>;
-}
-
-/**
- * Describes a single scheme parsed from schemes.yml
- */
-export interface Scheme {
-    base: string;
-    debug: boolean;
-    replacements: Dictionary<any>;
-}
-
-/**
- * Describes an object parsed from index.references.yml
- */
-export interface ReferencesConfig {
-    css: string[];
-    lib: string[];
-    js: string[];
-}
-
-/**
- * Describes a content security policy dictionary.
- */
-export interface ContentSecurityPolicyDictionary {
-    default_src: string[];
-    script_src: string[];
-    style_src: string[];
-    img_src: string[];
-    connect_src: string[];
-    font_src: string[];
-    object_src: string[];
-    media_src: string[];
-    frame_src: string[];
-    sandbox: string[];
-    report_uri: string[];
-    child_src: string[];
-    form_action: string[];
-    frame_ancestors: string[];
-    plugin_types: string[];
-}
 
 /**
  * Used to format a string by replacing values with the given arguments.
@@ -509,7 +452,7 @@ export function performReferenceReplacement(sourceFilePath: string, targetFilePa
             }
 
             libReferences.push(`<script type="text/javascript" src="${libReference}"${suffix}></script>`);
-        };
+        }
     }
 
     if (libReferences.length > 0) {
@@ -766,6 +709,7 @@ export function buildCspStringFromObject(csp: ContentSecurityPolicyDictionary): 
 
     let directiveNames = [
         "default-src",
+        "manifest-src",
         "script-src",
         "style-src",
         "img-src",
