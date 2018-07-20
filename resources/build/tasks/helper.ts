@@ -1,7 +1,5 @@
 
-import * as gulp from "gulp";
 import { GulpPlugins, Scheme, SchemesConfig, ContentSecurityPolicyDictionary, ReferencesConfig } from "../types";
-import { TaskFunc } from "orchestrator";
 
 import * as fs from "fs";
 import * as path from "path";
