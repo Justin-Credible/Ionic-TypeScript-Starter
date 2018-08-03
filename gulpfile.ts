@@ -1,6 +1,6 @@
 
 import * as gulp from "gulp";
-import { GulpPlugins } from "./resources/build/tasks/types";
+import { GulpPlugins } from "./resources/build/tasks/gulp-types";
 import { TaskFunc } from "orchestrator";
 
 import * as runSequence from "run-sequence";
@@ -14,8 +14,7 @@ let gulpPlugins = gulpLoadPlugins<GulpPlugins>();
  * Used to load the gulp task with the given name from resources/build/tasks
  * http://macr.ae/article/splitting-gulpfile-multiple-files.html
  */
-function getTask(taskName: string): TaskFunc {
-    var fileName = taskName.replace(":", "-");
+function getTask(fileName: string): TaskFunc {
     let factory: TaskFactory = require("./resources/build/tasks/" + fileName);
     return factory(gulp, gulpPlugins);
 }
@@ -26,42 +25,42 @@ gulp.task("default",  function (cb) {
     runSequence("plugins", "libs", "templates", "sass", "ts", "config", cb);
 });
 
-gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:templates", "clean:sass"], getTask("init"));
-gulp.task("config", getTask("config"));
-gulp.task("watch", getTask("watch"));
+gulp.task("init", ["clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:templates", "clean:sass"], getTask("gulp-init"));
+gulp.task("config", getTask("gulp-config"));
+gulp.task("watch", getTask("gulp-watch"));
 
-gulp.task("package-chrome", getTask("package-chrome"));
-gulp.task("package-web", getTask("package-web"));
-gulp.task("package-remote-build", getTask("package-remote-build"));
+gulp.task("package-chrome", getTask("gulp-package-chrome"));
+gulp.task("package-web", getTask("gulp-package-web"));
+gulp.task("package-remote-build", getTask("gulp-package-remote-build"));
 
-gulp.task("emulate-ios", getTask("emulate-ios"));
-gulp.task("emulate-ios-remote", ["package-remote-build"], getTask("emulate-ios-remote"));
-gulp.task("emulate-android", getTask("emulate-android"));
+gulp.task("emulate-ios", getTask("gulp-emulate-ios"));
+gulp.task("emulate-ios-remote", ["package-remote-build"], getTask("gulp-emulate-ios-remote"));
+gulp.task("emulate-android", getTask("gulp-emulate-android"));
 
-gulp.task("lint", getTask("lint"));
-gulp.task("test", ["ts:tests"], getTask("test"));
+gulp.task("lint", getTask("gulp-lint"));
+gulp.task("test", ["ts:tests"], getTask("gulp-test"));
 
-gulp.task("ts", getTask("ts"));
-gulp.task("ts:tests", ["ts"], getTask("ts:tests"));
+gulp.task("ts", getTask("gulp-ts"));
+gulp.task("ts:tests", ["ts"], getTask("gulp-ts-tests"));
 
-gulp.task("plugins", ["git-check"], getTask("plugins"));
-gulp.task("libs", getTask("libs"));
-gulp.task("minify", getTask("minify"));
-gulp.task("templates", getTask("templates"));
-gulp.task("sass", getTask("sass"));
+gulp.task("plugins", ["git-check"], getTask("gulp-plugins"));
+gulp.task("libs", getTask("gulp-libs"));
+gulp.task("minify", getTask("gulp-minify"));
+gulp.task("templates", getTask("gulp-templates"));
+gulp.task("sass", getTask("gulp-sass"));
 
 gulp.task("clean", ["clean:node", "clean:config", "clean:bower", "clean:platforms", "clean:plugins", "clean:build", "clean:libs", "clean:ts", "clean:templates", "clean:sass"]);
-gulp.task("clean:node", getTask("clean/clean:node"));
-gulp.task("clean:config", getTask("clean/clean:config"));
-gulp.task("clean:bower", getTask("clean/clean:bower"));
-gulp.task("clean:platforms", getTask("clean/clean:platforms"));
-gulp.task("clean:plugins", getTask("clean/clean:plugins"));
-gulp.task("clean:libs", getTask("clean/clean:libs"));
-gulp.task("clean:ts", getTask("clean/clean:ts"));
-gulp.task("clean:templates", getTask("clean/clean:templates"));
-gulp.task("clean:sass", getTask("clean/clean:sass"));
-gulp.task("clean:chrome", getTask("clean/clean:chrome"));
-gulp.task("clean:web", getTask("clean/clean:web"));
-gulp.task("clean:build", getTask("clean/clean:build"));
+gulp.task("clean:node", getTask("clean/gulp-clean-node"));
+gulp.task("clean:config", getTask("clean/gulp-clean-config"));
+gulp.task("clean:bower", getTask("clean/gulp-clean-bower"));
+gulp.task("clean:platforms", getTask("clean/gulp-clean-platforms"));
+gulp.task("clean:plugins", getTask("clean/gulp-clean-plugins"));
+gulp.task("clean:libs", getTask("clean/gulp-clean-libs"));
+gulp.task("clean:ts", getTask("clean/gulp-clean-ts"));
+gulp.task("clean:templates", getTask("clean/gulp-clean-templates"));
+gulp.task("clean:sass", getTask("clean/gulp-clean-sass"));
+gulp.task("clean:chrome", getTask("clean/gulp-clean-chrome"));
+gulp.task("clean:web", getTask("clean/gulp-clean-web"));
+gulp.task("clean:build", getTask("clean/gulp-clean-build"));
 
-gulp.task("git-check", getTask("git-check"));
+gulp.task("git-check", getTask("gulp-git-check"));
