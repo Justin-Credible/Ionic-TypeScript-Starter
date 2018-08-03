@@ -22,7 +22,7 @@ module.exports = function(gulp: gulp.Gulp, plugins: GulpPlugins): TaskFunc {
     return function(cb) {
 
         // Warn the user if they try to use a different prep flag value.
-        if (plugins.util.env.prep != null && plugins.util.env.prep != "web") {
+        if (plugins.util.env.prep != null && plugins.util.env.prep !== "web") {
             helper.warn(`The '--prep ${plugins.util.env.prep}' flag is invalid for the 'package-web' task; overriding it to: '--prep web'.`);
         }
 
@@ -49,7 +49,7 @@ module.exports = function(gulp: gulp.Gulp, plugins: GulpPlugins): TaskFunc {
 
             helper.info("Bundling css, lib, and js directories to build/web/resources-temp");
             sh.mkdir("-p", "build/web/resources-temp");
-            helper.bundleStaticResources("build/web", "build/web/resources-temp", "resources/web/index.references.yml")
+            helper.bundleStaticResources("build/web", "build/web/resources-temp", "resources/web/index.references.yml");
 
             helper.info("Removing css and js directories from build/web");
             sh.rm("-rf", "build/web/css");
