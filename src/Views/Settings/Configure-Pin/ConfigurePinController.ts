@@ -36,7 +36,7 @@
         //#region Controller Methods
 
         protected setPin_click() {
-            var options: Models.DialogOptions,
+            var options: Models.DialogOptions<Models.PinEntryDialogModel, Models.PinEntryDialogResultModel>,
                 model: Models.PinEntryDialogModel;
 
             model = new Models.PinEntryDialogModel("Enter a value for your new PIN", null, true);
@@ -70,7 +70,7 @@
         }
 
         protected changePin_click() {
-            var options: Models.DialogOptions,
+            var options: Models.DialogOptions<Models.PinEntryDialogModel, Models.PinEntryDialogResultModel>,
                 model: Models.PinEntryDialogModel;
 
             model = new Models.PinEntryDialogModel("Enter your current PIN", this.Preferences.pin, true);
@@ -113,7 +113,7 @@
         }
 
         protected removePin_click() {
-            var options: Models.DialogOptions,
+            var options: Models.DialogOptions<Models.PinEntryDialogModel, Models.PinEntryDialogResultModel>,
                 model: Models.PinEntryDialogModel;
 
             model = new Models.PinEntryDialogModel("Enter your current PIN", this.Preferences.pin, true);
