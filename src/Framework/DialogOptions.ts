@@ -2,16 +2,20 @@
 
     /**
      * Used to specify options for a dialog.
-     * For use with UIHelper.openDialog().
+     * For use with UIHelper.showDialog().
+     * 
+     * D - The type of data object that will be passed in when the dialog is opened.
+     * R - The type of the data object that will be returned when this dialog is closed.
+     * (see BaseDialogController and UIHelper.showDialog() for the matching templated types)
      */
-    export class DialogOptions {
+    export class DialogOptions<D, R> {
 
         /**
          * The data object for the dialog.
          * 
          * This will be available from BaseDialogController.getData().
          */
-        dialogData: any;
+        dialogData: D;
 
         /**
          * Specifies if the dialog should be able to be closed by clicking/touching
@@ -32,7 +36,7 @@
          */
         showBackground: boolean;
 
-        constructor(dialogData?: any) {
+        constructor(dialogData?: D) {
             this.dialogData = dialogData;
 
             this.backdropClickToClose = false;

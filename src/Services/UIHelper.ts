@@ -347,11 +347,14 @@
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
+         * D - The type of data object that will be passed in when the dialog is opened.
+         * R - The type of the data object that will be returned when this dialog is closed.
+         * 
          * @param dialogID The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
          * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
          */
-        public showDialog(dialogID: string, options: Models.DialogOptions): ng.IPromise<any>;
+        public showDialog<D, R>(dialogID: string, options: Models.DialogOptions<D, R>): ng.IPromise<R>;
 
         /**
          * Used to open the modal dialog with the given dialog ID.
@@ -370,12 +373,15 @@
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
+         * D - The type of data object that will be passed in when the dialog is opened.
+         * R - The type of the data object that will be returned when this dialog is closed.
+         * 
          * @param dialogID The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
          * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
          */
-        public showDialog(dialogID: string, options?: Models.DialogOptions): ng.IPromise<any> {
-            var q = this.$q.defer<any>();
+        public showDialog<D, R>(dialogID: string, options?: Models.DialogOptions<D, R>): ng.IPromise<R> {
+            var q = this.$q.defer<R>();
 
             if (!dialogID) {
                 q.reject(new Error("A dialogID is required."));
@@ -669,7 +675,7 @@
         public showPinEntryAfterResume(): ng.IPromise<void> {
             var q = this.$q.defer<void>(),
                 resumedAt: moment.Moment,
-                options: Models.DialogOptions,
+                options: Models.DialogOptions<Models.PinEntryDialogModel, Models.PinEntryDialogResultModel>,
                 model: Models.PinEntryDialogModel;
 
             // If the PIN entry dialog then there is nothing to do.
