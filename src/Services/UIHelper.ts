@@ -325,10 +325,12 @@
          * If a dialog with the given ID is already open, another will not be opened
          * and the promise will be rejected with UIHelper.DIALOG_ALREADY_OPEN.
          * 
+         * R - The type of the data object that will be returned when this dialog is closed.
+         * 
          * @param dialogID The ID of the dialog to show/open.
          * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
          */
-        public showDialog(dialogID: string): ng.IPromise<any>;
+        public showDialog<R>(dialogID: string): ng.IPromise<R>;
 
         /**
          * Used to open the modal dialog with the given dialog ID.
