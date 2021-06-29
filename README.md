@@ -1,8 +1,6 @@
 Ionic/TypeScript Starter
 =============================
 [![Build Status](https://travis-ci.org/Justin-Credible/Ionic-TypeScript-Starter.svg?branch=master)](https://travis-ci.org/Justin-Credible/Ionic-TypeScript-Starter)
-[![Dependencies](https://david-dm.org/Justin-Credible/Ionic-TypeScript-Starter
-.svg)](https://david-dm.org/Justin-Credible/Ionic-TypeScript-Starter)
 
 This is a sample project that I use as a starting point for developing new mobile applications. This starter project targets iOS, Android, Chrome (as an extension), and the web.
 
